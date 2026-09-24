@@ -8,8 +8,11 @@ modifică.
 
 1. În repo: **Settings → Pages → Build and deployment → Deploy from a branch**,
    branch `main`, folder `/ (root)` → **Save**.
-2. Tot acolo, la **Custom domain**, apare `echipa.madamemagnifique.ro` (din
-   fișierul `CNAME`). După ce DNS-ul e activ, bifează **Enforce HTTPS**.
+2. Până e gata DNS-ul, ghidul e online la
+   https://arthurteut.github.io/madame-magnifique-echipa/ (fișierul `CNAME`
+   e scos intenționat). După ce firma de hosting confirmă înregistrarea, scrie
+   `echipa.madamemagnifique.ro` la **Custom domain** → **Save** (GitHub
+   readaugă singur `CNAME`), apoi bifează **Enforce HTTPS**.
 3. (Recomandat) **Settings-ul contului → Pages → Add a domain** →
    `madamemagnifique.ro`: GitHub dă o înregistrare TXT de verificare, care
    împiedică pe altcineva să folosească subdomeniul. Se trimite firmei de
