@@ -92,6 +92,7 @@ SPATII = [
             ["Luni – Vineri", "08:00 – 19:30"],
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
+            ["Sosire echipă coacere și umplere (PP + B)", "06:00, zilele cu program"],
         ]),
         "abateri": "Porumbescu",
         "procese": RETAIL,
