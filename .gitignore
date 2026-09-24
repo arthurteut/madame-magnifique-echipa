@@ -1,0 +1,5 @@
+# Harta de operațiuni nu intră niciodată în repo (e publică).
+*.xlsx
+*.xls
+*.csv
+__pycache__/

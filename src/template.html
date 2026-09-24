@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Ghidul echipei · Madame Magnifique</title>
+<meta name="description" content="Ghidul intern al echipei Madame Magnifique.">
+<meta name="theme-color" content="#242424">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #242424;
+    --ink-soft: #353535;
+    --muted: #6a6a6a;
+    --line: #e1e1e1;
+    --bg: #ffffff;
+    --bg-soft: #f9f9f9;
+    --greige: #dedcd8;
+    --sand: #e3d0aa;
+    --stone: #afac9f;
+    --gold: #f6bb60;
+    --wrap: 1400px;
+    --gutter: clamp(16px, 4vw, 40px);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink-soft); font: 300 16px/1.6 'Roboto', sans-serif; }
+  h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--ink-soft); margin: 0; line-height: 1.2; }
+  a { color: inherit; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+  .eyebrow { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  .hidden { display: none !important; }
+  .logo svg { display: block; height: 100%; width: auto; }
+
+  /* ---------- Lacăt ---------- */
+  #lock { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 40px var(--gutter); background: var(--greige); }
+  .lock-card { width: 100%; max-width: 440px; background: #fff; padding: clamp(28px, 6vw, 48px); text-align: center; }
+  .lock-card .logo { height: 64px; display: flex; justify-content: center; color: var(--ink); margin-bottom: 28px; }
+  .lock-card h1 { font-size: 1.25rem; margin: 8px 0 6px; }
+  .lock-card p { color: var(--muted); margin: 0 0 24px; font-size: .95rem; }
+  .field { display: block; width: 100%; padding: 14px 16px; border: 1px solid var(--line); background: #fff; font-size: 1rem; border-radius: 0; }
+  .field:focus { border-color: var(--ink); outline: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; background: var(--ink); color: #fff; border: 0; font: 500 .8rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: background .3s; text-decoration: none; }
+  .btn:hover { background: #000; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: #fff; }
+  .lock-card .btn { width: 100%; margin-top: 12px; }
+  .check { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 16px; font-size: .88rem; color: var(--muted); }
+  .err { color: #9b2c2c; font-size: .9rem; min-height: 1.4em; margin-top: 12px; }
+
+  /* ---------- Antet ---------- */
+  header.top { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; gap: 24px; height: 76px; }
+  .bar .logo { height: 40px; color: var(--ink); flex: none; text-decoration: none; }
+  .bar nav { display: flex; gap: 4px; margin-left: auto; }
+  .bar nav a { font: 500 .78rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; padding: 10px 12px; color: var(--ink-soft); border-bottom: 2px solid transparent; }
+  .bar nav a:hover, .bar nav a.on { border-bottom-color: var(--ink); }
+  .icon-btn { background: none; border: 0; padding: 8px; display: inline-flex; color: var(--ink); }
+  .icon-btn svg { width: 22px; height: 22px; }
+  #menuBtn { display: none; }
+  .search-top { position: relative; flex: 0 1 320px; }
+  .search-top input { width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--line); background: var(--bg-soft); border-radius: 0; font-size: .92rem; }
+  .search-top input:focus { outline: none; border-color: var(--ink); background: #fff; }
+  .search-top svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted); }
+
+  /* ---------- Căutare ---------- */
+  #results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(0,0,0,.12); max-height: 70vh; overflow: auto; z-index: 30; }
+  .hero-search #results { top: calc(100% + 8px); }
+  .res-group { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .res-group:last-child { border-bottom: 0; }
+  .res-group .eyebrow { padding: 4px 16px 6px; display: block; }
+  .res { display: block; padding: 9px 16px; text-decoration: none; color: var(--ink-soft); font-size: .92rem; line-height: 1.35; }
+  .res:hover, .res.sel { background: var(--greige); }
+  .res small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+  .res mark { background: var(--sand); color: inherit; }
+  .res-empty { padding: 18px 16px; color: var(--muted); }
+
+  /* ---------- Acasă ---------- */
+  .hero { background: var(--ink); color: #fff; padding: clamp(48px, 9vw, 110px) 0 clamp(40px, 7vw, 80px); }
+  .hero .eyebrow { color: var(--sand); }
+  .hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 500; margin: 14px 0 12px; max-width: 16ch; }
+  .hero p { color: #cfcdc8; max-width: 56ch; margin: 0 0 32px; font-size: 1.05rem; }
+  .hero-search { position: relative; max-width: 720px; }
+  .hero-search input { width: 100%; padding: 20px 20px 20px 56px; font-size: 1.1rem; border: 0; border-radius: 0; background: #fff; color: var(--ink); }
+  .hero-search input:focus { outline: 2px solid var(--sand); }
+  .hero-search > svg { position: absolute; left: 20px; top: 30px; transform: translateY(-50%); width: 20px; height: 20px; color: var(--muted); }
+  .hint { color: #a9a69e; font-size: .85rem; margin-top: 12px; }
+  .hint button { background: none; border: 0; color: var(--sand); text-decoration: underline; padding: 0 2px; font-size: inherit; }
+
+  section.block { padding: clamp(40px, 6vw, 72px) 0; }
+  section.block.soft { background: var(--bg-soft); }
+  .block-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .block-head h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); margin-top: 8px; }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .tile { display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; padding: 24px; background: var(--greige); text-decoration: none; color: var(--ink); transition: background .3s, color .3s; position: relative; }
+  .tile:hover { background: var(--ink); color: #fff; }
+  .tile:hover h3, .tile:hover .eyebrow { color: #fff; }
+  .tile h3 { font-size: 1.35rem; margin: 10px 0 6px; transition: color .3s; }
+  .tile p { margin: 0; font-size: .92rem; opacity: .85; }
+  .tile .go { margin-top: 20px; font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .tile.dark { background: var(--ink); color: #fff; }
+  .tile.dark h3, .tile.dark .eyebrow { color: #fff; }
+  .tile.dark:hover { background: #000; }
+  .group-label { font: 500 .78rem/1 'Montserrat', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 32px 0 14px; }
+  .group-label:first-child { margin-top: 0; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border: 1px solid var(--line); background: #fff; font: 500 .82rem/1 'Montserrat', sans-serif; text-decoration: none; color: var(--ink-soft); }
+  .chip:hover { border-color: var(--ink); }
+  .chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .chip b { font-weight: 600; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .stat { background: #fff; padding: 20px; }
+  .stat strong { display: block; font: 500 2rem/1 'Montserrat', sans-serif; color: var(--ink); }
+  .stat span { font-size: .85rem; color: var(--muted); }
+
+  /* ---------- Pagina unui spațiu ---------- */
+  .band { background: var(--greige); padding: clamp(32px, 5vw, 56px) 0; }
+  .crumbs { font-size: .82rem; color: var(--muted); margin-bottom: 14px; }
+  .crumbs a { text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .band h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin: 8px 0 8px; }
+  .band .sub { font-size: 1.05rem; color: var(--ink-soft); margin: 0; }
+  .profile { margin-top: 24px; background: #fff; padding: 20px 24px; border-left: 3px solid var(--ink); max-width: 860px; }
+  .profile p { margin: 0; }
+  .profile .why { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+  .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .card { background: #fff; border: 1px solid var(--line); padding: 22px; }
+  .card .tag { display: inline-block; font: 600 .68rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 6px 8px; background: var(--sand); color: var(--ink); margin-bottom: 12px; text-decoration: none; }
+  .card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .card p { margin: 0; font-size: .94rem; }
+  .card .why { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: .86rem; }
+  .card.note { background: var(--bg-soft); border-color: transparent; }
+
+  .filterbar { position: sticky; top: 76px; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); padding: 12px 0; }
+  .filterbar .wrap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filterbar .lbl { font-size: .85rem; color: var(--muted); }
+
+  .proc { border: 1px solid var(--line); background: #fff; margin-bottom: 10px; scroll-margin-top: 150px; }
+  .proc > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: center; padding: 18px 20px; }
+  .proc > summary::-webkit-details-marker { display: none; }
+  .proc > summary:hover { background: var(--bg-soft); }
+  .proc .code { font: 600 .85rem/1 'Montserrat', sans-serif; color: var(--muted); }
+  .proc .name { font: 500 1.05rem/1.3 'Montserrat', sans-serif; color: var(--ink); }
+  .proc .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .proc .chev { width: 18px; height: 18px; transition: transform .25s; color: var(--muted); }
+  .proc[open] .chev { transform: rotate(180deg); }
+  .proc[open] > summary { border-bottom: 1px solid var(--line); }
+  .proc-body { padding: 20px; }
+  .miza { font-style: italic; color: var(--muted); margin: 0 0 18px; padding-left: 14px; border-left: 2px solid var(--sand); }
+  .local { background: #fbf6ea; border-left: 3px solid var(--gold); padding: 12px 16px; margin: 0 0 18px; font-size: .94rem; }
+  .local b { font-weight: 500; }
+  .local .why { color: var(--muted); font-size: .86rem; display: block; margin-top: 4px; }
+
+  .pill { display: inline-block; font: 600 .68rem/1 'Montserrat', sans-serif; letter-spacing: .06em; padding: 5px 7px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); text-decoration: none; white-space: nowrap; }
+  a.pill:hover { border-color: var(--ink); }
+  .pill.v1 { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .pill.v2 { background: var(--stone); color: #fff; border-color: var(--stone); }
+  .pill.v3 { background: var(--greige); border-color: var(--greige); }
+  .pill.crit { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .pill.star { background: var(--sand); border-color: var(--sand); }
+
+  .subp { margin: 0 0 20px; }
+  .subp:last-child { margin-bottom: 0; }
+  .subp h4 { font-size: .95rem; margin-bottom: 10px; display: flex; gap: 8px; align-items: baseline; }
+  .tasks { display: grid; gap: 8px; }
+  .task { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 12px 14px; background: var(--bg-soft); border-left: 3px solid var(--greige); }
+  .task.mine { border-left-color: var(--ink); }
+  .task .t { color: var(--ink); font-weight: 400; }
+  .task .facts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .84rem; color: var(--muted); }
+  .task .facts span { display: inline-flex; gap: 5px; align-items: center; }
+  .task .facts svg { width: 13px; height: 13px; flex: none; }
+  .task .right { display: flex; gap: 6px; align-items: start; }
+  .simple-list { margin: 0; padding: 0; list-style: none; }
+  .simple-list li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .simple-list li:last-child { border-bottom: 0; }
+  .lvl4 { font-size: .86rem; color: var(--muted); background: var(--bg-soft); padding: 10px 14px; margin-top: 14px; }
+
+  .proc-list { display: grid; gap: 8px; margin-top: 8px; }
+  .prow { display: grid; grid-template-columns: 78px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); text-decoration: none; background: #fff; }
+  .prow:hover { border-color: var(--ink); }
+  .prow .c { font: 600 .82rem/1 'Montserrat', sans-serif; color: var(--muted); }
+  .prow .ti { color: var(--ink); }
+  .prow .ti small { display: block; color: var(--muted); font-size: .82rem; margin-top: 2px; }
+  .prow .meta { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+  .section-title { font-size: 1.3rem; margin: 0 0 18px; }
+  .dom-head { margin: 36px 0 14px; }
+  .dom-head:first-child { margin-top: 0; }
+  .dom-head h3 { font-size: 1.2rem; }
+  .dom-head p { margin: 6px 0 0; color: var(--muted); font-style: italic; }
+
+  /* ---------- Procedură ---------- */
+  .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 24px 0; }
+  .facts-grid div { background: #fff; padding: 16px 18px; }
+  .facts-grid .eyebrow { display: block; margin-bottom: 8px; }
+  .facts-grid strong { font-weight: 400; color: var(--ink); }
+  .std { background: var(--bg-soft); padding: 20px 24px; }
+  .std ul { margin: 8px 0 0; padding-left: 18px; }
+
+  .role-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .role-card { display: block; padding: 20px; border: 1px solid var(--line); text-decoration: none; background: #fff; }
+  .role-card:hover { border-color: var(--ink); }
+  .role-card .rc { font: 600 .75rem/1 'Montserrat', sans-serif; letter-spacing: .1em; background: var(--ink); color: #fff; padding: 5px 8px; display: inline-block; }
+  .role-card h3 { font-size: 1.05rem; margin: 12px 0 6px; }
+  .role-card p { margin: 0; font-size: .9rem; color: var(--muted); }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  .tbl th { text-align: left; font: 500 .72rem/1.2 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid var(--ink); }
+  .tbl td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl tr:hover td { background: var(--bg-soft); }
+  .tbl a { text-decoration: none; }
+  .tbl-wrap { overflow-x: auto; }
+  .selects { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .selects select { padding: 10px 34px 10px 12px; border: 1px solid var(--line); background: #fff url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 6px center; -webkit-appearance: none; appearance: none; border-radius: 0; font-size: .9rem; }
+
+  footer { background: var(--ink); color: #a9a69e; padding: 36px 0; font-size: .85rem; margin-top: 40px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer .logo { height: 34px; color: #fff; }
+  footer button { background: none; border: 1px solid #555; color: #ddd; padding: 8px 14px; font-size: .8rem; }
+  footer button:hover { border-color: #fff; }
+
+  @media (max-width: 980px) {
+    .bar { gap: 12px; height: 64px; }
+    .bar .logo { height: 32px; }
+    #menuBtn { display: inline-flex; margin-left: auto; }
+    .bar nav { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 8px var(--gutter) 16px; border-bottom: 1px solid var(--line); }
+    .bar nav.open { display: flex; }
+    .bar nav a { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .search-top { flex: 1 1 auto; order: 3; }
+    .filterbar { top: 64px; }
+  }
+  @media (max-width: 640px) {
+    .bar { flex-wrap: wrap; height: auto; padding-top: 12px; padding-bottom: 12px; }
+    .search-top { flex-basis: 100%; }
+    .bar nav { top: 100%; }
+    .filterbar { position: static; }
+    .proc > summary { grid-template-columns: 1fr auto; gap: 8px 12px; padding: 16px; }
+    .proc .code { grid-column: 1 / -1; }
+    .proc .meta { grid-column: 1 / -1; justify-content: flex-start; }
+    .proc .chev { display: none; }
+    .proc-body { padding: 16px; }
+    .task { grid-template-columns: 1fr; }
+    .prow { grid-template-columns: 1fr; gap: 6px; }
+    .prow .meta { justify-content: flex-start; }
+    .cards { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr; }
+    .tile { min-height: 150px; }
+  }
+  @media print {
+    header.top, .filterbar, footer, #results { display: none !important; }
+    .proc { break-inside: avoid; }
+    details.proc > .proc-body { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="lock">
+  <form class="lock-card" id="lockForm" autocomplete="on">
+    <div class="logo"><!--LOGO--></div>
+    <span class="eyebrow">Doar pentru echipă</span>
+    <h1>Ghidul echipei</h1>
+    <p>Rolurile, procesele și procedurile Madame Magnifique, pe magazine, laboratoare și B2B.</p>
+    <input type="text" name="username" value="echipa" autocomplete="username" hidden>
+    <input class="field" type="password" id="pw" name="password" placeholder="Parola echipei" autocomplete="current-password" required>
+    <button class="btn" type="submit" id="unlockBtn">Intră</button>
+    <label class="check"><input type="checkbox" id="remember" checked> Ține-mă minte pe acest dispozitiv</label>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+</div>
+
+<div id="app" class="hidden">
+  <header class="top">
+    <div class="wrap bar">
+      <a class="logo" href="#/" aria-label="Acasă"><!--LOGO--></a>
+      <div class="search-top" id="topSearchBox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="topSearch" placeholder="Caută: casă, torturi, HACCP…" aria-label="Caută în ghid">
+      </div>
+      <button class="icon-btn" id="menuBtn" aria-label="Meniu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <nav id="nav">
+        <a href="#/" data-nav="home">Spații</a>
+        <a href="#/roluri" data-nav="roluri">Roluri</a>
+        <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
+        <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
+      </nav>
+    </div>
+  </header>
+  <main id="view"></main>
+  <footer>
+    <div class="wrap">
+      <span class="logo"><!--LOGO--></span>
+      <span>Ghid intern · document confidențial · nu se distribuie în afara echipei</span>
+      <button id="logout" type="button">Ieși din cont</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+const PAYLOAD = /*PAYLOAD*/null;
+const LS_KEY = 'mm-echipa-parola';
+let D = null;
+
+// ---------- Decriptare ----------
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function decrypt(pw) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: b64(PAYLOAD.salt), iterations: PAYLOAD.iter, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(PAYLOAD.iv) }, key, b64(PAYLOAD.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+const store = {
+  get() { try { return localStorage.getItem(LS_KEY); } catch (e) { return null; } },
+  set(v) { try { localStorage.setItem(LS_KEY, v); } catch (e) {} },
+  clear() { try { localStorage.removeItem(LS_KEY); } catch (e) {} },
+};
+async function unlock(pw, remember) {
+  D = await decrypt(pw);
+  if (remember) store.set(pw);
+  prepare();
+  document.getElementById('lock').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  route();
+}
+document.getElementById('lockForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('unlockBtn'), err = document.getElementById('err');
+  btn.disabled = true; btn.textContent = 'Se deschide…'; err.textContent = '';
+  try { await unlock(document.getElementById('pw').value, document.getElementById('remember').checked); }
+  catch (x) { err.textContent = 'Parolă greșită. Cere-o responsabilului de locație.'; }
+  btn.disabled = false; btn.textContent = 'Intră';
+});
+document.getElementById('logout').addEventListener('click', () => { store.clear(); location.hash = ''; location.reload(); });
+(async () => {
+  if (!PAYLOAD) { document.getElementById('err').textContent = 'Pagina nu a fost construită încă (lipsește conținutul).'; return; }
+  const saved = store.get();
+  if (saved) { try { await unlock(saved, true); } catch (e) { store.clear(); } }
+})();
+
+// ---------- Utilitare ----------
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const enc = encodeURIComponent;
+const $ = s => document.querySelector(s);
+const ICON = {
+  chev: '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>',
+};
+let P, ROL, PROC, SP;
+function prepare() {
+  P = D.procese;
+  ROL = Object.fromEntries(D.roluri.map(r => [r.cod, r]));
+  PROC = Object.fromEntries(D.proceduri.map(p => [p.cod, p]));
+  SP = Object.fromEntries(D.spatii.map(s => [s.id, s]));
+  buildIndex();
+}
+const valPill = v => v ? `<span class="pill v${esc(v.replace(/\D/g, ''))}" title="Valul de implementare">${esc(v)}</span>` : '';
+const rolPill = r => r ? `<a class="pill" href="#/r/${enc(r)}" title="${esc(ROL[r]?.nume || r)}">${esc(r)}</a>` : '';
+const prioPill = p => p ? `<span class="pill ${p === 'Critică' ? 'crit' : ''}">${esc(p)}</span>` : '';
+const rolName = r => ROL[r]?.nume || r;
+const tasksOf = pc => D.taskuri.filter(t => t.p === pc);
+const procsOf = pc => D.proceduri.filter(p => p.p === pc);
+const abateriOf = loc => D.abateri.filter(a => a.loc === loc);
+function spaceAbateri(s) {
+  if (s.abateri) return abateriOf(s.abateri);
+  const out = [];
+  for (const [loc, zone] of Object.entries(s.abateri_filtru || {})) out.push(...abateriOf(loc).filter(a => zone.includes(a.zona)));
+  return out;
+}
+function spacesOfRole(cod) { return D.spatii.filter(s => (s.roluri || []).includes(cod)); }
+
+// ---------- Rutare ----------
+function parseHash() {
+  const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+  const [path, q] = h.split('?');
+  const params = Object.fromEntries(new URLSearchParams(q || ''));
+  return { parts: path.split('/').filter(Boolean), params };
+}
+window.addEventListener('hashchange', () => { if (D) route(); });
+function route() {
+  const { parts, params } = parseHash();
+  const [a, b] = parts;
+  let html, nav = 'home';
+  if (a === 's' && SP[b]) html = viewSpace(SP[b], params);
+  else if (a === 'p' && P[b]) html = viewProcess(P[b], params);
+  else if (a === 'pr' && PROC[b]) { html = viewProcedure(PROC[b]); nav = 'proceduri'; }
+  else if (a === 'r' && ROL[b]) { html = viewRole(ROL[b], params); nav = 'roluri'; }
+  else if (a === 'roluri') { html = viewRoles(); nav = 'roluri'; }
+  else if (a === 'proceduri') { html = viewProcedures(params); nav = 'proceduri'; }
+  else if (a === 'ghid') { html = viewGuide(); nav = 'ghid'; }
+  else html = viewHome();
+  $('#view').innerHTML = html;
+  document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === nav));
+  $('#nav').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded', 'false');
+  closeResults();
+  wireView();
+  if (!params.keep) window.scrollTo(0, 0);
+  const open = params.deschide && document.getElementById('proc-' + params.deschide);
+  if (open) { open.open = true; setTimeout(() => open.scrollIntoView({ block: 'start' }), 30); }
+}
+$('#menuBtn').addEventListener('click', () => {
+  const n = $('#nav'); n.classList.toggle('open');
+  $('#menuBtn').setAttribute('aria-expanded', n.classList.contains('open'));
+});
+
+// ---------- Acasă ----------
+function tile(s) {
+  const kind = { magazin: 'Magazin', productie: 'Laborator', b2b: 'Canal', birou: 'Suport' }[s.tip];
+  const prof = s.abateri && abateriOf(s.abateri).find(a => a.zona === 'Profil');
+  const desc = s.subtitlu || (prof ? prof.text : '');
+  return `<a class="tile ${s.tip === 'b2b' ? 'dark' : ''}" href="#/s/${s.id}">
+    <div><span class="eyebrow">${kind}</span><h3>${esc(s.tip === 'magazin' ? s.nume : s.titlu)}</h3><p>${esc(desc)}</p></div>
+    <span class="go">Intră →</span></a>`;
+}
+function viewHome() {
+  const g = t => D.spatii.filter(s => s.tip === t).map(tile).join('');
+  const roleChips = D.roluri.map(r => `<a class="chip" href="#/r/${enc(r.cod)}"><b>${esc(r.cod)}</b> ${esc(r.nume)}</a>`).join('');
+  return `
+  <section class="hero"><div class="wrap">
+    <span class="eyebrow">Ghidul echipei Madame Magnifique</span>
+    <h1>Ai o întrebare? Începe de aici.</h1>
+    <p>Tot ce facem, pe magazine, laboratoare și B2B: cine face, ce face, când și cum se verifică. Scrie ce cauți sau alege-ți locul de muncă.</p>
+    <div class="hero-search" id="heroSearchBox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="heroSearch" placeholder="Ex.: închiderea casei, recepție marfă, torturi la comandă" aria-label="Caută în ghid" autocomplete="off">
+    </div>
+    <div class="hint">Încearcă: <button data-q="deschidere">deschidere</button> <button data-q="temperaturi">temperaturi</button> <button data-q="produs nevândut">produs nevândut</button> <button data-q="candybar">candybar</button></div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Unde lucrezi?</span><h2>Alege-ți spațiul</h2></div></div>
+    <div class="group-label">Magazinele Madame</div>
+    <div class="grid">${g('magazin')}</div>
+    <div class="group-label">Producție</div>
+    <div class="grid">${g('productie')}</div>
+    <div class="group-label">B2B și birou</div>
+    <div class="grid">${g('b2b')}${g('birou')}</div>
+  </div></section>
+  <section class="block soft"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Ce rol ai?</span><h2>Fișa ta de lucru</h2></div><a class="btn ghost" href="#/roluri">Toate rolurile</a></div>
+    <div class="chips">${roleChips}</div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Pe scurt</span><h2>Firma în cifre</h2></div></div>
+    <div class="stats">
+      <div class="stat"><strong>${Object.keys(D.domenii).length}</strong><span>domenii de activitate</span></div>
+      <div class="stat"><strong>${Object.keys(P).length}</strong><span>procese</span></div>
+      <div class="stat"><strong>${Object.values(P).reduce((n, p) => n + p.sub.length, 0)}</strong><span>sub-procese</span></div>
+      <div class="stat"><strong>${D.taskuri.length}</strong><span>task-uri în retail</span></div>
+      <div class="stat"><strong>${D.proceduri.length}</strong><span>proceduri</span></div>
+      <div class="stat"><strong>${D.roluri.length}</strong><span>roluri</span></div>
+    </div>
+  </div></section>`;
+}
+
+// ---------- Proces (accordion) ----------
+function taskHtml(t, rol) {
+  const pr = PROC[t.proc];
+  return `<div class="task ${rol && t.rol === rol ? 'mine' : ''}">
+    <div class="t">${esc(t.t)}</div>
+    <div class="right">${rolPill(t.rol)}${t.proc ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr?.titlu || '')}">${esc(t.proc)}</a>` : ''}</div>
+    <div class="facts">
+      ${t.cand ? `<span>${ICON.cal}${esc(t.cand)}</span>` : ''}
+      ${t.min ? `<span>${ICON.clock}${esc(t.min)} min</span>` : ''}
+      ${t.verif ? `<span>${ICON.check}${esc(t.verif)}</span>` : ''}
+    </div></div>`;
+}
+function procRow(p) {
+  return `<a class="prow" href="#/pr/${enc(p.cod)}">
+    <span class="c">${esc(p.cod)}</span>
+    <span class="ti">${esc(p.titlu)}<small>Declanșator: ${esc(p.decl)}</small></span>
+    <span class="meta">${rolPill(p.rol)}${prioPill(p.prio)}${valPill(p.val)}</span></a>`;
+}
+function processBody(p, ctx) {
+  const rol = ctx.rol;
+  let tasks = tasksOf(p.cod), procs = procsOf(p.cod);
+  if (rol) { tasks = tasks.filter(t => t.rol === rol); procs = procs.filter(x => x.rol === rol); }
+  const local = (ctx.abateri || []).filter(a => a.zona.startsWith(p.cod + ' '));
+  let h = p.miza ? `<p class="miza">${esc(p.miza)}</p>` : '';
+  h += local.map(a => `<div class="local"><b>La ${esc(a.loc)}:</b> ${esc(a.text)}<span class="why">De ce: ${esc(a.dece)}</span></div>`).join('');
+  const hasL4 = tasksOf(p.cod).length > 0;
+  for (const s of p.sub) {
+    const num = s.split(' ')[0];
+    const ts = tasks.filter(t => t.sub.split(' ')[0] === num);
+    if (hasL4 && rol && !ts.length) continue;
+    h += `<div class="subp"><h4>${esc(s)}</h4>${ts.length ? `<div class="tasks">${ts.map(t => taskHtml(t, rol)).join('')}</div>` : ''}</div>`;
+  }
+  if (hasL4 && rol && !tasks.length) h += `<p class="lvl4">Rolul ${esc(rol)} nu are task-uri directe în acest proces.</p>`;
+  if (!hasL4) h += `<p class="lvl4">Task-urile detaliate (nivelul 4) pentru acest proces se construiesc după validarea pe teren. Responsabil: <b>${esc(rolName(p.rol))}</b>.</p>`;
+  if (procs.length) h += `<h4 style="margin:22px 0 4px;font-size:.95rem">Proceduri</h4><div class="proc-list">${procs.map(procRow).join('')}</div>`;
+  return h;
+}
+function processItem(p, ctx) {
+  const local = (ctx.abateri || []).some(a => a.zona.startsWith(p.cod + ' '));
+  return `<details class="proc" id="proc-${p.cod}">
+    <summary><span class="code">${esc(p.cod)}</span><span class="name">${esc(p.nume)}</span>
+      <span class="meta">${local ? '<span class="pill crit">Diferit aici</span>' : ''}${rolPill(p.rol)}${valPill(p.val)}${ICON.chev}</span></summary>
+    <div class="proc-body">${processBody(p, ctx)}</div></details>`;
+}
+function processVisible(p, rol) {
+  if (!rol) return true;
+  if (p.rol === rol || (ROL[rol]?.procese || []).includes(p.cod)) return true;
+  return tasksOf(p.cod).some(t => t.rol === rol) || procsOf(p.cod).some(x => x.rol === rol);
+}
+
+// ---------- Spațiu ----------
+function viewSpace(s, params) {
+  const rol = params.rol && ROL[params.rol] ? params.rol : '';
+  const ab = spaceAbateri(s);
+  const prof = ab.find(a => a.zona === 'Profil');
+  const diff = ab.filter(a => a.zona !== 'Profil');
+  const ctx = { rol, abateri: ab };
+  const kind = { magazin: 'Magazin', productie: 'Laborator de producție', b2b: 'Canal de vânzare', birou: 'Suport' }[s.tip];
+  const roleChips = [`<a class="chip ${rol ? '' : 'on'}" href="#/s/${s.id}?keep=1">Toate rolurile</a>`]
+    .concat((s.roluri || []).map(r => `<a class="chip ${rol === r ? 'on' : ''}" href="#/s/${s.id}?rol=${enc(r)}&keep=1" title="${esc(rolName(r))}"><b>${esc(r)}</b> ${esc(rolName(r))}</a>`)).join('');
+
+  let body = '';
+  if (s.tip === 'birou') {
+    for (const dc of s.domenii) {
+      const d = D.domenii[dc];
+      const list = d.procese.map(c => P[c]).filter(p => processVisible(p, rol));
+      if (!list.length) continue;
+      body += `<div class="dom-head"><span class="eyebrow">${esc(dc)}</span><h3>${esc(d.nume)}</h3><p>${esc(d.miza)}</p></div>` + list.map(p => processItem(p, ctx)).join('');
+    }
+  } else if (s.specifice) {
+    const spec = s.procese.filter(c => s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol));
+    const rest = s.procese.filter(c => !s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol));
+    const label = s.tip === 'b2b' ? ['Procesele B2B', 'Legătura cu magazinele'] : ['Specific acestui laborator', 'Comun întregii producții'];
+    if (spec.length) body += `<div class="dom-head"><h3>${label[0]}</h3></div>` + spec.map(p => processItem(p, ctx)).join('');
+    if (rest.length) body += `<div class="dom-head"><h3>${label[1]}</h3></div>` + rest.map(p => processItem(p, ctx)).join('');
+  } else {
+    body = s.procese.map(c => P[c]).filter(p => processVisible(p, rol)).map(p => processItem(p, ctx)).join('');
+    body = `<div class="dom-head"><h3>Standardul de rețea, cu particularitățile de aici</h3><p>Procesele marcate „Diferit aici” au reguli proprii în acest magazin.</p></div>` + body;
+  }
+  if (!body) body = `<p class="lvl4">Rolul ${esc(rol)} nu are procese în acest spațiu.</p>`;
+
+  let roleExtra = '';
+  if (rol === 'PP + B') roleExtra = `<div class="local"><b>${esc(rolName(rol))}:</b> ${esc(ROL[rol].raspunde)}. Lucrezi mai ales în zona de coacere și umplere (P03 Expunere) și la mic dejun / prânz (P06 Lunch, sandwich & to-go).</div>`;
+
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/">Spații</a> / ${esc(s.titlu)}</div>
+    <span class="eyebrow">${kind}</span>
+    <h1>${esc(s.titlu)}</h1>
+    ${s.subtitlu ? `<p class="sub">${esc(s.subtitlu)}</p>` : ''}
+    ${prof ? `<div class="profile"><p>${esc(prof.text)}</p><p class="why">${esc(prof.dece)}</p></div>` : ''}
+  </div></section>
+  ${(diff.length || s.note.length) ? `<section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Particularități</span><h2>Ce e diferit aici</h2></div></div>
+    <div class="cards">
+      ${diff.map(a => {
+        const pc = (a.zona.match(/^P\d\d/) || [])[0];
+        const tag = pc ? `<a class="tag" href="#/s/${s.id}?deschide=${pc}">${esc(a.zona)}</a>` : `<span class="tag">${esc(a.zona)}</span>`;
+        return `<div class="card">${tag}<p>${esc(a.text)}</p><p class="why">De ce: ${esc(a.dece)}</p></div>`;
+      }).join('')}
+      ${s.note.map(n => `<div class="card note"><h3>${esc(n.titlu)}</h3><p>${esc(n.text)}</p></div>`).join('')}
+    </div></div></section>` : ''}
+  <div class="filterbar"><div class="wrap"><span class="lbl">Arată pentru:</span><div class="chips">${roleChips}</div></div></div>
+  <section class="block"><div class="wrap">
+    ${roleExtra}
+    ${body}
+    <div class="dom-head" style="margin-top:48px"><span class="eyebrow">Cine lucrează aici</span><h3>Rolurile din ${esc(s.tip === 'magazin' ? 'magazin' : 'acest spațiu')}</h3></div>
+    <div class="role-grid">${(s.roluri || []).map(r => roleCard(ROL[r])).join('')}</div>
+  </div></section>`;
+}
+
+// ---------- Proces (pagină proprie, din căutare) ----------
+function viewProcess(p) {
+  const d = D.domenii[p.domeniu];
+  const where = D.spatii.filter(s => (s.procese || []).includes(p.cod) || (s.domenii || []).includes(p.domeniu));
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/">Spații</a> / ${esc(d.nume)} / ${esc(p.cod)}</div>
+    <span class="eyebrow">${esc(p.cod)} · ${esc(d.nume)}</span>
+    <h1>${esc(p.nume)}</h1>
+    <p class="sub" style="margin-top:12px">Responsabil: ${rolPill(p.rol)} ${esc(rolName(p.rol))} &nbsp; ${valPill(p.val)}</p>
+  </div></section>
+  <section class="block"><div class="wrap">
+    ${where.length ? `<p style="margin:0 0 20px">Vezi-l cu particularitățile locului tău: ${where.map(s => `<a class="chip" href="#/s/${s.id}?deschide=${p.cod}">${esc(s.titlu)}</a>`).join(' ')}</p>` : ''}
+    <div class="card" style="padding:clamp(18px,3vw,28px)">${processBody(p, {})}</div>
+  </div></section>`;
+}
+
+// ---------- Procedură ----------
+function viewProcedure(p) {
+  const pr = P[p.p];
+  const tasks = D.taskuri.filter(t => t.proc === p.cod);
+  const chainNext = D.proceduri.filter(x => x.decl.includes(p.cod));
+  const prevCode = (p.decl.match(/PR-\d\d\.\d+/) || [])[0];
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/proceduri">Proceduri</a> / ${esc(p.cod)}</div>
+    <span class="eyebrow">Procedura ${esc(p.cod)}</span>
+    <h1>${esc(p.titlu)}</h1>
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">
+    <div class="facts-grid">
+      <div><span class="eyebrow">Cine o face</span><strong>${rolPill(p.rol)} ${esc(rolName(p.rol))}</strong></div>
+      <div><span class="eyebrow">Când începe</span><strong>${esc(p.decl)}</strong></div>
+      <div><span class="eyebrow">Tip declanșator</span><strong>${esc(p.tip)}</strong></div>
+      <div><span class="eyebrow">Prioritate</span><strong>${prioPill(p.prio)}</strong></div>
+      <div><span class="eyebrow">Val</span><strong>${valPill(p.val)}</strong></div>
+      <div><span class="eyebrow">Număr de pași</span><strong>${esc(p.pasi)}</strong></div>
+    </div>
+    <p>Face parte din procesul <a href="#/p/${enc(p.p)}"><b>${esc(p.p)} · ${esc(pr?.nume || '')}</b></a>. Deschide-l în magazinul tău:
+      ${D.spatii.filter(s => s.tip === 'magazin' && s.procese.includes(p.p)).map(s => `<a class="chip" href="#/s/${s.id}?deschide=${p.p}">${esc(s.nume)}</a>`).join(' ')}</p>
+    ${prevCode && PROC[prevCode] ? `<h3 class="section-title" style="margin-top:32px">Vine după</h3><div class="proc-list">${procRow(PROC[prevCode])}</div>` : ''}
+    ${chainNext.length ? `<h3 class="section-title" style="margin-top:32px">Urmează</h3><div class="proc-list">${chainNext.map(procRow).join('')}</div>` : ''}
+    ${tasks.length ? `<h3 class="section-title" style="margin-top:32px">Task-urile acoperite</h3><div class="tasks">${tasks.map(t => taskHtml(t)).join('')}</div>` : ''}
+    <div class="std" style="margin-top:32px"><span class="eyebrow">Standardul de procedură</span>
+      <ul><li>Maximum 10 pași; un singur rol o execută de la început până la final.</li><li>Pornește la un declanșator explicit: o oră, un eveniment sau finalul altei proceduri.</li><li>Procedura spune CE pași faci. Cum îi faci se învață la training, cu responsabilul de locație.</li></ul></div>
+  </div></section>`;
+}
+
+function viewProcedures(params) {
+  const f = { rol: params.rol || '', p: params.p || '', prio: params.prio || '' };
+  const list = D.proceduri.filter(x => (!f.rol || x.rol === f.rol) && (!f.p || x.p === f.p) && (!f.prio || x.prio === f.prio));
+  const opt = (arr, cur, lbl) => `<option value="">${lbl}</option>` + arr.map(([v, t]) => `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(t)}</option>`).join('');
+  const roles = [...new Set(D.proceduri.map(x => x.rol))].map(r => [r, `${r} · ${rolName(r)}`]);
+  const procs = [...new Set(D.proceduri.map(x => x.p))].map(c => [c, `${c} · ${P[c]?.nume || ''}`]);
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Registrul procedurilor · retail</span>
+    <h1>Proceduri</h1>
+    <p class="sub">${D.proceduri.length} proceduri, valabile în toate cele trei magazine. Filtrează după rolul tău sau după proces.</p>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="selects">
+      <select data-f="rol" aria-label="Rol">${opt(roles, f.rol, 'Toate rolurile')}</select>
+      <select data-f="p" aria-label="Proces">${opt(procs, f.p, 'Toate procesele')}</select>
+      <select data-f="prio" aria-label="Prioritate">${opt([['Critică', 'Critică'], ['Înaltă', 'Înaltă'], ['Medie', 'Medie']], f.prio, 'Orice prioritate')}</select>
+    </div>
+    <p class="lbl" style="color:var(--muted);font-size:.9rem">${list.length} rezultate</p>
+    <div class="proc-list">${list.map(procRow).join('')}</div>
+  </div></section>`;
+}
+
+// ---------- Roluri ----------
+function roleCard(r) {
+  if (!r) return '';
+  return `<a class="role-card" href="#/r/${enc(r.cod)}"><span class="rc">${esc(r.cod)}</span><h3>${esc(r.nume)}</h3><p>${esc(r.raspunde)}</p></a>`;
+}
+function viewRoles() {
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Cine ce face</span><h1>Rolurile din firmă</h1>
+    <p class="sub">Fiecare procedură are un singur rol care o execută. Alege-ți rolul ca să vezi fișa ta de lucru.</p>
+  </div></section>
+  <section class="block"><div class="wrap"><div class="role-grid">${D.roluri.map(roleCard).join('')}</div></div></section>`;
+}
+function viewRole(r) {
+  const tasks = D.taskuri.filter(t => t.rol === r.cod);
+  const procs = D.proceduri.filter(p => p.rol === r.cod);
+  const lead = Object.values(P).filter(p => p.rol === r.cod).map(p => p.cod);
+  const all = [...new Set([...r.procese, ...lead])].filter(c => P[c]).sort();
+  const where = spacesOfRole(r.cod);
+  const byProc = {};
+  tasks.forEach(t => (byProc[t.p] = byProc[t.p] || []).push(t));
+  const minutes = tasks.filter(t => /zilnic/i.test(t.cand)).reduce((n, t) => n + (parseFloat(t.min) || 0), 0);
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/roluri">Roluri</a> / ${esc(r.cod)}</div>
+    <span class="eyebrow">Fișa de lucru · ${esc(r.cod)}</span>
+    <h1>${esc(r.nume)}</h1>
+    <div class="profile"><p>${esc(r.raspunde)}</p></div>
+    ${where.length ? `<p style="margin:20px 0 0">Unde lucrezi: ${where.map(s => `<a class="chip" href="#/s/${s.id}?rol=${enc(r.cod)}">${esc(s.titlu)}</a>`).join(' ')}</p>` : ''}
+  </div></section>
+  <section class="block"><div class="wrap">
+    ${tasks.length ? `<div class="stats" style="margin-bottom:36px">
+      <div class="stat"><strong>${tasks.length}</strong><span>task-uri în retail</span></div>
+      <div class="stat"><strong>${procs.length}</strong><span>proceduri pe care le execuți</span></div>
+      <div class="stat"><strong>${Math.round(minutes)}</strong><span>minute de task-uri zilnice (estimat)</span></div>
+    </div>` : ''}
+    ${all.length ? `<h2 class="section-title">Procesele tale</h2>
+      <div class="proc-list" style="margin-bottom:40px">${all.map(c => `<a class="prow" href="#/p/${c}"><span class="c">${c}</span><span class="ti">${esc(P[c].nume)}<small>${esc(D.domenii[P[c].domeniu].nume)}${P[c].rol === r.cod ? ' · tu ești responsabil' : ''}</small></span><span class="meta">${valPill(P[c].val)}</span></a>`).join('')}</div>` : ''}
+    ${r.cod === 'PP + B' ? `<div class="local"><b>Unde intervii:</b> în zona de coacere și umplere patiserie din magazine (P03 Expunere) și la mic dejun / prânz (P06 Lunch, sandwich & to-go). Task-urile detaliate pentru acest rol se adaugă după validarea pe teren.</div>` : ''}
+    ${tasks.length ? `<h2 class="section-title">Ce faci, pas cu pas</h2>` + Object.entries(byProc).map(([pc, ts]) => `<div class="subp"><h4><span class="pill">${esc(pc)}</span> ${esc(P[pc]?.nume || '')}</h4><div class="tasks">${ts.map(t => taskHtml(t)).join('')}</div></div>`).join('') : ''}
+    ${procs.length ? `<h2 class="section-title" style="margin-top:40px">Procedurile tale</h2><div class="proc-list">${procs.map(procRow).join('')}</div>` : ''}
+  </div></section>`;
+}
+
+// ---------- Ghid ----------
+function viewGuide() {
+  const dom = Object.values(D.domenii).map(d => `<tr><td><b>${esc(d.cod)}</b></td><td>${esc(d.nume)}</td><td>${d.procese.length}</td><td style="color:var(--muted);font-style:italic">${esc(d.miza)}</td></tr>`).join('');
+  const hide = /ipoteze|foile/i;
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Cum se citește ghidul</span><h1>Cum funcționează</h1>
+    <p class="sub">Madame Magnifique · AVVA SRL</p>
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">
+    ${D.legenda.filter(s => !hide.test(s.titlu)).map(s => `<div style="margin-bottom:32px"><span class="eyebrow">${esc(s.titlu)}</span><ul class="simple-list" style="margin-top:10px">${s.linii.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}
+    <span class="eyebrow">Cele 7 domenii</span>
+    <div class="tbl-wrap" style="margin-top:10px"><table class="tbl"><thead><tr><th>Cod</th><th>Domeniu</th><th>Procese</th><th>Miza</th></tr></thead><tbody>${dom}</tbody></table></div>
+    <div class="std" style="margin-top:32px"><span class="eyebrow">Nu găsești răspunsul?</span>
+      <p style="margin:8px 0 0">Întreabă responsabilul de locație (RL) sau vânzătorul de tură (VT). Dacă o situație se repetă și nu e acoperită aici, spune-le: așa se scrie următoarea procedură.</p></div>
+  </div></section>`;
+}
+
+// ---------- Căutare ----------
+let INDEX = [];
+function buildIndex() {
+  const add = (grp, title, sub, href, extra = '') => INDEX.push({ grp, title, sub, href, k: norm(title + ' ' + sub + ' ' + extra) });
+  INDEX = [];
+  D.spatii.forEach(s => add('Spații', s.titlu, s.subtitlu || '', `#/s/${s.id}`));
+  D.roluri.forEach(r => add('Roluri', `${r.cod} · ${r.nume}`, r.raspunde, `#/r/${enc(r.cod)}`));
+  Object.values(P).forEach(p => add('Procese', `${p.cod} · ${p.nume}`, D.domenii[p.domeniu].nume, `#/p/${p.cod}`, p.sub.join(' ') + ' ' + p.miza));
+  D.proceduri.forEach(p => add('Proceduri', `${p.cod} · ${p.titlu}`, `${p.rol} · ${p.decl}`, `#/pr/${enc(p.cod)}`));
+  D.taskuri.forEach(t => add('Task-uri', t.t, `${t.p} · ${t.rol} · ${t.cand}`, `#/p/${t.p}`, t.verif + ' ' + t.sub));
+  D.abateri.forEach(a => {
+    const s = D.spatii.find(x => x.abateri === a.loc);
+    add('Particularități pe locații', `${a.loc}: ${a.text}`, a.zona, s ? `#/s/${s.id}` : '#/', a.dece);
+  });
+}
+function search(q) {
+  const terms = norm(q).split(/\s+/).filter(t => t.length > 1);
+  if (!terms.length) return null;
+  const hits = INDEX.map(it => {
+    let sc = 0;
+    for (const t of terms) { const i = it.k.indexOf(t); if (i < 0) return null; sc += i < 60 ? 3 : 1; if (norm(it.title).includes(t)) sc += 4; }
+    return { it, sc };
+  }).filter(Boolean).sort((a, b) => b.sc - a.sc);
+  const groups = {};
+  hits.forEach(h => { (groups[h.it.grp] = groups[h.it.grp] || []).length < 6 && groups[h.it.grp].push(h.it); });
+  return { groups, terms };
+}
+function highlight(text, terms) {
+  let out = esc(text);
+  const n = norm(text);
+  const ranges = [];
+  terms.forEach(t => { let i = n.indexOf(t); if (i >= 0) ranges.push([i, i + t.length]); });
+  if (!ranges.length) return out;
+  ranges.sort((a, b) => b[0] - a[0]);
+  let s = text;
+  ranges.forEach(([a, b]) => { s = s.slice(0, a) + '\u0001' + s.slice(a, b) + '\u0002' + s.slice(b); });
+  return esc(s).replace(/\u0001/g, '<mark>').replace(/\u0002/g, '</mark>');
+}
+const ORDER = ['Spații', 'Roluri', 'Procese', 'Proceduri', 'Task-uri', 'Particularități pe locații'];
+let activeBox = null, sel = -1;
+function renderResults(box, q) {
+  closeResults();
+  const r = search(q);
+  if (!r) return;
+  const el = document.createElement('div');
+  el.id = 'results'; el.setAttribute('role', 'listbox');
+  const gs = ORDER.filter(g => r.groups[g]);
+  el.innerHTML = gs.length ? gs.map(g => `<div class="res-group"><span class="eyebrow">${g}</span>${r.groups[g].map(it => `<a class="res" href="${it.href}">${highlight(it.title, r.terms)}<small>${esc(it.sub)}</small></a>`).join('')}</div>`).join('')
+    : `<div class="res-empty">Nimic găsit pentru „${esc(q)}”. Încearcă alt cuvânt sau întreabă responsabilul de locație.</div>`;
+  box.appendChild(el); activeBox = box; sel = -1;
+}
+function closeResults() { const r = document.getElementById('results'); if (r) r.remove(); activeBox = null; }
+function wireSearch(input, box) {
+  input.addEventListener('input', () => renderResults(box, input.value));
+  input.addEventListener('focus', () => input.value && renderResults(box, input.value));
+  input.addEventListener('keydown', e => {
+    const items = [...box.querySelectorAll('.res')];
+    if (e.key === 'Escape') { closeResults(); input.blur(); }
+    else if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && items.length) {
+      e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      items.forEach((x, i) => x.classList.toggle('sel', i === sel)); items[sel].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter' && items.length) { e.preventDefault(); location.hash = (items[sel] || items[0]).getAttribute('href'); input.value = ''; input.blur(); }
+  });
+}
+wireSearch($('#topSearch'), $('#topSearchBox'));
+document.addEventListener('click', e => { if (activeBox && !activeBox.contains(e.target)) closeResults(); if (e.target.closest('.res')) { $('#topSearch').value = ''; } });
+document.addEventListener('keydown', e => { if (e.key === '/' && !/input|select|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); ($('#heroSearch') || $('#topSearch')).focus(); } });
+
+function wireView() {
+  const hs = $('#heroSearch');
+  if (hs) {
+    wireSearch(hs, $('#heroSearchBox'));
+    document.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { hs.value = b.dataset.q; hs.focus(); renderResults($('#heroSearchBox'), hs.value); }));
+  }
+  document.querySelectorAll('select[data-f]').forEach(s => s.addEventListener('change', () => {
+    const q = new URLSearchParams();
+    document.querySelectorAll('select[data-f]').forEach(x => x.value && q.set(x.dataset.f, x.value));
+    q.set('keep', '1');
+    location.hash = '#/proceduri?' + q.toString();
+  }));
+}
+</script>
+</body>
+</html>
