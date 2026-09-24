@@ -140,6 +140,19 @@
   .card p { margin: 0; font-size: .94rem; }
   .card .why { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: .86rem; }
   .card.note { background: var(--bg-soft); border-color: transparent; }
+  .fisa { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .fisa .card h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .93rem; align-items: baseline; }
+  .kv:last-child { border-bottom: 0; }
+  .kv .k { color: var(--ink-soft); }
+  .kv .k small { display: block; color: var(--muted); font-size: .8rem; margin-top: 4px; }
+  .kv .v { color: var(--ink); text-align: right; font-weight: 400; }
+  .kv .v a { text-decoration: none; border-bottom: 1px solid var(--stone); }
+  .kv-head { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 18px 0 2px; }
+  .todo { display: inline-block; font-size: .78rem; color: #7a6a45; border: 1px dashed var(--gold); background: #fdf8ee; padding: 2px 8px; white-space: nowrap; }
+  .todo-count { font-size: .85rem; color: #7a6a45; }
+  .fisa-note { font-size: .82rem; color: var(--muted); margin: 12px 0 0; font-style: italic; }
+  @media (max-width: 640px) { .kv { grid-template-columns: 1fr; } .kv .v { text-align: left; } }
 
   .filterbar { position: sticky; top: 76px; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); padding: 12px 0; }
   .filterbar .wrap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
@@ -518,6 +531,37 @@ function processVisible(p, rol) {
   return tasksOf(p.cod).some(t => t.rol === rol) || procsOf(p.cod).some(x => x.rol === rol);
 }
 
+// ---------- Fișa spațiului ----------
+const TODO = '<span class="todo">de completat</span>';
+const val = v => v ? esc(v) : TODO;
+function fisaTodos(f) {
+  if (!f) return 0;
+  let n = 0;
+  [...(f.program || []), ...(f.livrari || [])].forEach(([, v]) => { if (!v) n++; });
+  (f.contacte || []).forEach(c => { if (!c.nume) n++; if (!c.telefon) n++; });
+  (f.echipamente || []).forEach(e => { if (!e.raportezi) n++; });
+  return n;
+}
+function fisaHtml(s) {
+  const f = s.fisa;
+  if (!f) return '';
+  const kv = ([k, v]) => `<div class="kv"><span class="k">${esc(k)}</span><span class="v">${val(v)}</span></div>`;
+  const prog = (f.program || []).length || (f.livrari || []).length ? `<div class="card"><h3>Program și livrări</h3>
+      ${(f.program || []).map(kv).join('')}
+      ${(f.livrari || []).length ? `<div class="kv-head">Livrări</div>${f.livrari.map(kv).join('')}` : ''}</div>` : '';
+  const cont = (f.contacte || []).length ? `<div class="card"><h3>Contacte și responsabili</h3>
+      ${f.contacte.map(c => `<div class="kv"><span class="k">${c.rol ? rolPill(c.rol) + ' ' : ''}${esc(c.functie)}<small>${c.nume ? esc(c.nume) : '<span class="todo">nume de completat</span>'}</small></span>
+        <span class="v">${c.telefon ? `<a href="tel:${esc(c.telefon.replace(/\s/g, ''))}">${esc(c.telefon)}</a>` : '<span class="todo">telefon de completat</span>'}</span></div>`).join('')}</div>` : '';
+  const ech = (f.echipamente || []).length ? `<div class="card"><h3>Echipamente</h3>
+      <div class="kv" style="padding-top:0"><span class="k"><small>Echipament</small></span><span class="v"><small style="color:var(--muted);font-size:.8rem">Defecțiune? Anunți</small></span></div>
+      ${f.echipamente.map(e => `<div class="kv"><span class="k">${esc(e.nume)}</span><span class="v">${val(e.raportezi)}</span></div>`).join('')}
+      ${f.nota_echipamente ? `<p class="fisa-note">${esc(f.nota_echipamente)}</p>` : ''}</div>` : '';
+  const n = fisaTodos(f);
+  return `<section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Fișa spațiului</span><h2>Program, contacte, echipamente</h2></div>${n ? `<span class="todo-count">${n} câmpuri de completat</span>` : ''}</div>
+    <div class="fisa">${prog}${cont}${ech}</div></div></section>`;
+}
+
 // ---------- Spațiu ----------
 function viewSpace(s, params) {
   const rol = params.rol && ROL[params.rol] ? params.rol : '';
@@ -560,7 +604,8 @@ function viewSpace(s, params) {
     ${s.subtitlu ? `<p class="sub">${esc(s.subtitlu)}</p>` : ''}
     ${prof ? `<div class="profile"><p>${esc(prof.text)}</p><p class="why">${esc(prof.dece)}</p></div>` : ''}
   </div></section>
-  ${(diff.length || s.note.length) ? `<section class="block"><div class="wrap">
+  ${fisaHtml(s)}
+  ${(diff.length || s.note.length) ? `<section class="block soft"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Particularități</span><h2>Ce e diferit aici</h2></div></div>
     <div class="cards">
       ${diff.map(a => {
@@ -722,6 +767,11 @@ function buildIndex() {
   Object.values(P).forEach(p => add('Procese', `${p.cod} · ${p.nume}`, D.domenii[p.domeniu].nume, `#/p/${p.cod}`, p.sub.join(' ') + ' ' + p.miza));
   D.proceduri.forEach(p => add('Proceduri', `${p.cod} · ${p.titlu}`, `${p.rol} · ${p.decl}`, `#/pr/${enc(p.cod)}`));
   D.taskuri.forEach(t => add('Task-uri', t.t, `${t.p} · ${t.rol} · ${t.cand}`, `#/p/${t.p}`, t.verif + ' ' + t.sub));
+  D.spatii.forEach(s => {
+    const f = s.fisa || {};
+    (f.contacte || []).filter(c => c.nume || c.telefon).forEach(c => add('Contacte', `${c.nume || c.functie}${c.telefon ? ' · ' + c.telefon : ''}`, `${c.functie} · ${s.titlu}`, `#/s/${s.id}`));
+    (f.echipamente || []).forEach(e => add('Echipamente', e.nume, `${s.titlu}${e.raportezi ? ' · defecțiune: ' + e.raportezi : ''}`, `#/s/${s.id}`, 'defect defectiune echipament'));
+  });
   D.abateri.forEach(a => {
     const s = D.spatii.find(x => x.abateri === a.loc);
     add('Particularități pe locații', `${a.loc}: ${a.text}`, a.zona, s ? `#/s/${s.id}` : '#/', a.dece);
@@ -750,7 +800,7 @@ function highlight(text, terms) {
   ranges.forEach(([a, b]) => { s = s.slice(0, a) + '\u0001' + s.slice(a, b) + '\u0002' + s.slice(b); });
   return esc(s).replace(/\u0001/g, '<mark>').replace(/\u0002/g, '</mark>');
 }
-const ORDER = ['Spații', 'Roluri', 'Procese', 'Proceduri', 'Task-uri', 'Particularități pe locații'];
+const ORDER = ['Spații', 'Contacte', 'Roluri', 'Procese', 'Proceduri', 'Task-uri', 'Echipamente', 'Particularități pe locații'];
 let activeBox = null, sel = -1;
 function renderResults(box, q) {
   closeResults();

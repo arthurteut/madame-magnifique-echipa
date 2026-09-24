@@ -32,10 +32,63 @@ ITERATII = 310_000
 RETAIL = [f"P{n:02d}" for n in range(1, 15)]
 PRODUCTIE_COMUN = ["P15", "P16", "P17", "P22", "P23", "P24"]
 
+# ---------------------------------------------------------------------------
+# Fișa fiecărui spațiu: program, livrări, contacte, echipamente.
+# Un câmp lăsat "" apare în ghid ca „de completat”.
+# ---------------------------------------------------------------------------
+def contact(rol, functie, nume="", telefon=""):
+    return {"rol": rol, "functie": functie, "nume": nume, "telefon": telefon}
+
+
+def echipament(nume, raportezi=""):
+    return {"nume": nume, "raportezi": raportezi}
+
+
+def fisa_magazin(coacere):
+    return {
+        "program": [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
+        "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", ""],
+                    ["Cofetărie și creme (Laborator Fructus)", ""]],
+        "contacte": [
+            contact("RL", "Responsabil locație"),
+            contact("VT", "Vânzător de tură (senior)"),
+            contact("DP", "Coordonator producție (comenzi, lipsuri de marfă)"),
+            contact("CB2B", "Comenzi B2B, torturi și candybar", "Nicoleta"),
+            contact("", "Mentenanță și defecțiuni"),
+        ],
+        "echipamente": [
+            echipament("Espressor și râșniță"),
+            echipament("Vitrine și frigidere"),
+            echipament("Cuptor de regenerare"),
+            *([echipament("Cuptor și zona de coacere / umplere patiserie")] if coacere else []),
+            echipament("Casă de marcat (POS), imprimantă bon, POS bancar"),
+            echipament("Climatizare"),
+            echipament("Alarmă și camere"),
+        ],
+    }
+
+
+def fisa_laborator(sefi_sectie, echipamente):
+    return {
+        "program": [["Schimburi de producție", ""], ["Recepție materii prime", ""]],
+        "livrari": [["Plecare către Porumbescu", ""], ["Plecare către Dumbrăvița", ""],
+                    ["Plecare către Fructus", ""], ["Livrări B2B și evenimente", ""]],
+        "contacte": [
+            contact("DP", "Coordonator producție"),
+            *[contact("SP", f) for f in sefi_sectie],
+            contact("GD", "Gestionar depozit și expediție"),
+            contact("LOG", "Logistică și distribuție"),
+            contact("", "Mentenanță și defecțiuni"),
+        ],
+        "echipamente": [echipament(e) for e in echipamente],
+        "nota_echipamente": "Listă orientativă, după procesele laboratorului. De confirmat pe teren.",
+    }
+
 SPATII = [
     {
         "id": "porumbescu", "tip": "magazin", "nume": "Porumbescu",
         "titlu": "Magazinul Porumbescu",
+        "fisa": fisa_magazin(coacere=True),
         "abateri": "Porumbescu",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -47,6 +100,7 @@ SPATII = [
     {
         "id": "dumbravita", "tip": "magazin", "nume": "Dumbrăvița",
         "titlu": "Magazinul Dumbrăvița",
+        "fisa": fisa_magazin(coacere=True),
         "abateri": "Dumbrăvița",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -58,6 +112,7 @@ SPATII = [
     {
         "id": "fructus", "tip": "magazin", "nume": "Fructus",
         "titlu": "Magazinul Fructus",
+        "fisa": fisa_magazin(coacere=False),
         "abateri": "Fructus",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -69,6 +124,10 @@ SPATII = [
     {
         "id": "peciu-nou", "tip": "productie", "nume": "Peciu Nou",
         "titlu": "Laboratorul Peciu Nou",
+        "fisa": fisa_laborator(
+            ["Brutar-șef", "Patiser-șef"],
+            ["Cuptoare de pâine", "Malaxoare (frământare)", "Camera de dospire",
+             "Laminor (patiserie)", "Frigidere și congelatoare", "Cântare"]),
         "subtitlu": "Brutărie și patiserie",
         "procese": ["P18", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P18", "P19"],
@@ -83,6 +142,11 @@ SPATII = [
     {
         "id": "laborator-fructus", "tip": "productie", "nume": "Fructus",
         "titlu": "Laboratorul Fructus",
+        "fisa": fisa_laborator(
+            ["Cofetar-șef", "Patiser-șef"],
+            ["Cuptoare de patiserie și blaturi", "Mixere (creme, blaturi)",
+             "Echipamente Roboq (creme și dulcețuri)", "Frigidere și congelatoare",
+             "Cântare"]),
         "subtitlu": "Cofetărie, creme și dulcețuri",
         "procese": ["P20", "P21", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P20", "P21", "P19"],
@@ -98,6 +162,18 @@ SPATII = [
     {
         "id": "b2b", "tip": "b2b", "nume": "B2B",
         "titlu": "B2B, evenimente și candybar",
+        "fisa": {
+            "program": [["Program birou B2B", ""], ["Termen de răspuns la o cerere de ofertă", ""]],
+            "livrari": [["Livrări B2B recurente", ""], ["Setup evenimente și candybar", ""]],
+            "contacte": [
+                contact("CB2B", "Coordonator B2B și evenimente", "Nicoleta"),
+                contact("DP", "Coordonator producție"),
+                contact("LOG", "Logistică și distribuție"),
+                contact("RL", "Responsabil locație Fructus (spațiul demo)"),
+            ],
+            "echipamente": [echipament("Materiale și recuzită candybar"),
+                            echipament("Spațiul demo de la Fructus")],
+        },
         "procese": ["P25", "P26", "P27", "P28", "P29", "P30", "P08", "P07"],
         "specifice": ["P25", "P26", "P27", "P28", "P29", "P30"],
         "roluri": ["CB2B", "RL", "VT", "DP", "LOG"],
@@ -112,6 +188,17 @@ SPATII = [
     {
         "id": "birou", "tip": "birou", "nume": "Birou central",
         "titlu": "Birou central",
+        "fisa": {
+            "program": [["Program birou", ""]],
+            "livrari": [],
+            "contacte": [
+                contact("GM", "Conducere / Board", "Ana Madame"),
+                contact("ADM", "Administrativ / Contabilitate internă"),
+                contact("EC", "Expert contabil"),
+                contact("MKT", "Marketing și comunicare"),
+            ],
+            "echipamente": [],
+        },
         "subtitlu": "Aprovizionare, marketing, financiar, oameni",
         "domenii": ["D4", "D5", "D6", "D7"],
         "roluri": ["GM", "ADM", "EC", "MKT", "GD", "LOG"],
