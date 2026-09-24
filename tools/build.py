@@ -44,9 +44,9 @@ def echipament(nume, raportezi=""):
     return {"nume": nume, "raportezi": raportezi}
 
 
-def fisa_magazin(coacere):
+def fisa_magazin(coacere, program=None):
     return {
-        "program": [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
+        "program": program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
         "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", ""],
                     ["Cofetărie și creme (Laborator Fructus)", ""]],
         "contacte": [
@@ -88,7 +88,11 @@ SPATII = [
     {
         "id": "porumbescu", "tip": "magazin", "nume": "Porumbescu",
         "titlu": "Magazinul Porumbescu",
-        "fisa": fisa_magazin(coacere=True),
+        "fisa": fisa_magazin(coacere=True, program=[
+            ["Luni – Vineri", "08:00 – 19:30"],
+            ["Sâmbătă", "09:00 – 16:00"],
+            ["Duminică", "Închis"],
+        ]),
         "abateri": "Porumbescu",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
