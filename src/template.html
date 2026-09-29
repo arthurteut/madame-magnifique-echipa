@@ -188,6 +188,8 @@
   .tasks { display: grid; gap: 8px; }
   .task { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 12px 14px; background: var(--bg-soft); border-left: 3px solid var(--greige); }
   .task.mine { border-left-color: var(--ink); }
+  .task.adj { border-left-color: var(--gold); background: #fdf8ee; }
+  .std-note { flex-basis: 100%; font-size: .8rem; color: #7a6a45; }
   .task .t { color: var(--ink); font-weight: 400; }
   .task .facts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .84rem; color: var(--muted); }
   .task .facts span { display: inline-flex; gap: 5px; align-items: center; }
@@ -400,10 +402,12 @@ function spacesOfRole(cod) { return D.spatii.filter(s => (s.roluri || []).includ
 
 // ---------- Rutare ----------
 function parseHash() {
-  const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
-  const [path, q] = h.split('?');
-  const params = Object.fromEntries(new URLSearchParams(q || ''));
-  return { parts: path.split('/').filter(Boolean), params };
+  const h = location.hash.replace(/^#\/?/, '');
+  const i = h.indexOf('?');
+  const path = i < 0 ? h : h.slice(0, i), q = i < 0 ? '' : h.slice(i + 1);
+  const params = Object.fromEntries(new URLSearchParams(q));
+  const dec = x => { try { return decodeURIComponent(x); } catch (e) { return x; } };
+  return { parts: path.split('/').filter(Boolean).map(dec), params };
 }
 window.addEventListener('hashchange', () => { if (D) route(); });
 function route() {
@@ -482,15 +486,23 @@ function viewHome() {
 }
 
 // ---------- Proces (accordion) ----------
+// Ajustările unei locații (ora / rolul de acolo) peste standardul de rețea.
+function eff(t, ctx) {
+  const a = ctx && ctx.adj && ctx.adj[t.id];
+  if (!a) return t;
+  return { ...t, cand: a.cand || t.cand, rol: a.rol || t.rol, stdCand: a.cand && a.cand !== t.cand ? t.cand : '', stdRol: a.rol && a.rol !== t.rol ? t.rol : '', loc: ctx.loc };
+}
 function taskHtml(t, rol) {
   const pr = PROC[t.proc];
-  return `<div class="task ${rol && t.rol === rol ? 'mine' : ''}">
+  const std = t.loc ? `<span class="std-note">La ${esc(t.loc)}${t.stdCand ? ` · standard: ${esc(t.stdCand)}` : ''}${t.stdRol ? ` · în rețea: ${esc(t.stdRol)}` : ''}</span>` : '';
+  return `<div class="task ${rol && t.rol === rol ? 'mine' : ''} ${t.loc ? 'adj' : ''}">
     <div class="t">${esc(t.t)}</div>
     <div class="right">${rolPill(t.rol)}${t.proc ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr?.titlu || '')}">${esc(t.proc)}</a>` : ''}</div>
     <div class="facts">
       ${t.cand ? `<span>${ICON.cal}${esc(t.cand)}</span>` : ''}
       ${t.min ? `<span>${ICON.clock}${esc(t.min)} min</span>` : ''}
       ${t.verif ? `<span>${ICON.check}${esc(t.verif)}</span>` : ''}
+      ${std}
     </div></div>`;
 }
 function procRow(p) {
@@ -501,7 +513,7 @@ function procRow(p) {
 }
 function processBody(p, ctx) {
   const rol = ctx.rol;
-  let tasks = tasksOf(p.cod), procs = procsOf(p.cod);
+  let tasks = tasksOf(p.cod).map(t => eff(t, ctx)), procs = procsOf(p.cod);
   if (rol) { tasks = tasks.filter(t => t.rol === rol); procs = procs.filter(x => x.rol === rol); }
   const local = (ctx.abateri || []).filter(a => a.zona.startsWith(p.cod + ' '));
   let h = p.miza ? `<p class="miza">${esc(p.miza)}</p>` : '';
@@ -519,16 +531,16 @@ function processBody(p, ctx) {
   return h;
 }
 function processItem(p, ctx) {
-  const local = (ctx.abateri || []).some(a => a.zona.startsWith(p.cod + ' '));
+  const local = (ctx.abateri || []).some(a => a.zona.startsWith(p.cod + ' ')) || tasksOf(p.cod).some(t => ctx.adj && ctx.adj[t.id]);
   return `<details class="proc" id="proc-${p.cod}">
     <summary><span class="code">${esc(p.cod)}</span><span class="name">${esc(p.nume)}</span>
       <span class="meta">${local ? '<span class="pill crit">Diferit aici</span>' : ''}${rolPill(p.rol)}${valPill(p.val)}${ICON.chev}</span></summary>
     <div class="proc-body">${processBody(p, ctx)}</div></details>`;
 }
-function processVisible(p, rol) {
+function processVisible(p, rol, ctx) {
   if (!rol) return true;
   if (p.rol === rol || (ROL[rol]?.procese || []).includes(p.cod)) return true;
-  return tasksOf(p.cod).some(t => t.rol === rol) || procsOf(p.cod).some(x => x.rol === rol);
+  return tasksOf(p.cod).some(t => eff(t, ctx).rol === rol) || procsOf(p.cod).some(x => x.rol === rol);
 }
 
 // ---------- Fișa spațiului ----------
@@ -568,7 +580,7 @@ function viewSpace(s, params) {
   const ab = spaceAbateri(s);
   const prof = ab.find(a => a.zona === 'Profil');
   const diff = ab.filter(a => a.zona !== 'Profil');
-  const ctx = { rol, abateri: ab };
+  const ctx = { rol, abateri: ab, adj: s.ajustari || null, loc: s.nume };
   const kind = { magazin: 'Magazin', productie: 'Laborator de producție', b2b: 'Canal de vânzare', birou: 'Suport' }[s.tip];
   const roleChips = [`<a class="chip ${rol ? '' : 'on'}" href="#/s/${s.id}?keep=1">Toate rolurile</a>`]
     .concat((s.roluri || []).map(r => `<a class="chip ${rol === r ? 'on' : ''}" href="#/s/${s.id}?rol=${enc(r)}&keep=1" title="${esc(rolName(r))}"><b>${esc(r)}</b> ${esc(rolName(r))}</a>`)).join('');
@@ -577,18 +589,18 @@ function viewSpace(s, params) {
   if (s.tip === 'birou') {
     for (const dc of s.domenii) {
       const d = D.domenii[dc];
-      const list = d.procese.map(c => P[c]).filter(p => processVisible(p, rol));
+      const list = d.procese.map(c => P[c]).filter(p => processVisible(p, rol, ctx));
       if (!list.length) continue;
       body += `<div class="dom-head"><span class="eyebrow">${esc(dc)}</span><h3>${esc(d.nume)}</h3><p>${esc(d.miza)}</p></div>` + list.map(p => processItem(p, ctx)).join('');
     }
   } else if (s.specifice) {
-    const spec = s.procese.filter(c => s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol));
-    const rest = s.procese.filter(c => !s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol));
+    const spec = s.procese.filter(c => s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol, ctx));
+    const rest = s.procese.filter(c => !s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol, ctx));
     const label = s.tip === 'b2b' ? ['Procesele B2B', 'Legătura cu magazinele'] : ['Specific acestui laborator', 'Comun întregii producții'];
     if (spec.length) body += `<div class="dom-head"><h3>${label[0]}</h3></div>` + spec.map(p => processItem(p, ctx)).join('');
     if (rest.length) body += `<div class="dom-head"><h3>${label[1]}</h3></div>` + rest.map(p => processItem(p, ctx)).join('');
   } else {
-    body = s.procese.map(c => P[c]).filter(p => processVisible(p, rol)).map(p => processItem(p, ctx)).join('');
+    body = s.procese.map(c => P[c]).filter(p => processVisible(p, rol, ctx)).map(p => processItem(p, ctx)).join('');
     body = `<div class="dom-head"><h3>Standardul de rețea, cu particularitățile de aici</h3><p>Procesele marcate „Diferit aici” au reguli proprii în acest magazin.</p></div>` + body;
   }
   if (!body) body = `<p class="lvl4">Rolul ${esc(rol)} nu are procese în acest spațiu.</p>`;

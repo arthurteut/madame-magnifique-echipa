@@ -93,13 +93,42 @@ SPATII = [
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
             ["Sosire echipă coacere și umplere (PP + B)", "06:00, zilele cu program"],
+            ["Sosire echipă de vânzare (VT, V, BAR)", "07:30"],
         ]),
+        # Dimineața la Porumbescu: PP + B deschide la 06:00, vânzarea vine la 07:30,
+        # magazinul deschide la 08:00. (început task, ora de aici, rol de aici sau "")
+        "ajustari": [
+            ("Descuiere, dezarmare alarmă", "Zilnic, 06:00", "PP + B"),
+            ("Pornire echipamente: espressor", "Zilnic, 06:05", "PP + B"),
+            ("Pornire și încălzire espressor", "Zilnic, 07:30", ""),
+            ("Citire și înregistrare temperaturi", "Zilnic, 07:30", ""),
+            ("Citirea și înregistrarea temperaturilor", "Zilnic, 07:30 și 17:00", ""),
+            ("Ștergere pult, vitrine", "Zilnic, 07:30", ""),
+            ("Verificare funcționare echipamente critice", "Zilnic, 07:35", ""),
+            ("Verificare stoc de lucru", "Zilnic, 07:40", ""),
+            ("Calibrare râșniță", "Zilnic 07:40 și la schimbarea sacului", ""),
+            ("Aranjare vitrine pe departamente", "Zilnic, 07:40", ""),
+            ("Verificare imagine exterioară", "Zilnic, 07:40", ""),
+            ("Numărare fond de casă", "Zilnic, 07:45", ""),
+            ("Deschidere tură în POS", "Zilnic, 07:45", ""),
+            ("Expunerea vizibilă a minimum 6-8 SKU", "Zilnic, 07:45", ""),
+            ("Amplasare tablă de ardezie", "Zilnic, 07:50", ""),
+            ("Poziționarea produselor cu valoare mare", "Zilnic, 07:50", ""),
+            ("Verificare etichete", "Zilnic, 07:50", ""),
+            ("Verificare stoc lapte", "Zilnic, 07:50", ""),
+            ("Pornire muzică ambientală", "Zilnic, 07:55", ""),
+            ("Pregătire tavă de degustare", "Zilnic, 07:55", ""),
+            ("Briefing 5 minute", "Zilnic, 07:55", ""),
+            ("Expunere baguette caldă", "Zilnic, 08:00", ""),
+        ],
         "abateri": "Porumbescu",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
         "note": [
             {"titlu": "Zonă de coacere și umplere patiserie",
              "text": "Magazinul are zonă proprie de coacere și umplere: semipreparatele venite din producție se coc și se umplu aici, la comandă. Rol: Preparator patiserie și bucătar (PP + B)."},
+            {"titlu": "Dimineața la Porumbescu",
+             "text": "Echipa de coacere și umplere (PP + B) vine la 06:00: descuie, dezarmează alarma și pornește echipamentele. Echipa de vânzare (VT, V, BAR) vine la 07:30 și pregătește magazinul până la deschiderea de la 08:00. Task-urile de dimineață au orele de aici, marcate cu galben."},
         ],
     },
     {
@@ -246,7 +275,7 @@ def citeste(xlsx):
     taskuri = []
     for r in randuri(wb["Retail nivel 4"], 5):
         pc, _pn, sub, task, rol, minute, cand, verif, proc = r[:9]
-        taskuri.append({"p": pc, "sub": sub, "t": task, "rol": rol, "min": minute,
+        taskuri.append({"id": len(taskuri), "p": pc, "sub": sub, "t": task, "rol": rol, "min": minute,
                         "cand": cand, "verif": verif, "proc": proc})
 
     proceduri = []
@@ -273,10 +302,22 @@ def citeste(xlsx):
             sectiune = {"titlu": t, "linii": []}
             legenda.append(sectiune)
 
+    spatii = [dict(sp) for sp in SPATII]
+    for sp in spatii:
+        if "ajustari" not in sp:
+            continue
+        rezolvate = {}
+        for inceput, cand, rol in sp["ajustari"]:
+            gasite = [t for t in taskuri if t["t"].startswith(inceput)]
+            if len(gasite) != 1:
+                sys.exit(f"{sp['id']}: ajustarea „{inceput}” se potrivește cu {len(gasite)} task-uri (trebuie exact 1).")
+            rezolvate[gasite[0]["id"]] = {"cand": cand, "rol": rol}
+        sp["ajustari"] = rezolvate
+
     return {
         "domenii": domenii, "procese": procese, "taskuri": taskuri,
         "proceduri": proceduri, "abateri": abateri, "roluri": roluri,
-        "legenda": legenda, "spatii": SPATII,
+        "legenda": legenda, "spatii": spatii,
     }
 
 
