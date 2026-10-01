@@ -153,6 +153,7 @@ begin
     execute format('alter table public.%I enable row level security', t);
     execute format('revoke all on public.%I from anon, authenticated', t);
     execute format('grant select on public.%I to authenticated', t);
+    execute format('grant all on public.%I to service_role', t);
     execute format(
       'create policy "matricea rolului" on public.%I for select to authenticated
          using (public.is_admin() or (public.is_member() and role_code = public.my_role()))', t);
@@ -161,6 +162,7 @@ end $$;
 alter table public.role_role_access enable row level security;
 revoke all on public.role_role_access from anon, authenticated;
 grant select on public.role_role_access to authenticated;
+grant all on public.role_role_access to service_role;
 create policy "matricea rolului" on public.role_role_access for select to authenticated
   using (public.is_admin() or (public.is_member() and viewer_role = public.my_role()));
 

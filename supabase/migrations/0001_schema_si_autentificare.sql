@@ -203,6 +203,9 @@ begin
     execute format('alter table public.%I enable row level security', t);
     execute format('revoke all on public.%I from anon, authenticated', t);
     execute format('grant select on public.%I to authenticated', t);
+    -- cheia de serviciu (import, panoul de admin) are nevoie de drepturi explicite
+    -- când proiectul nu expune automat tabelele noi
+    execute format('grant all on public.%I to service_role', t);
   end loop;
 
   -- Pasul 1: orice membru activ citește conținutul. (0002 restrânge pe rol.)
