@@ -25,6 +25,62 @@ ROOT = Path(__file__).resolve().parent.parent
 ITERATII = 310_000
 
 # ---------------------------------------------------------------------------
+# Dimineața în magazine. Echipa de vânzare (VT, V, BAR) vine cu 30–40 de minute
+# înainte de deschidere, oricare ar fi ora. Task-urile de dimineață din standard
+# (06:00–07:00) se fac în cele 30 de minute dinaintea deschiderii, în aceeași
+# ordine: (început task, minute înainte de deschidere, format oră).
+# ---------------------------------------------------------------------------
+DIMINEATA = [
+    ("Pornire și încălzire espressor", 30, "Zilnic, {}"),
+    ("Citire și înregistrare temperaturi", 30, "Zilnic, {}"),
+    ("Citirea și înregistrarea temperaturilor", 30, "Zilnic, {} și 17:00"),
+    ("Ștergere pult, vitrine", 30, "Zilnic, {}"),
+    ("Verificarea cantitativă a mărfii față de avizul", 30, "Zilnic, {}, la așezarea mărfii pe rafturi"),
+    ("Verificare calitativă: aspect", 30, "Zilnic, {}, la așezarea mărfii pe rafturi"),
+    ("Verificare funcționare echipamente critice", 25, "Zilnic, {}"),
+    ("Verificare stoc de lucru", 20, "Zilnic, {}"),
+    ("Calibrare râșniță", 20, "Zilnic {} și la schimbarea sacului"),
+    ("Aranjare vitrine pe departamente", 20, "Zilnic, {}"),
+    ("Verificare imagine exterioară", 20, "Zilnic, {}"),
+    ("Numărare fond de casă", 15, "Zilnic, {}"),
+    ("Deschidere tură în POS", 15, "Zilnic, {}"),
+    ("Expunerea vizibilă a minimum 6-8 SKU", 15, "Zilnic, {}"),
+    ("Amplasare tablă de ardezie", 10, "Zilnic, {}"),
+    ("Poziționarea produselor cu valoare mare", 10, "Zilnic, {}"),
+    ("Verificare etichete", 10, "Zilnic, {}"),
+    ("Verificare stoc lapte", 10, "Zilnic, {}"),
+    ("Pornire muzică ambientală", 5, "Zilnic, {}"),
+    ("Pregătire tavă de degustare", 5, "Zilnic, {}"),
+    ("Briefing 5 minute", 5, "Zilnic, {}"),
+    ("Expunere baguette caldă", 0, "Zilnic, {}"),
+]
+
+
+def ora(hhmm, minus):
+    h, m = map(int, hhmm.split(":"))
+    t = h * 60 + m - minus
+    return f"{t // 60:02d}:{t % 60:02d}"
+
+
+def dimineata(deschide, deschidere):
+    """Ajustările de dimineață pentru un magazin care deschide la ora `deschide`.
+    `deschidere` = cine descuie și pornește echipamentele, și când."""
+    ajustari = list(deschidere)
+    for inceput, minute, fmt in DIMINEATA:
+        ajustari.append((inceput, fmt.format(ora(deschide, minute)), ""))
+    h, m = deschide.split(":")
+    ajustari = [a for a in ajustari if a[0] != "Amplasare tablă de ardezie"]
+    ajustari.append(("Amplasare tablă de ardezie", f"Zilnic, {ora(deschide, 10)}", "",
+                     f"Amplasare tablă de ardezie cu mesajul zilei („Baguette proaspătă de la {int(h)}:{m}”)"))
+    return ajustari
+
+
+def sosire_vanzare(deschide):
+    return [f"Sosire echipă de vânzare (VT, V, BAR)",
+            f"{ora(deschide, 40)} – {ora(deschide, 30)} (cu 30–40 min înainte de deschidere)"]
+
+
+# ---------------------------------------------------------------------------
 # Spațiile echipei. Aici se editează ce vede fiecare magazin / laborator.
 # "procese" = codurile din Harta Firma; "abateri" = numele locației din foaia
 # „Abateri per locatie”; "note" = particularități scrise de mână.
@@ -174,34 +230,10 @@ SPATII = [
         ]),
         # Dimineața la Porumbescu: PP + B deschide la 06:00, vânzarea vine la 07:30,
         # magazinul deschide la 08:00.
-        # (început task, ora de aici, rol de aici sau "", [text de aici, opțional])
-        "ajustari": [
+        "ajustari": dimineata("08:00", deschidere=[
             ("Descuiere, dezarmare alarmă", "Zilnic, 06:00", "PP + B"),
             ("Pornire echipamente: espressor", "Zilnic, 06:05", "PP + B"),
-            ("Pornire și încălzire espressor", "Zilnic, 07:30", ""),
-            ("Citire și înregistrare temperaturi", "Zilnic, 07:30", ""),
-            ("Citirea și înregistrarea temperaturilor", "Zilnic, 07:30 și 17:00", ""),
-            ("Ștergere pult, vitrine", "Zilnic, 07:30", ""),
-            ("Verificare funcționare echipamente critice", "Zilnic, 07:35", ""),
-            ("Verificare stoc de lucru", "Zilnic, 07:40", ""),
-            ("Calibrare râșniță", "Zilnic 07:40 și la schimbarea sacului", ""),
-            ("Aranjare vitrine pe departamente", "Zilnic, 07:40", ""),
-            ("Verificare imagine exterioară", "Zilnic, 07:40", ""),
-            ("Numărare fond de casă", "Zilnic, 07:45", ""),
-            ("Deschidere tură în POS", "Zilnic, 07:45", ""),
-            ("Expunerea vizibilă a minimum 6-8 SKU", "Zilnic, 07:45", ""),
-            ("Amplasare tablă de ardezie", "Zilnic, 07:50", "",
-             "Amplasare tablă de ardezie cu mesajul zilei („Baguette proaspătă de la 8:00”)"),
-            ("Verificarea cantitativă a mărfii față de avizul", "Zilnic, 07:30, la așezarea mărfii pe rafturi", ""),
-            ("Verificare calitativă: aspect", "Zilnic, 07:30, la așezarea mărfii pe rafturi", ""),
-            ("Poziționarea produselor cu valoare mare", "Zilnic, 07:50", ""),
-            ("Verificare etichete", "Zilnic, 07:50", ""),
-            ("Verificare stoc lapte", "Zilnic, 07:50", ""),
-            ("Pornire muzică ambientală", "Zilnic, 07:55", ""),
-            ("Pregătire tavă de degustare", "Zilnic, 07:55", ""),
-            ("Briefing 5 minute", "Zilnic, 07:55", ""),
-            ("Expunere baguette caldă", "Zilnic, 08:00", ""),
-        ],
+        ]),
         "abateri": "Porumbescu",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -209,7 +241,7 @@ SPATII = [
             {"titlu": "Zonă de coacere și umplere patiserie",
              "text": "Magazinul are zonă proprie de coacere și umplere: semipreparatele venite din producție se coc și se umplu aici, la comandă. Rol: Preparator patiserie și bucătar (PP + B)."},
             {"titlu": "Dimineața la Porumbescu",
-             "text": "Echipa de coacere și umplere (PP + B) vine la 06:00: descuie, dezarmează alarma și pornește echipamentele. Echipa de vânzare (VT, V, BAR) vine la 07:30 și pregătește magazinul până la deschiderea de la 08:00. Task-urile de dimineață au orele de aici, marcate cu galben."},
+             "text": "Echipa de coacere și umplere (PP + B) vine la 06:00: descuie, dezarmează alarma și pornește echipamentele. Echipa de vânzare (VT, V, BAR) vine la 07:30 și pregătește magazinul până la deschiderea de la 08:00. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine, cu echipa venită cu 30–40 de minute înainte."},
         ],
     },
     {
@@ -217,11 +249,19 @@ SPATII = [
         "titlu": "Magazinul Dumbrăvița",
         "fisa": fisa_magazin(livrare_peciu="≈ 06:30 când e prima oprire; altfel după Fructus (în funcție de trafic)", livrare_fructus=COFETARIE_DUMBRAVITA, coacere=True,
             adresa="Strada Conac 14, Dumbrăvița",
-            program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 18:00"], ["Duminică", "Închis"]]),
+            program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 18:00"], ["Duminică", "Închis"],
+                     sosire_vanzare("08:30")]),
+        # Echipa de vânzare vine cu 30–40 min înainte de deschiderea de la 08:30.
+        "ajustari": dimineata("08:30", deschidere=[
+            ("Descuiere, dezarmare alarmă", "Zilnic, 08:00, la sosirea echipei", ""),
+            ("Pornire echipamente: espressor", "Zilnic, 08:00", ""),
+        ]),
         "abateri": "Dumbrăvița",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
         "note": [
+            {"titlu": "Dimineața la Dumbrăvița",
+             "text": "Echipa de vânzare (VT, V, BAR) vine cu 30–40 de minute înainte de deschiderea de la 08:30 și pregătește magazinul între 08:00 și 08:30. Marfa e deja lăsată de șofer. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine a task-urilor, cu echipa venită cu 30–40 de minute înainte."},
             {"titlu": "Zonă de coacere și umplere patiserie",
              "text": "Magazinul are zonă proprie de coacere și umplere: semipreparatele venite din producție se coc și se umplu aici, la comandă. Rol: Preparator patiserie și bucătar (PP + B)."},
         ],
@@ -231,11 +271,19 @@ SPATII = [
         "titlu": "Magazinul Fructus",
         "fisa": fisa_magazin(livrare_peciu="≈ 06:50; mai devreme când e prima oprire (în funcție de trafic)", livrare_fructus="Pe loc, din laborator", coacere=False,
             adresa="Gheorghe Lazăr 26, Timișoara",
-            program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 17:00"], ["Duminică", "Închis"]]),
+            program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 17:00"], ["Duminică", "Închis"],
+                     sosire_vanzare("08:30")]),
+        # Echipa de vânzare vine cu 30–40 min înainte de deschiderea de la 08:30.
+        "ajustari": dimineata("08:30", deschidere=[
+            ("Descuiere, dezarmare alarmă", "Zilnic, 08:00, la sosirea echipei", ""),
+            ("Pornire echipamente: espressor", "Zilnic, 08:00", ""),
+        ]),
         "abateri": "Fructus",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
         "note": [
+            {"titlu": "Dimineața la Fructus",
+             "text": "Echipa de vânzare (VT, V, BAR) vine cu 30–40 de minute înainte de deschiderea de la 08:30 și pregătește magazinul între 08:00 și 08:30. Marfa e deja lăsată de șofer. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine a task-urilor, cu echipa venită cu 30–40 de minute înainte."},
             {"titlu": "Aceeași clădire cu laboratorul de cofetărie",
              "text": "În Fructus funcționează și Laboratorul de cofetărie și creme. Pentru producție, vezi spațiul „Laborator Fructus”."},
         ],
