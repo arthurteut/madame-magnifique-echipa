@@ -39,6 +39,9 @@ PRODUCTIE_COMUN = ["P15", "P16", "P17", "P22", "P23", "P24"]
 SOFER_2 = ("06:30 când comandă toți clienții B2B (altfel orele de livrare se suprapun "
            "la unii clienți); în zilele cu mai puține livrări, 08:30")
 B2B_SOFERI = "Ambii șoferi"
+COFETARIE_DUMBRAVITA = ("Dacă șoferul 1 trece întâi prin Fructus, vine în aceeași cursă. Dacă începe cu "
+                        "Dumbrăvița, o aduce mai târziu, când revine în zonă pentru clienții B2B "
+                        "care vor marfa mai târziu.")
 NOTA_LIVRARI = ("Șoferii au cheie: lasă marfa și dacă magazinul e încă închis. Marfa vine "
                 "mereu cu avizul de însoțire, preluat de șofer la încărcare (din Peciu Nou "
                 "sau din alt magazin).")
@@ -162,7 +165,7 @@ SPATII = [
     {
         "id": "porumbescu", "tip": "magazin", "nume": "Porumbescu",
         "titlu": "Magazinul Porumbescu",
-        "fisa": fisa_magazin(livrare_peciu="07:30", livrare_fructus="07:30, în aceeași cursă (preluată din Fructus la 06:50)", coacere=True, program=[
+        "fisa": fisa_magazin(livrare_peciu="07:30", livrare_fructus="07:30, în aceeași cursă (preluată din Fructus)", coacere=True, program=[
             ["Luni – Vineri", "08:00 – 19:30"],
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
@@ -212,7 +215,7 @@ SPATII = [
     {
         "id": "dumbravita", "tip": "magazin", "nume": "Dumbrăvița",
         "titlu": "Magazinul Dumbrăvița",
-        "fisa": fisa_magazin(livrare_peciu="06:30", coacere=True),
+        "fisa": fisa_magazin(livrare_peciu="≈ 06:30 când e prima oprire; altfel după Fructus (în funcție de trafic)", livrare_fructus=COFETARIE_DUMBRAVITA, coacere=True),
         "abateri": "Dumbrăvița",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -224,7 +227,7 @@ SPATII = [
     {
         "id": "fructus", "tip": "magazin", "nume": "Fructus",
         "titlu": "Magazinul Fructus",
-        "fisa": fisa_magazin(livrare_peciu="06:50", livrare_fructus="Pe loc, din laborator", coacere=False),
+        "fisa": fisa_magazin(livrare_peciu="≈ 06:50; mai devreme când e prima oprire (în funcție de trafic)", livrare_fructus="Pe loc, din laborator", coacere=False),
         "abateri": "Fructus",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -242,9 +245,11 @@ SPATII = [
              "Laminor (patiserie)", "Frigidere și congelatoare", "Cântare"],
             livrari=[["Șofer 1: program", "05:50 – 13:30"],
                      ["Șofer 1 pleacă din Peciu Nou", "05:50 – 06:00"],
-                     ["Sosire Dumbrăvița", "06:30"],
-                     ["Sosire Fructus (preia și marfa Laboratorului Fructus)", "06:50"],
+                     ["Prima oprire", "Dumbrăvița sau Fructus, în funcție de trafic"],
+                     ["Sosire Dumbrăvița", "≈ 06:30 când e prima oprire"],
+                     ["Sosire Fructus (preia și marfa Laboratorului Fructus)", "≈ 06:50, mai devreme când e prima oprire"],
                      ["Sosire Porumbescu", "07:30"],
+                     ["Cofetăria pentru Dumbrăvița", COFETARIE_DUMBRAVITA],
                      ["Șofer 2: începe", SOFER_2],
                      ["Livrări B2B și evenimente", B2B_SOFERI]],
             nota_livrari=NOTA_LIVRARI),
@@ -267,9 +272,9 @@ SPATII = [
             ["Cuptoare de patiserie și blaturi", "Mixere (creme, blaturi)",
              "Echipamente Roboq (creme și dulcețuri)", "Frigidere și congelatoare",
              "Cântare"],
-            livrari=[["Marfa e preluată de șoferul 1", "06:50, când lasă marfa din Peciu Nou în Fructus"],
+            livrari=[["Marfa e preluată de șoferul 1", "Când lasă marfa din Peciu Nou în Fructus (≈ 06:50)"],
                      ["Sosire Porumbescu", "07:30, în aceeași cursă"],
-                     ["Sosire Dumbrăvița", ""],
+                     ["Sosire Dumbrăvița", COFETARIE_DUMBRAVITA],
                      ["Magazinul Fructus", "Pe loc, din laborator"],
                      ["Livrări B2B și evenimente", B2B_SOFERI]],
             nota_livrari=NOTA_LIVRARI),
