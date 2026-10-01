@@ -1,4 +1,4 @@
-# Configurarea Supabase · Pasul 1: conturi și autentificare
+# Configurarea Supabase
 
 Ghidul nu mai are o parolă comună. Fiecare angajat are utilizatorul lui, iar
 conținutul stă în Supabase, nu în repo. Durează ~20 de minute, o singură dată.
@@ -40,6 +40,28 @@ Importul înlocuiește tot conținutul într-o singură tranzacție și nu ating
 
 `date-ghid.sql` conține tot ghidul: **nu îl urca în repo** (e deja în `.gitignore`)
 și șterge-l după import.
+
+## 3b. Accesul pe rol
+
+**După primul import** (are nevoie de roluri și spații), **SQL Editor** → lipești
+[`supabase/migrations/0002_acces_pe_rol.sql`](supabase/migrations/0002_acces_pe_rol.sql) → **Run**.
+
+De acum fiecare cont primește din baza de date doar ce ține de rolul lui:
+
+| Rol | Spații | Vede și procedurile rolurilor |
+|---|---|---|
+| GM (admin) | toate | toate |
+| RL | cele 3 magazine | VT, V, BAR, PP + B |
+| VT | cele 3 magazine | V, BAR, PP + B |
+| V, BAR, PP + B | cele 3 magazine | doar ale lor |
+| DP | ambele laboratoare | SP, GD |
+| SP, GD | ambele laboratoare | doar ale lor |
+| LOG | laboratoarele, magazinele, B2B | doar ale lui |
+| CB2B | B2B, Laboratorul Fructus | doar ale lui |
+| MKT, ADM, EC | Biroul central | doar ale lor |
+
+Matricea stă în tabelele `role_space_access`, `role_role_access` și
+`role_section_access` (paginile din meniu). Reimportul hărții nu o atinge.
 
 ## 4. Primul cont de administrator
 

@@ -9,10 +9,18 @@ createdb ghid
 psql -d ghid -f supabase/tests/00_mediu_supabase_local.sql
 psql -d ghid -f supabase/migrations/0001_schema_si_autentificare.sql
 python3 tools/import_supabase.py Harta.xlsx date-ghid.sql && psql -d ghid -f date-ghid.sql
-psql -d ghid -f supabase/tests/01_pas1_autentificare.sql
+psql -d ghid -f supabase/tests/01_pas1_autentificare.sql   # înainte de 0002
+psql -d ghid -f supabase/migrations/0002_acces_pe_rol.sql
+psql -d ghid -f supabase/tests/02_pas2_acces_pe_rol.sql     # ce vede fiecare rol
 ```
 
 Ce trebuie să iasă la pasul 1: anonimul primește „permission denied”; un VT
 activ vede cele 103 proceduri și doar propriul profil; GM vede toate profilurile;
 un cont dezactivat sau fără profil vede 0 proceduri; orice UPDATE din rolul
 `authenticated` e refuzat.
+
+Pasul 2 (`02_pas2_acces_pe_rol.sql`) face câte un cont pentru fiecare rol și
+afișează ce primește: spațiile, procedurile, task-urile, procesele, rolurile,
+abaterile, fișele și ajustările. De exemplu: VT vede doar cele 3 magazine și 78
+de proceduri (VT + V + BAR), V doar cele 30 ale lui, PP + B cele 2 task-uri de
+deschidere de la Porumbescu și Dumbrăvița, CB2B doar B2B și Laboratorul Fructus.

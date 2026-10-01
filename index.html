@@ -35,7 +35,7 @@
   :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
   .eyebrow { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-  .hidden { display: none !important; }
+  .hidden, [hidden] { display: none !important; }
   .logo svg { display: block; height: 100%; width: auto; }
 
   /* ---------- Lacăt ---------- */
@@ -397,7 +397,11 @@ const CFG = window.MM_CONFIG || {};
 const emailDin = u => `${u.trim().toLowerCase()}@${DOMENIU_CONTURI}`;
 const showErr = m => { document.getElementById('err').textContent = m; };
 
+// Paginile din meniu permise rolului (role_section_access).
+const poate = sectiune => !ME || !ME.sectiuni || ME.sectiuni.has(sectiune);
+
 function showApp() {
+  document.querySelectorAll('#nav [data-nav]').forEach(a => { a.hidden = a.dataset.nav !== 'home' && !poate(a.dataset.nav); });
   document.getElementById('lock').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
@@ -426,14 +430,18 @@ async function tabel(nume, ordine) {
 // Reface din tabelele Supabase aceeași structură pe care o folosește pagina.
 async function incarcaDate() {
   const [roluri, domenii, procese, subprocese, proceduri, taskuri, abateri, ghid,
-         spatii, spProc, spRol, spNote, spFapte, spAjust] = await Promise.all([
+         spatii, spProc, spRol, spNote, spFapte, spAjust, sectiuni] = await Promise.all([
     tabel('roles', ['position']), tabel('domains', ['position']), tabel('processes', ['position']),
     tabel('subprocesses', ['process_code', 'position']), tabel('procedures', ['position']), tabel('tasks', ['id']),
     tabel('deviations', ['id']), tabel('guide_sections', ['id']), tabel('spaces', ['position']),
     tabel('space_processes', ['space_id', 'position']), tabel('space_roles', ['space_id', 'position']),
     tabel('space_notes', ['space_id', 'position']), tabel('space_facts', ['space_id', 'section', 'position']),
     tabel('space_task_overrides', ['space_id', 'task_id']),
+    tabel('role_section_access', ['section']),
   ]);
+  ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
+  ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid']
+    : sectiuni.filter(x => x.role_code === ME.role_code).map(x => x.section));
   const grup = (rows, cheie) => rows.reduce((m, r) => ((m[r[cheie]] = m[r[cheie]] || []).push(r), m), {});
   const subP = grup(subprocese, 'process_code'), procD = grup(procese, 'domain_code');
   const sp = { proc: grup(spProc, 'space_id'), rol: grup(spRol, 'space_id'), note: grup(spNote, 'space_id'),
@@ -501,6 +509,7 @@ document.getElementById('lockForm').addEventListener('submit', async e => {
     document.getElementById('pw').value = '';
     await deschideSesiunea(data.user);
   } catch (x) {
+    console.error('Logare eșuată:', x);
     const gresit = /invalid login credentials/i.test(x.message || '');
     showErr(gresit ? 'Utilizator sau parolă greșită.' : 'Nu s-a putut deschide ghidul. Verifică internetul și încearcă din nou.');
   }
@@ -519,7 +528,7 @@ document.getElementById('logout').addEventListener('click', async () => {
   const { data } = await SB.auth.getSession();
   if (data.session) {
     try { await deschideSesiunea(data.session.user); }
-    catch (e) { showLock('Nu s-a putut încărca ghidul. Reîncarcă pagina.'); }
+    catch (e) { console.error('Încărcare eșuată:', e); showLock('Nu s-a putut încărca ghidul. Reîncarcă pagina.'); }
   }
 })();
 
@@ -543,7 +552,9 @@ function prepare() {
   buildIndex();
 }
 const valPill = v => v ? `<span class="pill v${esc(v.replace(/\D/g, ''))}" title="Valul de implementare">${esc(v)}</span>` : '';
-const rolPill = r => r ? `<a class="pill" href="#/r/${enc(r)}" title="${esc(ROL[r]?.nume || r)}">${esc(r)}</a>` : '';
+const rolPill = r => !r ? '' : (ROL[r] && poate('roluri'))
+  ? `<a class="pill" href="#/r/${enc(r)}" title="${esc(ROL[r].nume)}">${esc(r)}</a>`
+  : `<span class="pill">${esc(r)}</span>`;
 const prioPill = p => p ? `<span class="pill ${p === 'Critică' ? 'crit' : ''}">${esc(p)}</span>` : '';
 const rolName = r => ROL[r]?.nume || r;
 const tasksOf = pc => D.taskuri.filter(t => t.p === pc);
@@ -573,11 +584,11 @@ function route() {
   let html, nav = 'home';
   if (a === 's' && SP[b]) html = viewSpace(SP[b], params);
   else if (a === 'p' && P[b]) html = viewProcess(P[b], params);
-  else if (a === 'pr' && PROC[b]) { html = viewProcedure(PROC[b]); nav = 'proceduri'; }
-  else if (a === 'r' && ROL[b]) { html = viewRole(ROL[b], params); nav = 'roluri'; }
-  else if (a === 'roluri') { html = viewRoles(); nav = 'roluri'; }
-  else if (a === 'proceduri') { html = viewProcedures(params); nav = 'proceduri'; }
-  else if (a === 'ghid') { html = viewGuide(); nav = 'ghid'; }
+  else if (a === 'pr' && PROC[b] && poate('proceduri')) { html = viewProcedure(PROC[b]); nav = 'proceduri'; }
+  else if (a === 'r' && ROL[b] && poate('roluri')) { html = viewRole(ROL[b], params); nav = 'roluri'; }
+  else if (a === 'roluri' && poate('roluri')) { html = viewRoles(); nav = 'roluri'; }
+  else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
+  else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
   else html = viewHome();
   $('#view').innerHTML = html;
   document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === nav));
@@ -629,19 +640,16 @@ function viewHome() {
   <div class="marquee" aria-hidden="true"><div class="mq-track">${[0, 1].map(() => `<span>Pâine</span><i>·</i><span>Patiserie</span><i>·</i><span>Cofetărie</span><i>·</i><span>Cafea de specialitate</span><i>·</i><span>Torturi</span><i>·</i><span>Candybar</span><i>·</i>`).join('')}</div></div>
   <section class="block"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Unde lucrezi?</span><h2>Alege-ți spațiul</h2></div></div>
-    <div class="group-label">Magazinele Madame</div>
-    <div class="grid">${g('magazin')}</div>
-    <div class="group-label">Producție</div>
-    <div class="grid">${g('productie')}</div>
-    <div class="group-label">B2B și birou</div>
-    <div class="grid">${g('b2b')}${g('birou')}</div>
+    ${[['Magazinele Madame', g('magazin')], ['Producție', g('productie')], ['B2B și birou', g('b2b') + g('birou')]]
+      .filter(([, h]) => h).map(([t, h]) => `<div class="group-label">${t}</div><div class="grid">${h}</div>`).join('')
+      || '<p class="lvl4">Contul tău nu are încă spații atribuite. Anunță administratorul ghidului.</p>'}
   </div></section>
   <section class="block soft"><div class="wrap">
-    <div class="block-head"><div><span class="eyebrow">Ce rol ai?</span><h2>Fișa ta de lucru</h2></div><a class="btn ghost" href="#/roluri">Toate rolurile</a></div>
+    <div class="block-head"><div><span class="eyebrow">Ce rol ai?</span><h2>Fișa ta de lucru</h2></div>${poate('roluri') ? '<a class="btn ghost" href="#/roluri">Toate rolurile</a>' : ''}</div>
     <div class="chips">${roleChips}</div>
   </div></section>
   <section class="block"><div class="wrap">
-    <div class="block-head"><div><span class="eyebrow">Pe scurt</span><h2>Firma în cifre</h2></div></div>
+    <div class="block-head"><div><span class="eyebrow">Pe scurt</span><h2>${ME && ME.admin ? 'Firma în cifre' : 'Ghidul tău în cifre'}</h2></div></div>
     <div class="stats">
       <div class="stat"><strong>${Object.keys(D.domenii).length}</strong><span>domenii de activitate</span></div>
       <div class="stat"><strong>${Object.keys(P).length}</strong><span>procese</span></div>
@@ -666,7 +674,7 @@ function taskHtml(t, rol) {
   const teren = t.teren ? `<span class="std-note">Actualizat pe teren${t.initial ? ` · în harta inițială: ${esc(t.initial)}` : ' · task nou'}</span>` : '';
   return `<div class="task ${rol && t.rol === rol ? 'mine' : ''} ${t.loc ? 'adj' : ''}">
     <div class="t">${esc(t.t)}</div>
-    <div class="right">${rolPill(t.rol)}${t.proc ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr?.titlu || '')}">${esc(t.proc)}</a>` : ''}</div>
+    <div class="right">${rolPill(t.rol)}${t.proc ? (pr ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr.titlu)}">${esc(t.proc)}</a>` : `<span class="pill star">${esc(t.proc)}</span>`) : ''}</div>
     <div class="facts">
       ${t.cand ? `<span>${ICON.cal}${esc(t.cand)}</span>` : ''}
       ${t.min ? `<span>${ICON.clock}${esc(t.min)} min</span>` : ''}
@@ -759,6 +767,7 @@ function viewSpace(s, params) {
   if (s.tip === 'birou') {
     for (const dc of s.domenii) {
       const d = D.domenii[dc];
+      if (!d) continue;
       const list = d.procese.map(c => P[c]).filter(p => processVisible(p, rol, ctx));
       if (!list.length) continue;
       body += `<div class="dom-head"><span class="eyebrow">${esc(dc)}</span><h3>${esc(d.nume)}</h3><p>${esc(d.miza)}</p></div>` + list.map(p => processItem(p, ctx)).join('');
@@ -947,7 +956,7 @@ function buildIndex() {
   INDEX = [];
   D.spatii.forEach(s => add('Spații', s.titlu, s.subtitlu || '', `#/s/${s.id}`));
   D.roluri.forEach(r => add('Roluri', `${r.cod} · ${r.nume}`, r.raspunde, `#/r/${enc(r.cod)}`));
-  Object.values(P).forEach(p => add('Procese', `${p.cod} · ${p.nume}`, D.domenii[p.domeniu].nume, `#/p/${p.cod}`, p.sub.join(' ') + ' ' + p.miza));
+  Object.values(P).forEach(p => add('Procese', `${p.cod} · ${p.nume}`, D.domenii[p.domeniu]?.nume || '', `#/p/${p.cod}`, p.sub.join(' ') + ' ' + p.miza));
   D.proceduri.forEach(p => add('Proceduri', `${p.cod} · ${p.titlu}`, `${p.rol} · ${p.decl}`, `#/pr/${enc(p.cod)}`));
   D.taskuri.forEach(t => add('Task-uri', t.t, `${t.p} · ${t.rol} · ${t.cand}`, `#/p/${t.p}`, t.verif + ' ' + t.sub));
   D.spatii.forEach(s => {

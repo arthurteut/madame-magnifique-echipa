@@ -64,9 +64,10 @@ def genereaza(d):
     out = ["-- Generat de tools/import_supabase.py. Conținut intern: nu se pune în repo.\n",
            "begin;\n\n"]
 
-    # 1) Golește conținutul (în ordinea dependențelor). Rolurile rămân: au profiluri.
+    # 1) Golește conținutul (în ordinea dependențelor). Rolurile și spațiile rămân
+    #    (se actualizează pe loc): de ele țin conturile și matricea de acces.
     for t in ["space_task_overrides", "space_facts", "space_notes", "space_roles", "space_processes",
-              "spaces", "tasks", "procedures", "subprocesses", "processes", "domains",
+              "tasks", "procedures", "subprocesses", "processes", "domains",
               "deviations", "guide_sections"]:
         out.append(f"delete from public.{t};\n")
     out.append("\n")
@@ -117,7 +118,15 @@ def genereaza(d):
                         q(s.get("abateri")), jsonb(s.get("abateri_filtru", {})), arr(s.get("domenii", [])),
                         q(s.get("fisa", {}).get("nota_livrari", "")),
                         q(s.get("fisa", {}).get("nota_echipamente", "")), q(i)]
-                       for i, s in enumerate(spatii)]))
+                       for i, s in enumerate(spatii)],
+                      "\non conflict (id) do update set type = excluded.type, name = excluded.name, "
+                      "title = excluded.title, subtitle = excluded.subtitle, "
+                      "deviations_location = excluded.deviations_location, "
+                      "deviations_filter = excluded.deviations_filter, domains = excluded.domains, "
+                      "deliveries_note = excluded.deliveries_note, equipment_note = excluded.equipment_note, "
+                      "position = excluded.position"))
+    ids = ", ".join(q(s["id"]) for s in spatii)
+    out.append(f"delete from public.spaces where id not in ({ids});\n\n")
     out.append(insert("space_processes", ["space_id", "process_code", "position", "is_specific"],
                       [[q(s["id"]), q(c), q(i), q(c in s.get("specifice", []))]
                        for s in spatii for i, c in enumerate(s.get("procese", []))]))
