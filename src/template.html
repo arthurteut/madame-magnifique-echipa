@@ -560,6 +560,7 @@ function eff(t, ctx) {
 function taskHtml(t, rol) {
   const pr = PROC[t.proc];
   const std = t.loc ? `<span class="std-note">La ${esc(t.loc)}${t.stdCand ? ` · standard: ${esc(t.stdCand)}` : ''}${t.stdRol ? ` · în rețea: ${esc(t.stdRol)}` : ''}${t.textLocal ? ' · text adaptat' : ''}</span>` : '';
+  const teren = t.teren ? `<span class="std-note">Actualizat pe teren${t.initial ? ` · în harta inițială: ${esc(t.initial)}` : ' · task nou'}</span>` : '';
   return `<div class="task ${rol && t.rol === rol ? 'mine' : ''} ${t.loc ? 'adj' : ''}">
     <div class="t">${esc(t.t)}</div>
     <div class="right">${rolPill(t.rol)}${t.proc ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr?.titlu || '')}">${esc(t.proc)}</a>` : ''}</div>
@@ -567,7 +568,7 @@ function taskHtml(t, rol) {
       ${t.cand ? `<span>${ICON.cal}${esc(t.cand)}</span>` : ''}
       ${t.min ? `<span>${ICON.clock}${esc(t.min)} min</span>` : ''}
       ${t.verif ? `<span>${ICON.check}${esc(t.verif)}</span>` : ''}
-      ${std}
+      ${teren}${std}
     </div></div>`;
 }
 function procRow(p) {
@@ -730,6 +731,7 @@ function viewProcedure(p) {
     <div class="crumbs"><a href="#/proceduri">Proceduri</a> / ${esc(p.cod)}</div>
     <span class="eyebrow">Procedura ${esc(p.cod)}</span>
     <h1>${esc(p.titlu)}</h1>
+    ${p.teren ? `<p class="sub" style="margin-top:10px;font-size:.9rem;color:#7a6a45">Actualizat pe teren · în harta inițială: ${esc(p.initial)}</p>` : ''}
   </div></section>
   <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">
     <div class="facts-grid">

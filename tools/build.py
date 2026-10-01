@@ -33,6 +33,63 @@ RETAIL = [f"P{n:02d}" for n in range(1, 15)]
 PRODUCTIE_COMUN = ["P15", "P16", "P17", "P22", "P23", "P24"]
 
 # ---------------------------------------------------------------------------
+# Actualizări confirmate pe teren, peste harta din Excel (valabile în toată
+# rețeaua). Se marchează în ghid „actualizat pe teren”; de mutat și în Excel.
+# ---------------------------------------------------------------------------
+NOTA_LIVRARI = ("Șoferii au cheie: lasă marfa și dacă magazinul e încă închis. Marfa vine "
+                "mereu cu avizul de însoțire, preluat de șofer la încărcare (din Peciu Nou "
+                "sau din alt magazin).")
+
+ACTUALIZARI_TASKURI = [
+    # (începutul task-ului din Excel, câmpurile noi)
+    ("Preluare marfă de la curier", {
+        "t": "Verificarea cantitativă a mărfii față de avizul de însoțire, în momentul așezării pe rafturi",
+        "cand": "Zilnic, la așezarea mărfii pe rafturi",
+        "verif": "Aviz completat și semnat de VT; diferențele notate pe aviz",
+    }),
+    ("Verificare calitativă: aspect", {"cand": "Zilnic, la așezarea mărfii pe rafturi"}),
+    ("Depozitare imediată pe categorii", {"cand": "Zilnic, la așezarea mărfii pe rafturi"}),
+]
+TASKURI_NOI = [
+    # (se adaugă după task-ul care începe cu…, task-ul nou)
+    ("Verificarea cantitativă a mărfii față de avizul", {
+        "t": "Notarea diferențelor pe aviz și predarea avizului către contabilitate, pentru prelucrare",
+        "rol": "VT", "min": "5", "cand": "Zilnic, după verificarea avizului",
+        "verif": "Avizele cu diferențe ajung la contabilitate (ADM)", "proc": "PR-02.1",
+    }),
+]
+ACTUALIZARI_PROCEDURI = {
+    "PR-02.1": {
+        "titlu": "Recepția cantitativă a livrării pe baza avizului de însoțire",
+        "decl": "Așezarea pe rafturi a mărfii lăsate de șofer împreună cu avizul",
+    },
+}
+
+
+def aplica_actualizari(taskuri, proceduri):
+    for inceput, nou in ACTUALIZARI_TASKURI:
+        gasite = [t for t in taskuri if t["t"].startswith(inceput)]
+        if len(gasite) != 1:
+            sys.exit(f"Actualizarea „{inceput}” se potrivește cu {len(gasite)} task-uri (trebuie exact 1).")
+        t = gasite[0]
+        t["initial"] = f"{t['t']} ({t['cand']})"
+        t.update(nou)
+        t["teren"] = True
+    for dupa, nou in TASKURI_NOI:
+        i = next((i for i, t in enumerate(taskuri) if t["t"].startswith(dupa)), None)
+        if i is None:
+            sys.exit(f"Task-ul nou nu are după ce să fie pus: „{dupa}”.")
+        taskuri.insert(i + 1, {**nou, "p": taskuri[i]["p"], "sub": taskuri[i]["sub"], "teren": True, "initial": ""})
+    for i, t in enumerate(taskuri):
+        t["id"] = i
+    for p in proceduri:
+        if p["cod"] in ACTUALIZARI_PROCEDURI:
+            p["initial"] = f"{p['titlu']} · declanșator: {p['decl']}"
+            p.update(ACTUALIZARI_PROCEDURI[p["cod"]])
+            p["teren"] = True
+
+
+# ---------------------------------------------------------------------------
 # Fișa fiecărui spațiu: program, livrări, contacte, echipamente.
 # Un câmp lăsat "" apare în ghid ca „de completat”.
 # ---------------------------------------------------------------------------
@@ -47,7 +104,7 @@ def echipament(nume, raportezi=""):
 def fisa_magazin(coacere, program=None, livrare_peciu=""):
     return {
         "program": program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
-        "nota_livrari": "Șoferii au cheie: lasă marfa și dacă magazinul e încă închis.",
+        "nota_livrari": NOTA_LIVRARI,
         "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", livrare_peciu],
                     ["Cofetărie și creme (Laborator Fructus)", ""]],
         "contacte": [
@@ -117,8 +174,8 @@ SPATII = [
             ("Expunerea vizibilă a minimum 6-8 SKU", "Zilnic, 07:45", ""),
             ("Amplasare tablă de ardezie", "Zilnic, 07:50", "",
              "Amplasare tablă de ardezie cu mesajul zilei („Baguette proaspătă de la 8:00”)"),
-            ("Preluare marfă de la curier", "Zilnic, 07:30, la sosirea livrării din Peciu Nou", ""),
-            ("Verificare calitativă: aspect", "Zilnic, 07:30, la recepție", ""),
+            ("Verificarea cantitativă a mărfii față de avizul", "Zilnic, 07:30, la așezarea mărfii pe rafturi", ""),
+            ("Verificare calitativă: aspect", "Zilnic, 07:30, la așezarea mărfii pe rafturi", ""),
             ("Poziționarea produselor cu valoare mare", "Zilnic, 07:50", ""),
             ("Verificare etichete", "Zilnic, 07:50", ""),
             ("Verificare stoc lapte", "Zilnic, 07:50", ""),
@@ -173,7 +230,7 @@ SPATII = [
                      ["Sosire Fructus", "06:50"],
                      ["Sosire Porumbescu", "07:30"],
                      ["Livrări B2B și evenimente", ""]],
-            nota_livrari="Șoferii au cheie: lasă marfa și dacă magazinul e încă închis."),
+            nota_livrari=NOTA_LIVRARI),
         "subtitlu": "Brutărie și patiserie",
         "procese": ["P18", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P18", "P19"],
@@ -313,6 +370,8 @@ def citeste(xlsx):
         else:
             sectiune = {"titlu": t, "linii": []}
             legenda.append(sectiune)
+
+    aplica_actualizari(taskuri, proceduri)
 
     spatii = [dict(sp) for sp in SPATII]
     for sp in spatii:
