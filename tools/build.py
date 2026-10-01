@@ -250,18 +250,20 @@ SPATII = [
         "fisa": fisa_magazin(livrare_peciu="≈ 06:30 când e prima oprire; altfel după Fructus (în funcție de trafic)", livrare_fructus=COFETARIE_DUMBRAVITA, coacere=True,
             adresa="Strada Conac 14, Dumbrăvița",
             program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 18:00"], ["Duminică", "Închis"],
+                     ["Sosire echipă coacere și umplere (PP + B)", "06:00, zilele cu program"],
                      sosire_vanzare("08:30")]),
-        # Echipa de vânzare vine cu 30–40 min înainte de deschiderea de la 08:30.
+        # Ca la Porumbescu: PP + B deschide la 06:00; vânzarea vine cu 30–40 min
+        # înainte de deschiderea de la 08:30.
         "ajustari": dimineata("08:30", deschidere=[
-            ("Descuiere, dezarmare alarmă", "Zilnic, 08:00, la sosirea echipei", ""),
-            ("Pornire echipamente: espressor", "Zilnic, 08:00", ""),
+            ("Descuiere, dezarmare alarmă", "Zilnic, 06:00", "PP + B"),
+            ("Pornire echipamente: espressor", "Zilnic, 06:05", "PP + B"),
         ]),
         "abateri": "Dumbrăvița",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
         "note": [
             {"titlu": "Dimineața la Dumbrăvița",
-             "text": "Echipa de vânzare (VT, V, BAR) vine cu 30–40 de minute înainte de deschiderea de la 08:30 și pregătește magazinul între 08:00 și 08:30. Marfa e deja lăsată de șofer. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine a task-urilor, cu echipa venită cu 30–40 de minute înainte."},
+             "text": "Echipa de coacere și umplere (PP + B) vine la 06:00: descuie, dezarmează alarma și pornește echipamentele. Echipa de vânzare (VT, V, BAR) vine cu 30–40 de minute înainte de deschiderea de la 08:30 și pregătește magazinul între 08:00 și 08:30. Marfa e deja lăsată de șofer. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine a task-urilor, cu echipa venită cu 30–40 de minute înainte."},
             {"titlu": "Zonă de coacere și umplere patiserie",
              "text": "Magazinul are zonă proprie de coacere și umplere: semipreparatele venite din producție se coc și se umplu aici, la comandă. Rol: Preparator patiserie și bucătar (PP + B)."},
         ],
