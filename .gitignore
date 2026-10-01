@@ -3,3 +3,7 @@
 *.xls
 *.csv
 __pycache__/
+# Exportul SQL al ghidului (tools/import_supabase.py) și cheile locale.
+date-*.sql
+.env
+.env.*

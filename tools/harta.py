@@ -1,28 +1,16 @@
 #!/usr/bin/env python3
-"""Construiește index.html din harta de operațiuni (Excel) + parola echipei.
+"""Harta de operațiuni Madame Magnifique: citește Excel-ul și adaugă configurarea
+ghidului (spațiile, fișele, ajustările locale și actualizările de pe teren).
 
-Utilizare:
-    pip install openpyxl cryptography
-    python3 tools/build.py Harta_Operatiuni_Madame_Magnifique_FIRMA.xlsx
-
-Parola se cere interactiv (sau din variabila MM_PAROLA). Conținutul e criptat
-AES-256-GCM cu o cheie derivată din parolă (PBKDF2-SHA256), așa că în repo
-ajunge doar textul criptat. Excel-ul NU se pune în repo.
+Nu se rulează direct: îl folosesc tools/import_supabase.py (încărcarea în
+Supabase). Excel-ul NU se pune în repo.
 """
-import base64
-import getpass
-import json
-import os
 import sys
 from pathlib import Path
 
 import openpyxl
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 ROOT = Path(__file__).resolve().parent.parent
-ITERATII = 310_000
 
 # ---------------------------------------------------------------------------
 # Dimineața în magazine. Echipa de vânzare (VT, V, BAR) vine cu 30–40 de minute
@@ -473,33 +461,3 @@ def citeste(xlsx):
         "proceduri": proceduri, "abateri": abateri, "roluri": roluri,
         "legenda": legenda, "spatii": spatii,
     }
-
-
-def cripteaza(date, parola):
-    sare, iv = os.urandom(16), os.urandom(12)
-    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=sare, iterations=ITERATII)
-    cheie = kdf.derive(parola.encode("utf-8"))
-    ct = AESGCM(cheie).encrypt(iv, json.dumps(date, ensure_ascii=False).encode("utf-8"), None)
-    b64 = lambda b: base64.b64encode(b).decode()
-    return {"v": 1, "iter": ITERATII, "salt": b64(sare), "iv": b64(iv), "ct": b64(ct)}
-
-
-def main():
-    if len(sys.argv) != 2:
-        sys.exit(__doc__)
-    date = citeste(sys.argv[1])
-    parola = os.environ.get("MM_PAROLA") or getpass.getpass("Parola echipei: ")
-    if len(parola) < 8:
-        sys.exit("Parola trebuie să aibă minimum 8 caractere.")
-
-    sablon = (ROOT / "src" / "template.html").read_text(encoding="utf-8")
-    logo = (ROOT / "src" / "logo.svg").read_text(encoding="utf-8")
-    html = (sablon.replace("<!--LOGO-->", logo)
-                  .replace("/*PAYLOAD*/null", json.dumps(cripteaza(date, parola))))
-    (ROOT / "index.html").write_text(html, encoding="utf-8")
-    print(f"index.html scris: {len(date['procese'])} procese, {len(date['taskuri'])} task-uri, "
-          f"{len(date['proceduri'])} proceduri, {len(date['roluri'])} roluri.")
-
-
-if __name__ == "__main__":
-    main()

@@ -21,32 +21,28 @@ vizual al madamemagnifique.ro: antracit `#242424`, bej-gri `#dedcd8`, nisip
   rol (procese, task-uri pas cu pas, proceduri).
 - **Registrul procedurilor**, filtrabil, cu lanțul „vine după / urmează”.
 - **Căutare** pe tot conținutul, fără diacritice obligatorii (tasta `/`).
+- **Conturi individuale** (utilizator + parolă), cu acces pe rol.
 
-## Confidențialitate
+## Conturi și confidențialitate
 
-Repo-ul e public (cerință GitHub Pages pe contul gratuit), dar conținutul **nu**:
-tot ce e în ghid e criptat în `index.html` (AES-256-GCM, cheie derivată din
-parola echipei cu PBKDF2-SHA256, 310.000 de iterații). Fără parolă se vede doar
-ecranul de intrare. Excel-ul sursă nu se pune niciodată în repo (`.gitignore`).
-Pagina e exclusă de la indexare (`robots.txt` + `noindex`).
+Fiecare angajat se loghează cu utilizatorul și parola lui (fără înregistrare
+publică: conturile le creează adminul). Conținutul stă în **Supabase**, nu în
+repo: pagina îl citește după logare, iar regulile din baza de date (Row Level
+Security) decid ce primește fiecare. Excel-ul și exportul SQL nu se pun niciodată
+în repo. Configurarea: [`SUPABASE-SETUP.md`](SUPABASE-SETUP.md).
 
-Parola se împarte doar oral sau în grupul intern. Pe tabletele din magazine,
-bifa „Ține-mă minte” păstrează accesul.
-
-## Actualizare (conținut nou sau parolă nouă)
+## Actualizare
 
 ```bash
-pip install openpyxl cryptography
-python3 tools/build.py /cale/catre/Harta_Operatiuni_Madame_Magnifique_FIRMA.xlsx
-# cere parola; apoi:
-git add index.html && git commit -m "Actualizare ghid" && git push
+pip install openpyxl
+python3 tools/import_supabase.py Harta.xlsx date-ghid.sql   # conținutul → Supabase (SQL Editor)
+python3 tools/pagina.py                                     # aspectul → index.html
 ```
 
-- Structura spațiilor (ce procese, roluri și note are fiecare magazin sau
-  laborator) se editează în `SPATII`, în `tools/build.py`.
+- Structura spațiilor, fișele, ajustările de dimineață și actualizările de pe
+  teren se editează în `tools/harta.py`.
 - Aspectul se editează în `src/template.html`.
-- Schimbarea parolei = rulezi build-ul cu parola nouă. Dispozitivele cu parola
-  veche salvată vor cere din nou parola.
+- Schema bazei de date: `supabase/migrations/`; teste locale: `supabase/tests/`.
 
 ## Publicare
 

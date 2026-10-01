@@ -58,6 +58,10 @@
   .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
   .btn.ghost:hover { background: var(--ink); color: #fff; }
   .lock-card .btn { width: 100%; margin-top: 12px; }
+  .lock-card p.check { margin: 16px 0 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .user-chip { font-size: .82rem; color: var(--muted); white-space: nowrap; padding: 0 4px; }
+  .user-chip b { font-weight: 500; color: var(--ink); }
   .check { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 16px; font-size: .88rem; color: var(--muted); }
   .err { color: #9b2c2c; font-size: .9rem; min-height: 1.4em; margin-top: 12px; }
 
@@ -337,10 +341,12 @@
     <span class="eyebrow">Doar pentru echipă</span>
     <h1>Ghidul echipei</h1>
     <p>Rolurile, procesele și procedurile Madame Magnifique, pe magazine, laboratoare și B2B.</p>
-    <input type="text" name="username" value="echipa" autocomplete="username" hidden>
-    <input class="field" type="password" id="pw" name="password" placeholder="Parola echipei" autocomplete="current-password" required>
+    <label class="sr-only" for="user">Utilizator</label>
+    <input class="field" type="text" id="user" name="username" placeholder="Utilizator (ex.: ana.vt)" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    <label class="sr-only" for="pw">Parola</label>
+    <input class="field" type="password" id="pw" name="password" placeholder="Parola" autocomplete="current-password" required style="margin-top:10px">
     <button class="btn" type="submit" id="unlockBtn">Intră</button>
-    <label class="check"><input type="checkbox" id="remember" checked> Ține-mă minte pe acest dispozitiv</label>
+    <p class="check">Ai uitat parola? Cere-i responsabilului de locație să ți-o reseteze.</p>
     <div class="err" id="err" role="alert"></div>
   </form>
   </div>
@@ -362,6 +368,7 @@
         <a href="#/roluri" data-nav="roluri">Roluri</a>
         <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
         <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
+        <span class="user-chip" id="userChip"></span>
       </nav>
     </div>
   </header>
@@ -377,47 +384,143 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script>
 <script>
-const PAYLOAD = /*PAYLOAD*/null;
-const LS_KEY = 'mm-echipa-parola';
-let D = null;
+let D = null, ME = null, SB = null;
 
-// ---------- Decriptare ----------
-const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-async function decrypt(pw) {
-  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
-  const key = await crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt: b64(PAYLOAD.salt), iterations: PAYLOAD.iter, hash: 'SHA-256' },
-    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
-  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(PAYLOAD.iv) }, key, b64(PAYLOAD.ct));
-  return JSON.parse(new TextDecoder().decode(pt));
-}
-const store = {
-  get() { try { return localStorage.getItem(LS_KEY); } catch (e) { return null; } },
-  set(v) { try { localStorage.setItem(LS_KEY, v); } catch (e) {} },
-  clear() { try { localStorage.removeItem(LS_KEY); } catch (e) {} },
-};
-async function unlock(pw, remember) {
-  D = await decrypt(pw);
-  if (remember) store.set(pw);
-  prepare();
+// ---------- Autentificare (Supabase) ----------
+// Angajatul scrie doar utilizatorul; contul are în spate un email intern,
+// pe care nu se trimite nimic.
+const DOMENIU_CONTURI = 'echipa.madamemagnifique.ro';
+const CFG = window.MM_CONFIG || {};
+const emailDin = u => `${u.trim().toLowerCase()}@${DOMENIU_CONTURI}`;
+const showErr = m => { document.getElementById('err').textContent = m; };
+
+function showApp() {
   document.getElementById('lock').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
+  document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
   route();
 }
+function showLock(msg) {
+  D = ME = null;
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('lock').classList.remove('hidden');
+  if (msg) showErr(msg);
+}
+
+// Citește un tabel întreg (PostgREST întoarce maximum 1000 de rânduri pe cerere).
+async function tabel(nume, ordine) {
+  const rows = [];
+  for (let de = 0; ; de += 1000) {
+    let q = SB.from(nume).select('*').range(de, de + 999);
+    for (const o of ordine) q = q.order(o);
+    const { data, error } = await q;
+    if (error) throw error;
+    rows.push(...data);
+    if (data.length < 1000) return rows;
+  }
+}
+
+// Reface din tabelele Supabase aceeași structură pe care o folosește pagina.
+async function incarcaDate() {
+  const [roluri, domenii, procese, subprocese, proceduri, taskuri, abateri, ghid,
+         spatii, spProc, spRol, spNote, spFapte, spAjust] = await Promise.all([
+    tabel('roles', ['position']), tabel('domains', ['position']), tabel('processes', ['position']),
+    tabel('subprocesses', ['process_code', 'position']), tabel('procedures', ['position']), tabel('tasks', ['id']),
+    tabel('deviations', ['id']), tabel('guide_sections', ['id']), tabel('spaces', ['position']),
+    tabel('space_processes', ['space_id', 'position']), tabel('space_roles', ['space_id', 'position']),
+    tabel('space_notes', ['space_id', 'position']), tabel('space_facts', ['space_id', 'section', 'position']),
+    tabel('space_task_overrides', ['space_id', 'task_id']),
+  ]);
+  const grup = (rows, cheie) => rows.reduce((m, r) => ((m[r[cheie]] = m[r[cheie]] || []).push(r), m), {});
+  const subP = grup(subprocese, 'process_code'), procD = grup(procese, 'domain_code');
+  const sp = { proc: grup(spProc, 'space_id'), rol: grup(spRol, 'space_id'), note: grup(spNote, 'space_id'),
+               fapte: grup(spFapte, 'space_id'), ajust: grup(spAjust, 'space_id') };
+  const str = v => (v === null || v === undefined) ? '' : String(v);
+  return {
+    roluri: roluri.map(r => ({ cod: r.code, nume: r.name, raspunde: r.responsibilities, procese: r.main_processes || [] })),
+    domenii: Object.fromEntries(domenii.map(x => [x.code, { cod: x.code, nume: x.name, miza: x.stake,
+      procese: (procD[x.code] || []).map(p => p.code) }])),
+    procese: Object.fromEntries(procese.map(p => [p.code, { cod: p.code, nume: p.name, domeniu: p.domain_code,
+      rol: p.lead_role || '', val: p.wave || '', miza: p.stake, sub: (subP[p.code] || []).map(x => x.name) }])),
+    proceduri: proceduri.map(p => ({ cod: p.code, titlu: p.title, p: p.process_code, rol: p.role_code, decl: p.trigger,
+      tip: p.trigger_type, prio: p.priority, val: p.wave, pasi: str(p.steps), teren: p.field_update, initial: p.original })),
+    taskuri: taskuri.map(t => ({ id: t.id, p: t.process_code, sub: t.subprocess, t: t.text, rol: t.role_code,
+      min: str(t.minutes), cand: t.schedule, verif: t.verification, proc: t.procedure_code || '',
+      teren: t.field_update, initial: t.original })),
+    abateri: abateri.map(a => ({ loc: a.location, zona: a.area, text: a.text, dece: a.reason })),
+    legenda: ghid.map(g => ({ titlu: g.title, linii: g.lines || [] })),
+    spatii: spatii.map(s => {
+      const pr = sp.proc[s.id] || [], fapte = sp.fapte[s.id] || [];
+      const kv = sec => fapte.filter(f => f.section === sec).map(f => [f.label, f.value]);
+      const ajust = Object.fromEntries((sp.ajust[s.id] || []).map(a => [a.task_id, { cand: a.schedule, rol: a.role_code || '', t: a.text }]));
+      return {
+        id: s.id, tip: s.type, nume: s.name, titlu: s.title, subtitlu: s.subtitle || undefined,
+        abateri: s.deviations_location || undefined,
+        abateri_filtru: Object.keys(s.deviations_filter || {}).length ? s.deviations_filter : undefined,
+        domenii: s.domains && s.domains.length ? s.domains : undefined,
+        procese: pr.map(x => x.process_code),
+        specifice: pr.some(x => x.is_specific) ? pr.filter(x => x.is_specific).map(x => x.process_code) : undefined,
+        roluri: (sp.rol[s.id] || []).map(x => x.role_code),
+        note: (sp.note[s.id] || []).map(n => ({ titlu: n.title, text: n.text })),
+        fisa: {
+          program: kv('program'), livrari: kv('livrari'),
+          contacte: fapte.filter(f => f.section === 'contacte').map(f => ({ rol: f.role_code || '', functie: f.label, nume: f.person, telefon: f.phone })),
+          echipamente: fapte.filter(f => f.section === 'echipamente').map(f => ({ nume: f.label, raportezi: f.value })),
+          nota_livrari: s.deliveries_note, nota_echipamente: s.equipment_note,
+        },
+        ajustari: Object.keys(ajust).length ? ajust : null,
+      };
+    }),
+  };
+}
+
+async function deschideSesiunea(user) {
+  const { data: prof, error } = await SB.from('profiles').select('username, full_name, role_code, active').eq('user_id', user.id).maybeSingle();
+  if (error) throw error;
+  if (!prof) { await SB.auth.signOut(); return showLock('Contul nu are încă un profil în ghid. Anunță responsabilul de locație.'); }
+  if (!prof.active) { await SB.auth.signOut(); return showLock('Contul este dezactivat. Anunță responsabilul de locație.'); }
+  ME = prof;
+  D = await incarcaDate();
+  prepare();
+  showApp();
+}
+
 document.getElementById('lockForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const btn = document.getElementById('unlockBtn'), err = document.getElementById('err');
-  btn.disabled = true; btn.textContent = 'Se deschide…'; err.textContent = '';
-  try { await unlock(document.getElementById('pw').value, document.getElementById('remember').checked); }
-  catch (x) { err.textContent = 'Parolă greșită. Cere-o responsabilului de locație.'; }
+  if (!SB) return;
+  const btn = document.getElementById('unlockBtn');
+  const u = document.getElementById('user').value;
+  if (!/^[a-z0-9._-]{3,40}$/i.test(u.trim())) return showErr('Utilizatorul are doar litere, cifre, punct sau cratimă (ex.: ana.vt).');
+  btn.disabled = true; btn.textContent = 'Se deschide…'; showErr('');
+  try {
+    const { data, error } = await SB.auth.signInWithPassword({ email: emailDin(u), password: document.getElementById('pw').value });
+    if (error) throw error;
+    document.getElementById('pw').value = '';
+    await deschideSesiunea(data.user);
+  } catch (x) {
+    const gresit = /invalid login credentials/i.test(x.message || '');
+    showErr(gresit ? 'Utilizator sau parolă greșită.' : 'Nu s-a putut deschide ghidul. Verifică internetul și încearcă din nou.');
+  }
   btn.disabled = false; btn.textContent = 'Intră';
 });
-document.getElementById('logout').addEventListener('click', () => { store.clear(); location.hash = ''; location.reload(); });
+document.getElementById('logout').addEventListener('click', async () => {
+  try { await SB.auth.signOut(); } catch (e) {}
+  location.hash = ''; showLock();
+});
 (async () => {
-  if (!PAYLOAD) { document.getElementById('err').textContent = 'Pagina nu a fost construită încă (lipsește conținutul).'; return; }
-  const saved = store.get();
-  if (saved) { try { await unlock(saved, true); } catch (e) { store.clear(); } }
+  if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase) {
+    document.getElementById('unlockBtn').disabled = true;
+    return showErr('Ghidul nu e conectat încă la baza de date (lipsește assets/config.js).');
+  }
+  SB = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  const { data } = await SB.auth.getSession();
+  if (data.session) {
+    try { await deschideSesiunea(data.session.user); }
+    catch (e) { showLock('Nu s-a putut încărca ghidul. Reîncarcă pagina.'); }
+  }
 })();
 
 // ---------- Utilitare ----------
