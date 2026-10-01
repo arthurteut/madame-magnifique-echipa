@@ -119,9 +119,9 @@ def echipament(nume, raportezi=""):
     return {"nume": nume, "raportezi": raportezi}
 
 
-def fisa_magazin(coacere, program=None, livrare_peciu="", livrare_fructus=""):
+def fisa_magazin(coacere, program=None, livrare_peciu="", livrare_fructus="", adresa=""):
     return {
-        "program": program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
+        "program": [["Adresă", adresa]] + (program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]]),
         "nota_livrari": NOTA_LIVRARI,
         "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", livrare_peciu],
                     ["Cofetărie și creme (Laborator Fructus)", livrare_fructus]],
@@ -165,7 +165,7 @@ SPATII = [
     {
         "id": "porumbescu", "tip": "magazin", "nume": "Porumbescu",
         "titlu": "Magazinul Porumbescu",
-        "fisa": fisa_magazin(livrare_peciu="07:30", livrare_fructus="07:30, în aceeași cursă (preluată din Fructus)", coacere=True, program=[
+        "fisa": fisa_magazin(adresa="Ciprian Porumbescu 12, Timișoara", livrare_peciu="07:30", livrare_fructus="07:30, în aceeași cursă (preluată din Fructus)", coacere=True, program=[
             ["Luni – Vineri", "08:00 – 19:30"],
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
@@ -215,7 +215,9 @@ SPATII = [
     {
         "id": "dumbravita", "tip": "magazin", "nume": "Dumbrăvița",
         "titlu": "Magazinul Dumbrăvița",
-        "fisa": fisa_magazin(livrare_peciu="≈ 06:30 când e prima oprire; altfel după Fructus (în funcție de trafic)", livrare_fructus=COFETARIE_DUMBRAVITA, coacere=True),
+        "fisa": fisa_magazin(livrare_peciu="≈ 06:30 când e prima oprire; altfel după Fructus (în funcție de trafic)", livrare_fructus=COFETARIE_DUMBRAVITA, coacere=True,
+            adresa="Strada Conac 14, Dumbrăvița",
+            program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 18:00"], ["Duminică", "Închis"]]),
         "abateri": "Dumbrăvița",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -227,7 +229,9 @@ SPATII = [
     {
         "id": "fructus", "tip": "magazin", "nume": "Fructus",
         "titlu": "Magazinul Fructus",
-        "fisa": fisa_magazin(livrare_peciu="≈ 06:50; mai devreme când e prima oprire (în funcție de trafic)", livrare_fructus="Pe loc, din laborator", coacere=False),
+        "fisa": fisa_magazin(livrare_peciu="≈ 06:50; mai devreme când e prima oprire (în funcție de trafic)", livrare_fructus="Pe loc, din laborator", coacere=False,
+            adresa="Gheorghe Lazăr 26, Timișoara",
+            program=[["Luni – Vineri", "08:30 – 20:00"], ["Sâmbătă", "09:00 – 17:00"], ["Duminică", "Închis"]]),
         "abateri": "Fructus",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
