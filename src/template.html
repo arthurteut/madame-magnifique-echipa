@@ -555,11 +555,11 @@ function viewHome() {
 function eff(t, ctx) {
   const a = ctx && ctx.adj && ctx.adj[t.id];
   if (!a) return t;
-  return { ...t, cand: a.cand || t.cand, rol: a.rol || t.rol, stdCand: a.cand && a.cand !== t.cand ? t.cand : '', stdRol: a.rol && a.rol !== t.rol ? t.rol : '', loc: ctx.loc };
+  return { ...t, t: a.t || t.t, textLocal: !!a.t, cand: a.cand || t.cand, rol: a.rol || t.rol, stdCand: a.cand && a.cand !== t.cand ? t.cand : '', stdRol: a.rol && a.rol !== t.rol ? t.rol : '', loc: ctx.loc };
 }
 function taskHtml(t, rol) {
   const pr = PROC[t.proc];
-  const std = t.loc ? `<span class="std-note">La ${esc(t.loc)}${t.stdCand ? ` · standard: ${esc(t.stdCand)}` : ''}${t.stdRol ? ` · în rețea: ${esc(t.stdRol)}` : ''}</span>` : '';
+  const std = t.loc ? `<span class="std-note">La ${esc(t.loc)}${t.stdCand ? ` · standard: ${esc(t.stdCand)}` : ''}${t.stdRol ? ` · în rețea: ${esc(t.stdRol)}` : ''}${t.textLocal ? ' · text adaptat' : ''}</span>` : '';
   return `<div class="task ${rol && t.rol === rol ? 'mine' : ''} ${t.loc ? 'adj' : ''}">
     <div class="t">${esc(t.t)}</div>
     <div class="right">${rolPill(t.rol)}${t.proc ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr?.titlu || '')}">${esc(t.proc)}</a>` : ''}</div>

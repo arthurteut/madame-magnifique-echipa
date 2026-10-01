@@ -44,10 +44,10 @@ def echipament(nume, raportezi=""):
     return {"nume": nume, "raportezi": raportezi}
 
 
-def fisa_magazin(coacere, program=None):
+def fisa_magazin(coacere, program=None, livrare_peciu=""):
     return {
         "program": program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
-        "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", ""],
+        "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", livrare_peciu],
                     ["Cofetărie și creme (Laborator Fructus)", ""]],
         "contacte": [
             contact("RL", "Responsabil locație"),
@@ -68,11 +68,11 @@ def fisa_magazin(coacere, program=None):
     }
 
 
-def fisa_laborator(sefi_sectie, echipamente):
+def fisa_laborator(sefi_sectie, echipamente, livrari=None):
     return {
         "program": [["Schimburi de producție", ""], ["Recepție materii prime", ""]],
-        "livrari": [["Plecare către Porumbescu", ""], ["Plecare către Dumbrăvița", ""],
-                    ["Plecare către Fructus", ""], ["Livrări B2B și evenimente", ""]],
+        "livrari": livrari or [["Plecare către Porumbescu", ""], ["Plecare către Dumbrăvița", ""],
+                               ["Plecare către Fructus", ""], ["Livrări B2B și evenimente", ""]],
         "contacte": [
             contact("DP", "Coordonator producție"),
             *[contact("SP", f) for f in sefi_sectie],
@@ -88,7 +88,7 @@ SPATII = [
     {
         "id": "porumbescu", "tip": "magazin", "nume": "Porumbescu",
         "titlu": "Magazinul Porumbescu",
-        "fisa": fisa_magazin(coacere=True, program=[
+        "fisa": fisa_magazin(livrare_peciu="07:30", coacere=True, program=[
             ["Luni – Vineri", "08:00 – 19:30"],
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
@@ -96,7 +96,8 @@ SPATII = [
             ["Sosire echipă de vânzare (VT, V, BAR)", "07:30"],
         ]),
         # Dimineața la Porumbescu: PP + B deschide la 06:00, vânzarea vine la 07:30,
-        # magazinul deschide la 08:00. (început task, ora de aici, rol de aici sau "")
+        # magazinul deschide la 08:00.
+        # (început task, ora de aici, rol de aici sau "", [text de aici, opțional])
         "ajustari": [
             ("Descuiere, dezarmare alarmă", "Zilnic, 06:00", "PP + B"),
             ("Pornire echipamente: espressor", "Zilnic, 06:05", "PP + B"),
@@ -112,7 +113,10 @@ SPATII = [
             ("Numărare fond de casă", "Zilnic, 07:45", ""),
             ("Deschidere tură în POS", "Zilnic, 07:45", ""),
             ("Expunerea vizibilă a minimum 6-8 SKU", "Zilnic, 07:45", ""),
-            ("Amplasare tablă de ardezie", "Zilnic, 07:50", ""),
+            ("Amplasare tablă de ardezie", "Zilnic, 07:50", "",
+             "Amplasare tablă de ardezie cu mesajul zilei („Baguette proaspătă de la 8:00”)"),
+            ("Preluare marfă de la curier", "Zilnic, 07:30, la sosirea livrării din Peciu Nou", ""),
+            ("Verificare calitativă: aspect", "Zilnic, 07:30, la recepție", ""),
             ("Poziționarea produselor cu valoare mare", "Zilnic, 07:50", ""),
             ("Verificare etichete", "Zilnic, 07:50", ""),
             ("Verificare stoc lapte", "Zilnic, 07:50", ""),
@@ -134,7 +138,7 @@ SPATII = [
     {
         "id": "dumbravita", "tip": "magazin", "nume": "Dumbrăvița",
         "titlu": "Magazinul Dumbrăvița",
-        "fisa": fisa_magazin(coacere=True),
+        "fisa": fisa_magazin(livrare_peciu="06:30", coacere=True),
         "abateri": "Dumbrăvița",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -146,7 +150,7 @@ SPATII = [
     {
         "id": "fructus", "tip": "magazin", "nume": "Fructus",
         "titlu": "Magazinul Fructus",
-        "fisa": fisa_magazin(coacere=False),
+        "fisa": fisa_magazin(livrare_peciu="06:50", coacere=False),
         "abateri": "Fructus",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -161,7 +165,12 @@ SPATII = [
         "fisa": fisa_laborator(
             ["Brutar-șef", "Patiser-șef"],
             ["Cuptoare de pâine", "Malaxoare (frământare)", "Camera de dospire",
-             "Laminor (patiserie)", "Frigidere și congelatoare", "Cântare"]),
+             "Laminor (patiserie)", "Frigidere și congelatoare", "Cântare"],
+            livrari=[["Plecarea mașinii de livrare", "05:50 – 06:00"],
+                     ["Sosire Dumbrăvița", "06:30"],
+                     ["Sosire Fructus", "06:50"],
+                     ["Sosire Porumbescu", "07:30"],
+                     ["Livrări B2B și evenimente", ""]]),
         "subtitlu": "Brutărie și patiserie",
         "procese": ["P18", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P18", "P19"],
@@ -307,11 +316,11 @@ def citeste(xlsx):
         if "ajustari" not in sp:
             continue
         rezolvate = {}
-        for inceput, cand, rol in sp["ajustari"]:
+        for inceput, cand, rol, *text in sp["ajustari"]:
             gasite = [t for t in taskuri if t["t"].startswith(inceput)]
             if len(gasite) != 1:
                 sys.exit(f"{sp['id']}: ajustarea „{inceput}” se potrivește cu {len(gasite)} task-uri (trebuie exact 1).")
-            rezolvate[gasite[0]["id"]] = {"cand": cand, "rol": rol}
+            rezolvate[gasite[0]["id"]] = {"cand": cand, "rol": rol, "t": text[0] if text else ""}
         sp["ajustari"] = rezolvate
 
     return {
