@@ -39,8 +39,15 @@
   .logo svg { display: block; height: 100%; width: auto; }
 
   /* ---------- Lacăt ---------- */
-  #lock { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 40px var(--gutter); background: var(--greige); }
+  #lock { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); background: var(--greige); }
+  .lock-photo { position: relative; overflow: hidden; margin: 0; background: #2a2622; }
+  .lock-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lock-side { display: grid; place-items: center; padding: 40px var(--gutter); }
   .lock-card { width: 100%; max-width: 440px; background: #fff; padding: clamp(28px, 6vw, 48px); text-align: center; }
+  @media (max-width: 820px) {
+    #lock { grid-template-columns: 1fr; grid-template-rows: 34vh auto; }
+    .lock-side { padding-top: 0; margin-top: -48px; position: relative; }
+  }
   .lock-card .logo { height: 64px; display: flex; justify-content: center; color: var(--ink); margin-bottom: 28px; }
   .lock-card h1 { font-size: 1.25rem; margin: 8px 0 6px; }
   .lock-card p { color: var(--muted); margin: 0 0 24px; font-size: .95rem; }
@@ -82,7 +89,21 @@
   .res-empty { padding: 18px 16px; color: var(--muted); }
 
   /* ---------- Acasă ---------- */
-  .hero { background: var(--ink); color: #fff; padding: clamp(48px, 9vw, 110px) 0 clamp(40px, 7vw, 80px); }
+  .hero { background: var(--ink); color: #fff; padding: clamp(48px, 8vw, 96px) 0 clamp(40px, 7vw, 80px); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .hero-collage { position: relative; height: clamp(380px, 40vw, 540px); }
+  .hero-collage figure { position: absolute; margin: 0; overflow: hidden; background: #3a352f; }
+  .hero-collage img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .hero-collage .f1 { left: 0; top: 10%; width: 54%; height: 72%; }
+  .hero-collage .f2 { right: 0; top: 0; width: 42%; height: 50%; }
+  .hero-collage .f3 { right: 6%; bottom: 0; width: 38%; height: 40%; }
+  .sw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+  .swi { display: inline-block; }
+
+  .marquee { background: var(--greige); overflow: hidden; padding: clamp(18px, 3vw, 28px) 0; border-bottom: 1px solid #d3d0ca; }
+  .mq-track { display: flex; width: max-content; }
+  .mq-track span { font: 400 clamp(1.5rem, 4vw, 2.9rem)/1.1 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--ink); white-space: nowrap; padding-right: .5em; }
+  .mq-track i { font-style: normal; color: var(--stone); padding-right: .5em; }
   .hero .eyebrow { color: var(--sand); }
   .hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 500; margin: 14px 0 12px; max-width: 16ch; }
   .hero p { color: #cfcdc8; max-width: 56ch; margin: 0 0 32px; font-size: 1.05rem; }
@@ -105,6 +126,15 @@
   .tile h3 { font-size: 1.35rem; margin: 10px 0 6px; transition: color .3s; }
   .tile p { margin: 0; font-size: .92rem; opacity: .85; }
   .tile .go { margin-top: 20px; font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .tile.photo { color: #fff; background: #2a2622; overflow: hidden; min-height: 280px; }
+  .tile.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
+  .tile.photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24, 22, 20, .78) 0%, rgba(24, 22, 20, .3) 48%, rgba(24, 22, 20, .7) 100%); }
+  .tile.photo h3, .tile.photo p, .tile.photo .eyebrow { text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
+  .tile.photo > div, .tile.photo > .go { position: relative; z-index: 1; }
+  .tile.photo h3, .tile.photo .eyebrow { color: #fff; }
+  .tile.photo p { opacity: .92; }
+  .tile.photo:hover { background: #2a2622; }
+  .tile.photo:hover img { transform: scale(1.07); }
   .tile.dark { background: var(--ink); color: #fff; }
   .tile.dark h3, .tile.dark .eyebrow { color: #fff; }
   .tile.dark:hover { background: #000; }
@@ -123,7 +153,10 @@
   .stat span { font-size: .85rem; color: var(--muted); }
 
   /* ---------- Pagina unui spațiu ---------- */
-  .band { background: var(--greige); padding: clamp(32px, 5vw, 56px) 0; }
+  .band { background: var(--greige); padding: clamp(32px, 5vw, 56px) 0; overflow: hidden; }
+  .band-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 30%); gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .band-photo { margin: 0; overflow: hidden; aspect-ratio: 4 / 5; max-height: 380px; background: #cfccc6; }
+  .band-photo img { display: block; width: 100%; height: 115%; object-fit: cover; }
   .crumbs { font-size: .82rem; color: var(--muted); margin-bottom: 14px; }
   .crumbs a { text-decoration: none; }
   .crumbs a:hover { text-decoration: underline; }
@@ -244,7 +277,23 @@
   footer button { background: none; border: 1px solid #555; color: #ddd; padding: 8px 14px; font-size: .8rem; }
   footer button:hover { border-color: #fff; }
 
+  @media (prefers-reduced-motion: no-preference) {
+    .lock-photo img { animation: kenburns 24s ease-in-out infinite alternate; }
+    .lock-card { animation: rise .9s cubic-bezier(.2, .7, .2, 1) .15s both; }
+    .lock-card .logo path { animation: riseT .8s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(.25s + var(--i, 0) * 45ms); }
+    .mq-track { animation: mq 38s linear infinite; }
+    html.gs .mq-track { animation: none; }
+  }
+  @keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.14) translate(-2%, -2%); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  /* Literele logo-ului au deja un transform SVG: le mișcăm cu „translate”, nu cu „transform”. */
+  @keyframes riseT { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes mq { to { transform: translateX(-50%); } }
   @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-collage { height: 300px; }
+    .band-grid { grid-template-columns: 1fr; }
+    .band-photo { aspect-ratio: 16 / 9; max-height: 220px; order: -1; }
     .bar { gap: 12px; height: 64px; }
     .bar .logo { height: 32px; }
     #menuBtn { display: inline-flex; margin-left: auto; }
@@ -281,6 +330,8 @@
 <body>
 
 <div id="lock">
+  <figure class="lock-photo"><img src="assets/img/patiserie-logo.jpg" alt="Patiserie Madame Magnifique pe hârtia cu logo"></figure>
+  <div class="lock-side">
   <form class="lock-card" id="lockForm" autocomplete="on">
     <div class="logo"><!--LOGO--></div>
     <span class="eyebrow">Doar pentru echipă</span>
@@ -292,6 +343,7 @@
     <label class="check"><input type="checkbox" id="remember" checked> Ține-mă minte pe acest dispozitiv</label>
     <div class="err" id="err" role="alert"></div>
   </form>
+  </div>
 </div>
 
 <div id="app" class="hidden">
@@ -323,6 +375,8 @@
   </footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 const PAYLOAD = /*PAYLOAD*/null;
 const LS_KEY = 'mm-echipa-parola';
@@ -427,7 +481,8 @@ function route() {
   $('#nav').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded', 'false');
   closeResults();
   wireView();
-  if (!params.keep) window.scrollTo(0, 0);
+  animateView();
+  if (!params.keep) window.scrollTo({ top: 0, behavior: 'instant' });
   const open = params.deschide && document.getElementById('proc-' + params.deschide);
   if (open) { open.open = true; setTimeout(() => open.scrollIntoView({ block: 'start' }), 30); }
 }
@@ -437,11 +492,15 @@ $('#menuBtn').addEventListener('click', () => {
 });
 
 // ---------- Acasă ----------
+// Fotografiile spațiilor (assets/img).
+const IMG = n => `assets/img/${n}.jpg`;
+const FOTO = { porumbescu: 'croissant', dumbravita: 'patiserie-logo', fructus: 'franzela', 'peciu-nou': 'paine-cos' };
 function tile(s) {
   const kind = { magazin: 'Magazin', productie: 'Laborator', b2b: 'Canal', birou: 'Suport' }[s.tip];
   const prof = s.abateri && abateriOf(s.abateri).find(a => a.zona === 'Profil');
   const desc = s.subtitlu || (prof ? prof.text : '');
-  return `<a class="tile ${s.tip === 'b2b' ? 'dark' : ''}" href="#/s/${s.id}">
+  const foto = FOTO[s.id];
+  return `<a class="tile ${foto ? 'photo' : ''} ${s.tip === 'b2b' ? 'dark' : ''}" href="#/s/${s.id}">${foto ? `<img src="${IMG(foto)}" alt="" loading="lazy">` : ''}
     <div><span class="eyebrow">${kind}</span><h3>${esc(s.tip === 'magazin' ? s.nume : s.titlu)}</h3><p>${esc(desc)}</p></div>
     <span class="go">Intră →</span></a>`;
 }
@@ -449,16 +508,22 @@ function viewHome() {
   const g = t => D.spatii.filter(s => s.tip === t).map(tile).join('');
   const roleChips = D.roluri.map(r => `<a class="chip" href="#/r/${enc(r.cod)}"><b>${esc(r.cod)}</b> ${esc(r.nume)}</a>`).join('');
   return `
-  <section class="hero"><div class="wrap">
+  <section class="hero"><div class="wrap hero-grid"><div>
     <span class="eyebrow">Ghidul echipei Madame Magnifique</span>
-    <h1>Ai o întrebare? Începe de aici.</h1>
+    <h1 data-split>Ai o întrebare? Începe de aici.</h1>
     <p>Tot ce facem, pe magazine, laboratoare și B2B: cine face, ce face, când și cum se verifică. Scrie ce cauți sau alege-ți locul de muncă.</p>
     <div class="hero-search" id="heroSearchBox">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input type="search" id="heroSearch" placeholder="Ex.: închiderea casei, recepție marfă, torturi la comandă" aria-label="Caută în ghid" autocomplete="off">
     </div>
     <div class="hint">Încearcă: <button data-q="deschidere">deschidere</button> <button data-q="temperaturi">temperaturi</button> <button data-q="produs nevândut">produs nevândut</button> <button data-q="candybar">candybar</button></div>
-  </div></section>
+  </div>
+  <div class="hero-collage" aria-hidden="true">
+    <figure class="f1" data-depth="1"><img src="${IMG('paine-cos')}" alt=""></figure>
+    <figure class="f2" data-depth="2.2"><img src="${IMG('croissant')}" alt=""></figure>
+    <figure class="f3" data-depth="3.4"><img src="${IMG('franzela')}" alt=""></figure>
+  </div></div></section>
+  <div class="marquee" aria-hidden="true"><div class="mq-track">${[0, 1].map(() => `<span>Pâine</span><i>·</i><span>Patiserie</span><i>·</i><span>Cofetărie</span><i>·</i><span>Cafea de specialitate</span><i>·</i><span>Torturi</span><i>·</i><span>Candybar</span><i>·</i>`).join('')}</div></div>
   <section class="block"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Unde lucrezi?</span><h2>Alege-ți spațiul</h2></div></div>
     <div class="group-label">Magazinele Madame</div>
@@ -609,13 +674,13 @@ function viewSpace(s, params) {
   if (rol === 'PP + B') roleExtra = `<div class="local"><b>${esc(rolName(rol))}:</b> ${esc(ROL[rol].raspunde)}. Lucrezi mai ales în zona de coacere și umplere (P03 Expunere) și la mic dejun / prânz (P06 Lunch, sandwich & to-go).</div>`;
 
   return `
-  <section class="band"><div class="wrap">
+  <section class="band"><div class="wrap ${FOTO[s.id] ? 'band-grid' : ''}"><div>
     <div class="crumbs"><a href="#/">Spații</a> / ${esc(s.titlu)}</div>
     <span class="eyebrow">${kind}</span>
-    <h1>${esc(s.titlu)}</h1>
+    <h1 data-split>${esc(s.titlu)}</h1>
     ${s.subtitlu ? `<p class="sub">${esc(s.subtitlu)}</p>` : ''}
     ${prof ? `<div class="profile"><p>${esc(prof.text)}</p><p class="why">${esc(prof.dece)}</p></div>` : ''}
-  </div></section>
+  </div>${FOTO[s.id] ? `<figure class="band-photo"><img src="${IMG(FOTO[s.id])}" alt=""></figure>` : ''}</div></section>
   ${fisaHtml(s)}
   ${(diff.length || s.note.length) ? `<section class="block soft"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Particularități</span><h2>Ce e diferit aici</h2></div></div>
@@ -841,6 +906,79 @@ function wireSearch(input, box) {
 wireSearch($('#topSearch'), $('#topSearchBox'));
 document.addEventListener('click', e => { if (activeBox && !activeBox.contains(e.target)) closeResults(); if (e.target.closest('.res')) { $('#topSearch').value = ''; } });
 document.addEventListener('keydown', e => { if (e.key === '/' && !/input|select|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); ($('#heroSearch') || $('#topSearch')).focus(); } });
+
+// ---------- Animații (GSAP + ScrollTrigger, în stilul DiviMotion) ----------
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HAS_GSAP = !!(window.gsap && window.ScrollTrigger) && !REDUCED;
+if (HAS_GSAP) { gsap.registerPlugin(ScrollTrigger); document.documentElement.classList.add('gs'); }
+let marqueeTween = null;
+document.querySelectorAll('.lock-card .logo path').forEach((p, i) => p.style.setProperty('--i', i));
+function splitWords(el) {
+  if (el.dataset.done) return el.querySelectorAll('.swi');
+  el.setAttribute('aria-label', el.textContent.trim());
+  el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="sw" aria-hidden="true"><span class="swi">${esc(w)}</span></span>`).join(' ');
+  el.dataset.done = 1;
+  return el.querySelectorAll('.swi');
+}
+function animateView() {
+  if (!HAS_GSAP) return;
+  ScrollTrigger.getAll().forEach(t => t.kill());
+  if (marqueeTween) { marqueeTween.kill(); marqueeTween = null; }
+  const ease = 'power4.out';
+
+  // Titluri: cuvintele urcă din mască.
+  document.querySelectorAll('#view [data-split]').forEach(h => gsap.from(splitWords(h), { yPercent: 115, duration: 1, ease, stagger: .07 }));
+  gsap.from('.hero .eyebrow, .hero p, .hero-search, .hint, .band .crumbs, .band .eyebrow, .band .sub, .band .profile', { y: 22, opacity: 0, duration: .8, ease: 'power3.out', stagger: .07, delay: .25 });
+
+  // Colajul: dezvăluire cu mască, apoi paralaxă la scroll.
+  gsap.utils.toArray('.hero-collage figure').forEach((f, i) => {
+    gsap.fromTo(f, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.out', delay: .2 + i * .15 });
+    gsap.from(f.querySelector('img'), { scale: 1.35, duration: 1.8, ease: 'expo.out', delay: .2 + i * .15 });
+    gsap.to(f, { yPercent: -8 * parseFloat(f.dataset.depth), ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  });
+  const bp = document.querySelector('.band-photo');
+  if (bp) {
+    gsap.fromTo(bp, { clipPath: 'inset(0% 0% 0% 100%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out', delay: .15 });
+    gsap.fromTo(bp.querySelector('img'), { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: bp, start: 'top bottom', end: 'bottom top', scrub: true } });
+  }
+
+  // Banda de text: se mișcă singură și accelerează odată cu scroll-ul.
+  const track = document.querySelector('.mq-track');
+  if (track) {
+    marqueeTween = gsap.to(track, { xPercent: -50, duration: 38, ease: 'none', repeat: -1 });
+    ScrollTrigger.create({ trigger: '.marquee', start: 'top bottom', end: 'bottom top', onUpdate: self => {
+      const v = Math.min(Math.abs(self.getVelocity()) / 250, 6);
+      gsap.to(marqueeTween, { timeScale: 1 + v, duration: .25, overwrite: true });
+      gsap.to(marqueeTween, { timeScale: 1, duration: 1.2, delay: .3, overwrite: false });
+    } });
+  }
+
+  // Cardurile apar eșalonat când intră în ecran.
+  const batch = sel => {
+    const els = gsap.utils.toArray(sel);
+    if (!els.length) return;
+    gsap.set(els, { y: 46, opacity: 0 });
+    ScrollTrigger.batch(els, { start: 'top 92%', once: true, onEnter: b => gsap.to(b, { y: 0, opacity: 1, duration: .8, ease: 'power3.out', stagger: .09 }) });
+  };
+  batch('#view .tile');
+  batch('#view .role-card');
+  batch('#view .card');
+  batch('#view .chips .chip');
+
+  // Titlurile secțiunilor.
+  gsap.utils.toArray('#view .block-head h2').forEach(h => gsap.from(splitWords(h), { yPercent: 115, duration: .9, ease, stagger: .06, scrollTrigger: { trigger: h, start: 'top 90%', once: true } }));
+
+  // Cifrele cresc de la zero.
+  gsap.utils.toArray('#view .stat strong').forEach(el => {
+    const end = parseInt(el.textContent, 10);
+    if (!end) return;
+    const o = { v: 0 };
+    el.textContent = '0';
+    gsap.to(o, { v: end, duration: 1.6, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 95%', once: true }, onUpdate: () => { el.textContent = Math.round(o.v); } });
+  });
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+}
+window.addEventListener('load', () => HAS_GSAP && ScrollTrigger.refresh());
 
 function wireView() {
   const hs = $('#heroSearch');
