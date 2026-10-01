@@ -36,7 +36,9 @@ PRODUCTIE_COMUN = ["P15", "P16", "P17", "P22", "P23", "P24"]
 # Actualizări confirmate pe teren, peste harta din Excel (valabile în toată
 # rețeaua). Se marchează în ghid „actualizat pe teren”; de mutat și în Excel.
 # ---------------------------------------------------------------------------
-SOFER_2 = "06:30 în zilele cu multe livrări (de exemplu când comandă toți clienții B2B); altfel 08:30"
+SOFER_2 = ("06:30 când comandă toți clienții B2B (altfel orele de livrare se suprapun "
+           "la unii clienți); în zilele cu mai puține livrări, 08:30")
+B2B_SOFERI = "Ambii șoferi"
 NOTA_LIVRARI = ("Șoferii au cheie: lasă marfa și dacă magazinul e încă închis. Marfa vine "
                 "mereu cu avizul de însoțire, preluat de șofer la încărcare (din Peciu Nou "
                 "sau din alt magazin).")
@@ -244,7 +246,7 @@ SPATII = [
                      ["Sosire Fructus (preia și marfa Laboratorului Fructus)", "06:50"],
                      ["Sosire Porumbescu", "07:30"],
                      ["Șofer 2: începe", SOFER_2],
-                     ["Livrări B2B și evenimente", ""]],
+                     ["Livrări B2B și evenimente", B2B_SOFERI]],
             nota_livrari=NOTA_LIVRARI),
         "subtitlu": "Brutărie și patiserie",
         "procese": ["P18", "P19"] + PRODUCTIE_COMUN,
@@ -269,7 +271,7 @@ SPATII = [
                      ["Sosire Porumbescu", "07:30, în aceeași cursă"],
                      ["Sosire Dumbrăvița", ""],
                      ["Magazinul Fructus", "Pe loc, din laborator"],
-                     ["Livrări B2B și evenimente", ""]],
+                     ["Livrări B2B și evenimente", B2B_SOFERI]],
             nota_livrari=NOTA_LIVRARI),
         "subtitlu": "Cofetărie, creme și dulcețuri",
         "procese": ["P20", "P21", "P19"] + PRODUCTIE_COMUN,
@@ -289,7 +291,7 @@ SPATII = [
         "fisa": {
             "program": [["Program birou B2B", ""], ["Termen de răspuns la o cerere de ofertă", ""]],
             "livrari": [["Șofer 2: începe", SOFER_2],
-                        ["Livrări B2B recurente", ""], ["Setup evenimente și candybar", ""]],
+                        ["Livrări B2B recurente", B2B_SOFERI], ["Setup evenimente și candybar", ""]],
             "contacte": [
                 contact("CB2B", "Coordonator B2B și evenimente", "Nicoleta"),
                 contact("DP", "Coordonator producție"),
