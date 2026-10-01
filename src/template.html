@@ -625,7 +625,8 @@ function fisaHtml(s) {
   const kv = ([k, v]) => `<div class="kv"><span class="k">${esc(k)}</span><span class="v">${val(v)}</span></div>`;
   const prog = (f.program || []).length || (f.livrari || []).length ? `<div class="card"><h3>Program și livrări</h3>
       ${(f.program || []).map(kv).join('')}
-      ${(f.livrari || []).length ? `<div class="kv-head">Livrări</div>${f.livrari.map(kv).join('')}` : ''}</div>` : '';
+      ${(f.livrari || []).length ? `<div class="kv-head">Livrări</div>${f.livrari.map(kv).join('')}` : ''}
+      ${f.nota_livrari ? `<p class="fisa-note">${esc(f.nota_livrari)}</p>` : ''}</div>` : '';
   const cont = (f.contacte || []).length ? `<div class="card"><h3>Contacte și responsabili</h3>
       ${f.contacte.map(c => `<div class="kv"><span class="k">${c.rol ? rolPill(c.rol) + ' ' : ''}${esc(c.functie)}<small>${c.nume ? esc(c.nume) : '<span class="todo">nume de completat</span>'}</small></span>
         <span class="v">${c.telefon ? `<a href="tel:${esc(c.telefon.replace(/\s/g, ''))}">${esc(c.telefon)}</a>` : '<span class="todo">telefon de completat</span>'}</span></div>`).join('')}</div>` : '';

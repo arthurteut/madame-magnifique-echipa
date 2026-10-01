@@ -47,6 +47,7 @@ def echipament(nume, raportezi=""):
 def fisa_magazin(coacere, program=None, livrare_peciu=""):
     return {
         "program": program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
+        "nota_livrari": "Șoferii au cheie: lasă marfa și dacă magazinul e încă închis.",
         "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", livrare_peciu],
                     ["Cofetărie și creme (Laborator Fructus)", ""]],
         "contacte": [
@@ -68,8 +69,9 @@ def fisa_magazin(coacere, program=None, livrare_peciu=""):
     }
 
 
-def fisa_laborator(sefi_sectie, echipamente, livrari=None):
+def fisa_laborator(sefi_sectie, echipamente, livrari=None, nota_livrari=""):
     return {
+        "nota_livrari": nota_livrari,
         "program": [["Schimburi de producție", ""], ["Recepție materii prime", ""]],
         "livrari": livrari or [["Plecare către Porumbescu", ""], ["Plecare către Dumbrăvița", ""],
                                ["Plecare către Fructus", ""], ["Livrări B2B și evenimente", ""]],
@@ -170,7 +172,8 @@ SPATII = [
                      ["Sosire Dumbrăvița", "06:30"],
                      ["Sosire Fructus", "06:50"],
                      ["Sosire Porumbescu", "07:30"],
-                     ["Livrări B2B și evenimente", ""]]),
+                     ["Livrări B2B și evenimente", ""]],
+            nota_livrari="Șoferii au cheie: lasă marfa și dacă magazinul e încă închis."),
         "subtitlu": "Brutărie și patiserie",
         "procese": ["P18", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P18", "P19"],
