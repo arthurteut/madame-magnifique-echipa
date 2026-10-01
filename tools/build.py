@@ -36,6 +36,7 @@ PRODUCTIE_COMUN = ["P15", "P16", "P17", "P22", "P23", "P24"]
 # Actualizări confirmate pe teren, peste harta din Excel (valabile în toată
 # rețeaua). Se marchează în ghid „actualizat pe teren”; de mutat și în Excel.
 # ---------------------------------------------------------------------------
+SOFER_2 = "06:30 în zilele cu multe livrări (de exemplu când comandă toți clienții B2B); altfel 08:30"
 NOTA_LIVRARI = ("Șoferii au cheie: lasă marfa și dacă magazinul e încă închis. Marfa vine "
                 "mereu cu avizul de însoțire, preluat de șofer la încărcare (din Peciu Nou "
                 "sau din alt magazin).")
@@ -58,6 +59,12 @@ TASKURI_NOI = [
         "verif": "Avizele cu diferențe ajung la contabilitate (ADM)", "proc": "PR-02.1",
     }),
 ]
+TASKURI_STERSE = [
+    # Diferențele de livrare merg doar pe aviz, la contabilitate.
+    "Raportare lipsuri și neconformități către producție",
+]
+PROCEDURI_STERSE = ["PR-02.3"]
+
 ACTUALIZARI_PROCEDURI = {
     "PR-02.1": {
         "titlu": "Recepția cantitativă a livrării pe baza avizului de însoțire",
@@ -67,6 +74,12 @@ ACTUALIZARI_PROCEDURI = {
 
 
 def aplica_actualizari(taskuri, proceduri):
+    for inceput in TASKURI_STERSE:
+        gasite = [t for t in taskuri if t["t"].startswith(inceput)]
+        if len(gasite) != 1:
+            sys.exit(f"Ștergerea „{inceput}” se potrivește cu {len(gasite)} task-uri (trebuie exact 1).")
+        taskuri.remove(gasite[0])
+    proceduri[:] = [p for p in proceduri if p["cod"] not in PROCEDURI_STERSE]
     for inceput, nou in ACTUALIZARI_TASKURI:
         gasite = [t for t in taskuri if t["t"].startswith(inceput)]
         if len(gasite) != 1:
@@ -101,12 +114,12 @@ def echipament(nume, raportezi=""):
     return {"nume": nume, "raportezi": raportezi}
 
 
-def fisa_magazin(coacere, program=None, livrare_peciu=""):
+def fisa_magazin(coacere, program=None, livrare_peciu="", livrare_fructus=""):
     return {
         "program": program or [["Luni – Vineri", ""], ["Sâmbătă", ""], ["Duminică", ""]],
         "nota_livrari": NOTA_LIVRARI,
         "livrari": [["Pâine și patiserie (Laborator Peciu Nou)", livrare_peciu],
-                    ["Cofetărie și creme (Laborator Fructus)", ""]],
+                    ["Cofetărie și creme (Laborator Fructus)", livrare_fructus]],
         "contacte": [
             contact("RL", "Responsabil locație"),
             contact("VT", "Vânzător de tură (senior)"),
@@ -147,7 +160,7 @@ SPATII = [
     {
         "id": "porumbescu", "tip": "magazin", "nume": "Porumbescu",
         "titlu": "Magazinul Porumbescu",
-        "fisa": fisa_magazin(livrare_peciu="07:30", coacere=True, program=[
+        "fisa": fisa_magazin(livrare_peciu="07:30", livrare_fructus="07:30, în aceeași cursă (preluată din Fructus la 06:50)", coacere=True, program=[
             ["Luni – Vineri", "08:00 – 19:30"],
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
@@ -209,7 +222,7 @@ SPATII = [
     {
         "id": "fructus", "tip": "magazin", "nume": "Fructus",
         "titlu": "Magazinul Fructus",
-        "fisa": fisa_magazin(livrare_peciu="06:50", coacere=False),
+        "fisa": fisa_magazin(livrare_peciu="06:50", livrare_fructus="Pe loc, din laborator", coacere=False),
         "abateri": "Fructus",
         "procese": RETAIL,
         "roluri": ["RL", "VT", "V", "BAR", "PP + B"],
@@ -225,10 +238,12 @@ SPATII = [
             ["Brutar-șef", "Patiser-șef"],
             ["Cuptoare de pâine", "Malaxoare (frământare)", "Camera de dospire",
              "Laminor (patiserie)", "Frigidere și congelatoare", "Cântare"],
-            livrari=[["Plecarea mașinii de livrare", "05:50 – 06:00"],
+            livrari=[["Șofer 1: program", "05:50 – 13:30"],
+                     ["Șofer 1 pleacă din Peciu Nou", "05:50 – 06:00"],
                      ["Sosire Dumbrăvița", "06:30"],
-                     ["Sosire Fructus", "06:50"],
+                     ["Sosire Fructus (preia și marfa Laboratorului Fructus)", "06:50"],
                      ["Sosire Porumbescu", "07:30"],
+                     ["Șofer 2: începe", SOFER_2],
                      ["Livrări B2B și evenimente", ""]],
             nota_livrari=NOTA_LIVRARI),
         "subtitlu": "Brutărie și patiserie",
@@ -249,7 +264,13 @@ SPATII = [
             ["Cofetar-șef", "Patiser-șef"],
             ["Cuptoare de patiserie și blaturi", "Mixere (creme, blaturi)",
              "Echipamente Roboq (creme și dulcețuri)", "Frigidere și congelatoare",
-             "Cântare"]),
+             "Cântare"],
+            livrari=[["Marfa e preluată de șoferul 1", "06:50, când lasă marfa din Peciu Nou în Fructus"],
+                     ["Sosire Porumbescu", "07:30, în aceeași cursă"],
+                     ["Sosire Dumbrăvița", ""],
+                     ["Magazinul Fructus", "Pe loc, din laborator"],
+                     ["Livrări B2B și evenimente", ""]],
+            nota_livrari=NOTA_LIVRARI),
         "subtitlu": "Cofetărie, creme și dulcețuri",
         "procese": ["P20", "P21", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P20", "P21", "P19"],
@@ -267,7 +288,8 @@ SPATII = [
         "titlu": "B2B, evenimente și candybar",
         "fisa": {
             "program": [["Program birou B2B", ""], ["Termen de răspuns la o cerere de ofertă", ""]],
-            "livrari": [["Livrări B2B recurente", ""], ["Setup evenimente și candybar", ""]],
+            "livrari": [["Șofer 2: începe", SOFER_2],
+                        ["Livrări B2B recurente", ""], ["Setup evenimente și candybar", ""]],
             "contacte": [
                 contact("CB2B", "Coordonator B2B și evenimente", "Nicoleta"),
                 contact("DP", "Coordonator producție"),

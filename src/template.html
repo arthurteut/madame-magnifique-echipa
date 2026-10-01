@@ -175,17 +175,17 @@
   .card.note { background: var(--bg-soft); border-color: transparent; }
   .fisa { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   .fisa .card h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
-  .kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .93rem; align-items: baseline; }
+  .kv { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .93rem; align-items: baseline; }
   .kv:last-child { border-bottom: 0; }
-  .kv .k { color: var(--ink-soft); }
+  .kv .k { color: var(--ink-soft); flex: 1 1 170px; min-width: 0; }
   .kv .k small { display: block; color: var(--muted); font-size: .8rem; margin-top: 4px; }
-  .kv .v { color: var(--ink); text-align: right; font-weight: 400; }
+  .kv .v { color: var(--ink); text-align: right; font-weight: 400; flex: 0 1 auto; margin-left: auto; max-width: 100%; }
   .kv .v a { text-decoration: none; border-bottom: 1px solid var(--stone); }
   .kv-head { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 18px 0 2px; }
   .todo { display: inline-block; font-size: .78rem; color: #7a6a45; border: 1px dashed var(--gold); background: #fdf8ee; padding: 2px 8px; white-space: nowrap; }
   .todo-count { font-size: .85rem; color: #7a6a45; }
   .fisa-note { font-size: .82rem; color: var(--muted); margin: 12px 0 0; font-style: italic; }
-  @media (max-width: 640px) { .kv { grid-template-columns: 1fr; } .kv .v { text-align: left; } }
+  @media (max-width: 640px) { .kv .v { text-align: left; margin-left: 0; } }
 
   .filterbar { position: sticky; top: 76px; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); padding: 12px 0; }
   .filterbar .wrap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
