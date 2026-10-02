@@ -335,6 +335,51 @@
   a.doc-card { text-decoration: none; color: inherit; }
   a.doc-card:hover { border-color: var(--ink); }
 
+  /* ---------- Ghidul brutarului ---------- */
+  .callout { background: #fbf6ea; border-left: 3px solid var(--gold); padding: 14px 18px; margin: 0 0 22px; }
+  .callout p { margin: 0 0 6px; } .callout ul { margin: 0; }
+  .doc-text h4 { font: 500 1rem/1.3 'Montserrat', sans-serif; color: var(--ink); margin: 20px 0 8px; }
+  .handbook > h3 { font: 500 1.2rem/1.3 'Montserrat', sans-serif; letter-spacing: 0; text-transform: none; color: var(--ink); margin: 34px 0 12px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .chap-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; }
+  .chap-nav .prow { grid-template-columns: auto 1fr; }
+  .chap-nav .prow:last-child:not(:first-child) { grid-template-columns: 1fr auto; text-align: right; }
+  .calc-cta { display: block; padding: 28px; background: var(--ink); color: #fff; text-decoration: none; }
+  .calc-cta h3 { color: #fff; font-size: 1.4rem; margin: 10px 0 6px; } .calc-cta .eyebrow { color: var(--sand); }
+  .calc-cta p { margin: 0 0 16px; color: #cfcdc8; } .calc-cta .go { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
+  .calc-form fieldset { border: 1px solid var(--line); background: #fff; padding: 18px 20px; margin: 0 0 14px; min-width: 0; }
+  .calc-form legend { font: 600 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0 6px; }
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 8px; }
+  .calc-form label { display: grid; gap: 6px; font-size: .82rem; color: var(--muted); }
+  .calc-form label.inline { display: flex; gap: 8px; align-items: center; margin-top: 6px; color: var(--ink-soft); font-size: .9rem; }
+  .calc-form .field { padding: 10px 12px; font-size: 1rem; }
+  .pct { position: relative; display: block; }
+  .pct .field { padding-right: 38px; width: 100%; }
+  .pct i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--muted); font-size: .85rem; pointer-events: none; }
+  .calc-rand { display: grid; grid-template-columns: minmax(0, 1fr) 110px 36px; gap: 8px; margin-bottom: 8px; align-items: center; }
+  .calc-rand .icon-btn { font-size: 1.3rem; justify-content: center; }
+  .seg { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .seg label { display: flex !important; flex-direction: row; gap: 8px; align-items: center; padding: 9px 14px; border: 1px solid var(--line); color: var(--ink) !important; font-size: .9rem !important; cursor: pointer; }
+  .seg label:has(input:checked) { border-color: var(--ink); background: var(--ink); color: #fff !important; }
+  .seg input { accent-color: var(--ink); }
+  #sumaF.err { color: #9b2c2c; }
+  .calc-rez { position: sticky; top: 96px; display: grid; gap: 14px; }
+  .calc-card { background: #fff; border: 1px solid var(--line); padding: 20px 22px; }
+  .calc-card .eyebrow { display: block; margin-bottom: 10px; }
+  .calc-tbl { width: 100%; border-collapse: collapse; font-size: .98rem; }
+  .calc-tbl td { padding: 9px 0; border-bottom: 1px solid var(--line); }
+  .calc-tbl td:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 500; white-space: nowrap; padding-left: 12px; }
+  .calc-tbl tr.sub td { color: var(--muted); font-size: .88rem; padding-left: 14px; }
+  .calc-tbl tfoot td { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 500; color: var(--ink); }
+  .calc-nota { font-size: .84rem; color: var(--muted); margin: 10px 0 0; }
+  .calc-avert { background: #fdf0f0; border-left: 3px solid #9b2c2c; padding: 10px 14px; margin: 0; font-size: .9rem; color: #7a2020; }
+  .calc-act { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  @media (max-width: 860px) { .calc { grid-template-columns: 1fr; } .calc-rez { position: static; } .chap-nav { grid-template-columns: 1fr; } }
+  @media print {
+    .calc-form, .calc-act, .band, .chap-nav { display: none !important; }
+    .calc { display: block; } .calc-rez { position: static; }
+  }
+
   /* ---------- Cursuri ---------- */
   .course-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: #fff; border: 1px solid var(--line); text-decoration: none; color: var(--ink-soft); transition: border-color .3s; }
   .course-card:hover { border-color: var(--ink); }
@@ -486,6 +531,7 @@
         <a href="#/roluri" data-nav="roluri">Roluri</a>
         <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
         <a href="#/cursuri" data-nav="cursuri">Cursuri</a>
+        <a href="#/brutar" data-nav="brutar">Brutar</a>
         <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
         <a href="#/admin" data-nav="admin" hidden>Admin</a>
         <span class="user-chip" id="userChip"></span>
@@ -566,7 +612,7 @@ async function incarcaDate() {
   const docs = await tabel('procedure_docs', ['position', 'id']).catch(e => { console.warn('procedure_docs:', e.message); return []; });
   ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
   ME.vedeTot = ME.admin || roluri.some(r => r.code === ME.role_code && r.sees_all);
-  ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid', 'cursuri']
+  ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid', 'cursuri', 'brutar']
     : sectiuni.filter(x => x.role_code === ME.role_code).map(x => x.section));
   const grup = (rows, cheie) => rows.reduce((m, r) => ((m[r[cheie]] = m[r[cheie]] || []).push(r), m), {});
   const subP = grup(subprocese, 'process_code'), procD = grup(procese, 'domain_code');
@@ -617,7 +663,7 @@ async function deschideSesiunea(user) {
   if (error) throw error;
   if (!prof) { await SB.auth.signOut(); return showLock('Contul nu are încă un profil în ghid. Anunță responsabilul de locație.'); }
   if (!prof.active) { await SB.auth.signOut(); return showLock('Contul este dezactivat. Anunță responsabilul de locație.'); }
-  ME = prof; SB_USER_ID = user.id; CURS = null;
+  ME = prof; SB_USER_ID = user.id; CURS = null; CAPITOLE = null;
   D = await incarcaDate();
   prepare();
   showApp();
@@ -723,6 +769,7 @@ function route() {
   else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
   else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
   else if (a === 'd' && DOCS.id[b]) { html = viewDoc(DOCS.id[b]); nav = 'proceduri'; }
+  else if (a === 'brutar' && poate('brutar')) { html = viewBrutar(parts); nav = 'brutar'; }
   else if (a === 'cursuri' && poate('cursuri')) { html = viewCursuri(); nav = 'cursuri'; }
   else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -983,7 +1030,8 @@ function viewProcess(p) {
 // rânduri goale între paragrafe.
 function textProcedura(t) {
   const out = []; let lista = null, tabel = null;
-  const linie = x => esc(x).replace(/_{3,}/g, '<span class="blank"></span>');
+  const linie = x => esc(x).replace(/_{3,}/g, '<span class="blank"></span>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  let caseta = null;
   const inchide = () => {
     if (lista) { out.push(lista.tag === 'ol' ? `<ol start="${lista.start}">${lista.li.join('')}</ol>` : `<ul>${lista.li.join('')}</ul>`); lista = null; }
     if (tabel) {
@@ -992,10 +1040,17 @@ function textProcedura(t) {
         + `<tbody>${rest.map(r => `<tr>${r.map((c, i) => `<td data-col="${esc(cap[i] || '')}">${linie(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
       tabel = null;
     }
+    if (caseta) { out.push(`<div class="callout">${textProcedura(caseta.join('\n'))}</div>`); caseta = null; }
   };
   for (const rand of String(t).replace(/\r/g, '').split('\n')) {
     const x = rand.trim();
     let m;
+    if (/^>\s?/.test(x)) {
+      if (!caseta) { inchide(); caseta = []; }
+      caseta.push(x.replace(/^>\s?/, ''));
+      continue;
+    }
+    if (caseta) inchide();
     if (/^\|.*\|$/.test(x)) {
       if (lista) { const tb = tabel; tabel = null; inchide(); tabel = tb; }
       (tabel = tabel || []).push(x.slice(1, -1).split('|').map(c => c.trim()));
@@ -1003,7 +1058,8 @@ function textProcedura(t) {
     }
     if (!x) { inchide(); continue; }
     if (tabel) inchide();
-    if ((m = x.match(/^##\s+(.*)$/))) { inchide(); out.push(`<h3>${esc(m[1])}</h3>`); }
+    if ((m = x.match(/^###\s+(.*)$/))) { inchide(); out.push(`<h4>${linie(m[1])}</h4>`); }
+    else if ((m = x.match(/^##\s+(.*)$/))) { inchide(); out.push(`<h3>${linie(m[1])}</h3>`); }
     else if ((m = x.match(/^(\d{1,2})[.)]\s+(.*)$/))) {
       if (!lista || lista.tag !== 'ol') { inchide(); lista = { tag: 'ol', start: +m[1], li: [] }; }
       lista.li.push(`<li>${linie(m[2])}</li>`);
@@ -1327,7 +1383,7 @@ async function incarcaAcces() {
   const admini = new Set(roluriToate.filter(r => r.is_admin).map(r => r.code));
   const vadTot = new Set(roluriToate.filter(r => r.sees_all && !r.is_admin).map(r => r.code));
   const are = (rows, a, b, ka, kb) => rows.some(r => r[ka] === a && r[kb] === b);
-  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['cursuri', 'Cursuri'], ['ghid', 'Cum funcționează']];
+  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['cursuri', 'Cursuri'], ['brutar', 'Ghidul brutarului'], ['ghid', 'Cum funcționează']];
   const grila = (titlu, explicatie, coloane, bifat, tabelNume) => `
     <h2 class="section-title" style="margin-top:40px">${titlu}</h2><p class="muted" style="margin:-8px 0 16px">${explicatie}</p>
     <div class="tbl-wrap"><table class="matrix" data-tabel="${tabelNume}"><thead><tr><th>Rol</th>${coloane.map(([, t]) => `<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>
@@ -1931,6 +1987,222 @@ async function incarcaProgres() {
     ${publicate.length ? `<div class="tbl-wrap" id="progTabel">${desen('')}</div>` : '<p class="lvl4">Niciun curs publicat încă.</p>'}`;
   const sel = document.getElementById('progRol');
   if (sel && publicate.length) sel.addEventListener('change', () => { document.getElementById('progTabel').innerHTML = desen(sel.value); });
+}
+
+// ---------- Ghidul brutarului și calculatorul de pâine ----------
+// Capitolele vin din Supabase (handbook_chapters, migrarea 0007); le vede cine
+// are pagina „brutar”. Calculatorul lucrează doar în pagină.
+let CAPITOLE = null;
+async function incarcaCapitole() {
+  if (!CAPITOLE) CAPITOLE = await tabel('handbook_chapters', ['position']);
+  return CAPITOLE;
+}
+const brutarBand = (crumb, titlu, sub) => `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/brutar">Ghidul brutarului</a>${crumb ? ' / ' + crumb : ''}</div>
+    <span class="eyebrow">Producție · pâinea cu maia</span>
+    <h1>${titlu}</h1>${sub ? `<p class="sub">${sub}</p>` : ''}
+  </div></section>`;
+
+function viewBrutar(parts) {
+  const sub = parts[1];
+  if (sub === 'calculator') return viewCalculator();
+  setTimeout(async () => {
+    const box = document.getElementById('brutarBody'); if (!box) return;
+    let cap;
+    try { cap = await incarcaCapitole(); }
+    catch (e) { console.error('Ghidul brutarului:', e); box.innerHTML = '<p class="err">Ghidul nu s-a putut încărca. Reîncarcă pagina.</p>'; return; }
+    if (!document.getElementById('brutarBody')) return;
+    if (sub) {
+      const i = cap.findIndex(c => c.slug === sub);
+      if (i < 0) { box.innerHTML = '<p class="lvl4">Capitolul nu există.</p>'; return; }
+      const c = cap[i], prev = cap[i - 1], next = cap[i + 1];
+      document.getElementById('brutarTitlu').textContent = c.title;
+      document.getElementById('brutarCrumb').textContent = `Capitolul ${i + 1}`;
+      box.innerHTML = `<article class="doc-text handbook">${textProcedura(c.body)}</article>
+        <nav class="chap-nav">${prev ? `<a class="prow" href="#/brutar/${prev.slug}"><span class="c">←</span><span class="ti">${esc(prev.title)}</span></a>` : '<span></span>'}
+          ${next ? `<a class="prow" href="#/brutar/${next.slug}"><span class="ti">${esc(next.title)}</span><span class="c">→</span></a>` : ''}</nav>`;
+      return;
+    }
+    box.innerHTML = `
+      <a class="calc-cta" href="#/brutar/calculator"><span class="eyebrow">Unealtă</span><h3>Calculatorul de pâine</h3>
+        <p>Greutatea aluatului sau a făinii, hidratarea, sarea și maiaua → cât cântărești din fiecare, în procente de brutar.</p><span class="go">Deschide →</span></a>
+      ${cap.length ? `<h2 class="section-title" style="margin-top:40px">Capitolele</h2>
+        <div class="proc-list">${cap.map((c, i) => `<a class="prow" href="#/brutar/${c.slug}"><span class="c">${i + 1}</span><span class="ti">${esc(c.title)}</span><span class="meta"></span></a>`).join('')}</div>`
+        : '<p class="lvl4" style="margin-top:32px">Capitolele ghidului nu sunt încă încărcate.</p>'}`;
+  }, 0);
+  return brutarBand(sub ? '<span id="brutarCrumb"></span>' : '', sub ? '<span id="brutarTitlu">Se încarcă…</span>' : 'Ghidul brutarului',
+      sub ? '' : 'Pâinea cu maia la Madame Magnifique: de ce se întâmplă fiecare lucru, cum lucrezi și ce parametri controlezi.')
+    + `<section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto" id="brutarBody"><p class="muted">Se încarcă…</p></div></section>`;
+}
+
+// Calculatorul: procente de brutar, făina totală = 100%.
+// Cu „maiaua inclusă” (implicit, ca la foodgeek), făina și apa din maia fac parte
+// din făina totală și din hidratare: cântărești făina și apa rămase.
+const CALC_CHEIE = 'mm-calc-v1';
+const CALC_IMPLICIT = { reteta: '', mod: 'paini', nr: 40, gramaj: 900, pierderi: 2, faina: 30, hidratare: 72, sare: 2, maia: 20, hidMaia: 100,
+  inclusa: true, fainuri: [{ nume: 'Făină albă 650', p: 100 }], extra: [],
+  starter: { mama: 20, faina: 40, apa: 40, pierdere: 0 } };
+let RETETE = null;   // rețetele casei (bread_recipes, migrarea 0007)
+const citesteCalc = () => { try { return JSON.parse(localStorage.getItem(CALC_CHEIE)) || null; } catch (e) { return null; } };
+const scrieCalc = v => { try { localStorage.setItem(CALC_CHEIE, JSON.stringify(v)); } catch (e) {} };
+const nr = (v, z = 0) => { const x = parseFloat(String(v).replace(',', '.')); return Number.isFinite(x) ? x : z; };
+const grame = g => Math.abs(g) >= 1000 ? (g / 1000).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' kg'
+  : Math.round(g).toLocaleString('ro-RO') + ' g';
+const proc = p => (Math.round(p * 10) / 10).toLocaleString('ro-RO') + '%';
+
+function calculeaza(c) {
+  const h = nr(c.hidratare) / 100, s = nr(c.sare) / 100, p = nr(c.maia) / 100, hm = nr(c.hidMaia) / 100;
+  const extra = c.extra.filter(x => x.nume || nr(x.p)), e = extra.reduce((t, x) => t + nr(x.p) / 100, 0);
+  const sumaF = c.fainuri.reduce((t, x) => t + nr(x.p), 0);
+  let F, aluat;
+  if (c.mod === 'paini') {
+    aluat = nr(c.nr) * nr(c.gramaj) * (1 + nr(c.pierderi) / 100);
+    F = aluat / (1 + h + s + e + (c.inclusa ? 0 : p));
+  } else {
+    F = nr(c.faina) * 1000;
+    aluat = F * (1 + h + s + e + (c.inclusa ? 0 : p));
+  }
+  const M = F * p, Mf = M / (1 + hm), Ma = M - Mf;
+  const fainaDeAdaugat = c.inclusa ? F - Mf : F, apaDeAdaugat = c.inclusa ? F * h - Ma : F * h;
+  return {
+    F, aluat, M, Mf, Ma, apa: apaDeAdaugat, sare: F * s, sumaF,
+    fainuri: c.fainuri.map(x => ({ nume: x.nume || 'Făină', p: nr(x.p), g: sumaF ? fainaDeAdaugat * nr(x.p) / sumaF : 0 })),
+    extra: extra.map(x => ({ nume: x.nume || 'Ingredient', p: nr(x.p), g: F * nr(x.p) / 100 })),
+    hidReala: c.inclusa ? h * 100 : (F * h + Ma) / (F + Mf) * 100,
+    starter: (() => {
+      const st = c.starter || {}, suma = nr(st.mama) + nr(st.faina) + nr(st.apa);
+      if (!suma) return null;
+      const total = M / (1 - Math.min(nr(st.pierdere), 90) / 100);
+      return { total, mama: total * nr(st.mama) / suma, faina: total * nr(st.faina) / suma, apa: total * nr(st.apa) / suma, suma };
+    })(),
+  };
+}
+
+function viewCalculator() {
+  const c = Object.assign({}, CALC_IMPLICIT, citesteCalc() || {});
+  c.starter = Object.assign({}, CALC_IMPLICIT.starter, c.starter || {});
+  setTimeout(async () => {
+    if (!RETETE) RETETE = await tabel('bread_recipes', ['position']).catch(e => { console.warn('bread_recipes:', e.message); return []; });
+    calcWire(c);
+  }, 0);
+  return brutarBand('Calculator', 'Calculatorul de pâine', 'Pui cantitatea și rețeta în procente de brutar; calculatorul îți spune cât cântărești. Valorile rămân salvate pe acest dispozitiv.')
+    + `<section class="block"><div class="wrap calc" id="calc"></div></section>`;
+}
+function calcForm(c) {
+  const rand = (lista, i, x, ph) => `<div class="calc-rand" data-lista="${lista}" data-i="${i}">
+      <input class="field" data-k="nume" value="${esc(x.nume)}" placeholder="${ph}" aria-label="Denumire">
+      <span class="pct"><input class="field" data-k="p" inputmode="decimal" value="${esc(x.p)}" aria-label="Procent"><i>%</i></span>
+      <button class="icon-btn" type="button" data-sterge aria-label="Șterge rândul">×</button></div>`;
+  const camp = (k, et, suf, extra = '') => `<label>${et}<span class="pct"><input class="field" data-c="${k}" inputmode="decimal" value="${esc(c[k])}" ${extra}><i>${suf}</i></span></label>`;
+  const retete = RETETE || [], r = retete.find(x => x.slug === c.reteta);
+  return `<form class="calc-form" autocomplete="off" onsubmit="return false">
+    ${retete.length ? `<fieldset><legend>Rețeta</legend>
+      <select class="field" data-reteta aria-label="Rețeta"><option value="">Rețetă proprie</option>${retete.map(x => `<option value="${esc(x.slug)}" ${x.slug === c.reteta ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}</select>
+      ${r && r.data.nota ? `<p class="calc-nota">${esc(r.data.nota)}</p>` : ''}
+      ${r ? '<p class="calc-nota">Procentele sunt ale fișei; dacă le schimbi, rețeta devine „proprie”.</p>' : ''}
+    </fieldset>` : ''}
+    <fieldset><legend>Cantitatea</legend>
+      <div class="seg"><label><input type="radio" name="mod" value="paini" ${c.mod === 'paini' ? 'checked' : ''}> Număr de pâini</label>
+        <label><input type="radio" name="mod" value="faina" ${c.mod === 'faina' ? 'checked' : ''}> Făina totală</label></div>
+      ${c.mod === 'paini' ? `<div class="calc-grid">${camp('nr', 'Pâini', 'buc')}${camp('gramaj', 'Aluat pe pâine', 'g')}${camp('pierderi', 'Rezervă pentru pierderi', '%')}</div>`
+        : `<div class="calc-grid">${camp('faina', 'Făina totală', 'kg')}</div>`}
+    </fieldset>
+    <fieldset><legend>Rețeta (procente de brutar)</legend>
+      <div class="calc-grid">${camp('hidratare', 'Hidratare', '%')}${camp('sare', 'Sare', '%')}${camp('maia', 'Maia', '%')}${camp('hidMaia', 'Hidratarea maialei', '%')}</div>
+      <label class="inline"><input type="checkbox" data-c="inclusa" ${c.inclusa ? 'checked' : ''}> Făina și apa din maia intră în făina totală și în hidratare</label>
+    </fieldset>
+    <fieldset><legend>Făinurile <span class="muted" id="sumaF"></span></legend>
+      ${c.fainuri.map((x, i) => rand('fainuri', i, x, 'ex.: Făină integrală')).join('')}
+      <button class="btn ghost sm" type="button" data-adauga="fainuri">+ Făină</button>
+    </fieldset>
+    <fieldset><legend>Starterul (maiaua de producție)</legend>
+      <p class="calc-nota" style="margin:0 0 10px">Din ce faci starterul, în procente din amestec, și cât pierzi la fermentare (rămâne pe vas).</p>
+      <div class="calc-grid">${['mama', 'faina', 'apa', 'pierdere'].map(k => `<label>${{ mama: 'Maia-mamă', faina: 'Făină', apa: 'Apă', pierdere: 'Pierdere' }[k]}<span class="pct"><input class="field" data-st="${k}" inputmode="decimal" value="${esc(c.starter[k])}"><i>%</i></span></label>`).join('')}</div>
+    </fieldset>
+    <fieldset><legend>Alte ingrediente (opțional)</legend>
+      ${c.extra.map((x, i) => rand('extra', i, x, 'ex.: Semințe de floarea-soarelui')).join('') || '<p class="muted" style="margin:0 0 10px;font-size:.88rem">Semințe, fulgi, miere… în procente din făina totală.</p>'}
+      <button class="btn ghost sm" type="button" data-adauga="extra">+ Ingredient</button>
+    </fieldset>
+    <button class="btn ghost sm" type="button" data-reset>Valorile implicite</button>
+  </form>
+  <div class="calc-rez" id="calcRez" aria-live="polite"></div>`;
+}
+function calcRezultat(c) {
+  const r = calculeaza(c), avert = [];
+  if (Math.abs(r.sumaF - 100) > 0.05) avert.push(`Făinurile însumează ${proc(r.sumaF)}, nu 100%: cantitățile sunt împărțite proporțional.`);
+  if (r.apa < 0) avert.push('Apa din maia depășește hidratarea dorită: scade procentul de maia sau crește hidratarea.');
+  if (!(r.F > 0)) avert.push('Completează cantitatea.');
+  const randuri = [...r.fainuri.map(x => [x.nume, x.g]), ['Apă', r.apa], ['Sare', r.sare], [`Maia (${proc(nr(c.hidMaia))} hidratare)`, r.M], ...r.extra.map(x => [x.nume, x.g])];
+  const text = randuri.map(([n, g]) => `${n}: ${grame(g)}`).join('\n') + `\nTotal aluat: ${grame(r.aluat)}`;
+  return `${avert.map(a => `<p class="calc-avert">${esc(a)}</p>`).join('')}
+    <div class="calc-card">
+      <span class="eyebrow">Cântărești</span>
+      <table class="calc-tbl"><tbody>${randuri.map(([n, g]) => `<tr><td>${esc(n)}</td><td>${grame(g)}</td></tr>`).join('')}</tbody>
+        <tfoot><tr><td>Total aluat</td><td>${grame(r.aluat)}</td></tr>
+        ${c.mod === 'paini' && nr(c.nr) > 0 ? `<tr><td>Pe pâine (fără rezervă)</td><td>${grame(nr(c.gramaj))}</td></tr>` : ''}</tfoot></table>
+      ${c.inclusa ? `<p class="calc-nota">Din maia vin ${grame(r.Mf)} făină și ${grame(r.Ma)} apă, deja scăzute mai sus.</p>` : ''}
+      <div class="calc-act"><button class="btn sm" type="button" data-copy="${esc(text)}">Copiază</button><button class="btn ghost sm" type="button" onclick="window.print()">Printează</button></div>
+    </div>
+    ${r.starter && r.M > 0 ? `<div class="calc-card">
+      <span class="eyebrow">Starterul de pregătit</span>
+      <table class="calc-tbl"><tbody>
+        <tr><td>Maia-mamă</td><td>${grame(r.starter.mama)}</td></tr>
+        <tr><td>${esc((c.starter && c.starter.fainaNume) || 'Făină')}</td><td>${grame(r.starter.faina)}</td></tr>
+        <tr><td>Apă</td><td>${grame(r.starter.apa)}</td></tr></tbody>
+        <tfoot><tr><td>Amestec</td><td>${grame(r.starter.total)}</td></tr><tr><td>Folosești în aluat</td><td>${grame(r.M)}</td></tr></tfoot></table>
+      ${Math.abs(r.starter.suma - 100) > 0.05 ? `<p class="calc-avert">Starterul însumează ${proc(r.starter.suma)}: cantitățile sunt împărțite proporțional.</p>` : ''}
+      <p class="calc-nota">Îl lași la temperatura camerei până își dublează volumul (orientativ 6 h).</p>
+    </div>` : ''}
+    <div class="calc-card">
+      <span class="eyebrow">Rețeta în procente de brutar</span>
+      <table class="calc-tbl"><tbody>
+        <tr><td>Făină totală</td><td>100% · ${grame(r.F)}</td></tr>
+        ${r.fainuri.length > 1 ? r.fainuri.map(x => `<tr class="sub"><td>${esc(x.nume)}</td><td>${proc(r.sumaF ? x.p * 100 / r.sumaF : 0)}</td></tr>`).join('') : ''}
+        <tr><td>Apă totală</td><td>${proc(r.hidReala)} · ${grame(r.F * nr(c.hidratare) / 100 + (c.inclusa ? 0 : r.Ma))}</td></tr>
+        <tr><td>Sare</td><td>${proc(nr(c.sare))}</td></tr>
+        <tr><td>Maia</td><td>${proc(nr(c.maia))}</td></tr>
+        ${r.extra.map(x => `<tr><td>${esc(x.nume)}</td><td>${proc(x.p)}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="calc-nota">Sarea și ingredientele în plus se raportează la făina totală${c.inclusa ? ', inclusiv cea din maia' : ''}.</p>
+    </div>`;
+}
+function calcWire(c) {
+  const box = document.getElementById('calc'); if (!box) return;
+  const deseneaza = () => { box.innerHTML = calcForm(c); actualizeaza(); };
+  const actualizeaza = () => {
+    scrieCalc(c);
+    const s = c.fainuri.reduce((t, x) => t + nr(x.p), 0);
+    const el = document.getElementById('sumaF'); if (el) { el.textContent = `· total ${proc(s)}`; el.classList.toggle('err', Math.abs(s - 100) > 0.05); }
+    document.getElementById('calcRez').innerHTML = calcRezultat(c);
+  };
+  box.oninput = e => {
+    const t = e.target;
+    if (t.matches('[data-reteta]')) return;
+    const cantitate = ['nr', 'gramaj', 'pierderi', 'faina'].includes(t.dataset.c) || t.matches('[data-st="pierdere"]');
+    if (!cantitate && c.reteta) { c.reteta = ''; const sel = box.querySelector('[data-reteta]'); if (sel) sel.value = ''; }
+    if (t.dataset.st) c.starter[t.dataset.st] = t.value;
+    else if (t.dataset.c) c[t.dataset.c] = t.type === 'checkbox' ? t.checked : t.value;
+    else if (t.dataset.k) { const r = t.closest('.calc-rand'); c[r.dataset.lista][+r.dataset.i][t.dataset.k] = t.value; }
+    else if (t.name === 'mod') { c.mod = t.value; return deseneaza(); }
+    actualizeaza();
+  };
+  box.onchange = e => {
+    if (e.target.matches('[data-reteta]')) {
+      const r = (RETETE || []).find(x => x.slug === e.target.value);
+      if (r) Object.assign(c, JSON.parse(JSON.stringify(CALC_IMPLICIT)), JSON.parse(JSON.stringify(r.data)), { reteta: r.slug, nr: c.nr, mod: c.mod === 'faina' ? 'faina' : 'paini' },
+        r.data.gramaj ? { gramaj: r.data.gramaj } : {});
+      else c.reteta = '';
+      return deseneaza();
+    }
+    if (e.target.name === 'mod') { c.mod = e.target.value; deseneaza(); } else if (e.target.dataset.c === 'inclusa') { c.inclusa = e.target.checked; actualizeaza(); } };
+  box.onclick = e => {
+    const a = e.target.closest('[data-adauga]'), s = e.target.closest('[data-sterge]'), r = e.target.closest('[data-reset]');
+    if (a) { c[a.dataset.adauga].push({ nume: '', p: a.dataset.adauga === 'fainuri' && !c.fainuri.length ? 100 : 0 }); deseneaza(); }
+    else if (s) { const rd = s.closest('.calc-rand'); c[rd.dataset.lista].splice(+rd.dataset.i, 1); deseneaza(); }
+    else if (r) { Object.assign(c, JSON.parse(JSON.stringify(CALC_IMPLICIT))); c.starter = { ...CALC_IMPLICIT.starter }; deseneaza(); }
+  };
+  deseneaza();
 }
 
 // ---------- Căutare ----------

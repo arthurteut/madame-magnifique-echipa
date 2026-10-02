@@ -46,3 +46,6 @@ Procedurile verificate (`06_proceduri_verificate.sql`, după 0006): fiecare rol
 vede documentele lui și pe ale rolurilor pe care le vede, cele legate de o
 locație doar dacă vede locația, iar fișele locației le vede toată echipa ei;
 la fel pentru PDF-uri; doar adminul scrie. Ultimul rând: „12 din 12”.
+
+Ghidul brutarului (`07_ghidul_brutarului.sql`, după 0007): DP, AE și GM citesc
+capitolele, V nu; nimeni nu le modifică din pagină. Ultimul rând: „7 din 7”.

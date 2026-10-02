@@ -171,6 +171,17 @@ Fiecare vede doar documentele rolului lui (și ale rolurilor pe care le vede), i
 cele legate de o locație doar dacă vede locația. PDF-urile stau în bucketul privat
 **proceduri**.
 
+## 10. Ghidul brutarului și calculatorul de pâine
+
+**SQL Editor** → lipești `9-ghidul-brutarului.sql` → **Run**. Fișerul conține
+[`supabase/migrations/0007_ghidul_brutarului.sql`](supabase/migrations/0007_ghidul_brutarului.sql)
+plus capitolele (generate cu `tools/ghid_brutar.py`) și rețetele casei pentru
+calculator; capitolele și rețetele nu stau în repo. Se poate rula din nou oricând
+se schimbă ghidul.
+
+Pagina **Brutar** (ghidul + calculatorul) o văd DP, SP, GD, GM și AE; o dai și
+altor roluri din **Admin → Acces pe rol → Paginile din meniu**.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
