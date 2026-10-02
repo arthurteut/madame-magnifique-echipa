@@ -343,7 +343,11 @@
   .chap-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; }
   .chap-nav .prow { grid-template-columns: auto 1fr; }
   .chap-nav .prow:last-child:not(:first-child) { grid-template-columns: 1fr auto; text-align: right; }
-  .calc-cta { display: block; padding: 28px; background: var(--ink); color: #fff; text-decoration: none; }
+  .calc-cta { display: grid; grid-template-columns: minmax(0, 1fr) 34%; background: var(--ink); color: #fff; text-decoration: none; overflow: hidden; }
+  .calc-cta > div { padding: 28px; }
+  .calc-cta img { width: 100%; height: 100%; object-fit: cover; min-height: 200px; transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
+  .calc-cta:hover img { transform: scale(1.06); }
+  @media (max-width: 640px) { .calc-cta { grid-template-columns: 1fr; } .calc-cta img { order: -1; min-height: 0; aspect-ratio: 16 / 9; } }
   .calc-cta h3 { color: #fff; font-size: 1.4rem; margin: 10px 0 6px; } .calc-cta .eyebrow { color: var(--sand); }
   .calc-cta p { margin: 0 0 16px; color: #cfcdc8; } .calc-cta .go { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
   .calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
@@ -566,10 +570,15 @@ const showErr = m => { document.getElementById('err').textContent = m; };
 // Paginile din meniu permise rolului (role_section_access).
 const poate = sectiune => !ME || !ME.sectiuni || ME.sectiuni.has(sectiune);
 
+// Conturile care văd doar ghidul brutarului (rolul BRT): fără spații și fără alte pagini.
+const doarBrutar = () => !!(ME && D && !ME.vedeTot && !D.spatii.length && poate('brutar')
+  && !['roluri', 'proceduri', 'ghid', 'cursuri'].some(poate));
 function showApp() {
   document.querySelectorAll('#nav [data-nav]').forEach(a => {
-    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : (a.dataset.nav !== 'home' && !poate(a.dataset.nav));
+    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : a.dataset.nav === 'home' ? doarBrutar() : !poate(a.dataset.nav);
   });
+  document.getElementById('topSearchBox').hidden = doarBrutar();
+  document.querySelector('.bar .logo').setAttribute('href', doarBrutar() ? '#/brutar' : '#/');
   document.getElementById('lock').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
@@ -773,6 +782,7 @@ function route() {
   else if (a === 'cursuri' && poate('cursuri')) { html = viewCursuri(); nav = 'cursuri'; }
   else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
+  else if (doarBrutar()) { html = viewBrutar(['brutar']); nav = 'brutar'; }
   else html = viewHome();
   $('#view').innerHTML = html;
   document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === nav));
@@ -1997,12 +2007,12 @@ async function incarcaCapitole() {
   if (!CAPITOLE) CAPITOLE = await tabel('handbook_chapters', ['position']);
   return CAPITOLE;
 }
-const brutarBand = (crumb, titlu, sub) => `
-  <section class="band"><div class="wrap">
+const brutarBand = (crumb, titlu, sub, foto, alt) => `
+  <section class="band"><div class="wrap ${foto ? 'band-grid' : ''}"><div>
     <div class="crumbs"><a href="#/brutar">Ghidul brutarului</a>${crumb ? ' / ' + crumb : ''}</div>
     <span class="eyebrow">Producție · pâinea cu maia</span>
     <h1>${titlu}</h1>${sub ? `<p class="sub">${sub}</p>` : ''}
-  </div></section>`;
+  </div>${foto ? `<figure class="band-photo"><img src="${IMG(foto)}" alt="${esc(alt || '')}"></figure>` : ''}</div></section>`;
 
 function viewBrutar(parts) {
   const sub = parts[1];
@@ -2025,14 +2035,16 @@ function viewBrutar(parts) {
       return;
     }
     box.innerHTML = `
-      <a class="calc-cta" href="#/brutar/calculator"><span class="eyebrow">Unealtă</span><h3>Calculatorul de pâine</h3>
-        <p>Greutatea aluatului sau a făinii, hidratarea, sarea și maiaua → cât cântărești din fiecare, în procente de brutar.</p><span class="go">Deschide →</span></a>
+      <a class="calc-cta" href="#/brutar/calculator"><div><span class="eyebrow">Unealtă</span><h3>Calculatorul de pâine</h3>
+        <p>Greutatea aluatului sau a făinii, hidratarea, sarea și maiaua → cât cântărești din fiecare, în procente de brutar.</p><span class="go">Deschide →</span></div>
+        <img src="${IMG('maia-borcan')}" alt="" loading="lazy"></a>
       ${cap.length ? `<h2 class="section-title" style="margin-top:40px">Capitolele</h2>
         <div class="proc-list">${cap.map((c, i) => `<a class="prow" href="#/brutar/${c.slug}"><span class="c">${i + 1}</span><span class="ti">${esc(c.title)}</span><span class="meta"></span></a>`).join('')}</div>`
         : '<p class="lvl4" style="margin-top:32px">Capitolele ghidului nu sunt încă încărcate.</p>'}`;
   }, 0);
   return brutarBand(sub ? '<span id="brutarCrumb"></span>' : '', sub ? '<span id="brutarTitlu">Se încarcă…</span>' : 'Ghidul brutarului',
-      sub ? '' : 'Pâinea cu maia la Madame Magnifique: de ce se întâmplă fiecare lucru, cum lucrezi și ce parametri controlezi.')
+      sub ? '' : 'Pâinea cu maia la Madame Magnifique: de ce se întâmplă fiecare lucru, cum lucrezi și ce parametri controlezi.',
+      sub ? '' : 'paine-miez', 'Pâine cu maia secționată: miez aerat, cu alveole neregulate')
     + `<section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto" id="brutarBody"><p class="muted">Se încarcă…</p></div></section>`;
 }
 
@@ -2086,7 +2098,8 @@ function viewCalculator() {
     if (!RETETE) RETETE = await tabel('bread_recipes', ['position']).catch(e => { console.warn('bread_recipes:', e.message); return []; });
     calcWire(c);
   }, 0);
-  return brutarBand('Calculator', 'Calculatorul de pâine', 'Pui cantitatea și rețeta în procente de brutar; calculatorul îți spune cât cântărești. Valorile rămân salvate pe acest dispozitiv.')
+  return brutarBand('Calculator', 'Calculatorul de pâine', 'Pui cantitatea și rețeta în procente de brutar; calculatorul îți spune cât cântărești. Valorile rămân salvate pe acest dispozitiv.',
+      'maia-borcan', 'Maia activă într-un borcan, crescută peste semnul de nivel')
     + `<section class="block"><div class="wrap calc" id="calc"></div></section>`;
 }
 function calcForm(c) {

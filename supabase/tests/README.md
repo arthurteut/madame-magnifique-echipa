@@ -49,3 +49,6 @@ la fel pentru PDF-uri; doar adminul scrie. Ultimul rând: „12 din 12”.
 
 Ghidul brutarului (`07_ghidul_brutarului.sql`, după 0007): DP, AE și GM citesc
 capitolele, V nu; nimeni nu le modifică din pagină. Ultimul rând: „7 din 7”.
+
+Rolul Brutar (`08_rol_brutar.sql`, după 0008): BRT citește ghidul și rețetele,
+nu vede spații, proceduri, cursuri sau „Cum funcționează”. Ultimul rând: „8 din 8”.

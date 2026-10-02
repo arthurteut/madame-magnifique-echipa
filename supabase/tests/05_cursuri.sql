@@ -103,8 +103,8 @@ delete from public.courses where title = 'E nou';
 insert into rez select 'GM șterge cursul cu tot cu lecții', not exists (select 1 from public.lessons where title = 'E1');
 
 reset role;
-insert into rez select 'Pagina Cursuri pentru toate rolurile',
-  (select count(*) from public.roles) = (select count(*) from public.role_section_access where section = 'cursuri');
+insert into rez select 'Pagina Cursuri pentru toate rolurile (în afară de BRT, după 0008)',
+  (select count(*) from public.roles where code <> 'BRT') = (select count(*) from public.role_section_access where section = 'cursuri' and role_code <> 'BRT');
 insert into rez select 'Bucketul e privat', not public from storage.buckets where id = 'cursuri';
 set role anon;
 do $$ begin perform 1 from public.courses; insert into rez values ('Anonimul nu citește cursuri', false);

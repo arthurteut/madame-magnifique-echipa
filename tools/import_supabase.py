@@ -32,6 +32,9 @@ ROLURI_SUPLIMENTARE = [
      "raspunde": "Sprijină conducerea: vede tot ghidul (toate spațiile, rolurile și procedurile), "
                  "fără drept de administrare.",
      "procese": []},
+    {"cod": "BRT", "nume": "Brutar",
+     "raspunde": "Produce pâinea cu maia după ghidul brutarului și fișele tehnologice ale casei.",
+     "procese": []},
 ]
 
 

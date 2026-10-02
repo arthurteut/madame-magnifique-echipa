@@ -182,6 +182,16 @@ se schimbă ghidul.
 Pagina **Brutar** (ghidul + calculatorul) o văd DP, SP, GD, GM și AE; o dai și
 altor roluri din **Admin → Acces pe rol → Paginile din meniu**.
 
+## 11. Rolul „Brutar” (BRT)
+
+**SQL Editor** → lipești
+[`supabase/migrations/0008_rol_brutar.sql`](supabase/migrations/0008_rol_brutar.sql) → **Run**.
+
+Un cont cu rolul BRT vede doar pagina **Brutar** (ghidul, rețetele casei și
+calculatorul) și ajunge direct acolo după logare. Migrarea face și ca paginile
+Cursuri și Cum funcționează să fie citite din baza de date doar de rolurile care
+le au în meniu.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
