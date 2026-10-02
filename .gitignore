@@ -7,3 +7,5 @@ __pycache__/
 date-*.sql
 .env
 .env.*
+# Textul procedurilor verificate (intrarea pentru tools/proceduri_verificate.py).
+/proceduri/

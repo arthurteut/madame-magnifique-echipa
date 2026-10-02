@@ -307,6 +307,34 @@
   footer button { background: none; border: 1px solid #555; color: #ddd; padding: 8px 14px; font-size: .8rem; }
   footer button:hover { border-color: #fff; }
 
+  /* ---------- Proceduri verificate ---------- */
+  .verif { margin: 0 0 36px; }
+  .doc { border: 1px solid var(--line); background: #fff; padding: clamp(18px, 3vw, 28px); margin-top: 16px; }
+  .doc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .doc-head h3 { font-size: 1.1rem; margin: 6px 0 4px; }
+  .doc-text { max-width: 780px; }
+  .doc-text h3 { font: 600 .74rem/1.3 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
+  .doc-text p { margin: 0 0 10px; }
+  .doc-text ol, .doc-text ul { margin: 0 0 12px; padding-left: 24px; }
+  .doc-text li { margin-bottom: 8px; padding-left: 4px; }
+  .doc-text ol li::marker { font-weight: 600; color: var(--ink); }
+  a[aria-disabled="true"] { opacity: .5; pointer-events: none; }
+  .doc-tbl { margin: 4px 0 16px; }
+  .doc-tbl table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  .doc-tbl th { text-align: left; font: 600 .7rem/1.3 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 2px solid var(--ink); vertical-align: bottom; }
+  .doc-tbl td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .doc-tbl td:first-child { font-weight: 400; color: var(--ink); }
+  @media (max-width: 640px) {
+    .doc-tbl thead { display: none; }
+    .doc-tbl tr { display: block; border: 1px solid var(--line); margin-bottom: 10px; padding: 6px 12px; }
+    .doc-tbl td { display: block; border: 0; padding: 6px 0; }
+    .doc-tbl td[data-col]:not([data-col=""])::before { content: attr(data-col); display: block; font: 600 .66rem/1.3 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .doc-tbl td:empty { display: none; }
+  }
+  .doc-text .blank { display: inline-block; min-width: 72px; border-bottom: 1px solid var(--stone); height: 1em; }
+  a.doc-card { text-decoration: none; color: inherit; }
+  a.doc-card:hover { border-color: var(--ink); }
+
   /* ---------- Cursuri ---------- */
   .course-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: #fff; border: 1px solid var(--line); text-decoration: none; color: var(--ink-soft); transition: border-color .3s; }
   .course-card:hover { border-color: var(--ink); }
@@ -534,6 +562,8 @@ async function incarcaDate() {
     tabel('space_task_overrides', ['space_id', 'task_id']),
     tabel('role_section_access', ['section']),
   ]);
+  // Procedurile verificate (0006); dacă migrarea nu e rulată încă, ghidul merge și fără ele.
+  const docs = await tabel('procedure_docs', ['position', 'id']).catch(e => { console.warn('procedure_docs:', e.message); return []; });
   ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
   ME.vedeTot = ME.admin || roluri.some(r => r.code === ME.role_code && r.sees_all);
   ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid', 'cursuri']
@@ -555,6 +585,7 @@ async function incarcaDate() {
       min: str(t.minutes), cand: t.schedule, verif: t.verification, proc: t.procedure_code || '',
       teren: t.field_update, initial: t.original })),
     abateri: abateri.map(a => ({ loc: a.location, zona: a.area, text: a.text, dece: a.reason })),
+    docs,
     legenda: ghid.map(g => ({ titlu: g.title, linii: g.lines || [] })),
     spatii: spatii.map(s => {
       const pr = sp.proc[s.id] || [], fapte = sp.fapte[s.id] || [];
@@ -639,12 +670,18 @@ const ICON = {
   cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>',
 };
-let P, ROL, PROC, SP;
+let P, ROL, PROC, SP, DOCS;
 function prepare() {
   P = D.procese;
   ROL = Object.fromEntries(D.roluri.map(r => [r.cod, r]));
   PROC = Object.fromEntries(D.proceduri.map(p => [p.cod, p]));
   SP = Object.fromEntries(D.spatii.map(s => [s.id, s]));
+  DOCS = { cod: {}, spatiu: {}, id: {} };
+  for (const d of D.docs) {
+    DOCS.id[d.id] = d;
+    if (d.procedure_code) (DOCS.cod[d.procedure_code] = DOCS.cod[d.procedure_code] || []).push(d);
+    else (DOCS.spatiu[d.space_id] = DOCS.spatiu[d.space_id] || []).push(d);
+  }
   buildIndex();
 }
 const valPill = v => v ? `<span class="pill v${esc(v.replace(/\D/g, ''))}" title="Valul de implementare">${esc(v)}</span>` : '';
@@ -685,6 +722,7 @@ function route() {
   else if (a === 'roluri' && poate('roluri')) { html = viewRoles(); nav = 'roluri'; }
   else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
   else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
+  else if (a === 'd' && DOCS.id[b]) { html = viewDoc(DOCS.id[b]); nav = 'proceduri'; }
   else if (a === 'cursuri' && poate('cursuri')) { html = viewCursuri(); nav = 'cursuri'; }
   else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -789,7 +827,7 @@ function procRow(p) {
   return `<a class="prow" href="#/pr/${enc(p.cod)}">
     <span class="c">${esc(p.cod)}</span>
     <span class="ti">${esc(p.titlu)}<small>Declanșator: ${esc(p.decl)}</small></span>
-    <span class="meta">${rolPill(p.rol)}${prioPill(p.prio)}${valPill(p.val)}</span></a>`;
+    <span class="meta">${DOCS.cod[p.cod] ? '<span class="pill ok" title="Procedură verificată pe teren">✓ Verificată</span>' : ''}${rolPill(p.rol)}${prioPill(p.prio)}${valPill(p.val)}</span></a>`;
 }
 function processBody(p, ctx) {
   const rol = ctx.rol;
@@ -899,6 +937,10 @@ function viewSpace(s, params) {
     ${prof ? `<div class="profile"><p>${esc(prof.text)}</p><p class="why">${esc(prof.dece)}</p></div>` : ''}
   </div>${FOTO[s.id] ? `<figure class="band-photo"><img src="${IMG(FOTO[s.id])}" alt=""></figure>` : ''}</div></section>
   ${fisaHtml(s)}
+  ${(DOCS.spatiu[s.id] || []).length ? `<section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Proceduri verificate</span><h2>Fișele locației</h2></div></div>
+    <div class="cards">${DOCS.spatiu[s.id].map(d => `<a class="card doc-card" href="#/d/${d.id}"><span class="tag">✓ Verificată</span><h3>${esc(d.title)}</h3><p class="muted">${esc(d.module || 'Fișă de lucru')}</p></a>`).join('')}</div>
+  </div></section>` : ''}
   ${(diff.length || s.note.length) ? `<section class="block soft"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Particularități</span><h2>Ce e diferit aici</h2></div></div>
     <div class="cards">
@@ -936,6 +978,92 @@ function viewProcess(p) {
 }
 
 // ---------- Procedură ----------
+// ---------- Procedurile verificate ----------
+// Text simplu → HTML: „## ” titlu de secțiune, „N. ” pas numerotat, „- ” listă,
+// rânduri goale între paragrafe.
+function textProcedura(t) {
+  const out = []; let lista = null, tabel = null;
+  const linie = x => esc(x).replace(/_{3,}/g, '<span class="blank"></span>');
+  const inchide = () => {
+    if (lista) { out.push(lista.tag === 'ol' ? `<ol start="${lista.start}">${lista.li.join('')}</ol>` : `<ul>${lista.li.join('')}</ul>`); lista = null; }
+    if (tabel) {
+      const [cap, ...rest] = tabel;
+      out.push(`<div class="tbl-wrap doc-tbl"><table><thead><tr>${cap.map(c => `<th>${linie(c)}</th>`).join('')}</tr></thead>`
+        + `<tbody>${rest.map(r => `<tr>${r.map((c, i) => `<td data-col="${esc(cap[i] || '')}">${linie(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+      tabel = null;
+    }
+  };
+  for (const rand of String(t).replace(/\r/g, '').split('\n')) {
+    const x = rand.trim();
+    let m;
+    if (/^\|.*\|$/.test(x)) {
+      if (lista) { const tb = tabel; tabel = null; inchide(); tabel = tb; }
+      (tabel = tabel || []).push(x.slice(1, -1).split('|').map(c => c.trim()));
+      continue;
+    }
+    if (!x) { inchide(); continue; }
+    if (tabel) inchide();
+    if ((m = x.match(/^##\s+(.*)$/))) { inchide(); out.push(`<h3>${esc(m[1])}</h3>`); }
+    else if ((m = x.match(/^(\d{1,2})[.)]\s+(.*)$/))) {
+      if (!lista || lista.tag !== 'ol') { inchide(); lista = { tag: 'ol', start: +m[1], li: [] }; }
+      lista.li.push(`<li>${linie(m[2])}</li>`);
+    } else if ((m = x.match(/^[-•]\s+(.*)$/))) {
+      if (!lista || lista.tag !== 'ul') { inchide(); lista = { tag: 'ul', li: [] }; }
+      lista.li.push(`<li>${linie(m[1])}</li>`);
+    } else { inchide(); out.push(`<p>${linie(x)}</p>`); }
+  }
+  inchide();
+  return out.join('');
+}
+// Documentele unui rol care nu au procedură în registru (ex.: scoasă din hartă).
+const docsFaraRegistru = rol => D.docs.filter(d => d.role_code && (!d.procedure_code || !PROC[d.procedure_code]) && (!rol || d.role_code === rol));
+const docRow = d => `<a class="prow" href="#/d/${d.id}"><span class="c">✓</span><span class="ti">${esc(d.title)}<small>${esc(d.module || 'Procedură verificată')}</small></span>
+  <span class="meta"><span class="pill ok">✓ Verificată</span>${rolPill(d.role_code)}</span></a>`;
+// Linkurile semnate către PDF-uri se pun după afișare (bucket privat).
+function semneazaPdf() {
+  setTimeout(async () => {
+    const linkuri = [...document.querySelectorAll('#view a[data-pdf]')];
+    if (!linkuri.length) return;
+    const { data, error } = await SB.storage.from('proceduri').createSignedUrls(linkuri.map(a => a.dataset.pdf), 3600);
+    if (error) return console.error('PDF:', error);
+    const url = Object.fromEntries((data || []).filter(d => d.signedUrl).map(d => [d.path, d.signedUrl]));
+    linkuri.forEach(a => { if (url[a.dataset.pdf]) { a.href = url[a.dataset.pdf]; a.removeAttribute('aria-disabled'); } });
+  }, 0);
+}
+const pdfBtn = d => d.pdf_path ? `<a class="btn ghost sm" data-pdf="${esc(d.pdf_path)}" aria-disabled="true" target="_blank" rel="noopener">Descarcă PDF</a>` : '';
+function docBloc(d, cuTitlu) {
+  return `<article class="doc">
+    <div class="doc-head"><div>${cuTitlu ? `<span class="eyebrow">${esc(d.space_id && SP[d.space_id] ? SP[d.space_id].nume : 'Toate locațiile')}</span><h3>${esc(d.title)}</h3>` : ''}
+      ${d.module ? `<span class="muted" style="font-size:.85rem">${esc(d.module)}</span>` : ''}</div>${pdfBtn(d)}</div>
+    <div class="doc-text">${textProcedura(d.body)}</div></article>`;
+}
+function docsHtml(docs) {
+  if (!docs.length) return '';
+  semneazaPdf();
+  // Întâi documentele pentru toate locațiile, apoi cele ale fiecărei locații.
+  const ord = docs.slice().sort((a, b) => (!!a.space_id - !!b.space_id) || a.position - b.position || a.id - b.id);
+  const multe = ord.length > 1;
+  return `<div class="verif"><span class="pill ok">✓ Procedură verificată pe teren</span>
+    ${multe ? `<div class="chips" style="margin-top:14px">${ord.map(d => `<a class="chip" href="#doc-${d.id}" data-salt="doc-${d.id}">${esc(d.space_id && SP[d.space_id] ? SP[d.space_id].nume + ' · ' : '')}${esc(d.title)}</a>`).join('')}</div>` : ''}
+    ${ord.map(d => `<div id="doc-${d.id}" style="scroll-margin-top:100px">${docBloc(d, multe)}</div>`).join('')}</div>`;
+}
+function viewDoc(d) {
+  semneazaPdf();
+  const s = d.space_id && SP[d.space_id];
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs">${s ? `<a href="#/s/${s.id}">${esc(s.titlu)}</a>` : '<a href="#/proceduri">Proceduri</a>'} / ${esc(d.title)}</div>
+    <span class="eyebrow">Procedură verificată${s ? ' · ' + esc(s.nume) : ''}${d.role_code ? ' · ' + esc(d.role_code) + ' ' + esc(rolName(d.role_code)) : ''}</span>
+    <h1>${esc(d.title)}</h1>
+    ${d.module ? `<p class="sub">${esc(d.module)}</p>` : ''}
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">${docBloc(d, false)}</div></section>`;
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-salt]'); if (!a) return;
+  e.preventDefault(); document.getElementById(a.dataset.salt)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
 function viewProcedure(p) {
   const pr = P[p.p];
   const tasks = D.taskuri.filter(t => t.proc === p.cod);
@@ -949,6 +1077,7 @@ function viewProcedure(p) {
     ${p.teren ? `<p class="sub" style="margin-top:10px;font-size:.9rem;color:#7a6a45">Actualizat pe teren · în harta inițială: ${esc(p.initial)}</p>` : ''}
   </div></section>
   <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">
+    ${docsHtml(DOCS.cod[p.cod] || [])}
     <div class="facts-grid">
       <div><span class="eyebrow">Cine o face</span><strong>${rolPill(p.rol)} ${esc(rolName(p.rol))}</strong></div>
       <div><span class="eyebrow">Când începe</span><strong>${esc(p.decl)}</strong></div>
@@ -968,8 +1097,11 @@ function viewProcedure(p) {
 }
 
 function viewProcedures(params) {
-  const f = { rol: params.rol || '', p: params.p || '', prio: params.prio || '' };
-  const list = D.proceduri.filter(x => (!f.rol || x.rol === f.rol) && (!f.p || x.p === f.p) && (!f.prio || x.prio === f.prio));
+  const f = { rol: params.rol || '', p: params.p || '', prio: params.prio || '', v: params.v || '' };
+  const list = D.proceduri.filter(x => (!f.rol || x.rol === f.rol) && (!f.p || x.p === f.p) && (!f.prio || x.prio === f.prio)
+    && (!f.v || (f.v === 'da') === !!DOCS.cod[x.cod]));
+  const extra = f.p || f.v === 'nu' ? [] : docsFaraRegistru(f.rol);
+  const verificate = D.proceduri.filter(x => DOCS.cod[x.cod]).length;
   const opt = (arr, cur, lbl) => `<option value="">${lbl}</option>` + arr.map(([v, t]) => `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(t)}</option>`).join('');
   const roles = [...new Set(D.proceduri.map(x => x.rol))].map(r => [r, `${r} · ${rolName(r)}`]);
   const procs = [...new Set(D.proceduri.map(x => x.p))].map(c => [c, `${c} · ${P[c]?.nume || ''}`]);
@@ -977,16 +1109,18 @@ function viewProcedures(params) {
   <section class="band"><div class="wrap">
     <span class="eyebrow">Registrul procedurilor · retail</span>
     <h1>Proceduri</h1>
-    <p class="sub">${D.proceduri.length} proceduri, valabile în toate cele trei magazine. Filtrează după rolul tău sau după proces.</p>
+    <p class="sub">${D.proceduri.length} proceduri, valabile în toate cele trei magazine${verificate ? `, din care ${verificate} verificate pe teren` : ''}. Filtrează după rolul tău sau după proces.</p>
   </div></section>
   <section class="block"><div class="wrap">
     <div class="selects">
       <select data-f="rol" aria-label="Rol">${opt(roles, f.rol, 'Toate rolurile')}</select>
       <select data-f="p" aria-label="Proces">${opt(procs, f.p, 'Toate procesele')}</select>
       <select data-f="prio" aria-label="Prioritate">${opt([['Critică', 'Critică'], ['Înaltă', 'Înaltă'], ['Medie', 'Medie']], f.prio, 'Orice prioritate')}</select>
+      ${D.docs.length ? `<select data-f="v" aria-label="Verificare">${opt([['da', 'Doar verificate'], ['nu', 'Neverificate încă']], f.v, 'Verificate și neverificate')}</select>` : ''}
     </div>
     <p class="lbl" style="color:var(--muted);font-size:.9rem">${list.length} rezultate</p>
     <div class="proc-list">${list.map(procRow).join('')}</div>
+    ${extra.length ? `<h2 class="section-title" style="margin-top:40px">Alte proceduri verificate</h2><p class="muted" style="margin:-8px 0 14px">Nu au încă un cod în harta de operațiuni.</p><div class="proc-list">${extra.map(docRow).join('')}</div>` : ''}
   </div></section>`;
 }
 
@@ -1030,7 +1164,7 @@ function viewRole(r) {
       <div class="proc-list" style="margin-bottom:40px">${all.map(c => `<a class="prow" href="#/p/${c}"><span class="c">${c}</span><span class="ti">${esc(P[c].nume)}<small>${esc(D.domenii[P[c].domeniu].nume)}${P[c].rol === r.cod ? ' · tu ești responsabil' : ''}</small></span><span class="meta">${valPill(P[c].val)}</span></a>`).join('')}</div>` : ''}
     ${r.cod === 'PP + B' ? `<div class="local"><b>Unde intervii:</b> în zona de coacere și umplere patiserie din magazine (P03 Expunere) și la mic dejun / prânz (P06 Lunch, sandwich & to-go). Task-urile detaliate pentru acest rol se adaugă după validarea pe teren.</div>` : ''}
     ${tasks.length ? `<h2 class="section-title">Ce faci, pas cu pas</h2>` + Object.entries(byProc).map(([pc, ts]) => `<div class="subp"><h4><span class="pill">${esc(pc)}</span> ${esc(P[pc]?.nume || '')}</h4><div class="tasks">${ts.map(t => taskHtml(t)).join('')}</div></div>`).join('') : ''}
-    ${procs.length ? `<h2 class="section-title" style="margin-top:40px">Procedurile tale</h2><div class="proc-list">${procs.map(procRow).join('')}</div>` : ''}
+    ${procs.length ? `<h2 class="section-title" style="margin-top:40px">Procedurile tale</h2><div class="proc-list">${procs.map(procRow).join('')}${docsFaraRegistru(r.cod).map(docRow).join('')}</div>` : ''}
   </div></section>`;
 }
 
@@ -1090,8 +1224,8 @@ const parolaHtml = (u, p) => `<div class="secret"><span>Comunică-i angajatului:
   <span class="muted" style="font-size:.82rem">Parola nu mai apare după ce închizi pagina.</span></div>`;
 
 function viewAdmin(params) {
-  const tab = ['acces', 'cursuri', 'progres'].includes(params.tab) ? params.tab : 'utilizatori';
-  setTimeout(() => ({ acces: incarcaAcces, cursuri: () => incarcaCursuriAdmin(params), progres: incarcaProgres, utilizatori: incarcaUtilizatori })[tab](), 0);
+  const tab = ['acces', 'cursuri', 'progres', 'proceduri'].includes(params.tab) ? params.tab : 'utilizatori';
+  setTimeout(() => ({ acces: incarcaAcces, cursuri: () => incarcaCursuriAdmin(params), progres: incarcaProgres, proceduri: incarcaProceduriAdmin, utilizatori: incarcaUtilizatori })[tab](), 0);
   return `
   <section class="band"><div class="wrap">
     <span class="eyebrow">Doar pentru administratori</span>
@@ -1099,7 +1233,7 @@ function viewAdmin(params) {
     <p class="sub">Conturile echipei, ce vede fiecare rol și cursurile de onboarding.</p>
   </div></section>
   <section class="block"><div class="wrap">
-    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a><a href="#/admin?tab=cursuri" class="${tab === 'cursuri' ? 'on' : ''}">Cursuri</a><a href="#/admin?tab=progres" class="${tab === 'progres' ? 'on' : ''}">Progres</a></nav>
+    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a><a href="#/admin?tab=cursuri" class="${tab === 'cursuri' ? 'on' : ''}">Cursuri</a><a href="#/admin?tab=progres" class="${tab === 'progres' ? 'on' : ''}">Progres</a><a href="#/admin?tab=proceduri" class="${tab === 'proceduri' ? 'on' : ''}">Proceduri verificate</a></nav>
     <div id="adminBody"><p class="muted">Se încarcă…</p></div>
   </div></section>`;
 }
@@ -1703,6 +1837,55 @@ async function incarcaFisiere(c, ed, lista) {
   else input.disabled = false;
 }
 
+// ---------- Admin → Proceduri verificate ----------
+// PDF-urile originale: adminul le alege pe toate odată (descărcate din Drive),
+// iar ghidul le potrivește după numele fișierului.
+const numeFisier = n => String(n).normalize('NFC').trim().toLowerCase();
+async function incarcaProceduriAdmin() {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  let docs;
+  try { docs = await tabel('procedure_docs', ['source_file']); }
+  catch (e) { console.error(e); box.innerHTML = '<p class="err">Procedurile verificate nu s-au putut încărca. Ai rulat 0006_proceduri_verificate.sql?</p>'; return; }
+  const cuPdf = docs.filter(d => d.pdf_path).length;
+  const unde = d => d.procedure_code && PROC[d.procedure_code] ? `<a href="#/pr/${enc(d.procedure_code)}">${esc(d.procedure_code)}</a>` : d.procedure_code ? esc(d.procedure_code) : `<a href="#/d/${d.id}">fișa locației</a>`;
+  box.innerHTML = `
+    <div class="help">Textul procedurilor e deja în ghid. Aici adaugi PDF-urile originale, ca angajații să le poată descărca: descarci folderul „Madame Verificate” din Google Drive (click dreapta → Descarcă), îl dezarhivezi și alegi toate PDF-urile odată. Ghidul le potrivește după numele fișierului și le înlocuiește pe cele vechi.</div>
+    <div class="stats" style="margin-bottom:24px">
+      <div class="stat"><strong>${docs.length}</strong><span>proceduri verificate</span></div>
+      <div class="stat"><strong id="nrPdf">${cuPdf}</strong><span>cu PDF atașat</span></div>
+    </div>
+    <label class="btn" style="cursor:pointer">Alege PDF-urile<input type="file" id="pdfuri" multiple accept="application/pdf,.pdf" hidden></label>
+    <div id="pdfRezultat" style="margin-top:16px"></div>
+    <h2 class="section-title" style="margin-top:40px">Documentele</h2>
+    ${docs.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Document</th><th>Procedura</th><th>Rol</th><th>Locația</th><th>PDF</th></tr></thead><tbody>
+      ${docs.map(d => `<tr><td>${esc(d.title)}<br><span class="muted" style="font-size:.8rem">${esc(d.source_file)}</span></td><td>${unde(d)}</td><td>${esc(d.role_code || 'toți')}</td>
+        <td>${esc(d.space_id && SP[d.space_id] ? SP[d.space_id].nume : 'toate')}</td><td>${d.pdf_path ? '✓' : '<span class="muted">lipsește</span>'}</td></tr>`).join('')}
+    </tbody></table></div>` : '<p class="lvl4">Nicio procedură verificată încă. Rulează scriptul cu conținutul (date-proceduri.sql).</p>'}`;
+  document.getElementById('pdfuri').addEventListener('change', async e => {
+    const fisiere = [...e.target.files]; if (!fisiere.length) return;
+    const dupaNume = Object.fromEntries(docs.map(d => [numeFisier(d.source_file), d]));
+    const rez = document.getElementById('pdfRezultat');
+    let ok = 0; const nepotrivite = [], erori = [];
+    for (const [i, f] of fisiere.entries()) {
+      const d = dupaNume[numeFisier(f.name)];
+      if (!d) { nepotrivite.push(f.name); continue; }
+      rez.innerHTML = `<p class="muted">Se încarcă ${i + 1} din ${fisiere.length}: ${esc(f.name)}…</p>`;
+      const path = `${d.id}/${numeSigur(f.name)}`;
+      const { error: eu } = await SB.storage.from('proceduri').upload(path, f, { contentType: 'application/pdf', upsert: true });
+      if (eu) { erori.push(`${f.name}: ${eu.message}`); continue; }
+      const { error } = await SB.from('procedure_docs').update({ pdf_path: path }).eq('id', d.id);
+      if (error) { erori.push(`${f.name}: ${error.message}`); continue; }
+      d.pdf_path = path; ok++;
+    }
+    D.docs.forEach(x => { const d = docs.find(y => y.id === x.id); if (d) x.pdf_path = d.pdf_path; });
+    toast(`${ok} PDF-uri atașate.`, !!erori.length);
+    await incarcaProceduriAdmin();
+    document.getElementById('pdfRezultat').innerHTML = `<p><b>${ok}</b> PDF-uri atașate.</p>`
+      + (nepotrivite.length ? `<p class="muted">Fără procedură potrivită (nu s-au încărcat): ${nepotrivite.map(esc).join(', ')}</p>` : '')
+      + (erori.length ? `<p class="err">${erori.map(esc).join('<br>')}</p>` : '');
+  });
+}
+
 // ---------- Admin → Progres ----------
 async function incarcaProgres() {
   const box = document.getElementById('adminBody'); if (!box) return;
@@ -1759,6 +1942,8 @@ function buildIndex() {
   D.roluri.forEach(r => add('Roluri', `${r.cod} · ${r.nume}`, r.raspunde, `#/r/${enc(r.cod)}`));
   Object.values(P).forEach(p => add('Procese', `${p.cod} · ${p.nume}`, D.domenii[p.domeniu]?.nume || '', `#/p/${p.cod}`, p.sub.join(' ') + ' ' + p.miza));
   D.proceduri.forEach(p => add('Proceduri', `${p.cod} · ${p.titlu}`, `${p.rol} · ${p.decl}`, `#/pr/${enc(p.cod)}`));
+  D.docs.forEach(d => add('Proceduri verificate', d.title, [d.procedure_code, d.role_code, d.space_id && SP[d.space_id] ? SP[d.space_id].nume : ''].filter(Boolean).join(' · '),
+    d.procedure_code && PROC[d.procedure_code] ? `#/pr/${enc(d.procedure_code)}` : `#/d/${d.id}`, d.body));
   D.taskuri.forEach(t => add('Task-uri', t.t, `${t.p} · ${t.rol} · ${t.cand}`, `#/p/${t.p}`, t.verif + ' ' + t.sub));
   D.spatii.forEach(s => {
     const f = s.fisa || {};

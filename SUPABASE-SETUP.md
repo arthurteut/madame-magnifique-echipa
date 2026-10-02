@@ -152,6 +152,25 @@ Video-urile nu se încarcă în ghid: pui un link YouTube (poate fi „nelistat�
 Vimeo sau Google Drive („oricine are linkul”), ca să nu umpli spațiul de 1 GB
 din planul gratuit.
 
+## 9. Procedurile verificate
+
+Textul procedurilor verificate pe teren (folderul „Madame Verificate” din Google
+Drive) apare în ghid la procedura respectivă, cu eticheta **✓ Verificată**. Fișele
+de deschidere / închidere apar pe pagina locației.
+
+1. **SQL Editor** → lipești
+   [`supabase/migrations/0006_proceduri_verificate.sql`](supabase/migrations/0006_proceduri_verificate.sql) → **Run**.
+2. **SQL Editor** → lipești `date-proceduri.sql` (conținutul, generat cu
+   `tools/proceduri_verificate.py`; nu stă în repo) → **Run**. Se poate rula din
+   nou oricând se schimbă documentele: le actualizează după numele fișierului.
+3. Opțional: **Admin → Proceduri verificate** → **Alege PDF-urile** → selectezi toate
+   PDF-urile din folder (descărcat din Drive). Ghidul le potrivește după nume și
+   le atașează, ca angajații să le poată descărca.
+
+Fiecare vede doar documentele rolului lui (și ale rolurilor pe care le vede), iar
+cele legate de o locație doar dacă vede locația. PDF-urile stau în bucketul privat
+**proceduri**.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
