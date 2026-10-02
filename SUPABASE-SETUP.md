@@ -173,7 +173,7 @@ cele legate de o locație doar dacă vede locația. PDF-urile stau în bucketul 
 
 ## 10. Ghidul brutarului și calculatorul de pâine
 
-**SQL Editor** → lipești `9-ghidul-brutarului.sql` → **Run**. Fișerul conține
+**SQL Editor** → lipești `9-ghidul-brutarului.sql` → **Run**. Fișierul conține
 [`supabase/migrations/0007_ghidul_brutarului.sql`](supabase/migrations/0007_ghidul_brutarului.sql)
 plus capitolele (generate cu `tools/ghid_brutar.py`) și rețetele casei pentru
 calculator; capitolele și rețetele nu stau în repo. Se poate rula din nou oricând
