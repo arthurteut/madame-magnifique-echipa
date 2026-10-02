@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Ghidul echipei · Madame Magnifique</title>
+<meta name="description" content="Ghidul intern al echipei Madame Magnifique.">
+<meta name="theme-color" content="#242424">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #242424;
+    --ink-soft: #353535;
+    --muted: #6a6a6a;
+    --line: #e1e1e1;
+    --bg: #ffffff;
+    --bg-soft: #f9f9f9;
+    --greige: #dedcd8;
+    --sand: #e3d0aa;
+    --stone: #afac9f;
+    --gold: #f6bb60;
+    --wrap: 1400px;
+    --gutter: clamp(16px, 4vw, 40px);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink-soft); font: 300 16px/1.6 'Roboto', sans-serif; }
+  h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--ink-soft); margin: 0; line-height: 1.2; }
+  a { color: inherit; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+  .eyebrow { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  .hidden, [hidden] { display: none !important; }
+  .logo svg { display: block; height: 100%; width: auto; }
+
+  /* ---------- Lacăt ---------- */
+  #lock { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); background: var(--greige); }
+  .lock-photo { position: relative; overflow: hidden; margin: 0; background: #2a2622; }
+  .lock-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lock-side { display: grid; place-items: center; padding: 40px var(--gutter); }
+  .lock-card { width: 100%; max-width: 440px; background: #fff; padding: clamp(28px, 6vw, 48px); text-align: center; }
+  @media (max-width: 820px) {
+    #lock { grid-template-columns: 1fr; grid-template-rows: 34vh auto; }
+    .lock-side { padding-top: 0; margin-top: -48px; position: relative; }
+  }
+  .lock-card .logo { height: 64px; display: flex; justify-content: center; color: var(--ink); margin-bottom: 28px; }
+  .lock-card h1 { font-size: 1.25rem; margin: 8px 0 6px; }
+  .lock-card p { color: var(--muted); margin: 0 0 24px; font-size: .95rem; }
+  .field { display: block; width: 100%; padding: 14px 16px; border: 1px solid var(--line); background: #fff; font-size: 1rem; border-radius: 0; }
+  .field:focus { border-color: var(--ink); outline: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; background: var(--ink); color: #fff; border: 0; font: 500 .8rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: background .3s; text-decoration: none; }
+  .btn:hover { background: #000; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: #fff; }
+  .lock-card .btn { width: 100%; margin-top: 12px; }
+  .lock-card p.check { margin: 16px 0 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .user-chip { font-size: .82rem; color: var(--muted); white-space: nowrap; padding: 0 4px; }
+  .user-chip b { font-weight: 500; color: var(--ink); }
+  .check { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 16px; font-size: .88rem; color: var(--muted); }
+  .err { color: #9b2c2c; font-size: .9rem; min-height: 1.4em; margin-top: 12px; }
+
+  /* ---------- Antet ---------- */
+  header.top { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; gap: 24px; height: 76px; }
+  .bar .logo { height: 40px; color: var(--ink); flex: none; text-decoration: none; }
+  .bar nav { display: flex; gap: 4px; margin-left: auto; }
+  .bar nav a { font: 500 .78rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; padding: 10px 12px; color: var(--ink-soft); border-bottom: 2px solid transparent; }
+  .bar nav a:hover, .bar nav a.on { border-bottom-color: var(--ink); }
+  .icon-btn { background: none; border: 0; padding: 8px; display: inline-flex; color: var(--ink); }
+  .icon-btn svg { width: 22px; height: 22px; }
+  #menuBtn { display: none; }
+  .search-top { position: relative; flex: 0 1 320px; }
+  .search-top input { width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--line); background: var(--bg-soft); border-radius: 0; font-size: .92rem; }
+  .search-top input:focus { outline: none; border-color: var(--ink); background: #fff; }
+  .search-top svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted); }
+
+  /* ---------- Căutare ---------- */
+  #results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(0,0,0,.12); max-height: 70vh; overflow: auto; z-index: 30; }
+  .hero-search #results { top: calc(100% + 8px); }
+  .res-group { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .res-group:last-child { border-bottom: 0; }
+  .res-group .eyebrow { padding: 4px 16px 6px; display: block; }
+  .res { display: block; padding: 9px 16px; text-decoration: none; color: var(--ink-soft); font-size: .92rem; line-height: 1.35; }
+  .res:hover, .res.sel { background: var(--greige); }
+  .res small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+  .res mark { background: var(--sand); color: inherit; }
+  .res-empty { padding: 18px 16px; color: var(--muted); }
+
+  /* ---------- Acasă ---------- */
+  .hero { background: var(--ink); color: #fff; padding: clamp(48px, 8vw, 96px) 0 clamp(40px, 7vw, 80px); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .hero-collage { position: relative; height: clamp(380px, 40vw, 540px); }
+  .hero-collage figure { position: absolute; margin: 0; overflow: hidden; background: #3a352f; }
+  .hero-collage img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .hero-collage .f1 { left: 0; top: 10%; width: 54%; height: 72%; }
+  .hero-collage .f2 { right: 0; top: 0; width: 42%; height: 50%; }
+  .hero-collage .f3 { right: 6%; bottom: 0; width: 38%; height: 40%; }
+  .sw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+  .swi { display: inline-block; }
+
+  .marquee { background: var(--greige); overflow: hidden; padding: clamp(18px, 3vw, 28px) 0; border-bottom: 1px solid #d3d0ca; }
+  .mq-track { display: flex; width: max-content; }
+  .mq-track span { font: 400 clamp(1.5rem, 4vw, 2.9rem)/1.1 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--ink); white-space: nowrap; padding-right: .5em; }
+  .mq-track i { font-style: normal; color: var(--stone); padding-right: .5em; }
+  .hero .eyebrow { color: var(--sand); }
+  .hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 500; margin: 14px 0 12px; max-width: 16ch; }
+  .hero p { color: #cfcdc8; max-width: 56ch; margin: 0 0 32px; font-size: 1.05rem; }
+  .hero-search { position: relative; max-width: 720px; }
+  .hero-search input { width: 100%; padding: 20px 20px 20px 56px; font-size: 1.1rem; border: 0; border-radius: 0; background: #fff; color: var(--ink); }
+  .hero-search input:focus { outline: 2px solid var(--sand); }
+  .hero-search > svg { position: absolute; left: 20px; top: 30px; transform: translateY(-50%); width: 20px; height: 20px; color: var(--muted); }
+  .hint { color: #a9a69e; font-size: .85rem; margin-top: 12px; }
+  .hint button { background: none; border: 0; color: var(--sand); text-decoration: underline; padding: 0 2px; font-size: inherit; }
+
+  section.block { padding: clamp(40px, 6vw, 72px) 0; }
+  section.block.soft { background: var(--bg-soft); }
+  .block-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .block-head h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); margin-top: 8px; }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .tile { display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; padding: 24px; background: var(--greige); text-decoration: none; color: var(--ink); transition: background .3s, color .3s; position: relative; }
+  .tile:hover { background: var(--ink); color: #fff; }
+  .tile:hover h3, .tile:hover .eyebrow { color: #fff; }
+  .tile h3 { font-size: 1.35rem; margin: 10px 0 6px; transition: color .3s; }
+  .tile p { margin: 0; font-size: .92rem; opacity: .85; }
+  .tile .go { margin-top: 20px; font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .tile.photo { color: #fff; background: #2a2622; overflow: hidden; min-height: 280px; }
+  .tile.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
+  .tile.photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24, 22, 20, .78) 0%, rgba(24, 22, 20, .3) 48%, rgba(24, 22, 20, .7) 100%); }
+  .tile.photo h3, .tile.photo p, .tile.photo .eyebrow { text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
+  .tile.photo > div, .tile.photo > .go { position: relative; z-index: 1; }
+  .tile.photo h3, .tile.photo .eyebrow { color: #fff; }
+  .tile.photo p { opacity: .92; }
+  .tile.photo:hover { background: #2a2622; }
+  .tile.photo:hover img { transform: scale(1.07); }
+  .tile.dark { background: var(--ink); color: #fff; }
+  .tile.dark h3, .tile.dark .eyebrow { color: #fff; }
+  .tile.dark:hover { background: #000; }
+  .group-label { font: 500 .78rem/1 'Montserrat', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 32px 0 14px; }
+  .group-label:first-child { margin-top: 0; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border: 1px solid var(--line); background: #fff; font: 500 .82rem/1 'Montserrat', sans-serif; text-decoration: none; color: var(--ink-soft); }
+  .chip:hover { border-color: var(--ink); }
+  .chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .chip b { font-weight: 600; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .stat { background: #fff; padding: 20px; }
+  .stat strong { display: block; font: 500 2rem/1 'Montserrat', sans-serif; color: var(--ink); }
+  .stat span { font-size: .85rem; color: var(--muted); }
+
+  /* ---------- Pagina unui spațiu ---------- */
+  .band { background: var(--greige); padding: clamp(32px, 5vw, 56px) 0; overflow: hidden; }
+  .band-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 30%); gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .band-photo { margin: 0; overflow: hidden; aspect-ratio: 4 / 5; max-height: 380px; background: #cfccc6; }
+  .band-photo img { display: block; width: 100%; height: 115%; object-fit: cover; }
+  .crumbs { font-size: .82rem; color: var(--muted); margin-bottom: 14px; }
+  .crumbs a { text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .band h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin: 8px 0 8px; }
+  .band .sub { font-size: 1.05rem; color: var(--ink-soft); margin: 0; }
+  .profile { margin-top: 24px; background: #fff; padding: 20px 24px; border-left: 3px solid var(--ink); max-width: 860px; }
+  .profile p { margin: 0; }
+  .profile .why { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+  .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .card { background: #fff; border: 1px solid var(--line); padding: 22px; }
+  .card .tag { display: inline-block; font: 600 .68rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 6px 8px; background: var(--sand); color: var(--ink); margin-bottom: 12px; text-decoration: none; }
+  .card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .card p { margin: 0; font-size: .94rem; }
+  .card .why { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: .86rem; }
+  .card.note { background: var(--bg-soft); border-color: transparent; }
+  .fisa { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .fisa .card h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .kv { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .93rem; align-items: baseline; }
+  .kv:last-child { border-bottom: 0; }
+  .kv .k { color: var(--ink-soft); flex: 1 1 170px; min-width: 0; }
+  .kv .k small { display: block; color: var(--muted); font-size: .8rem; margin-top: 4px; }
+  .kv .v { color: var(--ink); text-align: right; font-weight: 400; flex: 0 1 auto; margin-left: auto; max-width: 100%; }
+  .kv .v a { text-decoration: none; border-bottom: 1px solid var(--stone); }
+  .kv-head { font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 18px 0 2px; }
+  .todo { display: inline-block; font-size: .78rem; color: #7a6a45; border: 1px dashed var(--gold); background: #fdf8ee; padding: 2px 8px; white-space: nowrap; }
+  .todo-count { font-size: .85rem; color: #7a6a45; }
+  .fisa-note { font-size: .82rem; color: var(--muted); margin: 12px 0 0; font-style: italic; }
+  @media (max-width: 640px) { .kv .v { text-align: left; margin-left: 0; } }
+
+  .filterbar { position: sticky; top: 76px; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); padding: 12px 0; }
+  .filterbar .wrap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filterbar .lbl { font-size: .85rem; color: var(--muted); }
+
+  .proc { border: 1px solid var(--line); background: #fff; margin-bottom: 10px; scroll-margin-top: 150px; }
+  .proc > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: center; padding: 18px 20px; }
+  .proc > summary::-webkit-details-marker { display: none; }
+  .proc > summary:hover { background: var(--bg-soft); }
+  .proc .code { font: 600 .85rem/1 'Montserrat', sans-serif; color: var(--muted); }
+  .proc .name { font: 500 1.05rem/1.3 'Montserrat', sans-serif; color: var(--ink); }
+  .proc .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .proc .chev { width: 18px; height: 18px; transition: transform .25s; color: var(--muted); }
+  .proc[open] .chev { transform: rotate(180deg); }
+  .proc[open] > summary { border-bottom: 1px solid var(--line); }
+  .proc-body { padding: 20px; }
+  .miza { font-style: italic; color: var(--muted); margin: 0 0 18px; padding-left: 14px; border-left: 2px solid var(--sand); }
+  .local { background: #fbf6ea; border-left: 3px solid var(--gold); padding: 12px 16px; margin: 0 0 18px; font-size: .94rem; }
+  .local b { font-weight: 500; }
+  .local .why { color: var(--muted); font-size: .86rem; display: block; margin-top: 4px; }
+
+  .pill { display: inline-block; font: 600 .68rem/1 'Montserrat', sans-serif; letter-spacing: .06em; padding: 5px 7px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); text-decoration: none; white-space: nowrap; }
+  a.pill:hover { border-color: var(--ink); }
+  .pill.v1 { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .pill.v2 { background: var(--stone); color: #fff; border-color: var(--stone); }
+  .pill.v3 { background: var(--greige); border-color: var(--greige); }
+  .pill.crit { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .pill.star { background: var(--sand); border-color: var(--sand); }
+
+  .subp { margin: 0 0 20px; }
+  .subp:last-child { margin-bottom: 0; }
+  .subp h4 { font-size: .95rem; margin-bottom: 10px; display: flex; gap: 8px; align-items: baseline; }
+  .tasks { display: grid; gap: 8px; }
+  .task { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 12px 14px; background: var(--bg-soft); border-left: 3px solid var(--greige); }
+  .task.mine { border-left-color: var(--ink); }
+  .task.adj { border-left-color: var(--gold); background: #fdf8ee; }
+  .std-note { flex-basis: 100%; font-size: .8rem; color: #7a6a45; }
+  .task .t { color: var(--ink); font-weight: 400; }
+  .task .facts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .84rem; color: var(--muted); }
+  .task .facts span { display: inline-flex; gap: 5px; align-items: center; }
+  .task .facts svg { width: 13px; height: 13px; flex: none; }
+  .task .right { display: flex; gap: 6px; align-items: start; }
+  .simple-list { margin: 0; padding: 0; list-style: none; }
+  .simple-list li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .simple-list li:last-child { border-bottom: 0; }
+  .lvl4 { font-size: .86rem; color: var(--muted); background: var(--bg-soft); padding: 10px 14px; margin-top: 14px; }
+
+  .proc-list { display: grid; gap: 8px; margin-top: 8px; }
+  .prow { display: grid; grid-template-columns: 78px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); text-decoration: none; background: #fff; }
+  .prow:hover { border-color: var(--ink); }
+  .prow .c { font: 600 .82rem/1 'Montserrat', sans-serif; color: var(--muted); }
+  .prow .ti { color: var(--ink); }
+  .prow .ti small { display: block; color: var(--muted); font-size: .82rem; margin-top: 2px; }
+  .prow .meta { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+  .section-title { font-size: 1.3rem; margin: 0 0 18px; }
+  .dom-head { margin: 36px 0 14px; }
+  .dom-head:first-child { margin-top: 0; }
+  .dom-head h3 { font-size: 1.2rem; }
+  .dom-head p { margin: 6px 0 0; color: var(--muted); font-style: italic; }
+
+  /* ---------- Procedură ---------- */
+  .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 24px 0; }
+  .facts-grid div { background: #fff; padding: 16px 18px; }
+  .facts-grid .eyebrow { display: block; margin-bottom: 8px; }
+  .facts-grid strong { font-weight: 400; color: var(--ink); }
+  .std { background: var(--bg-soft); padding: 20px 24px; }
+  .std ul { margin: 8px 0 0; padding-left: 18px; }
+
+  .role-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .role-card { display: block; padding: 20px; border: 1px solid var(--line); text-decoration: none; background: #fff; }
+  .role-card:hover { border-color: var(--ink); }
+  .role-card .rc { font: 600 .75rem/1 'Montserrat', sans-serif; letter-spacing: .1em; background: var(--ink); color: #fff; padding: 5px 8px; display: inline-block; }
+  .role-card h3 { font-size: 1.05rem; margin: 12px 0 6px; }
+  .role-card p { margin: 0; font-size: .9rem; color: var(--muted); }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  .tbl th { text-align: left; font: 500 .72rem/1.2 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid var(--ink); }
+  .tbl td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl tr:hover td { background: var(--bg-soft); }
+  .tbl a { text-decoration: none; }
+  .tbl-wrap { overflow-x: auto; }
+  .selects { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .selects select { padding: 10px 34px 10px 12px; border: 1px solid var(--line); background: #fff url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 6px center; -webkit-appearance: none; appearance: none; border-radius: 0; font-size: .9rem; }
+
+  footer { background: var(--ink); color: #a9a69e; padding: 36px 0; font-size: .85rem; margin-top: 40px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer .logo { height: 34px; color: #fff; }
+  footer button { background: none; border: 1px solid #555; color: #ddd; padding: 8px 14px; font-size: .8rem; }
+  footer button:hover { border-color: #fff; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lock-photo img { animation: kenburns 24s ease-in-out infinite alternate; }
+    .lock-card { animation: rise .9s cubic-bezier(.2, .7, .2, 1) .15s both; }
+    .lock-card .logo path { animation: riseT .8s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(.25s + var(--i, 0) * 45ms); }
+    .mq-track { animation: mq 38s linear infinite; }
+    html.gs .mq-track { animation: none; }
+  }
+  @keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.14) translate(-2%, -2%); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  /* Literele logo-ului au deja un transform SVG: le mișcăm cu „translate”, nu cu „transform”. */
+  @keyframes riseT { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes mq { to { transform: translateX(-50%); } }
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-collage { height: 300px; }
+    .band-grid { grid-template-columns: 1fr; }
+    .band-photo { aspect-ratio: 16 / 9; max-height: 220px; order: -1; }
+    .bar { gap: 12px; height: 64px; }
+    .bar .logo { height: 32px; }
+    #menuBtn { display: inline-flex; margin-left: auto; }
+    .bar nav { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 8px var(--gutter) 16px; border-bottom: 1px solid var(--line); }
+    .bar nav.open { display: flex; }
+    .bar nav a { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .search-top { flex: 1 1 auto; order: 3; }
+    .filterbar { top: 64px; }
+  }
+  @media (max-width: 640px) {
+    .bar { flex-wrap: wrap; height: auto; padding-top: 12px; padding-bottom: 12px; }
+    .search-top { flex-basis: 100%; }
+    .bar nav { top: 100%; }
+    .filterbar { position: static; }
+    .proc > summary { grid-template-columns: 1fr auto; gap: 8px 12px; padding: 16px; }
+    .proc .code { grid-column: 1 / -1; }
+    .proc .meta { grid-column: 1 / -1; justify-content: flex-start; }
+    .proc .chev { display: none; }
+    .proc-body { padding: 16px; }
+    .task { grid-template-columns: 1fr; }
+    .prow { grid-template-columns: 1fr; gap: 6px; }
+    .prow .meta { justify-content: flex-start; }
+    .cards { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr; }
+    .tile { min-height: 150px; }
+  }
+  @media print {
+    header.top, .filterbar, footer, #results { display: none !important; }
+    .proc { break-inside: avoid; }
+    details.proc > .proc-body { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="lock">
+  <figure class="lock-photo"><img src="assets/img/patiserie-logo.jpg" alt="Patiserie Madame Magnifique pe hârtia cu logo"></figure>
+  <div class="lock-side">
+  <form class="lock-card" id="lockForm" autocomplete="on">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="28 30 312 94" fill="currentColor" role="img" aria-label="Madame Magnifique"><path transform="matrix(1,0,0,-1,0,154.4655)" d="M334.1738 115.8684V120.0776H306.2849 302.118V115.8684 91.9491 87.7136 72.9006 69.9123 68.6914H334.1738V72.9006H306.2849V87.7136H329.7654V91.9491H306.2849V115.8684Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M247.6293 113.7572C247.6514 99.3379 247.6485 83.1538 247.6474 68.6582H251.8628V106.7295C251.9144 106.7426 251.9649 106.7539 252.0164 106.7658 257.1585 94.6154 262.3005 82.4624 267.5083 70.1538 272.7142 82.8638 277.852 95.4065 282.99 107.9484 283.0467 107.9331 283.1031 107.9201 283.1579 107.9048V107.1184C283.1579 94.9113 283.1579 80.9527 283.1587 68.6582H287.3225V120.1365H283.1803C282.0977 117.4119 267.9803 82.3915 267.5103 81.2333 266.9292 82.5616 252.7228 115.2853 250.6258 120.1365H244.8351C245.289 119.3219 246.549 116.6658 247.1927 115.3885 247.5746 114.6297 247.6281 114.3043 247.6293 113.7572" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M202.9436 85.5882C206.1524 93.7074 209.3865 101.8925 212.5327 109.8544 212.5942 109.8502 212.6537 109.8451 212.7155 109.84 216.0326 101.7814 219.3494 93.7239 222.6994 85.5882ZM230.0063 68.6582H235.0766C227.7264 85.9459 219.9657 104.2058 212.6186 121.4844 205.4823 104.1231 198.006 85.9742 190.887 68.6582H195.8624C197.0456 71.5073 201.0974 81.2163 201.0974 81.2163 208.3751 81.1998 217.3238 81.201 224.6077 81.2163 224.6077 81.2163 229.119 70.7553 230.0063 68.6582" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M37.1245 113.7572C37.1469 99.3379 37.1438 83.1538 37.1438 68.6582H41.3589V106.7295C41.4096 106.7426 41.4612 106.7539 41.5128 106.7658 46.6546 94.6154 51.7958 82.4624 57.0033 70.1538 62.2091 82.8638 67.3472 95.4065 72.485 107.9484 72.5417 107.9331 72.5984 107.9201 72.654 107.9048V107.1184 68.6582H76.8189V120.1365H72.6761C71.5938 117.4119 57.4764 82.3915 57.0064 81.2333 56.4253 82.5616 42.2181 115.2853 40.1219 120.1365H34.3301C34.7848 119.3219 36.0451 116.6658 36.688 115.3885 37.0709 114.6297 37.1234 114.3043 37.1245 113.7572" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M100.9585 85.5882C104.1664 93.7074 107.4002 101.8925 110.5464 109.8544 110.6082 109.8502 110.6685 109.8451 110.73 109.84 114.0471 101.7814 117.3628 93.7239 120.7134 85.5882ZM128.0203 68.6582H133.0906C125.7401 85.9459 117.9794 104.2058 110.6323 121.4844 103.4963 104.1231 96.0197 85.9742 88.9007 68.6582H93.8761C95.0596 71.5073 99.1114 81.2163 99.1114 81.2163 106.3885 81.1998 115.3386 81.201 122.6211 81.2163 122.6211 81.2163 127.1327 70.7553 128.0203 68.6582" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M176.9627 83.8582C172.823 77.1242 166.8747 73.1849 158.7838 72.9595 156.5974 72.8977 154.4094 72.919 152.2216 72.9221V72.9201H149.3768V92.4888 115.8534H149.7042C149.7073 115.8534 149.7101 115.8554 149.7132 115.8554 153.0289 115.8403 156.35 115.9191 159.6609 115.7837 165.2142 115.5543 169.7732 113.1449 173.6813 109.2591 181.0174 101.9633 181.2577 90.8476 176.9627 83.8582ZM183.6207 100.0483C182.7102 104.7747 180.3229 108.7415 176.989 112.1868 172.0806 117.2611 166.155 120.0101 159.0616 120.0909 154.6036 120.1394 150.1458 120.1102 145.688 120.113H145.6849 145.1906V120.0657 119.0358 117.9473 71.4569 68.6906C145.4261 68.6767 145.622 68.6531 145.8193 68.6531 150.0083 68.6511 154.1996 68.5936 158.3864 68.6786 160.2794 68.7178 162.1925 68.91 164.0509 69.2668 168.3238 70.0852 172.0641 72.057 175.3021 74.9503 182.8797 81.7206 185.5256 90.1551 183.6207 100.0483" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M110.8899 34.0543H108.8711V46.3504L103.3832 38.895H102.6848L97.1711 46.3759V34.0543H95.1517V51.4239H95.8765L103.0215 41.5358 110.1657 51.4239H110.8899Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M121.2194 39.3355H128.0531L124.6615 47.6963ZM132.4534 34.054H130.2795L128.8043 37.5231H120.4685L119.0183 34.054H116.8696L124.2998 51.4244H125.0246Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M145.7342 51.4244C147.2003 51.4244 148.5252 51.1129 149.7078 50.4924 150.8893 49.8708 151.8775 49.017 152.6709 47.9296L151.17 46.7391C150.5313 47.6184 149.7583 48.3094 148.8526 48.8098 147.9464 49.3104 146.9072 49.5607 145.7342 49.5607 144.7495 49.5607 143.839 49.3829 143.0022 49.03 142.1654 48.6754 141.45 48.1884 140.8538 47.5679 140.2586 46.9454 139.7925 46.2127 139.4561 45.3665 139.1193 44.5218 138.9518 43.6071 138.9518 42.6229 138.9518 41.6222 139.1233 40.6945 139.4691 39.8404 139.8146 38.9857 140.2877 38.2436 140.8929 37.6143 141.4973 36.9833 142.221 36.4884 143.0671 36.1256 143.9127 35.7627 144.8354 35.5816 145.838 35.5816 147.1314 35.5816 148.2613 35.8656 149.2288 36.4357 150.1948 37.0046 150.9537 37.7382 151.5067 38.6371V40.9399H145.7079V42.7521H153.5261V38.1963C153.163 37.5403 152.7092 36.9411 152.1666 36.3974 151.6229 35.8537 151.0143 35.3877 150.3414 34.9997 149.6696 34.6105 148.9439 34.3083 148.1666 34.094 147.3905 33.8777 146.579 33.7697 145.7342 33.7697 144.4921 33.7697 143.3256 33.9993 142.2391 34.456 141.152 34.9129 140.2109 35.5334 139.4175 36.3195 138.6232 37.1049 137.9976 38.0364 137.541 39.1147 137.0832 40.1944 136.8544 41.3546 136.8544 42.5976 136.8544 43.8398 137.0832 45.0009 137.541 46.0791 137.9976 47.1566 138.6283 48.0932 139.4308 48.8877 140.2333 49.6809 141.173 50.3025 142.2522 50.7512 143.3296 51.1999 144.4921 51.4244 145.7342 51.4244" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M171.7495 38.2476V51.1401H173.7689V33.7697H173.018L162.1457 46.8947V34.0549H160.1263V51.4244H160.8511Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M183.3199 34.054H181.3011V51.1393H183.3199Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M201.5453 49.3279H192.8733V43.4511H200.0699V41.6129H192.8733V34.0546H190.8539V51.1401H201.5453Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M209.285 34.054H207.2659V51.1393H209.285Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M224.5567 49.5609C223.5906 49.5609 222.6932 49.3832 221.8654 49.0303 221.0366 48.6757 220.3203 48.1887 219.7168 47.5671 219.1116 46.9457 218.6413 46.2129 218.3051 45.3668 217.9684 44.5221 217.8006 43.6065 217.8006 42.6231 217.8006 41.6225 217.9726 40.6947 218.3179 39.8407 218.6637 38.986 219.1377 38.2482 219.742 37.6265 220.3466 37.0049 221.0618 36.5179 221.8907 36.1641 222.7195 35.8106 223.6158 35.6335 224.583 35.6335 225.5494 35.6335 226.4426 35.8106 227.262 36.1641 228.0815 36.5179 228.7933 37.0049 229.3974 37.6265 230.002 38.2482 230.4729 38.986 230.8096 39.8407 231.1458 40.6947 231.3136 41.6134 231.3136 42.5971 231.3136 43.5813 231.1458 44.4997 230.8096 45.3538 230.4729 46.209 230.002 46.9457 229.3974 47.5671 228.7933 48.1887 228.0815 48.6757 227.262 49.0303 226.4426 49.3832 225.5409 49.5609 224.5567 49.5609ZM224.5567 51.4247C225.7826 51.4247 226.9307 51.2005 227.9999 50.7515 229.07 50.3016 230.0071 49.6811 230.8096 48.888 231.6107 48.0934 232.2456 47.1569 232.7114 46.0794 233.1771 45.0003 233.4107 43.8401 233.4107 42.5971 233.4107 41.0272 233.0612 39.6113 232.3627 38.3511 231.6623 37.0919 230.7263 36.0652 229.5533 35.2709 230.7436 33.7014 232.0988 32.5191 233.6179 31.7254 235.1358 30.9311 236.8964 30.534 238.8977 30.534 239.2775 30.534 239.6786 30.5473 240.1021 30.5725 240.5245 30.5989 240.9602 30.6292 241.41 30.6635V29.0585C240.9775 28.9726 240.5336 28.9069 240.0758 28.8643 239.618 28.8221 239.1401 28.7997 238.6397 28.7997 236.378 28.7997 234.3506 29.2788 232.5557 30.2357 230.7609 31.1941 229.2086 32.5786 227.897 34.3905 227.3783 34.2014 226.8439 34.05 226.292 33.9381 225.7393 33.8264 225.161 33.77 224.5567 33.77 223.3148 33.77 222.1586 33.9996 221.0882 34.4563 220.0178 34.9132 219.0821 35.5337 218.2796 36.3189 217.4771 37.1052 216.8467 38.037 216.3898 39.115 215.9331 40.1933 215.7035 41.3549 215.7035 42.5971 215.7035 43.8401 215.9331 45.0003 216.3898 46.0794 216.8467 47.1569 217.4771 48.0934 218.2796 48.888 219.0821 49.6811 220.0232 50.3016 221.1015 50.7515 222.179 51.2005 223.3318 51.4247 224.5567 51.4247" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M253.2132 40.8365C253.2132 39.6975 253.0406 38.6881 252.6951 37.8088 252.3504 36.9283 251.8764 36.1896 251.2718 35.5944 250.6666 35.0002 249.9511 34.5464 249.1234 34.2363 248.2948 33.9248 247.3974 33.7703 246.4311 33.7703 245.4466 33.7703 244.5412 33.9248 243.7135 34.2363 242.8838 34.5464 242.1683 35.0002 241.5648 35.5944 240.9596 36.1896 240.4899 36.9283 240.1532 37.8088 239.8167 38.6881 239.6486 39.6975 239.6486 40.8365V51.1398H241.668V40.7072C241.668 39.8452 241.7924 39.0932 242.043 38.4554 242.2925 37.8167 242.6292 37.2903 243.0527 36.8756 243.4751 36.4626 243.9754 36.1514 244.5542 35.9442 245.1325 35.7369 245.7581 35.6338 246.4311 35.6338 247.087 35.6338 247.7035 35.7369 248.2818 35.9442 248.8598 36.1514 249.3641 36.4626 249.7966 36.8756 250.2281 37.2903 250.5685 37.8167 250.8194 38.4554 251.0688 39.0932 251.1944 39.8452 251.1944 40.7072V51.1398H253.2132Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M271.5151 49.3279H262.5843V44.098H269.418V42.2861H262.5843V35.8665H271.8266V34.0546H260.5652V51.1401H271.5151Z" /></svg></div>
+    <span class="eyebrow">Doar pentru echipă</span>
+    <h1>Ghidul echipei</h1>
+    <p>Rolurile, procesele și procedurile Madame Magnifique, pe magazine, laboratoare și B2B.</p>
+    <label class="sr-only" for="user">Utilizator</label>
+    <input class="field" type="text" id="user" name="username" placeholder="Utilizator (ex.: ana.vt)" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    <label class="sr-only" for="pw">Parola</label>
+    <input class="field" type="password" id="pw" name="password" placeholder="Parola" autocomplete="current-password" required style="margin-top:10px">
+    <button class="btn" type="submit" id="unlockBtn">Intră</button>
+    <p class="check">Ai uitat parola? Cere-i responsabilului de locație să ți-o reseteze.</p>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header class="top">
+    <div class="wrap bar">
+      <a class="logo" href="#/" aria-label="Acasă"><svg xmlns="http://www.w3.org/2000/svg" viewBox="28 30 312 94" fill="currentColor" role="img" aria-label="Madame Magnifique"><path transform="matrix(1,0,0,-1,0,154.4655)" d="M334.1738 115.8684V120.0776H306.2849 302.118V115.8684 91.9491 87.7136 72.9006 69.9123 68.6914H334.1738V72.9006H306.2849V87.7136H329.7654V91.9491H306.2849V115.8684Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M247.6293 113.7572C247.6514 99.3379 247.6485 83.1538 247.6474 68.6582H251.8628V106.7295C251.9144 106.7426 251.9649 106.7539 252.0164 106.7658 257.1585 94.6154 262.3005 82.4624 267.5083 70.1538 272.7142 82.8638 277.852 95.4065 282.99 107.9484 283.0467 107.9331 283.1031 107.9201 283.1579 107.9048V107.1184C283.1579 94.9113 283.1579 80.9527 283.1587 68.6582H287.3225V120.1365H283.1803C282.0977 117.4119 267.9803 82.3915 267.5103 81.2333 266.9292 82.5616 252.7228 115.2853 250.6258 120.1365H244.8351C245.289 119.3219 246.549 116.6658 247.1927 115.3885 247.5746 114.6297 247.6281 114.3043 247.6293 113.7572" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M202.9436 85.5882C206.1524 93.7074 209.3865 101.8925 212.5327 109.8544 212.5942 109.8502 212.6537 109.8451 212.7155 109.84 216.0326 101.7814 219.3494 93.7239 222.6994 85.5882ZM230.0063 68.6582H235.0766C227.7264 85.9459 219.9657 104.2058 212.6186 121.4844 205.4823 104.1231 198.006 85.9742 190.887 68.6582H195.8624C197.0456 71.5073 201.0974 81.2163 201.0974 81.2163 208.3751 81.1998 217.3238 81.201 224.6077 81.2163 224.6077 81.2163 229.119 70.7553 230.0063 68.6582" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M37.1245 113.7572C37.1469 99.3379 37.1438 83.1538 37.1438 68.6582H41.3589V106.7295C41.4096 106.7426 41.4612 106.7539 41.5128 106.7658 46.6546 94.6154 51.7958 82.4624 57.0033 70.1538 62.2091 82.8638 67.3472 95.4065 72.485 107.9484 72.5417 107.9331 72.5984 107.9201 72.654 107.9048V107.1184 68.6582H76.8189V120.1365H72.6761C71.5938 117.4119 57.4764 82.3915 57.0064 81.2333 56.4253 82.5616 42.2181 115.2853 40.1219 120.1365H34.3301C34.7848 119.3219 36.0451 116.6658 36.688 115.3885 37.0709 114.6297 37.1234 114.3043 37.1245 113.7572" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M100.9585 85.5882C104.1664 93.7074 107.4002 101.8925 110.5464 109.8544 110.6082 109.8502 110.6685 109.8451 110.73 109.84 114.0471 101.7814 117.3628 93.7239 120.7134 85.5882ZM128.0203 68.6582H133.0906C125.7401 85.9459 117.9794 104.2058 110.6323 121.4844 103.4963 104.1231 96.0197 85.9742 88.9007 68.6582H93.8761C95.0596 71.5073 99.1114 81.2163 99.1114 81.2163 106.3885 81.1998 115.3386 81.201 122.6211 81.2163 122.6211 81.2163 127.1327 70.7553 128.0203 68.6582" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M176.9627 83.8582C172.823 77.1242 166.8747 73.1849 158.7838 72.9595 156.5974 72.8977 154.4094 72.919 152.2216 72.9221V72.9201H149.3768V92.4888 115.8534H149.7042C149.7073 115.8534 149.7101 115.8554 149.7132 115.8554 153.0289 115.8403 156.35 115.9191 159.6609 115.7837 165.2142 115.5543 169.7732 113.1449 173.6813 109.2591 181.0174 101.9633 181.2577 90.8476 176.9627 83.8582ZM183.6207 100.0483C182.7102 104.7747 180.3229 108.7415 176.989 112.1868 172.0806 117.2611 166.155 120.0101 159.0616 120.0909 154.6036 120.1394 150.1458 120.1102 145.688 120.113H145.6849 145.1906V120.0657 119.0358 117.9473 71.4569 68.6906C145.4261 68.6767 145.622 68.6531 145.8193 68.6531 150.0083 68.6511 154.1996 68.5936 158.3864 68.6786 160.2794 68.7178 162.1925 68.91 164.0509 69.2668 168.3238 70.0852 172.0641 72.057 175.3021 74.9503 182.8797 81.7206 185.5256 90.1551 183.6207 100.0483" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M110.8899 34.0543H108.8711V46.3504L103.3832 38.895H102.6848L97.1711 46.3759V34.0543H95.1517V51.4239H95.8765L103.0215 41.5358 110.1657 51.4239H110.8899Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M121.2194 39.3355H128.0531L124.6615 47.6963ZM132.4534 34.054H130.2795L128.8043 37.5231H120.4685L119.0183 34.054H116.8696L124.2998 51.4244H125.0246Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M145.7342 51.4244C147.2003 51.4244 148.5252 51.1129 149.7078 50.4924 150.8893 49.8708 151.8775 49.017 152.6709 47.9296L151.17 46.7391C150.5313 47.6184 149.7583 48.3094 148.8526 48.8098 147.9464 49.3104 146.9072 49.5607 145.7342 49.5607 144.7495 49.5607 143.839 49.3829 143.0022 49.03 142.1654 48.6754 141.45 48.1884 140.8538 47.5679 140.2586 46.9454 139.7925 46.2127 139.4561 45.3665 139.1193 44.5218 138.9518 43.6071 138.9518 42.6229 138.9518 41.6222 139.1233 40.6945 139.4691 39.8404 139.8146 38.9857 140.2877 38.2436 140.8929 37.6143 141.4973 36.9833 142.221 36.4884 143.0671 36.1256 143.9127 35.7627 144.8354 35.5816 145.838 35.5816 147.1314 35.5816 148.2613 35.8656 149.2288 36.4357 150.1948 37.0046 150.9537 37.7382 151.5067 38.6371V40.9399H145.7079V42.7521H153.5261V38.1963C153.163 37.5403 152.7092 36.9411 152.1666 36.3974 151.6229 35.8537 151.0143 35.3877 150.3414 34.9997 149.6696 34.6105 148.9439 34.3083 148.1666 34.094 147.3905 33.8777 146.579 33.7697 145.7342 33.7697 144.4921 33.7697 143.3256 33.9993 142.2391 34.456 141.152 34.9129 140.2109 35.5334 139.4175 36.3195 138.6232 37.1049 137.9976 38.0364 137.541 39.1147 137.0832 40.1944 136.8544 41.3546 136.8544 42.5976 136.8544 43.8398 137.0832 45.0009 137.541 46.0791 137.9976 47.1566 138.6283 48.0932 139.4308 48.8877 140.2333 49.6809 141.173 50.3025 142.2522 50.7512 143.3296 51.1999 144.4921 51.4244 145.7342 51.4244" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M171.7495 38.2476V51.1401H173.7689V33.7697H173.018L162.1457 46.8947V34.0549H160.1263V51.4244H160.8511Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M183.3199 34.054H181.3011V51.1393H183.3199Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M201.5453 49.3279H192.8733V43.4511H200.0699V41.6129H192.8733V34.0546H190.8539V51.1401H201.5453Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M209.285 34.054H207.2659V51.1393H209.285Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M224.5567 49.5609C223.5906 49.5609 222.6932 49.3832 221.8654 49.0303 221.0366 48.6757 220.3203 48.1887 219.7168 47.5671 219.1116 46.9457 218.6413 46.2129 218.3051 45.3668 217.9684 44.5221 217.8006 43.6065 217.8006 42.6231 217.8006 41.6225 217.9726 40.6947 218.3179 39.8407 218.6637 38.986 219.1377 38.2482 219.742 37.6265 220.3466 37.0049 221.0618 36.5179 221.8907 36.1641 222.7195 35.8106 223.6158 35.6335 224.583 35.6335 225.5494 35.6335 226.4426 35.8106 227.262 36.1641 228.0815 36.5179 228.7933 37.0049 229.3974 37.6265 230.002 38.2482 230.4729 38.986 230.8096 39.8407 231.1458 40.6947 231.3136 41.6134 231.3136 42.5971 231.3136 43.5813 231.1458 44.4997 230.8096 45.3538 230.4729 46.209 230.002 46.9457 229.3974 47.5671 228.7933 48.1887 228.0815 48.6757 227.262 49.0303 226.4426 49.3832 225.5409 49.5609 224.5567 49.5609ZM224.5567 51.4247C225.7826 51.4247 226.9307 51.2005 227.9999 50.7515 229.07 50.3016 230.0071 49.6811 230.8096 48.888 231.6107 48.0934 232.2456 47.1569 232.7114 46.0794 233.1771 45.0003 233.4107 43.8401 233.4107 42.5971 233.4107 41.0272 233.0612 39.6113 232.3627 38.3511 231.6623 37.0919 230.7263 36.0652 229.5533 35.2709 230.7436 33.7014 232.0988 32.5191 233.6179 31.7254 235.1358 30.9311 236.8964 30.534 238.8977 30.534 239.2775 30.534 239.6786 30.5473 240.1021 30.5725 240.5245 30.5989 240.9602 30.6292 241.41 30.6635V29.0585C240.9775 28.9726 240.5336 28.9069 240.0758 28.8643 239.618 28.8221 239.1401 28.7997 238.6397 28.7997 236.378 28.7997 234.3506 29.2788 232.5557 30.2357 230.7609 31.1941 229.2086 32.5786 227.897 34.3905 227.3783 34.2014 226.8439 34.05 226.292 33.9381 225.7393 33.8264 225.161 33.77 224.5567 33.77 223.3148 33.77 222.1586 33.9996 221.0882 34.4563 220.0178 34.9132 219.0821 35.5337 218.2796 36.3189 217.4771 37.1052 216.8467 38.037 216.3898 39.115 215.9331 40.1933 215.7035 41.3549 215.7035 42.5971 215.7035 43.8401 215.9331 45.0003 216.3898 46.0794 216.8467 47.1569 217.4771 48.0934 218.2796 48.888 219.0821 49.6811 220.0232 50.3016 221.1015 50.7515 222.179 51.2005 223.3318 51.4247 224.5567 51.4247" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M253.2132 40.8365C253.2132 39.6975 253.0406 38.6881 252.6951 37.8088 252.3504 36.9283 251.8764 36.1896 251.2718 35.5944 250.6666 35.0002 249.9511 34.5464 249.1234 34.2363 248.2948 33.9248 247.3974 33.7703 246.4311 33.7703 245.4466 33.7703 244.5412 33.9248 243.7135 34.2363 242.8838 34.5464 242.1683 35.0002 241.5648 35.5944 240.9596 36.1896 240.4899 36.9283 240.1532 37.8088 239.8167 38.6881 239.6486 39.6975 239.6486 40.8365V51.1398H241.668V40.7072C241.668 39.8452 241.7924 39.0932 242.043 38.4554 242.2925 37.8167 242.6292 37.2903 243.0527 36.8756 243.4751 36.4626 243.9754 36.1514 244.5542 35.9442 245.1325 35.7369 245.7581 35.6338 246.4311 35.6338 247.087 35.6338 247.7035 35.7369 248.2818 35.9442 248.8598 36.1514 249.3641 36.4626 249.7966 36.8756 250.2281 37.2903 250.5685 37.8167 250.8194 38.4554 251.0688 39.0932 251.1944 39.8452 251.1944 40.7072V51.1398H253.2132Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M271.5151 49.3279H262.5843V44.098H269.418V42.2861H262.5843V35.8665H271.8266V34.0546H260.5652V51.1401H271.5151Z" /></svg></a>
+      <div class="search-top" id="topSearchBox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="topSearch" placeholder="Caută: casă, torturi, HACCP…" aria-label="Caută în ghid">
+      </div>
+      <button class="icon-btn" id="menuBtn" aria-label="Meniu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <nav id="nav">
+        <a href="#/" data-nav="home">Spații</a>
+        <a href="#/roluri" data-nav="roluri">Roluri</a>
+        <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
+        <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
+        <span class="user-chip" id="userChip"></span>
+      </nav>
+    </div>
+  </header>
+  <main id="view"></main>
+  <footer>
+    <div class="wrap">
+      <span class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="28 30 312 94" fill="currentColor" role="img" aria-label="Madame Magnifique"><path transform="matrix(1,0,0,-1,0,154.4655)" d="M334.1738 115.8684V120.0776H306.2849 302.118V115.8684 91.9491 87.7136 72.9006 69.9123 68.6914H334.1738V72.9006H306.2849V87.7136H329.7654V91.9491H306.2849V115.8684Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M247.6293 113.7572C247.6514 99.3379 247.6485 83.1538 247.6474 68.6582H251.8628V106.7295C251.9144 106.7426 251.9649 106.7539 252.0164 106.7658 257.1585 94.6154 262.3005 82.4624 267.5083 70.1538 272.7142 82.8638 277.852 95.4065 282.99 107.9484 283.0467 107.9331 283.1031 107.9201 283.1579 107.9048V107.1184C283.1579 94.9113 283.1579 80.9527 283.1587 68.6582H287.3225V120.1365H283.1803C282.0977 117.4119 267.9803 82.3915 267.5103 81.2333 266.9292 82.5616 252.7228 115.2853 250.6258 120.1365H244.8351C245.289 119.3219 246.549 116.6658 247.1927 115.3885 247.5746 114.6297 247.6281 114.3043 247.6293 113.7572" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M202.9436 85.5882C206.1524 93.7074 209.3865 101.8925 212.5327 109.8544 212.5942 109.8502 212.6537 109.8451 212.7155 109.84 216.0326 101.7814 219.3494 93.7239 222.6994 85.5882ZM230.0063 68.6582H235.0766C227.7264 85.9459 219.9657 104.2058 212.6186 121.4844 205.4823 104.1231 198.006 85.9742 190.887 68.6582H195.8624C197.0456 71.5073 201.0974 81.2163 201.0974 81.2163 208.3751 81.1998 217.3238 81.201 224.6077 81.2163 224.6077 81.2163 229.119 70.7553 230.0063 68.6582" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M37.1245 113.7572C37.1469 99.3379 37.1438 83.1538 37.1438 68.6582H41.3589V106.7295C41.4096 106.7426 41.4612 106.7539 41.5128 106.7658 46.6546 94.6154 51.7958 82.4624 57.0033 70.1538 62.2091 82.8638 67.3472 95.4065 72.485 107.9484 72.5417 107.9331 72.5984 107.9201 72.654 107.9048V107.1184 68.6582H76.8189V120.1365H72.6761C71.5938 117.4119 57.4764 82.3915 57.0064 81.2333 56.4253 82.5616 42.2181 115.2853 40.1219 120.1365H34.3301C34.7848 119.3219 36.0451 116.6658 36.688 115.3885 37.0709 114.6297 37.1234 114.3043 37.1245 113.7572" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M100.9585 85.5882C104.1664 93.7074 107.4002 101.8925 110.5464 109.8544 110.6082 109.8502 110.6685 109.8451 110.73 109.84 114.0471 101.7814 117.3628 93.7239 120.7134 85.5882ZM128.0203 68.6582H133.0906C125.7401 85.9459 117.9794 104.2058 110.6323 121.4844 103.4963 104.1231 96.0197 85.9742 88.9007 68.6582H93.8761C95.0596 71.5073 99.1114 81.2163 99.1114 81.2163 106.3885 81.1998 115.3386 81.201 122.6211 81.2163 122.6211 81.2163 127.1327 70.7553 128.0203 68.6582" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M176.9627 83.8582C172.823 77.1242 166.8747 73.1849 158.7838 72.9595 156.5974 72.8977 154.4094 72.919 152.2216 72.9221V72.9201H149.3768V92.4888 115.8534H149.7042C149.7073 115.8534 149.7101 115.8554 149.7132 115.8554 153.0289 115.8403 156.35 115.9191 159.6609 115.7837 165.2142 115.5543 169.7732 113.1449 173.6813 109.2591 181.0174 101.9633 181.2577 90.8476 176.9627 83.8582ZM183.6207 100.0483C182.7102 104.7747 180.3229 108.7415 176.989 112.1868 172.0806 117.2611 166.155 120.0101 159.0616 120.0909 154.6036 120.1394 150.1458 120.1102 145.688 120.113H145.6849 145.1906V120.0657 119.0358 117.9473 71.4569 68.6906C145.4261 68.6767 145.622 68.6531 145.8193 68.6531 150.0083 68.6511 154.1996 68.5936 158.3864 68.6786 160.2794 68.7178 162.1925 68.91 164.0509 69.2668 168.3238 70.0852 172.0641 72.057 175.3021 74.9503 182.8797 81.7206 185.5256 90.1551 183.6207 100.0483" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M110.8899 34.0543H108.8711V46.3504L103.3832 38.895H102.6848L97.1711 46.3759V34.0543H95.1517V51.4239H95.8765L103.0215 41.5358 110.1657 51.4239H110.8899Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M121.2194 39.3355H128.0531L124.6615 47.6963ZM132.4534 34.054H130.2795L128.8043 37.5231H120.4685L119.0183 34.054H116.8696L124.2998 51.4244H125.0246Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M145.7342 51.4244C147.2003 51.4244 148.5252 51.1129 149.7078 50.4924 150.8893 49.8708 151.8775 49.017 152.6709 47.9296L151.17 46.7391C150.5313 47.6184 149.7583 48.3094 148.8526 48.8098 147.9464 49.3104 146.9072 49.5607 145.7342 49.5607 144.7495 49.5607 143.839 49.3829 143.0022 49.03 142.1654 48.6754 141.45 48.1884 140.8538 47.5679 140.2586 46.9454 139.7925 46.2127 139.4561 45.3665 139.1193 44.5218 138.9518 43.6071 138.9518 42.6229 138.9518 41.6222 139.1233 40.6945 139.4691 39.8404 139.8146 38.9857 140.2877 38.2436 140.8929 37.6143 141.4973 36.9833 142.221 36.4884 143.0671 36.1256 143.9127 35.7627 144.8354 35.5816 145.838 35.5816 147.1314 35.5816 148.2613 35.8656 149.2288 36.4357 150.1948 37.0046 150.9537 37.7382 151.5067 38.6371V40.9399H145.7079V42.7521H153.5261V38.1963C153.163 37.5403 152.7092 36.9411 152.1666 36.3974 151.6229 35.8537 151.0143 35.3877 150.3414 34.9997 149.6696 34.6105 148.9439 34.3083 148.1666 34.094 147.3905 33.8777 146.579 33.7697 145.7342 33.7697 144.4921 33.7697 143.3256 33.9993 142.2391 34.456 141.152 34.9129 140.2109 35.5334 139.4175 36.3195 138.6232 37.1049 137.9976 38.0364 137.541 39.1147 137.0832 40.1944 136.8544 41.3546 136.8544 42.5976 136.8544 43.8398 137.0832 45.0009 137.541 46.0791 137.9976 47.1566 138.6283 48.0932 139.4308 48.8877 140.2333 49.6809 141.173 50.3025 142.2522 50.7512 143.3296 51.1999 144.4921 51.4244 145.7342 51.4244" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M171.7495 38.2476V51.1401H173.7689V33.7697H173.018L162.1457 46.8947V34.0549H160.1263V51.4244H160.8511Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M183.3199 34.054H181.3011V51.1393H183.3199Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M201.5453 49.3279H192.8733V43.4511H200.0699V41.6129H192.8733V34.0546H190.8539V51.1401H201.5453Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M209.285 34.054H207.2659V51.1393H209.285Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M224.5567 49.5609C223.5906 49.5609 222.6932 49.3832 221.8654 49.0303 221.0366 48.6757 220.3203 48.1887 219.7168 47.5671 219.1116 46.9457 218.6413 46.2129 218.3051 45.3668 217.9684 44.5221 217.8006 43.6065 217.8006 42.6231 217.8006 41.6225 217.9726 40.6947 218.3179 39.8407 218.6637 38.986 219.1377 38.2482 219.742 37.6265 220.3466 37.0049 221.0618 36.5179 221.8907 36.1641 222.7195 35.8106 223.6158 35.6335 224.583 35.6335 225.5494 35.6335 226.4426 35.8106 227.262 36.1641 228.0815 36.5179 228.7933 37.0049 229.3974 37.6265 230.002 38.2482 230.4729 38.986 230.8096 39.8407 231.1458 40.6947 231.3136 41.6134 231.3136 42.5971 231.3136 43.5813 231.1458 44.4997 230.8096 45.3538 230.4729 46.209 230.002 46.9457 229.3974 47.5671 228.7933 48.1887 228.0815 48.6757 227.262 49.0303 226.4426 49.3832 225.5409 49.5609 224.5567 49.5609ZM224.5567 51.4247C225.7826 51.4247 226.9307 51.2005 227.9999 50.7515 229.07 50.3016 230.0071 49.6811 230.8096 48.888 231.6107 48.0934 232.2456 47.1569 232.7114 46.0794 233.1771 45.0003 233.4107 43.8401 233.4107 42.5971 233.4107 41.0272 233.0612 39.6113 232.3627 38.3511 231.6623 37.0919 230.7263 36.0652 229.5533 35.2709 230.7436 33.7014 232.0988 32.5191 233.6179 31.7254 235.1358 30.9311 236.8964 30.534 238.8977 30.534 239.2775 30.534 239.6786 30.5473 240.1021 30.5725 240.5245 30.5989 240.9602 30.6292 241.41 30.6635V29.0585C240.9775 28.9726 240.5336 28.9069 240.0758 28.8643 239.618 28.8221 239.1401 28.7997 238.6397 28.7997 236.378 28.7997 234.3506 29.2788 232.5557 30.2357 230.7609 31.1941 229.2086 32.5786 227.897 34.3905 227.3783 34.2014 226.8439 34.05 226.292 33.9381 225.7393 33.8264 225.161 33.77 224.5567 33.77 223.3148 33.77 222.1586 33.9996 221.0882 34.4563 220.0178 34.9132 219.0821 35.5337 218.2796 36.3189 217.4771 37.1052 216.8467 38.037 216.3898 39.115 215.9331 40.1933 215.7035 41.3549 215.7035 42.5971 215.7035 43.8401 215.9331 45.0003 216.3898 46.0794 216.8467 47.1569 217.4771 48.0934 218.2796 48.888 219.0821 49.6811 220.0232 50.3016 221.1015 50.7515 222.179 51.2005 223.3318 51.4247 224.5567 51.4247" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M253.2132 40.8365C253.2132 39.6975 253.0406 38.6881 252.6951 37.8088 252.3504 36.9283 251.8764 36.1896 251.2718 35.5944 250.6666 35.0002 249.9511 34.5464 249.1234 34.2363 248.2948 33.9248 247.3974 33.7703 246.4311 33.7703 245.4466 33.7703 244.5412 33.9248 243.7135 34.2363 242.8838 34.5464 242.1683 35.0002 241.5648 35.5944 240.9596 36.1896 240.4899 36.9283 240.1532 37.8088 239.8167 38.6881 239.6486 39.6975 239.6486 40.8365V51.1398H241.668V40.7072C241.668 39.8452 241.7924 39.0932 242.043 38.4554 242.2925 37.8167 242.6292 37.2903 243.0527 36.8756 243.4751 36.4626 243.9754 36.1514 244.5542 35.9442 245.1325 35.7369 245.7581 35.6338 246.4311 35.6338 247.087 35.6338 247.7035 35.7369 248.2818 35.9442 248.8598 36.1514 249.3641 36.4626 249.7966 36.8756 250.2281 37.2903 250.5685 37.8167 250.8194 38.4554 251.0688 39.0932 251.1944 39.8452 251.1944 40.7072V51.1398H253.2132Z" /><path transform="matrix(1,0,0,-1,0,154.4655)" d="M271.5151 49.3279H262.5843V44.098H269.418V42.2861H262.5843V35.8665H271.8266V34.0546H260.5652V51.1401H271.5151Z" /></svg></span>
+      <span>Ghid intern · document confidențial · nu se distribuie în afara echipei</span>
+      <button id="logout" type="button">Ieși din cont</button>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script>
+<script>
+let D = null, ME = null, SB = null;
+
+// ---------- Autentificare (Supabase) ----------
+// Angajatul scrie doar utilizatorul; contul are în spate un email intern,
+// pe care nu se trimite nimic.
+const DOMENIU_CONTURI = 'echipa.madamemagnifique.ro';
+const CFG = window.MM_CONFIG || {};
+const emailDin = u => `${u.trim().toLowerCase()}@${DOMENIU_CONTURI}`;
+const showErr = m => { document.getElementById('err').textContent = m; };
+
+// Paginile din meniu permise rolului (role_section_access).
+const poate = sectiune => !ME || !ME.sectiuni || ME.sectiuni.has(sectiune);
+
+function showApp() {
+  document.querySelectorAll('#nav [data-nav]').forEach(a => { a.hidden = a.dataset.nav !== 'home' && !poate(a.dataset.nav); });
+  document.getElementById('lock').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
+  route();
+}
+function showLock(msg) {
+  D = ME = null;
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('lock').classList.remove('hidden');
+  if (msg) showErr(msg);
+}
+
+// Citește un tabel întreg (PostgREST întoarce maximum 1000 de rânduri pe cerere).
+async function tabel(nume, ordine) {
+  const rows = [];
+  for (let de = 0; ; de += 1000) {
+    let q = SB.from(nume).select('*').range(de, de + 999);
+    for (const o of ordine) q = q.order(o);
+    const { data, error } = await q;
+    if (error) throw error;
+    rows.push(...data);
+    if (data.length < 1000) return rows;
+  }
+}
+
+// Reface din tabelele Supabase aceeași structură pe care o folosește pagina.
+async function incarcaDate() {
+  const [roluri, domenii, procese, subprocese, proceduri, taskuri, abateri, ghid,
+         spatii, spProc, spRol, spNote, spFapte, spAjust, sectiuni] = await Promise.all([
+    tabel('roles', ['position']), tabel('domains', ['position']), tabel('processes', ['position']),
+    tabel('subprocesses', ['process_code', 'position']), tabel('procedures', ['position']), tabel('tasks', ['id']),
+    tabel('deviations', ['id']), tabel('guide_sections', ['id']), tabel('spaces', ['position']),
+    tabel('space_processes', ['space_id', 'position']), tabel('space_roles', ['space_id', 'position']),
+    tabel('space_notes', ['space_id', 'position']), tabel('space_facts', ['space_id', 'section', 'position']),
+    tabel('space_task_overrides', ['space_id', 'task_id']),
+    tabel('role_section_access', ['section']),
+  ]);
+  ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
+  ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid']
+    : sectiuni.filter(x => x.role_code === ME.role_code).map(x => x.section));
+  const grup = (rows, cheie) => rows.reduce((m, r) => ((m[r[cheie]] = m[r[cheie]] || []).push(r), m), {});
+  const subP = grup(subprocese, 'process_code'), procD = grup(procese, 'domain_code');
+  const sp = { proc: grup(spProc, 'space_id'), rol: grup(spRol, 'space_id'), note: grup(spNote, 'space_id'),
+               fapte: grup(spFapte, 'space_id'), ajust: grup(spAjust, 'space_id') };
+  const str = v => (v === null || v === undefined) ? '' : String(v);
+  return {
+    roluri: roluri.map(r => ({ cod: r.code, nume: r.name, raspunde: r.responsibilities, procese: r.main_processes || [] })),
+    domenii: Object.fromEntries(domenii.map(x => [x.code, { cod: x.code, nume: x.name, miza: x.stake,
+      procese: (procD[x.code] || []).map(p => p.code) }])),
+    procese: Object.fromEntries(procese.map(p => [p.code, { cod: p.code, nume: p.name, domeniu: p.domain_code,
+      rol: p.lead_role || '', val: p.wave || '', miza: p.stake, sub: (subP[p.code] || []).map(x => x.name) }])),
+    proceduri: proceduri.map(p => ({ cod: p.code, titlu: p.title, p: p.process_code, rol: p.role_code, decl: p.trigger,
+      tip: p.trigger_type, prio: p.priority, val: p.wave, pasi: str(p.steps), teren: p.field_update, initial: p.original })),
+    taskuri: taskuri.map(t => ({ id: t.id, p: t.process_code, sub: t.subprocess, t: t.text, rol: t.role_code,
+      min: str(t.minutes), cand: t.schedule, verif: t.verification, proc: t.procedure_code || '',
+      teren: t.field_update, initial: t.original })),
+    abateri: abateri.map(a => ({ loc: a.location, zona: a.area, text: a.text, dece: a.reason })),
+    legenda: ghid.map(g => ({ titlu: g.title, linii: g.lines || [] })),
+    spatii: spatii.map(s => {
+      const pr = sp.proc[s.id] || [], fapte = sp.fapte[s.id] || [];
+      const kv = sec => fapte.filter(f => f.section === sec).map(f => [f.label, f.value]);
+      const ajust = Object.fromEntries((sp.ajust[s.id] || []).map(a => [a.task_id, { cand: a.schedule, rol: a.role_code || '', t: a.text }]));
+      return {
+        id: s.id, tip: s.type, nume: s.name, titlu: s.title, subtitlu: s.subtitle || undefined,
+        abateri: s.deviations_location || undefined,
+        abateri_filtru: Object.keys(s.deviations_filter || {}).length ? s.deviations_filter : undefined,
+        domenii: s.domains && s.domains.length ? s.domains : undefined,
+        procese: pr.map(x => x.process_code),
+        specifice: pr.some(x => x.is_specific) ? pr.filter(x => x.is_specific).map(x => x.process_code) : undefined,
+        roluri: (sp.rol[s.id] || []).map(x => x.role_code),
+        note: (sp.note[s.id] || []).map(n => ({ titlu: n.title, text: n.text })),
+        fisa: {
+          program: kv('program'), livrari: kv('livrari'),
+          contacte: fapte.filter(f => f.section === 'contacte').map(f => ({ rol: f.role_code || '', functie: f.label, nume: f.person, telefon: f.phone })),
+          echipamente: fapte.filter(f => f.section === 'echipamente').map(f => ({ nume: f.label, raportezi: f.value })),
+          nota_livrari: s.deliveries_note, nota_echipamente: s.equipment_note,
+        },
+        ajustari: Object.keys(ajust).length ? ajust : null,
+      };
+    }),
+  };
+}
+
+async function deschideSesiunea(user) {
+  const { data: prof, error } = await SB.from('profiles').select('username, full_name, role_code, active').eq('user_id', user.id).maybeSingle();
+  if (error) throw error;
+  if (!prof) { await SB.auth.signOut(); return showLock('Contul nu are încă un profil în ghid. Anunță responsabilul de locație.'); }
+  if (!prof.active) { await SB.auth.signOut(); return showLock('Contul este dezactivat. Anunță responsabilul de locație.'); }
+  ME = prof;
+  D = await incarcaDate();
+  prepare();
+  showApp();
+}
+
+document.getElementById('lockForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!SB) return;
+  const btn = document.getElementById('unlockBtn');
+  const u = document.getElementById('user').value;
+  if (!/^[a-z0-9._-]{3,40}$/i.test(u.trim())) return showErr('Utilizatorul are doar litere, cifre, punct sau cratimă (ex.: ana.vt).');
+  btn.disabled = true; btn.textContent = 'Se deschide…'; showErr('');
+  try {
+    const { data, error } = await SB.auth.signInWithPassword({ email: emailDin(u), password: document.getElementById('pw').value });
+    if (error) throw error;
+    document.getElementById('pw').value = '';
+    await deschideSesiunea(data.user);
+  } catch (x) {
+    console.error('Logare eșuată:', x);
+    const gresit = /invalid login credentials/i.test(x.message || '');
+    showErr(gresit ? 'Utilizator sau parolă greșită.' : 'Nu s-a putut deschide ghidul. Verifică internetul și încearcă din nou.');
+  }
+  btn.disabled = false; btn.textContent = 'Intră';
+});
+document.getElementById('logout').addEventListener('click', async () => {
+  try { await SB.auth.signOut(); } catch (e) {}
+  location.hash = ''; showLock();
+});
+(async () => {
+  if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase) {
+    document.getElementById('unlockBtn').disabled = true;
+    return showErr('Ghidul nu e conectat încă la baza de date (lipsește assets/config.js).');
+  }
+  SB = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  const { data } = await SB.auth.getSession();
+  if (data.session) {
+    try { await deschideSesiunea(data.session.user); }
+    catch (e) { console.error('Încărcare eșuată:', e); showLock('Nu s-a putut încărca ghidul. Reîncarcă pagina.'); }
+  }
+})();
+
+// ---------- Utilitare ----------
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const enc = encodeURIComponent;
+const $ = s => document.querySelector(s);
+const ICON = {
+  chev: '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>',
+};
+let P, ROL, PROC, SP;
+function prepare() {
+  P = D.procese;
+  ROL = Object.fromEntries(D.roluri.map(r => [r.cod, r]));
+  PROC = Object.fromEntries(D.proceduri.map(p => [p.cod, p]));
+  SP = Object.fromEntries(D.spatii.map(s => [s.id, s]));
+  buildIndex();
+}
+const valPill = v => v ? `<span class="pill v${esc(v.replace(/\D/g, ''))}" title="Valul de implementare">${esc(v)}</span>` : '';
+const rolPill = r => !r ? '' : (ROL[r] && poate('roluri'))
+  ? `<a class="pill" href="#/r/${enc(r)}" title="${esc(ROL[r].nume)}">${esc(r)}</a>`
+  : `<span class="pill">${esc(r)}</span>`;
+const prioPill = p => p ? `<span class="pill ${p === 'Critică' ? 'crit' : ''}">${esc(p)}</span>` : '';
+const rolName = r => ROL[r]?.nume || r;
+const tasksOf = pc => D.taskuri.filter(t => t.p === pc);
+const procsOf = pc => D.proceduri.filter(p => p.p === pc);
+const abateriOf = loc => D.abateri.filter(a => a.loc === loc);
+function spaceAbateri(s) {
+  if (s.abateri) return abateriOf(s.abateri);
+  const out = [];
+  for (const [loc, zone] of Object.entries(s.abateri_filtru || {})) out.push(...abateriOf(loc).filter(a => zone.includes(a.zona)));
+  return out;
+}
+function spacesOfRole(cod) { return D.spatii.filter(s => (s.roluri || []).includes(cod)); }
+
+// ---------- Rutare ----------
+function parseHash() {
+  const h = location.hash.replace(/^#\/?/, '');
+  const i = h.indexOf('?');
+  const path = i < 0 ? h : h.slice(0, i), q = i < 0 ? '' : h.slice(i + 1);
+  const params = Object.fromEntries(new URLSearchParams(q));
+  const dec = x => { try { return decodeURIComponent(x); } catch (e) { return x; } };
+  return { parts: path.split('/').filter(Boolean).map(dec), params };
+}
+window.addEventListener('hashchange', () => { if (D) route(); });
+function route() {
+  const { parts, params } = parseHash();
+  const [a, b] = parts;
+  let html, nav = 'home';
+  if (a === 's' && SP[b]) html = viewSpace(SP[b], params);
+  else if (a === 'p' && P[b]) html = viewProcess(P[b], params);
+  else if (a === 'pr' && PROC[b] && poate('proceduri')) { html = viewProcedure(PROC[b]); nav = 'proceduri'; }
+  else if (a === 'r' && ROL[b] && poate('roluri')) { html = viewRole(ROL[b], params); nav = 'roluri'; }
+  else if (a === 'roluri' && poate('roluri')) { html = viewRoles(); nav = 'roluri'; }
+  else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
+  else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
+  else html = viewHome();
+  $('#view').innerHTML = html;
+  document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === nav));
+  $('#nav').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded', 'false');
+  closeResults();
+  wireView();
+  animateView();
+  if (!params.keep) window.scrollTo({ top: 0, behavior: 'instant' });
+  const open = params.deschide && document.getElementById('proc-' + params.deschide);
+  if (open) { open.open = true; setTimeout(() => open.scrollIntoView({ block: 'start' }), 30); }
+}
+$('#menuBtn').addEventListener('click', () => {
+  const n = $('#nav'); n.classList.toggle('open');
+  $('#menuBtn').setAttribute('aria-expanded', n.classList.contains('open'));
+});
+
+// ---------- Acasă ----------
+// Fotografiile spațiilor (assets/img).
+const IMG = n => `assets/img/${n}.jpg`;
+const FOTO = { porumbescu: 'croissant', dumbravita: 'patiserie-logo', fructus: 'franzela', 'peciu-nou': 'paine-cos' };
+function tile(s) {
+  const kind = { magazin: 'Magazin', productie: 'Laborator', b2b: 'Canal', birou: 'Suport' }[s.tip];
+  const prof = s.abateri && abateriOf(s.abateri).find(a => a.zona === 'Profil');
+  const desc = s.subtitlu || (prof ? prof.text : '');
+  const foto = FOTO[s.id];
+  return `<a class="tile ${foto ? 'photo' : ''} ${s.tip === 'b2b' ? 'dark' : ''}" href="#/s/${s.id}">${foto ? `<img src="${IMG(foto)}" alt="" loading="lazy">` : ''}
+    <div><span class="eyebrow">${kind}</span><h3>${esc(s.tip === 'magazin' ? s.nume : s.titlu)}</h3><p>${esc(desc)}</p></div>
+    <span class="go">Intră →</span></a>`;
+}
+function viewHome() {
+  const g = t => D.spatii.filter(s => s.tip === t).map(tile).join('');
+  const roleChips = D.roluri.map(r => `<a class="chip" href="#/r/${enc(r.cod)}"><b>${esc(r.cod)}</b> ${esc(r.nume)}</a>`).join('');
+  return `
+  <section class="hero"><div class="wrap hero-grid"><div>
+    <span class="eyebrow">Ghidul echipei Madame Magnifique</span>
+    <h1 data-split>Ai o întrebare? Începe de aici.</h1>
+    <p>Tot ce facem, pe magazine, laboratoare și B2B: cine face, ce face, când și cum se verifică. Scrie ce cauți sau alege-ți locul de muncă.</p>
+    <div class="hero-search" id="heroSearchBox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="heroSearch" placeholder="Ex.: închiderea casei, recepție marfă, torturi la comandă" aria-label="Caută în ghid" autocomplete="off">
+    </div>
+    <div class="hint">Încearcă: <button data-q="deschidere">deschidere</button> <button data-q="temperaturi">temperaturi</button> <button data-q="produs nevândut">produs nevândut</button> <button data-q="candybar">candybar</button></div>
+  </div>
+  <div class="hero-collage" aria-hidden="true">
+    <figure class="f1" data-depth="1"><img src="${IMG('paine-cos')}" alt=""></figure>
+    <figure class="f2" data-depth="2.2"><img src="${IMG('croissant')}" alt=""></figure>
+    <figure class="f3" data-depth="3.4"><img src="${IMG('franzela')}" alt=""></figure>
+  </div></div></section>
+  <div class="marquee" aria-hidden="true"><div class="mq-track">${[0, 1].map(() => `<span>Pâine</span><i>·</i><span>Patiserie</span><i>·</i><span>Cofetărie</span><i>·</i><span>Cafea de specialitate</span><i>·</i><span>Torturi</span><i>·</i><span>Candybar</span><i>·</i>`).join('')}</div></div>
+  <section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Unde lucrezi?</span><h2>Alege-ți spațiul</h2></div></div>
+    ${[['Magazinele Madame', g('magazin')], ['Producție', g('productie')], ['B2B și birou', g('b2b') + g('birou')]]
+      .filter(([, h]) => h).map(([t, h]) => `<div class="group-label">${t}</div><div class="grid">${h}</div>`).join('')
+      || '<p class="lvl4">Contul tău nu are încă spații atribuite. Anunță administratorul ghidului.</p>'}
+  </div></section>
+  <section class="block soft"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Ce rol ai?</span><h2>Fișa ta de lucru</h2></div>${poate('roluri') ? '<a class="btn ghost" href="#/roluri">Toate rolurile</a>' : ''}</div>
+    <div class="chips">${roleChips}</div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Pe scurt</span><h2>${ME && ME.admin ? 'Firma în cifre' : 'Ghidul tău în cifre'}</h2></div></div>
+    <div class="stats">
+      <div class="stat"><strong>${Object.keys(D.domenii).length}</strong><span>domenii de activitate</span></div>
+      <div class="stat"><strong>${Object.keys(P).length}</strong><span>procese</span></div>
+      <div class="stat"><strong>${Object.values(P).reduce((n, p) => n + p.sub.length, 0)}</strong><span>sub-procese</span></div>
+      <div class="stat"><strong>${D.taskuri.length}</strong><span>task-uri în retail</span></div>
+      <div class="stat"><strong>${D.proceduri.length}</strong><span>proceduri</span></div>
+      <div class="stat"><strong>${D.roluri.length}</strong><span>roluri</span></div>
+    </div>
+  </div></section>`;
+}
+
+// ---------- Proces (accordion) ----------
+// Ajustările unei locații (ora / rolul de acolo) peste standardul de rețea.
+function eff(t, ctx) {
+  const a = ctx && ctx.adj && ctx.adj[t.id];
+  if (!a) return t;
+  return { ...t, t: a.t || t.t, textLocal: !!a.t, cand: a.cand || t.cand, rol: a.rol || t.rol, stdCand: a.cand && a.cand !== t.cand ? t.cand : '', stdRol: a.rol && a.rol !== t.rol ? t.rol : '', loc: ctx.loc };
+}
+function taskHtml(t, rol) {
+  const pr = PROC[t.proc];
+  const std = t.loc ? `<span class="std-note">La ${esc(t.loc)}${t.stdCand ? ` · standard: ${esc(t.stdCand)}` : ''}${t.stdRol ? ` · în rețea: ${esc(t.stdRol)}` : ''}${t.textLocal ? ' · text adaptat' : ''}</span>` : '';
+  const teren = t.teren ? `<span class="std-note">Actualizat pe teren${t.initial ? ` · în harta inițială: ${esc(t.initial)}` : ' · task nou'}</span>` : '';
+  return `<div class="task ${rol && t.rol === rol ? 'mine' : ''} ${t.loc ? 'adj' : ''}">
+    <div class="t">${esc(t.t)}</div>
+    <div class="right">${rolPill(t.rol)}${t.proc ? (pr ? `<a class="pill star" href="#/pr/${enc(t.proc)}" title="${esc(pr.titlu)}">${esc(t.proc)}</a>` : `<span class="pill star">${esc(t.proc)}</span>`) : ''}</div>
+    <div class="facts">
+      ${t.cand ? `<span>${ICON.cal}${esc(t.cand)}</span>` : ''}
+      ${t.min ? `<span>${ICON.clock}${esc(t.min)} min</span>` : ''}
+      ${t.verif ? `<span>${ICON.check}${esc(t.verif)}</span>` : ''}
+      ${teren}${std}
+    </div></div>`;
+}
+function procRow(p) {
+  return `<a class="prow" href="#/pr/${enc(p.cod)}">
+    <span class="c">${esc(p.cod)}</span>
+    <span class="ti">${esc(p.titlu)}<small>Declanșator: ${esc(p.decl)}</small></span>
+    <span class="meta">${rolPill(p.rol)}${prioPill(p.prio)}${valPill(p.val)}</span></a>`;
+}
+function processBody(p, ctx) {
+  const rol = ctx.rol;
+  let tasks = tasksOf(p.cod).map(t => eff(t, ctx)), procs = procsOf(p.cod);
+  if (rol) { tasks = tasks.filter(t => t.rol === rol); procs = procs.filter(x => x.rol === rol); }
+  const local = (ctx.abateri || []).filter(a => a.zona.startsWith(p.cod + ' '));
+  let h = p.miza ? `<p class="miza">${esc(p.miza)}</p>` : '';
+  h += local.map(a => `<div class="local"><b>La ${esc(a.loc)}:</b> ${esc(a.text)}<span class="why">De ce: ${esc(a.dece)}</span></div>`).join('');
+  const hasL4 = tasksOf(p.cod).length > 0;
+  for (const s of p.sub) {
+    const num = s.split(' ')[0];
+    const ts = tasks.filter(t => t.sub.split(' ')[0] === num);
+    if (hasL4 && rol && !ts.length) continue;
+    h += `<div class="subp"><h4>${esc(s)}</h4>${ts.length ? `<div class="tasks">${ts.map(t => taskHtml(t, rol)).join('')}</div>` : ''}</div>`;
+  }
+  if (hasL4 && rol && !tasks.length) h += `<p class="lvl4">Rolul ${esc(rol)} nu are task-uri directe în acest proces.</p>`;
+  if (!hasL4) h += `<p class="lvl4">Task-urile detaliate (nivelul 4) pentru acest proces se construiesc după validarea pe teren. Responsabil: <b>${esc(rolName(p.rol))}</b>.</p>`;
+  if (procs.length) h += `<h4 style="margin:22px 0 4px;font-size:.95rem">Proceduri</h4><div class="proc-list">${procs.map(procRow).join('')}</div>`;
+  return h;
+}
+function processItem(p, ctx) {
+  const local = (ctx.abateri || []).some(a => a.zona.startsWith(p.cod + ' ')) || tasksOf(p.cod).some(t => ctx.adj && ctx.adj[t.id]);
+  return `<details class="proc" id="proc-${p.cod}">
+    <summary><span class="code">${esc(p.cod)}</span><span class="name">${esc(p.nume)}</span>
+      <span class="meta">${local ? '<span class="pill crit">Diferit aici</span>' : ''}${rolPill(p.rol)}${valPill(p.val)}${ICON.chev}</span></summary>
+    <div class="proc-body">${processBody(p, ctx)}</div></details>`;
+}
+function processVisible(p, rol, ctx) {
+  if (!rol) return true;
+  if (p.rol === rol || (ROL[rol]?.procese || []).includes(p.cod)) return true;
+  return tasksOf(p.cod).some(t => eff(t, ctx).rol === rol) || procsOf(p.cod).some(x => x.rol === rol);
+}
+
+// ---------- Fișa spațiului ----------
+const TODO = '<span class="todo">de completat</span>';
+const val = v => v ? esc(v) : TODO;
+function fisaTodos(f) {
+  if (!f) return 0;
+  let n = 0;
+  [...(f.program || []), ...(f.livrari || [])].forEach(([, v]) => { if (!v) n++; });
+  (f.contacte || []).forEach(c => { if (!c.nume) n++; if (!c.telefon) n++; });
+  (f.echipamente || []).forEach(e => { if (!e.raportezi) n++; });
+  return n;
+}
+function fisaHtml(s) {
+  const f = s.fisa;
+  if (!f) return '';
+  const kv = ([k, v]) => `<div class="kv"><span class="k">${esc(k)}</span><span class="v">${val(v)}</span></div>`;
+  const prog = (f.program || []).length || (f.livrari || []).length ? `<div class="card"><h3>Program și livrări</h3>
+      ${(f.program || []).map(kv).join('')}
+      ${(f.livrari || []).length ? `<div class="kv-head">Livrări</div>${f.livrari.map(kv).join('')}` : ''}
+      ${f.nota_livrari ? `<p class="fisa-note">${esc(f.nota_livrari)}</p>` : ''}</div>` : '';
+  const cont = (f.contacte || []).length ? `<div class="card"><h3>Contacte și responsabili</h3>
+      ${f.contacte.map(c => `<div class="kv"><span class="k">${c.rol ? rolPill(c.rol) + ' ' : ''}${esc(c.functie)}<small>${c.nume ? esc(c.nume) : '<span class="todo">nume de completat</span>'}</small></span>
+        <span class="v">${c.telefon ? `<a href="tel:${esc(c.telefon.replace(/\s/g, ''))}">${esc(c.telefon)}</a>` : '<span class="todo">telefon de completat</span>'}</span></div>`).join('')}</div>` : '';
+  const ech = (f.echipamente || []).length ? `<div class="card"><h3>Echipamente</h3>
+      <div class="kv" style="padding-top:0"><span class="k"><small>Echipament</small></span><span class="v"><small style="color:var(--muted);font-size:.8rem">Defecțiune? Anunți</small></span></div>
+      ${f.echipamente.map(e => `<div class="kv"><span class="k">${esc(e.nume)}</span><span class="v">${val(e.raportezi)}</span></div>`).join('')}
+      ${f.nota_echipamente ? `<p class="fisa-note">${esc(f.nota_echipamente)}</p>` : ''}</div>` : '';
+  const n = fisaTodos(f);
+  return `<section class="block"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Fișa spațiului</span><h2>Program, contacte, echipamente</h2></div>${n ? `<span class="todo-count">${n} câmpuri de completat</span>` : ''}</div>
+    <div class="fisa">${prog}${cont}${ech}</div></div></section>`;
+}
+
+// ---------- Spațiu ----------
+function viewSpace(s, params) {
+  const rol = params.rol && ROL[params.rol] ? params.rol : '';
+  const ab = spaceAbateri(s);
+  const prof = ab.find(a => a.zona === 'Profil');
+  const diff = ab.filter(a => a.zona !== 'Profil');
+  const ctx = { rol, abateri: ab, adj: s.ajustari || null, loc: s.nume };
+  const kind = { magazin: 'Magazin', productie: 'Laborator de producție', b2b: 'Canal de vânzare', birou: 'Suport' }[s.tip];
+  const roleChips = [`<a class="chip ${rol ? '' : 'on'}" href="#/s/${s.id}?keep=1">Toate rolurile</a>`]
+    .concat((s.roluri || []).map(r => `<a class="chip ${rol === r ? 'on' : ''}" href="#/s/${s.id}?rol=${enc(r)}&keep=1" title="${esc(rolName(r))}"><b>${esc(r)}</b> ${esc(rolName(r))}</a>`)).join('');
+
+  let body = '';
+  if (s.tip === 'birou') {
+    for (const dc of s.domenii) {
+      const d = D.domenii[dc];
+      if (!d) continue;
+      const list = d.procese.map(c => P[c]).filter(p => processVisible(p, rol, ctx));
+      if (!list.length) continue;
+      body += `<div class="dom-head"><span class="eyebrow">${esc(dc)}</span><h3>${esc(d.nume)}</h3><p>${esc(d.miza)}</p></div>` + list.map(p => processItem(p, ctx)).join('');
+    }
+  } else if (s.specifice) {
+    const spec = s.procese.filter(c => s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol, ctx));
+    const rest = s.procese.filter(c => !s.specifice.includes(c)).map(c => P[c]).filter(p => processVisible(p, rol, ctx));
+    const label = s.tip === 'b2b' ? ['Procesele B2B', 'Legătura cu magazinele'] : ['Specific acestui laborator', 'Comun întregii producții'];
+    if (spec.length) body += `<div class="dom-head"><h3>${label[0]}</h3></div>` + spec.map(p => processItem(p, ctx)).join('');
+    if (rest.length) body += `<div class="dom-head"><h3>${label[1]}</h3></div>` + rest.map(p => processItem(p, ctx)).join('');
+  } else {
+    body = s.procese.map(c => P[c]).filter(p => processVisible(p, rol, ctx)).map(p => processItem(p, ctx)).join('');
+    body = `<div class="dom-head"><h3>Standardul de rețea, cu particularitățile de aici</h3><p>Procesele marcate „Diferit aici” au reguli proprii în acest magazin.</p></div>` + body;
+  }
+  if (!body) body = `<p class="lvl4">Rolul ${esc(rol)} nu are procese în acest spațiu.</p>`;
+
+  let roleExtra = '';
+  if (rol === 'PP + B') roleExtra = `<div class="local"><b>${esc(rolName(rol))}:</b> ${esc(ROL[rol].raspunde)}. Lucrezi mai ales în zona de coacere și umplere (P03 Expunere) și la mic dejun / prânz (P06 Lunch, sandwich & to-go).</div>`;
+
+  return `
+  <section class="band"><div class="wrap ${FOTO[s.id] ? 'band-grid' : ''}"><div>
+    <div class="crumbs"><a href="#/">Spații</a> / ${esc(s.titlu)}</div>
+    <span class="eyebrow">${kind}</span>
+    <h1 data-split>${esc(s.titlu)}</h1>
+    ${s.subtitlu ? `<p class="sub">${esc(s.subtitlu)}</p>` : ''}
+    ${prof ? `<div class="profile"><p>${esc(prof.text)}</p><p class="why">${esc(prof.dece)}</p></div>` : ''}
+  </div>${FOTO[s.id] ? `<figure class="band-photo"><img src="${IMG(FOTO[s.id])}" alt=""></figure>` : ''}</div></section>
+  ${fisaHtml(s)}
+  ${(diff.length || s.note.length) ? `<section class="block soft"><div class="wrap">
+    <div class="block-head"><div><span class="eyebrow">Particularități</span><h2>Ce e diferit aici</h2></div></div>
+    <div class="cards">
+      ${diff.map(a => {
+        const pc = (a.zona.match(/^P\d\d/) || [])[0];
+        const tag = pc ? `<a class="tag" href="#/s/${s.id}?deschide=${pc}">${esc(a.zona)}</a>` : `<span class="tag">${esc(a.zona)}</span>`;
+        return `<div class="card">${tag}<p>${esc(a.text)}</p><p class="why">De ce: ${esc(a.dece)}</p></div>`;
+      }).join('')}
+      ${s.note.map(n => `<div class="card note"><h3>${esc(n.titlu)}</h3><p>${esc(n.text)}</p></div>`).join('')}
+    </div></div></section>` : ''}
+  <div class="filterbar"><div class="wrap"><span class="lbl">Arată pentru:</span><div class="chips">${roleChips}</div></div></div>
+  <section class="block"><div class="wrap">
+    ${roleExtra}
+    ${body}
+    <div class="dom-head" style="margin-top:48px"><span class="eyebrow">Cine lucrează aici</span><h3>Rolurile din ${esc(s.tip === 'magazin' ? 'magazin' : 'acest spațiu')}</h3></div>
+    <div class="role-grid">${(s.roluri || []).map(r => roleCard(ROL[r])).join('')}</div>
+  </div></section>`;
+}
+
+// ---------- Proces (pagină proprie, din căutare) ----------
+function viewProcess(p) {
+  const d = D.domenii[p.domeniu];
+  const where = D.spatii.filter(s => (s.procese || []).includes(p.cod) || (s.domenii || []).includes(p.domeniu));
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/">Spații</a> / ${esc(d.nume)} / ${esc(p.cod)}</div>
+    <span class="eyebrow">${esc(p.cod)} · ${esc(d.nume)}</span>
+    <h1>${esc(p.nume)}</h1>
+    <p class="sub" style="margin-top:12px">Responsabil: ${rolPill(p.rol)} ${esc(rolName(p.rol))} &nbsp; ${valPill(p.val)}</p>
+  </div></section>
+  <section class="block"><div class="wrap">
+    ${where.length ? `<p style="margin:0 0 20px">Vezi-l cu particularitățile locului tău: ${where.map(s => `<a class="chip" href="#/s/${s.id}?deschide=${p.cod}">${esc(s.titlu)}</a>`).join(' ')}</p>` : ''}
+    <div class="card" style="padding:clamp(18px,3vw,28px)">${processBody(p, {})}</div>
+  </div></section>`;
+}
+
+// ---------- Procedură ----------
+function viewProcedure(p) {
+  const pr = P[p.p];
+  const tasks = D.taskuri.filter(t => t.proc === p.cod);
+  const chainNext = D.proceduri.filter(x => x.decl.includes(p.cod));
+  const prevCode = (p.decl.match(/PR-\d\d\.\d+/) || [])[0];
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/proceduri">Proceduri</a> / ${esc(p.cod)}</div>
+    <span class="eyebrow">Procedura ${esc(p.cod)}</span>
+    <h1>${esc(p.titlu)}</h1>
+    ${p.teren ? `<p class="sub" style="margin-top:10px;font-size:.9rem;color:#7a6a45">Actualizat pe teren · în harta inițială: ${esc(p.initial)}</p>` : ''}
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">
+    <div class="facts-grid">
+      <div><span class="eyebrow">Cine o face</span><strong>${rolPill(p.rol)} ${esc(rolName(p.rol))}</strong></div>
+      <div><span class="eyebrow">Când începe</span><strong>${esc(p.decl)}</strong></div>
+      <div><span class="eyebrow">Tip declanșator</span><strong>${esc(p.tip)}</strong></div>
+      <div><span class="eyebrow">Prioritate</span><strong>${prioPill(p.prio)}</strong></div>
+      <div><span class="eyebrow">Val</span><strong>${valPill(p.val)}</strong></div>
+      <div><span class="eyebrow">Număr de pași</span><strong>${esc(p.pasi)}</strong></div>
+    </div>
+    <p>Face parte din procesul <a href="#/p/${enc(p.p)}"><b>${esc(p.p)} · ${esc(pr?.nume || '')}</b></a>. Deschide-l în magazinul tău:
+      ${D.spatii.filter(s => s.tip === 'magazin' && s.procese.includes(p.p)).map(s => `<a class="chip" href="#/s/${s.id}?deschide=${p.p}">${esc(s.nume)}</a>`).join(' ')}</p>
+    ${prevCode && PROC[prevCode] ? `<h3 class="section-title" style="margin-top:32px">Vine după</h3><div class="proc-list">${procRow(PROC[prevCode])}</div>` : ''}
+    ${chainNext.length ? `<h3 class="section-title" style="margin-top:32px">Urmează</h3><div class="proc-list">${chainNext.map(procRow).join('')}</div>` : ''}
+    ${tasks.length ? `<h3 class="section-title" style="margin-top:32px">Task-urile acoperite</h3><div class="tasks">${tasks.map(t => taskHtml(t)).join('')}</div>` : ''}
+    <div class="std" style="margin-top:32px"><span class="eyebrow">Standardul de procedură</span>
+      <ul><li>Maximum 10 pași; un singur rol o execută de la început până la final.</li><li>Pornește la un declanșator explicit: o oră, un eveniment sau finalul altei proceduri.</li><li>Procedura spune CE pași faci. Cum îi faci se învață la training, cu responsabilul de locație.</li></ul></div>
+  </div></section>`;
+}
+
+function viewProcedures(params) {
+  const f = { rol: params.rol || '', p: params.p || '', prio: params.prio || '' };
+  const list = D.proceduri.filter(x => (!f.rol || x.rol === f.rol) && (!f.p || x.p === f.p) && (!f.prio || x.prio === f.prio));
+  const opt = (arr, cur, lbl) => `<option value="">${lbl}</option>` + arr.map(([v, t]) => `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(t)}</option>`).join('');
+  const roles = [...new Set(D.proceduri.map(x => x.rol))].map(r => [r, `${r} · ${rolName(r)}`]);
+  const procs = [...new Set(D.proceduri.map(x => x.p))].map(c => [c, `${c} · ${P[c]?.nume || ''}`]);
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Registrul procedurilor · retail</span>
+    <h1>Proceduri</h1>
+    <p class="sub">${D.proceduri.length} proceduri, valabile în toate cele trei magazine. Filtrează după rolul tău sau după proces.</p>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="selects">
+      <select data-f="rol" aria-label="Rol">${opt(roles, f.rol, 'Toate rolurile')}</select>
+      <select data-f="p" aria-label="Proces">${opt(procs, f.p, 'Toate procesele')}</select>
+      <select data-f="prio" aria-label="Prioritate">${opt([['Critică', 'Critică'], ['Înaltă', 'Înaltă'], ['Medie', 'Medie']], f.prio, 'Orice prioritate')}</select>
+    </div>
+    <p class="lbl" style="color:var(--muted);font-size:.9rem">${list.length} rezultate</p>
+    <div class="proc-list">${list.map(procRow).join('')}</div>
+  </div></section>`;
+}
+
+// ---------- Roluri ----------
+function roleCard(r) {
+  if (!r) return '';
+  return `<a class="role-card" href="#/r/${enc(r.cod)}"><span class="rc">${esc(r.cod)}</span><h3>${esc(r.nume)}</h3><p>${esc(r.raspunde)}</p></a>`;
+}
+function viewRoles() {
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Cine ce face</span><h1>Rolurile din firmă</h1>
+    <p class="sub">Fiecare procedură are un singur rol care o execută. Alege-ți rolul ca să vezi fișa ta de lucru.</p>
+  </div></section>
+  <section class="block"><div class="wrap"><div class="role-grid">${D.roluri.map(roleCard).join('')}</div></div></section>`;
+}
+function viewRole(r) {
+  const tasks = D.taskuri.filter(t => t.rol === r.cod);
+  const procs = D.proceduri.filter(p => p.rol === r.cod);
+  const lead = Object.values(P).filter(p => p.rol === r.cod).map(p => p.cod);
+  const all = [...new Set([...r.procese, ...lead])].filter(c => P[c]).sort();
+  const where = spacesOfRole(r.cod);
+  const byProc = {};
+  tasks.forEach(t => (byProc[t.p] = byProc[t.p] || []).push(t));
+  const minutes = tasks.filter(t => /zilnic/i.test(t.cand)).reduce((n, t) => n + (parseFloat(t.min) || 0), 0);
+  return `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/roluri">Roluri</a> / ${esc(r.cod)}</div>
+    <span class="eyebrow">Fișa de lucru · ${esc(r.cod)}</span>
+    <h1>${esc(r.nume)}</h1>
+    <div class="profile"><p>${esc(r.raspunde)}</p></div>
+    ${where.length ? `<p style="margin:20px 0 0">Unde lucrezi: ${where.map(s => `<a class="chip" href="#/s/${s.id}?rol=${enc(r.cod)}">${esc(s.titlu)}</a>`).join(' ')}</p>` : ''}
+  </div></section>
+  <section class="block"><div class="wrap">
+    ${tasks.length ? `<div class="stats" style="margin-bottom:36px">
+      <div class="stat"><strong>${tasks.length}</strong><span>task-uri în retail</span></div>
+      <div class="stat"><strong>${procs.length}</strong><span>proceduri pe care le execuți</span></div>
+      <div class="stat"><strong>${Math.round(minutes)}</strong><span>minute de task-uri zilnice (estimat)</span></div>
+    </div>` : ''}
+    ${all.length ? `<h2 class="section-title">Procesele tale</h2>
+      <div class="proc-list" style="margin-bottom:40px">${all.map(c => `<a class="prow" href="#/p/${c}"><span class="c">${c}</span><span class="ti">${esc(P[c].nume)}<small>${esc(D.domenii[P[c].domeniu].nume)}${P[c].rol === r.cod ? ' · tu ești responsabil' : ''}</small></span><span class="meta">${valPill(P[c].val)}</span></a>`).join('')}</div>` : ''}
+    ${r.cod === 'PP + B' ? `<div class="local"><b>Unde intervii:</b> în zona de coacere și umplere patiserie din magazine (P03 Expunere) și la mic dejun / prânz (P06 Lunch, sandwich & to-go). Task-urile detaliate pentru acest rol se adaugă după validarea pe teren.</div>` : ''}
+    ${tasks.length ? `<h2 class="section-title">Ce faci, pas cu pas</h2>` + Object.entries(byProc).map(([pc, ts]) => `<div class="subp"><h4><span class="pill">${esc(pc)}</span> ${esc(P[pc]?.nume || '')}</h4><div class="tasks">${ts.map(t => taskHtml(t)).join('')}</div></div>`).join('') : ''}
+    ${procs.length ? `<h2 class="section-title" style="margin-top:40px">Procedurile tale</h2><div class="proc-list">${procs.map(procRow).join('')}</div>` : ''}
+  </div></section>`;
+}
+
+// ---------- Ghid ----------
+function viewGuide() {
+  const dom = Object.values(D.domenii).map(d => `<tr><td><b>${esc(d.cod)}</b></td><td>${esc(d.nume)}</td><td>${d.procese.length}</td><td style="color:var(--muted);font-style:italic">${esc(d.miza)}</td></tr>`).join('');
+  const hide = /ipoteze|foile/i;
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Cum se citește ghidul</span><h1>Cum funcționează</h1>
+    <p class="sub">Madame Magnifique · AVVA SRL</p>
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:1000px;margin:0 auto">
+    ${D.legenda.filter(s => !hide.test(s.titlu)).map(s => `<div style="margin-bottom:32px"><span class="eyebrow">${esc(s.titlu)}</span><ul class="simple-list" style="margin-top:10px">${s.linii.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}
+    <span class="eyebrow">Cele 7 domenii</span>
+    <div class="tbl-wrap" style="margin-top:10px"><table class="tbl"><thead><tr><th>Cod</th><th>Domeniu</th><th>Procese</th><th>Miza</th></tr></thead><tbody>${dom}</tbody></table></div>
+    <div class="std" style="margin-top:32px"><span class="eyebrow">Nu găsești răspunsul?</span>
+      <p style="margin:8px 0 0">Întreabă responsabilul de locație (RL) sau vânzătorul de tură (VT). Dacă o situație se repetă și nu e acoperită aici, spune-le: așa se scrie următoarea procedură.</p></div>
+  </div></section>`;
+}
+
+// ---------- Căutare ----------
+let INDEX = [];
+function buildIndex() {
+  const add = (grp, title, sub, href, extra = '') => INDEX.push({ grp, title, sub, href, k: norm(title + ' ' + sub + ' ' + extra) });
+  INDEX = [];
+  D.spatii.forEach(s => add('Spații', s.titlu, s.subtitlu || '', `#/s/${s.id}`));
+  D.roluri.forEach(r => add('Roluri', `${r.cod} · ${r.nume}`, r.raspunde, `#/r/${enc(r.cod)}`));
+  Object.values(P).forEach(p => add('Procese', `${p.cod} · ${p.nume}`, D.domenii[p.domeniu]?.nume || '', `#/p/${p.cod}`, p.sub.join(' ') + ' ' + p.miza));
+  D.proceduri.forEach(p => add('Proceduri', `${p.cod} · ${p.titlu}`, `${p.rol} · ${p.decl}`, `#/pr/${enc(p.cod)}`));
+  D.taskuri.forEach(t => add('Task-uri', t.t, `${t.p} · ${t.rol} · ${t.cand}`, `#/p/${t.p}`, t.verif + ' ' + t.sub));
+  D.spatii.forEach(s => {
+    const f = s.fisa || {};
+    (f.contacte || []).filter(c => c.nume || c.telefon).forEach(c => add('Contacte', `${c.nume || c.functie}${c.telefon ? ' · ' + c.telefon : ''}`, `${c.functie} · ${s.titlu}`, `#/s/${s.id}`));
+    (f.echipamente || []).forEach(e => add('Echipamente', e.nume, `${s.titlu}${e.raportezi ? ' · defecțiune: ' + e.raportezi : ''}`, `#/s/${s.id}`, 'defect defectiune echipament'));
+  });
+  D.abateri.forEach(a => {
+    const s = D.spatii.find(x => x.abateri === a.loc);
+    add('Particularități pe locații', `${a.loc}: ${a.text}`, a.zona, s ? `#/s/${s.id}` : '#/', a.dece);
+  });
+}
+function search(q) {
+  const terms = norm(q).split(/\s+/).filter(t => t.length > 1);
+  if (!terms.length) return null;
+  const hits = INDEX.map(it => {
+    let sc = 0;
+    for (const t of terms) { const i = it.k.indexOf(t); if (i < 0) return null; sc += i < 60 ? 3 : 1; if (norm(it.title).includes(t)) sc += 4; }
+    return { it, sc };
+  }).filter(Boolean).sort((a, b) => b.sc - a.sc);
+  const groups = {};
+  hits.forEach(h => { (groups[h.it.grp] = groups[h.it.grp] || []).length < 6 && groups[h.it.grp].push(h.it); });
+  return { groups, terms };
+}
+function highlight(text, terms) {
+  let out = esc(text);
+  const n = norm(text);
+  const ranges = [];
+  terms.forEach(t => { let i = n.indexOf(t); if (i >= 0) ranges.push([i, i + t.length]); });
+  if (!ranges.length) return out;
+  ranges.sort((a, b) => b[0] - a[0]);
+  let s = text;
+  ranges.forEach(([a, b]) => { s = s.slice(0, a) + '\u0001' + s.slice(a, b) + '\u0002' + s.slice(b); });
+  return esc(s).replace(/\u0001/g, '<mark>').replace(/\u0002/g, '</mark>');
+}
+const ORDER = ['Spații', 'Contacte', 'Roluri', 'Procese', 'Proceduri', 'Task-uri', 'Echipamente', 'Particularități pe locații'];
+let activeBox = null, sel = -1;
+function renderResults(box, q) {
+  closeResults();
+  const r = search(q);
+  if (!r) return;
+  const el = document.createElement('div');
+  el.id = 'results'; el.setAttribute('role', 'listbox');
+  const gs = ORDER.filter(g => r.groups[g]);
+  el.innerHTML = gs.length ? gs.map(g => `<div class="res-group"><span class="eyebrow">${g}</span>${r.groups[g].map(it => `<a class="res" href="${it.href}">${highlight(it.title, r.terms)}<small>${esc(it.sub)}</small></a>`).join('')}</div>`).join('')
+    : `<div class="res-empty">Nimic găsit pentru „${esc(q)}”. Încearcă alt cuvânt sau întreabă responsabilul de locație.</div>`;
+  box.appendChild(el); activeBox = box; sel = -1;
+}
+function closeResults() { const r = document.getElementById('results'); if (r) r.remove(); activeBox = null; }
+function wireSearch(input, box) {
+  input.addEventListener('input', () => renderResults(box, input.value));
+  input.addEventListener('focus', () => input.value && renderResults(box, input.value));
+  input.addEventListener('keydown', e => {
+    const items = [...box.querySelectorAll('.res')];
+    if (e.key === 'Escape') { closeResults(); input.blur(); }
+    else if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && items.length) {
+      e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      items.forEach((x, i) => x.classList.toggle('sel', i === sel)); items[sel].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter' && items.length) { e.preventDefault(); location.hash = (items[sel] || items[0]).getAttribute('href'); input.value = ''; input.blur(); }
+  });
+}
+wireSearch($('#topSearch'), $('#topSearchBox'));
+document.addEventListener('click', e => { if (activeBox && !activeBox.contains(e.target)) closeResults(); if (e.target.closest('.res')) { $('#topSearch').value = ''; } });
+document.addEventListener('keydown', e => { if (e.key === '/' && !/input|select|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); ($('#heroSearch') || $('#topSearch')).focus(); } });
+
+// ---------- Animații (GSAP + ScrollTrigger, în stilul DiviMotion) ----------
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HAS_GSAP = !!(window.gsap && window.ScrollTrigger) && !REDUCED;
+if (HAS_GSAP) { gsap.registerPlugin(ScrollTrigger); document.documentElement.classList.add('gs'); }
+let marqueeTween = null;
+document.querySelectorAll('.lock-card .logo path').forEach((p, i) => p.style.setProperty('--i', i));
+function splitWords(el) {
+  if (el.dataset.done) return el.querySelectorAll('.swi');
+  el.setAttribute('aria-label', el.textContent.trim());
+  el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="sw" aria-hidden="true"><span class="swi">${esc(w)}</span></span>`).join(' ');
+  el.dataset.done = 1;
+  return el.querySelectorAll('.swi');
+}
+function animateView() {
+  if (!HAS_GSAP) return;
+  ScrollTrigger.getAll().forEach(t => t.kill());
+  if (marqueeTween) { marqueeTween.kill(); marqueeTween = null; }
+  const ease = 'power4.out';
+
+  // Titluri: cuvintele urcă din mască.
+  document.querySelectorAll('#view [data-split]').forEach(h => gsap.from(splitWords(h), { yPercent: 115, duration: 1, ease, stagger: .07 }));
+  gsap.from('.hero .eyebrow, .hero p, .hero-search, .hint, .band .crumbs, .band .eyebrow, .band .sub, .band .profile', { y: 22, opacity: 0, duration: .8, ease: 'power3.out', stagger: .07, delay: .25 });
+
+  // Colajul: dezvăluire cu mască, apoi paralaxă la scroll.
+  gsap.utils.toArray('.hero-collage figure').forEach((f, i) => {
+    gsap.fromTo(f, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.out', delay: .2 + i * .15 });
+    gsap.from(f.querySelector('img'), { scale: 1.35, duration: 1.8, ease: 'expo.out', delay: .2 + i * .15 });
+    gsap.to(f, { yPercent: -8 * parseFloat(f.dataset.depth), ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  });
+  const bp = document.querySelector('.band-photo');
+  if (bp) {
+    gsap.fromTo(bp, { clipPath: 'inset(0% 0% 0% 100%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out', delay: .15 });
+    gsap.fromTo(bp.querySelector('img'), { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: bp, start: 'top bottom', end: 'bottom top', scrub: true } });
+  }
+
+  // Banda de text: se mișcă singură și accelerează odată cu scroll-ul.
+  const track = document.querySelector('.mq-track');
+  if (track) {
+    marqueeTween = gsap.to(track, { xPercent: -50, duration: 38, ease: 'none', repeat: -1 });
+    ScrollTrigger.create({ trigger: '.marquee', start: 'top bottom', end: 'bottom top', onUpdate: self => {
+      const v = Math.min(Math.abs(self.getVelocity()) / 250, 6);
+      gsap.to(marqueeTween, { timeScale: 1 + v, duration: .25, overwrite: true });
+      gsap.to(marqueeTween, { timeScale: 1, duration: 1.2, delay: .3, overwrite: false });
+    } });
+  }
+
+  // Cardurile apar eșalonat când intră în ecran.
+  const batch = sel => {
+    const els = gsap.utils.toArray(sel);
+    if (!els.length) return;
+    gsap.set(els, { y: 46, opacity: 0 });
+    ScrollTrigger.batch(els, { start: 'top 92%', once: true, onEnter: b => gsap.to(b, { y: 0, opacity: 1, duration: .8, ease: 'power3.out', stagger: .09 }) });
+  };
+  batch('#view .tile');
+  batch('#view .role-card');
+  batch('#view .card');
+  batch('#view .chips .chip');
+
+  // Titlurile secțiunilor.
+  gsap.utils.toArray('#view .block-head h2').forEach(h => gsap.from(splitWords(h), { yPercent: 115, duration: .9, ease, stagger: .06, scrollTrigger: { trigger: h, start: 'top 90%', once: true } }));
+
+  // Cifrele cresc de la zero.
+  gsap.utils.toArray('#view .stat strong').forEach(el => {
+    const end = parseInt(el.textContent, 10);
+    if (!end) return;
+    const o = { v: 0 };
+    el.textContent = '0';
+    gsap.to(o, { v: end, duration: 1.6, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 95%', once: true }, onUpdate: () => { el.textContent = Math.round(o.v); } });
+  });
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+}
+window.addEventListener('load', () => HAS_GSAP && ScrollTrigger.refresh());
+
+function wireView() {
+  const hs = $('#heroSearch');
+  if (hs) {
+    wireSearch(hs, $('#heroSearchBox'));
+    document.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { hs.value = b.dataset.q; hs.focus(); renderResults($('#heroSearchBox'), hs.value); }));
+  }
+  document.querySelectorAll('select[data-f]').forEach(s => s.addEventListener('change', () => {
+    const q = new URLSearchParams();
+    document.querySelectorAll('select[data-f]').forEach(x => x.value && q.set(x.dataset.f, x.value));
+    q.set('keep', '1');
+    location.hash = '#/proceduri?' + q.toString();
+  }));
+}
+</script>
+</body>
+</html>
