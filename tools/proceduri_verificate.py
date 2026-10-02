@@ -38,6 +38,13 @@ PREFIXE = [
     ("Barista_Fructus_", "BAR", "fructus"),
     ("Barista_Dumbravita_", "BAR", "dumbravita"),
 ]
+# Corecturi cerute după verificare (rânduri scoase din textul unui document).
+SCOASE = {
+    # Diferențele merg pe aviz la contabilitate, nu se raportează la producție (2 oct. 2026).
+    "Vanzator_Tura_04_Receptia_cantitativa_a_livrarii_din_laboratoare.pdf": [
+        "8. Raportezi diferențele către producție în aceeași zi (Modulul 6).",
+    ],
+}
 NUME_ROL = {"V": "Vânzător", "VT": "Vânzător de tură", "RL": "Responsabil locație", "BAR": "Barista"}
 # Modulele barista fără locație în nume („02_Calibrarea…”): valabile peste tot.
 BARISTA_FARA_LOCATIE = re.compile(r"^\d\d_")
@@ -225,6 +232,10 @@ def main():
                 k = next((i for i, (x, y) in enumerate(zip(a, b)) if x != y), min(len(a), len(b)))
                 probleme.append(f"tabele respinse (textul diferă la cuvântul {k}: {a[k:k+4]} ≠ {b[k:k+4]}): {sursa}")
         corp = lipeste_pasi(re.sub(r"\\([!#*_.\-+()\[\]`>~=])", r"\1", corp))   # „\!” din exportul Drive
+        for rand in SCOASE.get(sursa, []):
+            if rand not in corp.split("\n"):
+                probleme.append(f"corectura nu se mai aplică (rândul nu există): {sursa}: {rand}")
+            corp = "\n".join(x for x in corp.split("\n") if x != rand)
         if rol == "BAR" and loc and re.fullmatch(rf"Modulul \d+ · {loc}", modul, flags=re.I):
             modul = modul.split(" · ")[0] + f" · Barista {loc.capitalize()}"
         if re.fullmatch(r"Modulul \d+", modul) and rol in NUME_ROL:
