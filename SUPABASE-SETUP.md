@@ -117,6 +117,14 @@ resetează parole și editează matricea de acces.
 URL-ul proiectului și cheia secretă sunt puse automat în funcție de Supabase:
 nu le copiezi nicăieri.
 
+## 7. Rolul „Asistent executiv” (AE)
+
+**SQL Editor** → lipești
+[`supabase/migrations/0004_asistent_executiv.sql`](supabase/migrations/0004_asistent_executiv.sql) → **Run**.
+
+AE vede tot ghidul, ca administratorul, dar nu are pagina **Admin**. Ca să poată
+și administra: `update public.roles set is_admin = true where code = 'AE';`
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

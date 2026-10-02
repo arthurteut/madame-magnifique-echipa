@@ -26,6 +26,14 @@ import harta  # noqa: E402
 # dreptul se schimbă din panoul de admin, iar importul nu îl mai suprascrie.
 ROLURI_ADMIN = {"GM"}
 
+# Roluri care nu sunt în harta din Excel, dar există în ghid (vezi migrarea 0004).
+ROLURI_SUPLIMENTARE = [
+    {"cod": "AE", "nume": "Asistent executiv",
+     "raspunde": "Sprijină conducerea: vede tot ghidul (toate spațiile, rolurile și procedurile), "
+                 "fără drept de administrare.",
+     "procese": []},
+]
+
 
 def q(v):
     """Literal SQL."""
@@ -73,7 +81,7 @@ def genereaza(d):
     out.append("\n")
 
     # 2) Roluri: upsert; cele dispărute din hartă se șterg doar dacă nu au conturi.
-    roluri = d["roluri"]
+    roluri = d["roluri"] + [r for r in ROLURI_SUPLIMENTARE if r["cod"] not in {x["cod"] for x in d["roluri"]}]
     out.append(insert("roles", ["code", "name", "responsibilities", "main_processes", "is_admin", "position"],
                       [[q(r["cod"]), q(r["nume"]), q(r["raspunde"]), arr(r["procese"]),
                         q(r["cod"] in ROLURI_ADMIN), q(i)] for i, r in enumerate(roluri)],

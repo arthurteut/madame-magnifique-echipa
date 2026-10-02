@@ -468,6 +468,7 @@ async function incarcaDate() {
     tabel('role_section_access', ['section']),
   ]);
   ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
+  ME.vedeTot = ME.admin || roluri.some(r => r.code === ME.role_code && r.sees_all);
   ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid']
     : sectiuni.filter(x => x.role_code === ME.role_code).map(x => x.section));
   const grup = (rows, cheie) => rows.reduce((m, r) => ((m[r[cheie]] = m[r[cheie]] || []).push(r), m), {});
@@ -678,7 +679,7 @@ function viewHome() {
     <div class="chips">${roleChips}</div>
   </div></section>
   <section class="block"><div class="wrap">
-    <div class="block-head"><div><span class="eyebrow">Pe scurt</span><h2>${ME && ME.admin ? 'Firma în cifre' : 'Ghidul tău în cifre'}</h2></div></div>
+    <div class="block-head"><div><span class="eyebrow">Pe scurt</span><h2>${ME && ME.vedeTot ? 'Firma în cifre' : 'Ghidul tău în cifre'}</h2></div></div>
     <div class="stats">
       <div class="stat"><strong>${Object.keys(D.domenii).length}</strong><span>domenii de activitate</span></div>
       <div class="stat"><strong>${Object.keys(P).length}</strong><span>procese</span></div>
@@ -1117,13 +1118,14 @@ async function incarcaAcces() {
       tabel('role_section_access', ['role_code']), tabel('roles', ['position'])]);
   } catch (e) { console.error(e); box.innerHTML = '<p class="err">Matricea nu s-a putut încărca.</p>'; return; }
   const admini = new Set(roluriToate.filter(r => r.is_admin).map(r => r.code));
+  const vadTot = new Set(roluriToate.filter(r => r.sees_all && !r.is_admin).map(r => r.code));
   const are = (rows, a, b, ka, kb) => rows.some(r => r[ka] === a && r[kb] === b);
   const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['ghid', 'Cum funcționează']];
   const grila = (titlu, explicatie, coloane, bifat, tabelNume) => `
     <h2 class="section-title" style="margin-top:40px">${titlu}</h2><p class="muted" style="margin:-8px 0 16px">${explicatie}</p>
     <div class="tbl-wrap"><table class="matrix" data-tabel="${tabelNume}"><thead><tr><th>Rol</th>${coloane.map(([, t]) => `<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>
-    ${D.roluri.map(r => admini.has(r.cod)
-      ? `<tr class="admin-row"><td><b>${esc(r.cod)}</b> ${esc(r.nume)}</td><td colspan="${coloane.length}">administrator: vede tot</td></tr>`
+    ${D.roluri.map(r => (admini.has(r.cod) || (vadTot.has(r.cod) && tabelNume !== 'role_section_access'))
+      ? `<tr class="admin-row"><td><b>${esc(r.cod)}</b> ${esc(r.nume)}</td><td colspan="${coloane.length}">${admini.has(r.cod) ? 'administrator: vede tot' : 'vede tot (fără administrare)'}</td></tr>`
       : `<tr><td><b>${esc(r.cod)}</b> ${esc(r.nume)}</td>${coloane.map(([c, t]) => r.cod === c ? '<td class="muted">·</td>'
           : `<td><input type="checkbox" data-a="${esc(r.cod)}" data-b="${esc(c)}" ${bifat(r.cod, c) ? 'checked' : ''} aria-label="${esc(r.cod)}: ${esc(t)}"></td>`).join('')}</tr>`).join('')}
     </tbody></table></div>`;
