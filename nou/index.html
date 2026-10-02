@@ -1081,7 +1081,11 @@ async function incarcaUtilizatori() {
     const tr = e.target.closest('tr'), id = tr.dataset.id, act = e.target.dataset.act;
     const patch = act === 'rol' ? { role_code: e.target.value } : { active: e.target.checked };
     const { data, error } = await SB.from('profiles').update(patch).eq('user_id', id).select('user_id');
-    if (error || !data || !data.length) { toast('Modificarea nu a fost salvată.', true); return incarcaUtilizatori(); }
+    if (error || !data || !data.length) {
+      if (error) console.error('Profil:', error);
+      toast(`Modificarea nu a fost salvată: ${error ? (error.message || error.code) : 'baza de date a refuzat-o (rulează 0003_panou_admin.sql)'}`, true);
+      return incarcaUtilizatori();
+    }
     toast(act === 'rol' ? `Rol schimbat în ${patch.role_code}. Se aplică la următoarea logare a angajatului.` : (patch.active ? 'Cont reactivat.' : 'Cont dezactivat: angajatul nu mai poate intra.'));
     if (act === 'activ') incarcaUtilizatori();
   });
@@ -1139,7 +1143,7 @@ async function incarcaAcces() {
     cb.disabled = true;
     const { error } = cb.checked ? await SB.from(t).insert(rand) : await SB.from(t).delete().eq(ka, rand[ka]).eq(kb, rand[kb]);
     cb.disabled = false;
-    if (error) { cb.checked = !cb.checked; toast('Modificarea nu a fost salvată.', true); }
+    if (error) { console.error('Matrice:', error); cb.checked = !cb.checked; toast(`Modificarea nu a fost salvată: ${error.message || error.code || 'eroare necunoscută'}`, true); }
     else toast(cb.checked ? 'Acces adăugat.' : 'Acces scos.');
   }, { once: false });
 }
