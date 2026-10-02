@@ -995,8 +995,17 @@ function parolaNoua() {
 async function functieAdmin(body) {
   const { data, error } = await SB.functions.invoke(CFG.adminFunction || 'admin-users', { body });
   if (error) {
-    let mesaj = 'Operația nu a reușit. Verifică internetul și încearcă din nou.';
-    try { const j = await error.context.json(); if (j && j.error) mesaj = j.error; } catch (e) {}
+    console.error('Funcția de admin:', error);
+    const ctx = error.context;
+    // Fără răspuns de la server (rețea, CORS): context nu e un Response.
+    if (!ctx || typeof ctx.json !== 'function') throw new Error('Funcția de admin nu răspunde. Verifică internetul și încearcă din nou.');
+    let mesaj = `Operația nu a reușit (cod ${ctx.status}).`;
+    try {
+      const j = await ctx.json();
+      // Mesajele funcției noastre vin în „error”; cele ale Supabase în „message” / „msg”.
+      const m = j && (j.error || j.message || j.msg);
+      if (m) mesaj = j.error ? m : `${m} (cod ${ctx.status})`;
+    } catch (e) {}
     throw new Error(mesaj);
   }
   return data;
