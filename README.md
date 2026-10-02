@@ -22,6 +22,8 @@ vizual al madamemagnifique.ro: antracit `#242424`, bej-gri `#dedcd8`, nisip
 - **Registrul procedurilor**, filtrabil, cu lanțul „vine după / urmează”.
 - **Căutare** pe tot conținutul, fără diacritice obligatorii (tasta `/`).
 - **Conturi individuale** (utilizator + parolă), cu acces pe rol.
+- **Cursuri de onboarding** pe rol: lecții (text, video din link, fișiere), bifă
+  „am parcurs” și test la final. Adminul le editează și vede progresul echipei.
 
 ## Conturi și confidențialitate
 

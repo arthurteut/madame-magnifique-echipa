@@ -34,3 +34,10 @@ Funcția `admin-users` are teste proprii, cu un client Supabase simulat:
 ```bash
 ADMIN_USERS_TEST=1 deno test --allow-env supabase/functions/admin-users/
 ```
+
+Cursurile (`05_cursuri.sql`, după 0003, 0004 și 0005): V vede cursul comun și
+pe al rolului lui, nu și pe cel de B2B sau ciornele; nimeni în afară de admin nu
+vede răspunsurile corecte; `submit_quiz` corectează și salvează încercarea;
+fiecare își bifează doar lecțiile proprii; doar adminul scrie cursuri și
+încarcă fișiere; din Storage, fiecare descarcă doar fișierele cursurilor pe
+care le vede. Ultimul rând trebuie să fie „31 din 31”.

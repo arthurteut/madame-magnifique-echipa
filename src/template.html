@@ -62,7 +62,8 @@
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .user-chip { font-size: .82rem; color: var(--muted); white-space: nowrap; padding: 0 4px; }
   .user-chip b { font-weight: 500; color: var(--ink); }
-  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 28px; overflow-x: auto; }
+  .tabs a { white-space: nowrap; }
   .tabs a { padding: 12px 16px; text-decoration: none; font: 500 .8rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
   .tabs a.on { color: var(--ink); border-bottom-color: var(--ink); }
   .form-row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); align-items: end; }
@@ -306,6 +307,70 @@
   footer button { background: none; border: 1px solid #555; color: #ddd; padding: 8px 14px; font-size: .8rem; }
   footer button:hover { border-color: #fff; }
 
+  /* ---------- Cursuri ---------- */
+  .course-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: #fff; border: 1px solid var(--line); text-decoration: none; color: var(--ink-soft); transition: border-color .3s; }
+  .course-card:hover { border-color: var(--ink); }
+  .course-card h3 { font-size: 1.2rem; }
+  .course-card p { margin: 0; font-size: .92rem; color: var(--muted); }
+  .course-card .status { font-size: .85rem; color: var(--ink); margin-top: auto; }
+  .course-card.gata { background: var(--greige); border-color: var(--greige); }
+  .progress { height: 6px; background: var(--line); overflow: hidden; }
+  .progress i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .6s cubic-bezier(.2, .7, .2, 1); }
+  .band .progress { max-width: 420px; margin-top: 20px; background: #cfccc6; }
+  .lesson > summary { grid-template-columns: 44px 1fr auto; }
+  .lesson .nr { font: 600 .95rem/1 'Montserrat', sans-serif; color: var(--muted); }
+  .lesson.facut .nr { color: var(--ink); }
+  .pill.ok { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .lesson-text { max-width: 760px; }
+  .lesson-text p { margin: 0 0 14px; }
+  .lesson-text h3 { font-size: 1.05rem; margin: 22px 0 10px; }
+  .lesson-text ul { margin: 0 0 14px; padding-left: 20px; }
+  .lesson-text li { margin-bottom: 6px; }
+  .video { position: relative; aspect-ratio: 16 / 9; background: #000; max-width: 860px; margin: 8px 0 20px; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .files { display: grid; gap: 8px; margin: 8px 0 20px; max-width: 760px; }
+  .file { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); background: #fff; text-decoration: none; color: var(--ink); }
+  a.file:hover { border-color: var(--ink); }
+  .file .ext { font: 600 .68rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; background: var(--sand); padding: 6px 7px; flex: none; }
+  .file small { color: var(--muted); margin-left: auto; white-space: nowrap; }
+  .file-img { display: block; max-width: 100%; max-height: 520px; margin: 0 0 8px; border: 1px solid var(--line); }
+  .lesson-done { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--line); }
+  .quiz { max-width: 860px; }
+  .q { border: 1px solid var(--line); background: #fff; padding: 18px 20px; margin: 0 0 12px; min-width: 0; }
+  .q legend { font: 500 1rem/1.4 'Montserrat', sans-serif; color: var(--ink); padding: 0; margin-bottom: 10px; float: left; width: 100%; }
+  .q label { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; clear: both; cursor: pointer; }
+  .q input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--ink); flex: none; }
+  .q.bun { border-left: 3px solid #2f6b3a; }
+  .q.gresit { border-left: 3px solid #9b2c2c; }
+  .q .verdict { clear: both; font-size: .85rem; margin-top: 6px; }
+  .q.bun .verdict { color: #2f6b3a; }
+  .q.gresit .verdict { color: #9b2c2c; }
+  .result { padding: 20px 24px; margin-bottom: 20px; background: var(--greige); }
+  .result.trecut { background: var(--ink); color: #fff; }
+  .result.trecut h3 { color: #fff; }
+  .result h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .result p { margin: 0; }
+  .ed { border: 1px solid var(--line); background: #fff; padding: 20px; margin-bottom: 14px; }
+  .ed-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .ed-head h3 { font-size: 1rem; }
+  .ed-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ed label { display: grid; gap: 6px; font-size: .82rem; color: var(--muted); margin-bottom: 12px; }
+  .ed .field { padding: 11px 12px; font-size: .95rem; }
+  textarea.field { resize: vertical; min-height: 90px; font: 300 .95rem/1.5 'Roboto', sans-serif; }
+  .ed .inline { display: flex; gap: 8px; align-items: center; color: var(--ink-soft); font-size: .92rem; margin: 0 16px 12px 0; }
+  .ed .inline input { width: 18px; height: 18px; accent-color: var(--ink); }
+  .role-checks { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .role-checks label { display: inline-flex; flex-direction: row; gap: 6px; align-items: center; padding: 7px 10px; border: 1px solid var(--line); margin: 0; color: var(--ink-soft); font-size: .85rem; }
+  .role-checks input { accent-color: var(--ink); }
+  .ed-files { display: grid; gap: 6px; margin-bottom: 12px; }
+  .ed-files .file { padding: 8px 12px; }
+  .ed-sub { font: 500 .78rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 36px 0 14px; }
+  .help { font-size: .85rem; color: var(--muted); background: var(--bg-soft); padding: 12px 16px; margin-bottom: 20px; }
+  .help code { background: #fff; padding: 1px 5px; border: 1px solid var(--line); }
+  .prog-cell { white-space: nowrap; font-size: .85rem; }
+  .prog-cell.gata { color: #2f6b3a; font-weight: 500; }
+  .prog-cell.na { color: var(--line); }
+
   @media (prefers-reduced-motion: no-preference) {
     .lock-photo img { animation: kenburns 24s ease-in-out infinite alternate; }
     .lock-card { animation: rise .9s cubic-bezier(.2, .7, .2, 1) .15s both; }
@@ -392,6 +457,7 @@
         <a href="#/" data-nav="home">Spații</a>
         <a href="#/roluri" data-nav="roluri">Roluri</a>
         <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
+        <a href="#/cursuri" data-nav="cursuri">Cursuri</a>
         <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
         <a href="#/admin" data-nav="admin" hidden>Admin</a>
         <span class="user-chip" id="userChip"></span>
@@ -413,7 +479,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
 <script src="assets/config.js"></script>
 <script>
-let D = null, ME = null, SB = null, SB_USER_ID = null;
+let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null;
 
 // ---------- Autentificare (Supabase) ----------
 // Angajatul scrie doar utilizatorul; contul are în spate un email intern,
@@ -443,10 +509,11 @@ function showLock(msg) {
 }
 
 // Citește un tabel întreg (PostgREST întoarce maximum 1000 de rânduri pe cerere).
-async function tabel(nume, ordine) {
+async function tabel(nume, ordine, filtre = {}) {
   const rows = [];
   for (let de = 0; ; de += 1000) {
     let q = SB.from(nume).select('*').range(de, de + 999);
+    for (const [c, v] of Object.entries(filtre)) q = q.eq(c, v);
     for (const o of ordine) q = q.order(o);
     const { data, error } = await q;
     if (error) throw error;
@@ -469,7 +536,7 @@ async function incarcaDate() {
   ]);
   ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
   ME.vedeTot = ME.admin || roluri.some(r => r.code === ME.role_code && r.sees_all);
-  ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid']
+  ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid', 'cursuri']
     : sectiuni.filter(x => x.role_code === ME.role_code).map(x => x.section));
   const grup = (rows, cheie) => rows.reduce((m, r) => ((m[r[cheie]] = m[r[cheie]] || []).push(r), m), {});
   const subP = grup(subprocese, 'process_code'), procD = grup(procese, 'domain_code');
@@ -519,7 +586,7 @@ async function deschideSesiunea(user) {
   if (error) throw error;
   if (!prof) { await SB.auth.signOut(); return showLock('Contul nu are încă un profil în ghid. Anunță responsabilul de locație.'); }
   if (!prof.active) { await SB.auth.signOut(); return showLock('Contul este dezactivat. Anunță responsabilul de locație.'); }
-  ME = prof; SB_USER_ID = user.id;
+  ME = prof; SB_USER_ID = user.id; CURS = null;
   D = await incarcaDate();
   prepare();
   showApp();
@@ -618,6 +685,8 @@ function route() {
   else if (a === 'roluri' && poate('roluri')) { html = viewRoles(); nav = 'roluri'; }
   else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
   else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
+  else if (a === 'cursuri' && poate('cursuri')) { html = viewCursuri(); nav = 'cursuri'; }
+  else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
   else html = viewHome();
   $('#view').innerHTML = html;
@@ -674,6 +743,10 @@ function viewHome() {
       .filter(([, h]) => h).map(([t, h]) => `<div class="group-label">${t}</div><div class="grid">${h}</div>`).join('')
       || '<p class="lvl4">Contul tău nu are încă spații atribuite. Anunță administratorul ghidului.</p>'}
   </div></section>
+  ${poate('cursuri') ? `<section class="block"><div class="wrap"><div class="band-grid" style="align-items:end">
+    <div><span class="eyebrow">Ești nou în echipă?</span><h2 class="section-title" style="font-size:clamp(1.4rem,2.6vw,1.85rem);margin:8px 0 10px">Cursurile de onboarding</h2>
+    <p style="margin:0;max-width:60ch">Lecțiile, documentele și video-urile pentru rolul tău, cu un test scurt la final. Bifezi ce ai parcurs și reiei oricând.</p></div>
+    <div><a class="btn" href="#/cursuri">Cursurile mele →</a></div></div></div></section>` : ''}
   <section class="block soft"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Ce rol ai?</span><h2>Fișa ta de lucru</h2></div>${poate('roluri') ? '<a class="btn ghost" href="#/roluri">Toate rolurile</a>' : ''}</div>
     <div class="chips">${roleChips}</div>
@@ -1017,16 +1090,16 @@ const parolaHtml = (u, p) => `<div class="secret"><span>Comunică-i angajatului:
   <span class="muted" style="font-size:.82rem">Parola nu mai apare după ce închizi pagina.</span></div>`;
 
 function viewAdmin(params) {
-  const tab = params.tab === 'acces' ? 'acces' : 'utilizatori';
-  setTimeout(() => (tab === 'acces' ? incarcaAcces() : incarcaUtilizatori()), 0);
+  const tab = ['acces', 'cursuri', 'progres'].includes(params.tab) ? params.tab : 'utilizatori';
+  setTimeout(() => ({ acces: incarcaAcces, cursuri: () => incarcaCursuriAdmin(params), progres: incarcaProgres, utilizatori: incarcaUtilizatori })[tab](), 0);
   return `
   <section class="band"><div class="wrap">
     <span class="eyebrow">Doar pentru administratori</span>
     <h1>Administrare</h1>
-    <p class="sub">Conturile echipei și ce vede fiecare rol.</p>
+    <p class="sub">Conturile echipei, ce vede fiecare rol și cursurile de onboarding.</p>
   </div></section>
   <section class="block"><div class="wrap">
-    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a></nav>
+    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a><a href="#/admin?tab=cursuri" class="${tab === 'cursuri' ? 'on' : ''}">Cursuri</a><a href="#/admin?tab=progres" class="${tab === 'progres' ? 'on' : ''}">Progres</a></nav>
     <div id="adminBody"><p class="muted">Se încarcă…</p></div>
   </div></section>`;
 }
@@ -1120,7 +1193,7 @@ async function incarcaAcces() {
   const admini = new Set(roluriToate.filter(r => r.is_admin).map(r => r.code));
   const vadTot = new Set(roluriToate.filter(r => r.sees_all && !r.is_admin).map(r => r.code));
   const are = (rows, a, b, ka, kb) => rows.some(r => r[ka] === a && r[kb] === b);
-  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['ghid', 'Cum funcționează']];
+  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['cursuri', 'Cursuri'], ['ghid', 'Cum funcționează']];
   const grila = (titlu, explicatie, coloane, bifat, tabelNume) => `
     <h2 class="section-title" style="margin-top:40px">${titlu}</h2><p class="muted" style="margin:-8px 0 16px">${explicatie}</p>
     <div class="tbl-wrap"><table class="matrix" data-tabel="${tabelNume}"><thead><tr><th>Rol</th>${coloane.map(([, t]) => `<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>
@@ -1153,6 +1226,529 @@ document.addEventListener('click', async e => {
   const b = e.target.closest('[data-copy]'); if (!b) return;
   try { await navigator.clipboard.writeText(b.dataset.copy); toast('Copiat.'); } catch (x) { toast('Selectează și copiază manual.', true); }
 });
+
+// ---------- Cursuri de onboarding ----------
+// Se încarcă la prima deschidere a paginii Cursuri, nu odată cu ghidul.
+// Ce vede fiecare hotărăște baza de date (migrarea 0005): cursurile comune,
+// ale rolului lui; adminul vede și ciornele.
+const grupeaza = (rows, k) => rows.reduce((m, r) => ((m[r[k]] = m[r[k]] || []).push(r), m), {});
+async function incarcaCursuri(fortat) {
+  if (CURS && !fortat) return CURS;
+  const [cursuri, cr, lectii, fisiere, intrebari, progres, incercari] = await Promise.all([
+    tabel('courses', ['position', 'id']), tabel('course_roles', ['course_id']),
+    tabel('lessons', ['course_id', 'position', 'id']), tabel('lesson_files', ['lesson_id', 'position', 'id']),
+    tabel('quiz_questions', ['course_id', 'position', 'id']),
+    tabel('lesson_progress', ['lesson_id'], { user_id: SB_USER_ID }),
+    tabel('quiz_attempts', ['created_at'], { user_id: SB_USER_ID }),
+  ]);
+  const crG = grupeaza(cr, 'course_id'), lG = grupeaza(lectii, 'course_id'), fG = grupeaza(fisiere, 'lesson_id'),
+        qG = grupeaza(intrebari, 'course_id'), aG = grupeaza(incercari, 'course_id');
+  const lista = cursuri.map(c => ({ ...c, roluri: (crG[c.id] || []).map(x => x.role_code),
+    lectii: (lG[c.id] || []).map(l => ({ ...l, fisiere: fG[l.id] || [] })),
+    intrebari: qG[c.id] || [], incercari: aG[c.id] || [] }));
+  CURS = { lista, byId: Object.fromEntries(lista.map(c => [c.id, c])), facute: new Set(progres.map(p => p.lesson_id)) };
+  return CURS;
+}
+const pct = a => a && a.total ? Math.round(a.score * 100 / a.total) : 0;
+function stareCurs(c) {
+  const total = c.lectii.length, facute = c.lectii.filter(l => CURS.facute.has(l.id)).length;
+  const areTest = c.intrebari.length > 0;
+  const best = c.incercari.reduce((b, a) => (!b || pct(a) > pct(b) ? a : b), null);
+  const promovat = c.incercari.some(a => a.passed);
+  const pasi = total + (areTest ? 1 : 0), facuti = facute + (areTest && promovat ? 1 : 0);
+  return { total, facute, areTest, best, promovat, gata: pasi > 0 && facuti === pasi, procent: pasi ? Math.round(facuti * 100 / pasi) : 0 };
+}
+function textStare(st) {
+  const test = !st.areTest ? '' : st.best ? ` · test ${pct(st.best)}%${st.promovat ? ' ✓' : ', nepromovat'}` : ' · test nedat';
+  if (st.gata) return 'Terminat' + (st.best ? ` · test ${pct(st.best)}%` : '');
+  if (!st.facute && !st.best) return `Neînceput · ${st.total} ${st.total === 1 ? 'lecție' : 'lecții'}${st.areTest ? ' + test' : ''}`;
+  return `${st.facute} din ${st.total} lecții${test}`;
+}
+const pentruCine = c => c.is_common ? 'Toată echipa' : (c.roluri.join(' · ') || 'Niciun rol');
+
+function viewCursuri() {
+  setTimeout(async () => {
+    const box = document.getElementById('cursBody'); if (!box) return;
+    try { await incarcaCursuri(true); }
+    catch (e) { console.error('Cursuri:', e); box.innerHTML = '<p class="err">Cursurile nu s-au putut încărca. Reîncarcă pagina.</p>'; return; }
+    if (!document.getElementById('cursBody')) return;
+    const card = c => {
+      const st = stareCurs(c);
+      return `<a class="course-card ${st.gata ? 'gata' : ''}" href="#/c/${c.id}">
+        <span class="eyebrow">${esc(pentruCine(c))}${c.published ? '' : ' · ciornă'}</span>
+        <h3>${esc(c.title)}</h3>${c.description ? `<p>${esc(c.description)}</p>` : ''}
+        <div class="progress" aria-hidden="true"><i style="width:${st.procent}%"></i></div>
+        <span class="status">${esc(textStare(st))}</span></a>`;
+    };
+    const comune = CURS.lista.filter(c => c.is_common);
+    const ale = CURS.lista.filter(c => !c.is_common && c.roluri.includes(ME.role_code));
+    const altele = CURS.lista.filter(c => !c.is_common && !c.roluri.includes(ME.role_code));
+    const deFacut = [...comune, ...ale].filter(c => c.published);
+    const gata = deFacut.filter(c => stareCurs(c).gata).length;
+    const grupuri = [['Pentru toată echipa', comune], [`Pentru rolul tău · ${ME.role_code}`, ale], ['Pentru celelalte roluri', altele]]
+      .filter(([, l]) => l.length);
+    box.innerHTML = (deFacut.length ? `<div class="stats" style="margin-bottom:36px">
+        <div class="stat"><strong>${gata}</strong><span>din ${deFacut.length} cursuri terminate</span></div>
+        <div class="stat"><strong>${deFacut.reduce((n, c) => n + c.lectii.filter(l => CURS.facute.has(l.id)).length, 0)}</strong><span>lecții parcurse</span></div>
+      </div>` : '')
+      + (grupuri.map(([t, l]) => `<div class="group-label">${esc(t)}</div><div class="grid" style="margin-bottom:12px">${l.map(card).join('')}</div>`).join('')
+      || `<p class="lvl4">Nu ai încă niciun curs. ${ME.admin ? 'Le adaugi din <a href="#/admin?tab=cursuri">Admin → Cursuri</a>.' : 'Administratorul le adaugă în curând.'}</p>`);
+    if (HAS_GSAP) gsap.from('#cursBody .course-card', { y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .06 });
+  }, 0);
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Onboarding</span><h1 data-split>Cursurile tale</h1>
+    <p class="sub">Lecții, documente și video-uri pentru rolul tău. Bifezi fiecare lecție după ce o parcurgi; la final te așteaptă un test scurt.</p>
+  </div></section>
+  <section class="block"><div class="wrap" id="cursBody"><p class="muted">Se încarcă…</p></div></section>`;
+}
+
+// Link YouTube / Vimeo / Google Drive → adresa playerului încorporat.
+function videoEmbed(u) {
+  let m;
+  if ((m = u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{11})/))) return `https://www.youtube-nocookie.com/embed/${m[1]}?rel=0`;
+  if ((m = u.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([\da-f]+))?/))) return `https://player.vimeo.com/video/${m[1]}${m[2] ? '?h=' + m[2] : ''}`;
+  if ((m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/))) return `https://drive.google.com/file/d/${m[1]}/preview`;
+  return null;
+}
+// Text simplu → HTML: paragrafe, liste („- ”), subtitluri („## ”), linkuri.
+function textLectie(t) {
+  const link = s => esc(s).replace(/https:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+  const out = [];
+  for (const bloc of String(t).replace(/\r/g, '').split(/\n\s*\n/)) {
+    let linii = bloc.split('\n').filter(x => x.trim());
+    while (linii.length && /^##\s+/.test(linii[0])) { out.push(`<h3>${esc(linii.shift().replace(/^##\s+/, ''))}</h3>`); }
+    if (!linii.length) continue;
+    if (linii.every(x => /^\s*[-•*]\s+/.test(x))) out.push(`<ul>${linii.map(x => `<li>${link(x.replace(/^\s*[-•*]\s+/, ''))}</li>`).join('')}</ul>`);
+    else out.push(`<p>${linii.map(link).join('<br>')}</p>`);
+  }
+  return out.join('');
+}
+const marime = b => b >= 1048576 ? (b / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+const extensie = n => (String(n).match(/\.([a-z0-9]{1,5})$/i) || [, 'fișier'])[1];
+function fisierHtml(f, url, extra = '') {
+  const inner = `<span class="ext">${esc(extensie(f.name))}</span><span>${esc(f.name)}</span><small>${marime(f.size || 0)}</small>${extra}`;
+  return url ? `<a class="file" href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="file">${inner}</div>`;
+}
+function lectieHtml(l, i, urls, deschisa) {
+  const facut = CURS.facute.has(l.id);
+  const emb = l.video_url && videoEmbed(l.video_url);
+  const imagini = l.fisiere.filter(f => /^image\/(jpeg|png|webp|gif)$/.test(f.mime) && urls[f.path]);
+  const altele = l.fisiere.filter(f => !imagini.includes(f));
+  return `<details class="proc lesson ${facut ? 'facut' : ''}" id="lectie-${l.id}" ${deschisa ? 'open' : ''}>
+    <summary><span class="nr">${facut ? '✓' : i + 1}</span><span class="name">${esc(l.title)}</span>
+      <span class="meta">${facut ? '<span class="pill ok">Parcursă</span>' : ''}${ICON.chev}</span></summary>
+    <div class="proc-body">
+      ${l.body ? `<div class="lesson-text">${textLectie(l.body)}</div>` : ''}
+      ${l.video_url ? (emb ? `<div class="video"><iframe src="${esc(emb)}" title="${esc(l.title)}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`
+        : `<p><a class="btn ghost sm" href="${esc(l.video_url)}" target="_blank" rel="noopener">Deschide video-ul ↗</a></p>`) : ''}
+      ${imagini.map(f => `<a href="${esc(urls[f.path])}" target="_blank" rel="noopener"><img class="file-img" src="${esc(urls[f.path])}" alt="${esc(f.name)}" loading="lazy"></a>`).join('')}
+      ${altele.length ? `<div class="files">${altele.map(f => fisierHtml(f, urls[f.path], urls[f.path] ? '' : '<small>indisponibil</small>')).join('')}</div>` : ''}
+      <div class="lesson-done">
+        <button class="btn ${facut ? 'ghost' : ''} sm" type="button" data-lectie="${l.id}" data-facut="${facut ? 1 : 0}">${facut ? 'Marchează ca neparcursă' : 'Am parcurs lecția ✓'}</button>
+      </div>
+    </div></details>`;
+}
+function testHtml(c, st, r) {
+  const prag = `Treci cu minimum ${c.pass_percent}% răspunsuri corecte.`;
+  if (st.facute < st.total && !ME.vedeTot)
+    return `<div class="lvl4">Testul se deschide după ce parcurgi toate lecțiile (ai parcurs ${st.facute} din ${st.total}). ${prag}</div>`;
+  const head = r
+    ? `<div class="result ${r.passed ? 'trecut' : ''}" role="status"><h3>${r.passed ? 'Felicitări, ai trecut testul!' : 'De data asta nu ai trecut.'}</h3>
+        <p>${r.score} din ${r.total} răspunsuri corecte (${pct(r)}%). ${r.passed ? '' : prag + ' Recitește lecțiile și încearcă din nou.'}</p></div>`
+    : st.promovat ? `<div class="result trecut"><h3>Ai trecut testul (${pct(st.best)}%).</h3><p>Îl poți da din nou oricând, ca recapitulare.</p></div>`
+    : `<p style="margin:0 0 16px">${c.intrebari.length} ${c.intrebari.length === 1 ? 'întrebare' : 'întrebări'}. ${prag}${c.incercari.length ? ` Încercări până acum: ${c.incercari.length}, cel mai bun rezultat ${pct(st.best)}%.` : ''}</p>`;
+  return head + `<form class="quiz" id="quizForm" data-curs="${c.id}">${c.intrebari.map((q, i) => {
+      const cls = r ? (r.correct[i] ? 'bun' : 'gresit') : '';
+      return `<fieldset class="q ${cls}"><legend>${i + 1}. ${esc(q.question)}</legend>
+        ${q.options.map((o, j) => `<label><input type="radio" name="q${i}" value="${j}" ${r && r.answers[i] === j ? 'checked' : ''} ${r ? 'disabled' : ''}><span>${esc(o)}</span></label>`).join('')}
+        ${r ? `<div class="verdict">${r.correct[i] ? 'Corect' : 'Greșit'}</div>` : ''}</fieldset>`;
+    }).join('')}
+    ${r ? '<button class="btn" type="button" data-reia="1">Încearcă din nou</button>' : '<button class="btn" type="submit">Trimite răspunsurile</button>'}</form>`;
+}
+
+function viewCurs(id, params) {
+  setTimeout(() => randeazaCurs(id, params), 0);
+  return `<div id="cursPagina"><section class="band"><div class="wrap"><div class="crumbs"><a href="#/cursuri">Cursuri</a></div><p class="muted">Se încarcă…</p></div></section></div>`;
+}
+async function randeazaCurs(id, params = {}, rezultat) {
+  let box = document.getElementById('cursPagina'); if (!box) return;
+  try { await incarcaCursuri(); }
+  catch (e) { console.error('Curs:', e); box.innerHTML = '<section class="block"><div class="wrap"><p class="err">Cursul nu s-a putut încărca. Reîncarcă pagina.</p></div></section>'; return; }
+  const c = CURS.byId[id];
+  if (!c) { box.innerHTML = '<section class="band"><div class="wrap"><div class="crumbs"><a href="#/cursuri">Cursuri</a></div><h1>Cursul nu există</h1><p class="sub">Sau nu e pentru rolul tău.</p></div></section>'; return; }
+  // Fișierele sunt private: linkuri semnate, valabile o oră.
+  const cai = c.lectii.flatMap(l => l.fisiere.map(f => f.path)), urls = {};
+  if (cai.length) {
+    const { data, error } = await SB.storage.from('cursuri').createSignedUrls(cai, 3600);
+    if (error) console.error('Fișiere:', error);
+    (data || []).forEach(d => { if (d.signedUrl) urls[d.path] = d.signedUrl; });
+  }
+  box = document.getElementById('cursPagina'); if (!box) return;
+  const st = stareCurs(c);
+  const deschisa = params.l ? +params.l : (c.lectii.find(l => !CURS.facute.has(l.id)) || {}).id;
+  box.innerHTML = `
+  <section class="band"><div class="wrap">
+    <div class="crumbs"><a href="#/cursuri">Cursuri</a> / ${esc(c.title)}</div>
+    <span class="eyebrow">${c.is_common ? 'Pentru toată echipa' : 'Onboarding · ' + esc(c.roluri.join(', '))}${c.published ? '' : ' · ciornă'}</span>
+    <h1>${esc(c.title)}</h1>
+    ${c.description ? `<p class="sub">${esc(c.description)}</p>` : ''}
+    <div class="progress" aria-hidden="true"><i style="width:${st.procent}%"></i></div>
+    <p class="muted" style="margin:10px 0 0;font-size:.9rem">${esc(textStare(st))}</p>
+    ${ME.admin ? `<p style="margin:16px 0 0"><a class="btn ghost sm" href="#/admin?tab=cursuri&curs=${c.id}">Editează cursul</a></p>` : ''}
+  </div></section>
+  <section class="block"><div class="wrap">
+    ${c.lectii.length ? '<h2 class="section-title">Lecțiile</h2>' + c.lectii.map((l, i) => lectieHtml(l, i, urls, l.id === deschisa)).join('')
+      : '<p class="lvl4">Cursul nu are încă lecții.</p>'}
+    ${c.intrebari.length ? `<h2 class="section-title" style="margin-top:48px;scroll-margin-top:100px" id="test">Testul de final</h2><div id="testBox">${testHtml(c, st, rezultat)}</div>` : ''}
+  </div></section>`;
+}
+
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-lectie]');
+  if (b) {
+    const id = +b.dataset.lectie, facut = b.dataset.facut === '1', cursId = +parseHash().parts[1];
+    b.disabled = true;
+    const { error } = facut
+      ? await SB.from('lesson_progress').delete().eq('user_id', SB_USER_ID).eq('lesson_id', id)
+      : await SB.from('lesson_progress').insert({ user_id: SB_USER_ID, lesson_id: id });
+    if (error && !/duplicate/i.test(error.message || '')) {
+      console.error('Progres:', error); b.disabled = false;
+      return toast(`Nu s-a salvat: ${error.message || 'eroare necunoscută'}`, true);
+    }
+    facut ? CURS.facute.delete(id) : CURS.facute.add(id);
+    const c = CURS.byId[cursId], urm = !facut && c && c.lectii.find(l => !CURS.facute.has(l.id));
+    await randeazaCurs(cursId, { l: urm ? urm.id : id });
+    const tinta = facut ? null : urm ? document.getElementById('lectie-' + urm.id) : document.getElementById('test');
+    if (tinta) tinta.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!facut) toast(urm ? `Lecție parcursă. Urmează: ${urm.title}` : `Ai parcurs toate lecțiile.${c && c.intrebari.length ? ' Urmează testul.' : ''}`);
+    return;
+  }
+  if (e.target.closest('[data-reia]')) {
+    const c = CURS.byId[+parseHash().parts[1]];
+    document.getElementById('testBox').innerHTML = testHtml(c, stareCurs(c));
+    document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'quizForm') return;
+  e.preventDefault();
+  const f = e.target, id = +f.dataset.curs, c = CURS.byId[id];
+  const answers = c.intrebari.map((q, i) => { const x = f.querySelector(`input[name="q${i}"]:checked`); return x ? +x.value : -1; });
+  const lipsa = answers.indexOf(-1);
+  if (lipsa >= 0) { toast(`Răspunde și la întrebarea ${lipsa + 1}.`, true); return f.querySelectorAll('.q')[lipsa].scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  const btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Se corectează…';
+  const { data, error } = await SB.rpc('submit_quiz', { p_course: id, p_answers: answers });
+  if (error || !data || !data.length) {
+    console.error('Test:', error); btn.disabled = false; btn.textContent = 'Trimite răspunsurile';
+    return toast(`Testul nu s-a putut trimite: ${error ? error.message : 'răspuns gol'}`, true);
+  }
+  const r = { ...data[0], answers };
+  c.incercari.push({ score: r.score, total: r.total, passed: r.passed });
+  await randeazaCurs(id, { l: -1 }, r);
+  document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ---------- Admin → Cursuri ----------
+const FISIERE_OK = /\.(pdf|docx?|xlsx?|pptx?|jpe?g|png|webp|gif|heic)$/i;
+const MAX_FISIER = 50 * 1024 * 1024;
+const numeSigur = n => n.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(-80) || 'fisier';
+
+async function incarcaCursuriAdmin(params) {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  try { await incarcaCursuri(true); }
+  catch (e) { console.error(e); box.innerHTML = '<p class="err">Cursurile nu s-au putut încărca. Ai rulat 0005_cursuri.sql?</p>'; return; }
+  if (params.curs) {
+    const c = CURS.byId[+params.curs];
+    if (c) return editorCurs(c);
+  }
+  box.onclick = box.oninput = box.onchange = null;
+  box.innerHTML = `
+    <div class="help">Un curs are lecții (text, video din link, fișiere) și, opțional, un test la final. Îl văd rolurile bifate în curs; cursurile „pentru toată echipa” le văd toți. Până îl publici, e ciornă și îl văd doar adminii.</div>
+    <h2 class="section-title">Curs nou</h2>
+    <form id="cursNou" class="form-row" autocomplete="off" style="max-width:720px">
+      <label>Titlul cursului<input class="field" id="cursTitlu" placeholder="ex.: Prima zi ca vânzător" required></label>
+      <button class="btn" type="submit">Creează cursul</button>
+    </form>
+    <h2 class="section-title" style="margin-top:48px">Cursurile <span class="muted" style="font-size:.9rem">(${CURS.lista.length})</span></h2>
+    ${CURS.lista.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Curs</th><th>Pentru</th><th>Lecții</th><th>Test</th><th>Stare</th><th></th></tr></thead><tbody>
+      ${CURS.lista.map(c => `<tr><td><a href="#/admin?tab=cursuri&curs=${c.id}"><b>${esc(c.title)}</b></a></td><td>${esc(pentruCine(c))}</td><td>${c.lectii.length}</td>
+        <td>${c.intrebari.length ? `${c.intrebari.length} întrebări · ${c.pass_percent}%` : '—'}</td><td>${c.published ? 'Publicat' : '<span class="muted">Ciornă</span>'}</td>
+        <td class="actions"><a class="btn ghost sm" href="#/admin?tab=cursuri&curs=${c.id}">Editează</a></td></tr>`).join('')}
+    </tbody></table></div>` : '<p class="muted">Niciun curs încă.</p>'}`;
+  document.getElementById('cursNou').addEventListener('submit', async e => {
+    e.preventDefault();
+    const title = document.getElementById('cursTitlu').value.trim(); if (!title) return;
+    const position = CURS.lista.reduce((m, c) => Math.max(m, c.position + 1), 0);
+    const { data, error } = await SB.from('courses').insert({ title, position }).select('id').single();
+    if (error) { console.error(error); return toast(`Cursul nu a fost creat: ${error.message}`, true); }
+    toast('Curs creat. Adaugă lecțiile și publică-l când e gata.');
+    location.hash = `#/admin?tab=cursuri&curs=${data.id}`;
+  });
+}
+
+function edLectie(l, i, n) {
+  return `<div class="ed" data-tip="lectie" data-id="${l.id}">
+    <div class="ed-head"><h3>Lecția ${i + 1}</h3><div class="ed-actions">
+      <button class="btn ghost sm" type="button" data-ed="sus" ${i === 0 ? 'disabled' : ''} aria-label="Mută mai sus">↑</button>
+      <button class="btn ghost sm" type="button" data-ed="jos" ${i === n - 1 ? 'disabled' : ''} aria-label="Mută mai jos">↓</button>
+      <button class="btn danger sm" type="button" data-ed="sterge">Șterge</button></div></div>
+    <label>Titlu<input class="field" name="title" value="${esc(l.title)}" required></label>
+    <label>Text<textarea class="field" name="body" rows="8">${esc(l.body)}</textarea></label>
+    <label>Link video (opțional)<input class="field" name="video_url" type="url" value="${esc(l.video_url)}" placeholder="https://youtu.be/…"></label>
+    <span class="eyebrow" style="display:block;margin-bottom:8px">Fișiere</span>
+    <div class="ed-files">${l.fisiere.map(f => fisierHtml(f, null, `<button class="btn danger sm" type="button" data-ed="sterge-fisier" data-fisier="${f.id}">Șterge</button>`)).join('') || '<span class="muted" style="font-size:.88rem">Niciun fișier.</span>'}</div>
+    <label>Adaugă fișiere (PDF, Word, Excel, PowerPoint, poze · max. 50 MB)<input type="file" multiple data-ed="incarca" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.webp,.gif,.heic"></label>
+    <button class="btn sm" type="button" data-ed="salveaza">Salvează lecția</button>
+  </div>`;
+}
+function edIntrebare(q, i, n, corect) {
+  return `<div class="ed" data-tip="intrebare" data-id="${q.id}">
+    <div class="ed-head"><h3>Întrebarea ${i + 1}</h3><div class="ed-actions">
+      <button class="btn ghost sm" type="button" data-ed="sus" ${i === 0 ? 'disabled' : ''} aria-label="Mută mai sus">↑</button>
+      <button class="btn ghost sm" type="button" data-ed="jos" ${i === n - 1 ? 'disabled' : ''} aria-label="Mută mai jos">↓</button>
+      <button class="btn danger sm" type="button" data-ed="sterge">Șterge</button></div></div>
+    <label>Întrebarea<input class="field" name="question" value="${esc(q.question)}" required></label>
+    <label>Variantele de răspuns (câte una pe rând, 2–6)<textarea class="field" name="options" rows="4">${esc(q.options.join('\n'))}</textarea></label>
+    <label style="max-width:520px">Varianta corectă<select class="field" name="correct">${optiuniCorecte(q.options, corect)}</select></label>
+    <button class="btn sm" type="button" data-ed="salveaza">Salvează întrebarea</button>
+  </div>`;
+}
+const optiuniCorecte = (opt, sel) => opt.map((o, j) => `<option value="${j}" ${j === sel ? 'selected' : ''}>${j + 1}. ${esc(o)}</option>`).join('')
+  || '<option value="">Scrie întâi variantele</option>';
+const variante = t => t.split('\n').map(x => x.trim()).filter(Boolean);
+
+async function editorCurs(c) {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  let corect = {};
+  if (c.intrebari.length) {
+    try { corect = Object.fromEntries((await tabel('quiz_answers', ['question_id'])).map(a => [a.question_id, a.correct])); }
+    catch (e) { console.error(e); toast('Răspunsurile corecte nu s-au putut încărca.', true); }
+  }
+  box.innerHTML = `
+    <div class="crumbs"><a href="#/admin?tab=cursuri">← Toate cursurile</a></div>
+    <div class="ed" data-tip="curs" data-id="${c.id}">
+      <div class="ed-head"><h3>Cursul</h3><div class="ed-actions">
+        <a class="btn ghost sm" href="#/c/${c.id}">Vezi cum arată</a>
+        <button class="btn danger sm" type="button" data-ed="sterge">Șterge cursul</button></div></div>
+      <label>Titlu<input class="field" name="title" value="${esc(c.title)}" required></label>
+      <label>Descriere scurtă<textarea class="field" name="description" rows="2" style="min-height:60px">${esc(c.description)}</textarea></label>
+      <div style="display:flex;flex-wrap:wrap">
+        <label class="inline"><input type="checkbox" name="published" ${c.published ? 'checked' : ''}> Publicat (altfel e ciornă, o văd doar adminii)</label>
+        <label class="inline"><input type="checkbox" name="is_common" ${c.is_common ? 'checked' : ''}> Pentru toată echipa</label>
+      </div>
+      <span class="eyebrow" style="display:block;margin-bottom:8px">Pentru rolurile</span>
+      <div class="role-checks">${D.roluri.map(r => `<label title="${esc(r.nume)}"><input type="checkbox" name="rol" value="${esc(r.cod)}" ${c.roluri.includes(r.cod) ? 'checked' : ''}> ${esc(r.cod)}</label>`).join('')}</div>
+      <label style="max-width:260px">Prag de promovare la test (%)<input class="field" type="number" name="pass_percent" min="0" max="100" value="${c.pass_percent}"></label>
+      <button class="btn sm" type="button" data-ed="salveaza">Salvează cursul</button>
+    </div>
+    <div class="ed-sub">Lecțiile (${c.lectii.length})</div>
+    <div class="help">Textul: lași un rând gol între paragrafe; rândurile care încep cu <code>- </code> devin listă; un rând care începe cu <code>## </code> devine subtitlu.
+      Video: link YouTube (poate fi „nelistat”), Vimeo sau Google Drive (partajat „oricine are linkul”). Pozele apar direct în lecție; celelalte fișiere se deschid la click.</div>
+    ${c.lectii.map((l, i) => edLectie(l, i, c.lectii.length)).join('')}
+    <button class="btn ghost sm" type="button" data-ed="lectie-noua">+ Adaugă lecție</button>
+    <div class="ed-sub">Testul de final (${c.intrebari.length} ${c.intrebari.length === 1 ? 'întrebare' : 'întrebări'})</div>
+    <div class="help">Fără întrebări, cursul nu are test. Angajatul nu vede răspunsul corect, doar dacă a răspuns bine sau greșit; testul se poate relua.</div>
+    ${c.intrebari.map((q, i) => edIntrebare(q, i, c.intrebari.length, corect[q.id])).join('')}
+    <button class="btn ghost sm" type="button" data-ed="intrebare-noua">+ Adaugă întrebare</button>`;
+
+  // Ce s-a modificat și nu e salvat se salvează înainte de orice altă acțiune.
+  box.oninput = e => {
+    const ed = e.target.closest('.ed'); if (!ed) return;
+    ed.dataset.dirty = '1';
+    if (e.target.name === 'options') {
+      const sel = ed.querySelector('select[name=correct]'), v = +sel.value;
+      sel.innerHTML = optiuniCorecte(variante(e.target.value), v);
+    }
+  };
+  box.onchange = e => {
+    if (e.target.matches('input[type=file]')) return incarcaFisiere(c, e.target.closest('.ed'), e.target.files);
+    const ed = e.target.closest('.ed'); if (ed) ed.dataset.dirty = '1';
+  };
+  box.onclick = async e => {
+    const b = e.target.closest('button[data-ed]'); if (!b) return;
+    const ed = b.closest('.ed'), act = b.dataset.ed;
+    b.disabled = true;
+    try {
+      if (act === 'salveaza') { if (await salveazaBloc(c, ed)) { toast('Salvat.'); return reafiseaza(c.id); } }
+      else if (act === 'lectie-noua') {
+        await salveazaModificate(c);
+        const { error } = await SB.from('lessons').insert({ course_id: c.id, title: 'Lecție nouă', position: c.lectii.length });
+        if (error) throw error;
+        await reafiseaza(c.id);
+        const ultima = [...document.querySelectorAll('.ed[data-tip=lectie]')].pop();
+        if (ultima) { ultima.scrollIntoView({ block: 'center' }); ultima.querySelector('input[name=title]').select(); }
+        return;
+      }
+      else if (act === 'intrebare-noua') {
+        await salveazaModificate(c);
+        const { data, error } = await SB.from('quiz_questions').insert({ course_id: c.id, position: c.intrebari.length,
+          question: 'Întrebare nouă', options: ['Varianta 1', 'Varianta 2'] }).select('id').single();
+        if (error) throw error;
+        const { error: ea } = await SB.from('quiz_answers').insert({ question_id: data.id, correct: 0 });
+        if (ea) throw ea;
+        await reafiseaza(c.id);
+        const ultima = [...document.querySelectorAll('.ed[data-tip=intrebare]')].pop();
+        if (ultima) { ultima.scrollIntoView({ block: 'center' }); ultima.querySelector('input[name=question]').select(); }
+        return;
+      }
+      else if (act === 'sus' || act === 'jos') { await salveazaModificate(c); await muta(c, ed, act === 'sus' ? -1 : 1); return reafiseaza(c.id); }
+      else if (act === 'sterge-fisier') {
+        const f = c.lectii.flatMap(l => l.fisiere).find(x => x.id === +b.dataset.fisier);
+        if (!f || !confirm(`Ștergi fișierul „${f.name}”?`)) return;
+        await salveazaModificate(c);
+        const { error: es } = await SB.storage.from('cursuri').remove([f.path]);
+        if (es) throw es;
+        const { error } = await SB.from('lesson_files').delete().eq('id', f.id);
+        if (error) throw error;
+        toast('Fișier șters.'); return reafiseaza(c.id);
+      }
+      else if (act === 'sterge') return sterge(c, ed);
+    } catch (x) { console.error('Editor curs:', x); toast(`Nu s-a salvat: ${x.message || 'eroare necunoscută'}`, true); }
+    finally { b.disabled = false; }
+  };
+}
+async function reafiseaza(id) {
+  const y = window.scrollY;
+  await incarcaCursuri(true);
+  const c = CURS.byId[id];
+  if (!c) { location.hash = '#/admin?tab=cursuri'; return; }
+  await editorCurs(c);
+  window.scrollTo({ top: y, behavior: 'instant' });
+}
+async function salveazaModificate(c) {
+  for (const ed of document.querySelectorAll('#adminBody .ed[data-dirty]')) await salveazaBloc(c, ed, true);
+}
+// Salvează un bloc din editor (cursul, o lecție sau o întrebare).
+async function salveazaBloc(c, ed, tacut) {
+  const v = n => ed.querySelector(`[name=${n}]`);
+  const id = +ed.dataset.id, tip = ed.dataset.tip;
+  const nu = m => { toast(m, true); v('title') ? v('title').focus() : null; return false; };
+  if (tip === 'curs') {
+    const title = v('title').value.trim(); if (!title) return nu('Cursul are nevoie de un titlu.');
+    const roluri = [...ed.querySelectorAll('input[name=rol]:checked')].map(x => x.value);
+    const patch = { title, description: v('description').value.trim(), published: v('published').checked,
+      is_common: v('is_common').checked, pass_percent: Math.min(100, Math.max(0, parseInt(v('pass_percent').value, 10) || 0)) };
+    const { error } = await SB.from('courses').update(patch).eq('id', id);
+    if (error) throw error;
+    for (const r of c.roluri.filter(r => !roluri.includes(r))) {
+      const { error: e } = await SB.from('course_roles').delete().eq('course_id', id).eq('role_code', r); if (e) throw e;
+    }
+    const noi = roluri.filter(r => !c.roluri.includes(r)).map(r => ({ course_id: id, role_code: r }));
+    if (noi.length) { const { error: e } = await SB.from('course_roles').insert(noi); if (e) throw e; }
+    if (!tacut && patch.published && !patch.is_common && !roluri.length) toast('Atenție: cursul publicat nu are niciun rol bifat, îl văd doar GM și AE.', true);
+  } else if (tip === 'lectie') {
+    const title = v('title').value.trim(); if (!title) return nu('Lecția are nevoie de un titlu.');
+    const video_url = v('video_url').value.trim();
+    if (video_url && !/^https:\/\//.test(video_url)) return nu('Linkul video trebuie să înceapă cu https://');
+    const { error } = await SB.from('lessons').update({ title, body: v('body').value.replace(/\s+$/, ''), video_url }).eq('id', id);
+    if (error) throw error;
+  } else if (tip === 'intrebare') {
+    const question = v('question').value.trim(), options = variante(v('options').value), correct = parseInt(v('correct').value, 10);
+    if (!question) return nu('Scrie întrebarea.');
+    if (options.length < 2 || options.length > 6) return nu('O întrebare are între 2 și 6 variante, câte una pe rând.');
+    if (!(correct >= 0 && correct < options.length)) return nu('Alege varianta corectă.');
+    const { error } = await SB.from('quiz_questions').update({ question, options }).eq('id', id);
+    if (error) throw error;
+    const { error: ea } = await SB.from('quiz_answers').upsert({ question_id: id, correct });
+    if (ea) throw ea;
+  }
+  delete ed.dataset.dirty;
+  return true;
+}
+async function muta(c, ed, pas) {
+  const tabelul = ed.dataset.tip === 'lectie' ? 'lessons' : 'quiz_questions';
+  const lista = (ed.dataset.tip === 'lectie' ? c.lectii : c.intrebari).map(x => x.id);
+  const i = lista.indexOf(+ed.dataset.id), j = i + pas;
+  if (i < 0 || j < 0 || j >= lista.length) return;
+  [lista[i], lista[j]] = [lista[j], lista[i]];
+  for (const [poz, id] of lista.entries()) {
+    const { error } = await SB.from(tabelul).update({ position: poz }).eq('id', id);
+    if (error) throw error;
+  }
+}
+async function sterge(c, ed) {
+  const tip = ed.dataset.tip, id = +ed.dataset.id;
+  const l = tip === 'lectie' && c.lectii.find(x => x.id === id);
+  const mesaj = tip === 'curs' ? `Ștergi definitiv cursul „${c.title}”, cu toate lecțiile, fișierele, testul și progresul echipei?`
+    : tip === 'lectie' ? `Ștergi lecția „${l.title}”${l.fisiere.length ? ` și cele ${l.fisiere.length} fișiere` : ''}?` : 'Ștergi întrebarea?';
+  if (!confirm(mesaj)) return;
+  if (tip !== 'curs') await salveazaModificate(c);
+  const cai = (tip === 'curs' ? c.lectii : tip === 'lectie' ? [l] : []).flatMap(x => x.fisiere.map(f => f.path));
+  if (cai.length) { const { error } = await SB.storage.from('cursuri').remove(cai); if (error) throw error; }
+  const tabelul = { curs: 'courses', lectie: 'lessons', intrebare: 'quiz_questions' }[tip];
+  const { error } = await SB.from(tabelul).delete().eq('id', id);
+  if (error) throw error;
+  toast(tip === 'curs' ? 'Cursul a fost șters.' : 'Șters.');
+  if (tip === 'curs') { location.hash = '#/admin?tab=cursuri'; return; }
+  return reafiseaza(c.id);
+}
+async function incarcaFisiere(c, ed, lista) {
+  const fisiere = [...lista]; if (!fisiere.length) return;
+  const lectie = c.lectii.find(x => x.id === +ed.dataset.id);
+  const input = ed.querySelector('input[type=file]'); input.disabled = true;
+  let ok = 0, pos = lectie.fisiere.reduce((m, f) => Math.max(m, f.position + 1), 0);
+  for (const f of fisiere) {
+    if (!FISIERE_OK.test(f.name)) { toast(`„${f.name}”: tip de fișier nepermis (doar PDF, Word, Excel, PowerPoint, poze).`, true); continue; }
+    if (f.size > MAX_FISIER) { toast(`„${f.name}” are ${marime(f.size)}; maximum 50 MB. Pentru video folosește un link.`, true); continue; }
+    toast(`Se încarcă ${f.name}…`);
+    const path = `${c.id}/${lectie.id}/${Date.now().toString(36)}-${numeSigur(f.name)}`;
+    const { error: eu } = await SB.storage.from('cursuri').upload(path, f, { contentType: f.type || undefined, upsert: false });
+    if (eu) { console.error('Încărcare:', eu); toast(`„${f.name}” nu s-a încărcat: ${eu.message}`, true); continue; }
+    const { error } = await SB.from('lesson_files').insert({ lesson_id: lectie.id, name: f.name, path, mime: f.type || '', size: f.size, position: pos++ });
+    if (error) { await SB.storage.from('cursuri').remove([path]); toast(`„${f.name}” nu s-a salvat: ${error.message}`, true); continue; }
+    ok++;
+  }
+  if (ok) { await salveazaModificate(c); toast(ok === 1 ? 'Fișier încărcat.' : `${ok} fișiere încărcate.`); await reafiseaza(c.id); }
+  else input.disabled = false;
+}
+
+// ---------- Admin → Progres ----------
+async function incarcaProgres() {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  let prof, curs, cr, lectii, intreb, prog, inc;
+  try {
+    [prof, curs, cr, lectii, intreb, prog, inc] = await Promise.all([tabel('profiles', ['full_name']), tabel('courses', ['position', 'id']),
+      tabel('course_roles', ['course_id']), tabel('lessons', ['course_id']), tabel('quiz_questions', ['course_id']),
+      tabel('lesson_progress', ['user_id']), tabel('quiz_attempts', ['created_at'])]);
+  } catch (e) { console.error(e); box.innerHTML = '<p class="err">Progresul nu s-a putut încărca. Ai rulat 0005_cursuri.sql?</p>'; return; }
+  const publicate = curs.filter(c => c.published);
+  const rolCurs = grupeaza(cr, 'course_id'), lectiiCurs = grupeaza(lectii, 'course_id'), testCurs = new Set(intreb.map(q => q.course_id));
+  const facute = grupeaza(prog, 'user_id'), incercari = grupeaza(inc, 'user_id');
+  // Cursurile pe care trebuie să le facă un om: cele comune și ale rolului lui.
+  const seAplica = (p, c) => c.is_common || (rolCurs[c.id] || []).some(x => x.role_code === p.role_code);
+  const stare = (p, c) => {
+    const ls = (lectiiCurs[c.id] || []).map(l => l.id), f = new Set((facute[p.user_id] || []).map(x => x.lesson_id));
+    const n = ls.filter(id => f.has(id)).length;
+    const inc_ = (incercari[p.user_id] || []).filter(a => a.course_id === c.id);
+    const best = inc_.reduce((b, a) => (!b || pct(a) > pct(b) ? a : b), null), promovat = inc_.some(a => a.passed);
+    const gata = (ls.length || testCurs.has(c.id)) && n === ls.length && (!testCurs.has(c.id) || promovat);
+    return { n, total: ls.length, best, promovat, gata, inceput: n > 0 || inc_.length > 0, test: testCurs.has(c.id) };
+  };
+  const celula = (p, c) => {
+    if (!seAplica(p, c)) return '<td class="prog-cell na">—</td>';
+    const s = stare(p, c);
+    if (s.gata) return `<td class="prog-cell gata">✓ terminat${s.best ? ` · ${pct(s.best)}%` : ''}</td>`;
+    if (!s.inceput) return '<td class="prog-cell muted">neînceput</td>';
+    return `<td class="prog-cell">${s.n}/${s.total} lecții${s.test ? (s.best ? ` · test ${pct(s.best)}%` : ' · test nedat') : ''}</td>`;
+  };
+  const activi = prof.filter(p => p.active);
+  const roluriPrezente = [...new Set(activi.map(p => p.role_code))];
+  const desen = rolFiltru => {
+    const rows = activi.filter(p => !rolFiltru || p.role_code === rolFiltru);
+    return `<table class="tbl"><thead><tr><th>Nume</th><th>Rol</th><th>Onboarding</th>${publicate.map(c => `<th>${esc(c.title)}</th>`).join('')}</tr></thead><tbody>
+      ${rows.map(p => {
+        const ale = publicate.filter(c => seAplica(p, c)), gata = ale.filter(c => stare(p, c).gata).length;
+        return `<tr><td>${esc(p.full_name)}<br><span class="muted" style="font-size:.82rem">${esc(p.username)}</span></td><td>${esc(p.role_code)}</td>
+          <td class="prog-cell ${ale.length && gata === ale.length ? 'gata' : ''}">${ale.length ? `${gata} din ${ale.length}` : '—'}</td>${publicate.map(c => celula(p, c)).join('')}</tr>`;
+      }).join('') || `<tr><td colspan="${3 + publicate.length}" class="muted">Niciun cont.</td></tr>`}</tbody></table>`;
+  };
+  box.innerHTML = `<p class="muted">Cursurile publicate și cât a parcurs fiecare om activ. Fiecare are de făcut cursurile comune și pe cele ale rolului lui.</p>
+    <div class="selects"><select id="progRol" aria-label="Filtrează după rol"><option value="">Toate rolurile</option>${roluriPrezente.map(r => `<option>${esc(r)}</option>`).join('')}</select></div>
+    ${publicate.length ? `<div class="tbl-wrap" id="progTabel">${desen('')}</div>` : '<p class="lvl4">Niciun curs publicat încă.</p>'}`;
+  const sel = document.getElementById('progRol');
+  if (sel && publicate.length) sel.addEventListener('change', () => { document.getElementById('progTabel').innerHTML = desen(sel.value); });
+}
 
 // ---------- Căutare ----------
 let INDEX = [];

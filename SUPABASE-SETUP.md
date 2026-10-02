@@ -125,6 +125,33 @@ nu le copiezi nicăieri.
 AE vede tot ghidul, ca administratorul, dar nu are pagina **Admin**. Ca să poată
 și administra: `update public.roles set is_admin = true where code = 'AE';`
 
+## 8. Cursurile de onboarding
+
+**SQL Editor** → lipești
+[`supabase/migrations/0005_cursuri.sql`](supabase/migrations/0005_cursuri.sql) → **Run**.
+Se poate rula de mai multe ori.
+
+Migrarea adaugă:
+
+- tabelele cursurilor (lecții, fișiere, întrebări, progres, încercări la test);
+- bucketul privat **cursuri** din Storage (max. 50 MB pe fișier: PDF, Word, Excel, PowerPoint, poze);
+- pagina **Cursuri** în meniu, pentru toate rolurile.
+
+Cine vede ce:
+
+- **Cursurile comune** le vede toată echipa.
+- **Celelalte cursuri** le văd doar rolurile bifate în curs.
+- **GM și AE** văd toate cursurile publicate.
+- **Ciornele** le văd doar adminii.
+
+Răspunsurile corecte nu ajung niciodată în browserul angajatului: testul se corectează în
+baza de date (`submit_quiz`), iar scorul nu poate fi scris direct.
+
+Cursurile se fac din **Admin → Cursuri**. Progresul echipei e în **Admin → Progres**.
+Video-urile nu se încarcă în ghid: pui un link YouTube (poate fi „nelistat”),
+Vimeo sau Google Drive („oricine are linkul”), ca să nu umpli spațiul de 1 GB
+din planul gratuit.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
@@ -142,3 +169,5 @@ AE vede tot ghidul, ca administratorul, dar nu are pagina **Admin**. Ca să poat
   dashboard cu un clic.
 - **Fără email real**: pe adresele `@echipa.madamemagnifique.ro` nu se trimite
   nimic. Parola uitată o resetează adminul, din pagina **Admin**.
+- **Spațiul de fișiere** (planul gratuit): 1 GB în Storage. Îl vezi în
+  dashboard → **Storage**. Fișierele șterse din editor se șterg și din Storage.
