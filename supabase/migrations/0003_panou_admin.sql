@@ -10,22 +10,24 @@
 -- Edge `admin-users`, care are cheia secretă și verifică și ea că apelantul
 -- e admin.
 -- Un admin nu-și poate modifica propriul cont (nu se poate bloca pe dinafară).
+-- Se poate rula de mai multe ori.
 -- =============================================================================
 
 -- Profiluri: adminul modifică numele, rolul și starea altor conturi.
 grant update (full_name, role_code, active) on public.profiles to authenticated;
-
+drop policy if exists "adminul modifică alte conturi" on public.profiles;
 create policy "adminul modifică alte conturi" on public.profiles
   for update to authenticated
   using (public.is_admin() and user_id <> auth.uid())
   with check (public.is_admin() and user_id <> auth.uid());
 
--- Matricea de acces: adminul adaugă și scoate drepturi.
 do $$
 declare t text;
 begin
   foreach t in array array['role_space_access', 'role_role_access', 'role_section_access'] loop
-    execute format('grant insert, delete on public.%I to authenticated', t);
+    execute format('grant select, insert, delete on public.%I to authenticated', t);
+    execute format('drop policy if exists "adminul editează matricea (adaugă)" on public.%I', t);
+    execute format('drop policy if exists "adminul editează matricea (scoate)" on public.%I', t);
     execute format(
       'create policy "adminul editează matricea (adaugă)" on public.%I for insert to authenticated
          with check (public.is_admin())', t);
@@ -35,6 +37,5 @@ begin
   end loop;
 end $$;
 
--- Rolurile de admin nu pot rămâne fără acces la panou: un rol admin vede tot
--- oricum (is_admin), iar dreptul de admin se schimbă doar din SQL Editor:
---   update public.roles set is_admin = true where code = 'RL';
+-- Rolurile admin văd tot oricum (is_admin). Dreptul de admin se schimbă doar
+-- din SQL Editor, de exemplu:  update public.roles set is_admin = true where code = 'RL';
