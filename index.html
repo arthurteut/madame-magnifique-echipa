@@ -62,6 +62,31 @@
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .user-chip { font-size: .82rem; color: var(--muted); white-space: nowrap; padding: 0 4px; }
   .user-chip b { font-weight: 500; color: var(--ink); }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  .tabs a { padding: 12px 16px; text-decoration: none; font: 500 .8rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs a.on { color: var(--ink); border-bottom-color: var(--ink); }
+  .form-row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); align-items: end; }
+  .form-row label { display: grid; gap: 6px; font-size: .82rem; color: var(--muted); }
+  .form-row .field, .form-row select { padding: 11px 12px; font-size: .95rem; border: 1px solid var(--line); background: #fff; border-radius: 0; }
+  .btn.sm { padding: 10px 14px; font-size: .7rem; }
+  .btn.danger { background: #9b2c2c; }
+  .btn.danger:hover { background: #7a2020; }
+  .tbl select { padding: 6px 8px; border: 1px solid var(--line); background: #fff; border-radius: 0; font-size: .88rem; }
+  .tbl td.actions { white-space: nowrap; }
+  .tbl td.actions .btn { margin-left: 6px; }
+  .tbl .me { color: var(--muted); font-size: .82rem; }
+  .muted { color: var(--muted); }
+  .inactiv td { color: var(--muted); }
+  .matrix { border-collapse: collapse; font-size: .85rem; }
+  .matrix th, .matrix td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: center; }
+  .matrix th:first-child, .matrix td:first-child { text-align: left; white-space: nowrap; position: sticky; left: 0; background: #fff; }
+  .matrix thead th { font: 500 .7rem/1.2 'Montserrat', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); vertical-align: bottom; }
+  .matrix input { width: 18px; height: 18px; accent-color: var(--ink); cursor: pointer; }
+  .matrix tr.admin-row td { color: var(--muted); }
+  .secret { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: #fdf8ee; border-left: 3px solid var(--gold); padding: 14px 16px; margin: 16px 0 0; }
+  .secret code { font: 500 1rem/1.4 ui-monospace, Menlo, monospace; background: #fff; padding: 4px 8px; border: 1px solid var(--line); }
+  #toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 18px; font-size: .9rem; z-index: 50; max-width: calc(100% - 32px); }
+  #toast.err { background: #9b2c2c; }
   .check { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 16px; font-size: .88rem; color: var(--muted); }
   .err { color: #9b2c2c; font-size: .9rem; min-height: 1.4em; margin-top: 12px; }
 
@@ -368,6 +393,7 @@
         <a href="#/roluri" data-nav="roluri">Roluri</a>
         <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
         <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
+        <a href="#/admin" data-nav="admin" hidden>Admin</a>
         <span class="user-chip" id="userChip"></span>
       </nav>
     </div>
@@ -387,7 +413,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
 <script src="assets/config.js"></script>
 <script>
-let D = null, ME = null, SB = null;
+let D = null, ME = null, SB = null, SB_USER_ID = null;
 
 // ---------- Autentificare (Supabase) ----------
 // Angajatul scrie doar utilizatorul; contul are în spate un email intern,
@@ -401,7 +427,9 @@ const showErr = m => { document.getElementById('err').textContent = m; };
 const poate = sectiune => !ME || !ME.sectiuni || ME.sectiuni.has(sectiune);
 
 function showApp() {
-  document.querySelectorAll('#nav [data-nav]').forEach(a => { a.hidden = a.dataset.nav !== 'home' && !poate(a.dataset.nav); });
+  document.querySelectorAll('#nav [data-nav]').forEach(a => {
+    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : (a.dataset.nav !== 'home' && !poate(a.dataset.nav));
+  });
   document.getElementById('lock').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
@@ -490,7 +518,7 @@ async function deschideSesiunea(user) {
   if (error) throw error;
   if (!prof) { await SB.auth.signOut(); return showLock('Contul nu are încă un profil în ghid. Anunță responsabilul de locație.'); }
   if (!prof.active) { await SB.auth.signOut(); return showLock('Contul este dezactivat. Anunță responsabilul de locație.'); }
-  ME = prof;
+  ME = prof; SB_USER_ID = user.id;
   D = await incarcaDate();
   prepare();
   showApp();
@@ -589,6 +617,7 @@ function route() {
   else if (a === 'roluri' && poate('roluri')) { html = viewRoles(); nav = 'roluri'; }
   else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
   else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
+  else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
   else html = viewHome();
   $('#view').innerHTML = html;
   document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === nav));
@@ -948,6 +977,167 @@ function viewGuide() {
       <p style="margin:8px 0 0">Întreabă responsabilul de locație (RL) sau vânzătorul de tură (VT). Dacă o situație se repetă și nu e acoperită aici, spune-le: așa se scrie următoarea procedură.</p></div>
   </div></section>`;
 }
+
+// ---------- Panoul de admin ----------
+// Doar pentru adminii activi (roles.is_admin). Scrierea e păzită și în baza de
+// date (RLS, migrarea 0003) și în funcția Edge admin-users.
+function toast(msg, err) {
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+  t.textContent = msg; t.className = err ? 'err' : ''; t.hidden = false;
+  clearTimeout(toast.h); toast.h = setTimeout(() => { t.hidden = true; }, 4000);
+}
+function parolaNoua() {
+  const a = 'abcdefghjkmnpqrstuvwxyz23456789';
+  const r = crypto.getRandomValues(new Uint32Array(10));
+  return 'mm-' + Array.from(r, x => a[x % a.length]).join('');
+}
+async function functieAdmin(body) {
+  const { data, error } = await SB.functions.invoke('admin-users', { body });
+  if (error) {
+    let mesaj = 'Operația nu a reușit. Verifică internetul și încearcă din nou.';
+    try { const j = await error.context.json(); if (j && j.error) mesaj = j.error; } catch (e) {}
+    throw new Error(mesaj);
+  }
+  return data;
+}
+const roluriOptiuni = (sel) => D.roluri.map(r => `<option value="${esc(r.cod)}" ${r.cod === sel ? 'selected' : ''}>${esc(r.cod)} · ${esc(r.nume)}</option>`).join('');
+const parolaHtml = (u, p) => `<div class="secret"><span>Comunică-i angajatului: utilizator <code>${esc(u)}</code> parola <code>${esc(p)}</code></span>
+  <button class="btn ghost sm" type="button" data-copy="${esc(`Utilizator: ${u}\nParola: ${p}`)}">Copiază</button>
+  <span class="muted" style="font-size:.82rem">Parola nu mai apare după ce închizi pagina.</span></div>`;
+
+function viewAdmin(params) {
+  const tab = params.tab === 'acces' ? 'acces' : 'utilizatori';
+  setTimeout(() => (tab === 'acces' ? incarcaAcces() : incarcaUtilizatori()), 0);
+  return `
+  <section class="band"><div class="wrap">
+    <span class="eyebrow">Doar pentru administratori</span>
+    <h1>Administrare</h1>
+    <p class="sub">Conturile echipei și ce vede fiecare rol.</p>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a></nav>
+    <div id="adminBody"><p class="muted">Se încarcă…</p></div>
+  </div></section>`;
+}
+
+async function incarcaUtilizatori() {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  let profiluri;
+  try { profiluri = await tabel('profiles', ['full_name']); }
+  catch (e) { console.error(e); box.innerHTML = '<p class="err">Lista de conturi nu s-a putut încărca.</p>'; return; }
+  const rand = p => {
+    const eu = p.user_id === SB_USER_ID;
+    return `<tr class="${p.active ? '' : 'inactiv'}" data-id="${esc(p.user_id)}">
+      <td>${esc(p.full_name)}${eu ? ' <span class="me">(tu)</span>' : ''}</td>
+      <td>${esc(p.username)}</td>
+      <td><select data-act="rol" ${eu ? 'disabled' : ''} aria-label="Rolul lui ${esc(p.full_name)}">${roluriOptiuni(p.role_code)}</select></td>
+      <td><label><input type="checkbox" data-act="activ" ${p.active ? 'checked' : ''} ${eu ? 'disabled' : ''}> ${p.active ? 'activ' : 'dezactivat'}</label></td>
+      <td class="actions">${eu ? '' : `<button class="btn ghost sm" type="button" data-act="parola">Resetează parola</button><button class="btn danger sm" type="button" data-act="sterge">Șterge</button>`}</td>
+    </tr>`;
+  };
+  box.innerHTML = `
+    <h2 class="section-title">Cont nou</h2>
+    <form id="contNou" class="form-row" autocomplete="off">
+      <label>Nume complet<input class="field" id="cnNume" required></label>
+      <label>Utilizator<input class="field" id="cnUser" placeholder="ex.: maria.v" autocapitalize="none" spellcheck="false" required></label>
+      <label>Rol<select id="cnRol">${roluriOptiuni('V')}</select></label>
+      <label>Parola inițială<input class="field" id="cnParola" value="${parolaNoua()}" required minlength="8"></label>
+      <button class="btn" type="submit" id="cnBtn">Creează contul</button>
+    </form>
+    <p class="muted" style="font-size:.85rem;margin:10px 0 0">Utilizatorul: litere mici, cifre, punct sau cratimă (ex.: <b>maria.v</b>). Angajatul se loghează cu el și cu parola de mai sus.</p>
+    <div id="cnRezultat"></div>
+    <h2 class="section-title" style="margin-top:48px">Conturile echipei <span class="muted" style="font-size:.9rem">(${profiluri.length})</span></h2>
+    <div class="tbl-wrap"><table class="tbl" id="tabConturi">
+      <thead><tr><th>Nume</th><th>Utilizator</th><th>Rol</th><th>Stare</th><th></th></tr></thead>
+      <tbody>${profiluri.map(rand).join('')}</tbody></table></div>
+    <div id="rezParola"></div>`;
+
+  document.getElementById('contNou').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('cnBtn');
+    const body = { action: 'create', full_name: document.getElementById('cnNume').value.trim(),
+      username: document.getElementById('cnUser').value.trim().toLowerCase(),
+      role_code: document.getElementById('cnRol').value, password: document.getElementById('cnParola').value };
+    btn.disabled = true;
+    try {
+      await functieAdmin(body);
+      await incarcaUtilizatori();
+      document.getElementById('cnRezultat').innerHTML = parolaHtml(body.username, body.password);
+      toast(`Contul ${body.username} a fost creat.`);
+    } catch (x) { toast(x.message, true); btn.disabled = false; }
+  });
+
+  document.getElementById('tabConturi').addEventListener('change', async e => {
+    const tr = e.target.closest('tr'), id = tr.dataset.id, act = e.target.dataset.act;
+    const patch = act === 'rol' ? { role_code: e.target.value } : { active: e.target.checked };
+    const { data, error } = await SB.from('profiles').update(patch).eq('user_id', id).select('user_id');
+    if (error || !data || !data.length) { toast('Modificarea nu a fost salvată.', true); return incarcaUtilizatori(); }
+    toast(act === 'rol' ? `Rol schimbat în ${patch.role_code}. Se aplică la următoarea logare a angajatului.` : (patch.active ? 'Cont reactivat.' : 'Cont dezactivat: angajatul nu mai poate intra.'));
+    if (act === 'activ') incarcaUtilizatori();
+  });
+
+  document.getElementById('tabConturi').addEventListener('click', async e => {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const tr = btn.closest('tr'), id = tr.dataset.id;
+    const p = profiluri.find(x => x.user_id === id);
+    if (btn.dataset.act === 'parola') {
+      const parola = parolaNoua();
+      if (!confirm(`Resetezi parola pentru ${p.full_name} (${p.username})?`)) return;
+      try { await functieAdmin({ action: 'reset_password', user_id: id, password: parola });
+        document.getElementById('rezParola').innerHTML = parolaHtml(p.username, parola); toast('Parola a fost resetată.');
+        document.getElementById('rezParola').scrollIntoView({ block: 'center' });
+      } catch (x) { toast(x.message, true); }
+    } else if (btn.dataset.act === 'sterge') {
+      if (!confirm(`Ștergi definitiv contul lui ${p.full_name} (${p.username})? Dacă doar pleacă temporar, mai bine îl dezactivezi.`)) return;
+      try { await functieAdmin({ action: 'delete', user_id: id }); toast('Contul a fost șters.'); incarcaUtilizatori(); }
+      catch (x) { toast(x.message, true); }
+    }
+  });
+}
+
+async function incarcaAcces() {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  let rsa, rra, rsec, roluriToate;
+  try {
+    [rsa, rra, rsec, roluriToate] = await Promise.all([tabel('role_space_access', ['role_code']), tabel('role_role_access', ['viewer_role']),
+      tabel('role_section_access', ['role_code']), tabel('roles', ['position'])]);
+  } catch (e) { console.error(e); box.innerHTML = '<p class="err">Matricea nu s-a putut încărca.</p>'; return; }
+  const admini = new Set(roluriToate.filter(r => r.is_admin).map(r => r.code));
+  const are = (rows, a, b, ka, kb) => rows.some(r => r[ka] === a && r[kb] === b);
+  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['ghid', 'Cum funcționează']];
+  const grila = (titlu, explicatie, coloane, bifat, tabelNume) => `
+    <h2 class="section-title" style="margin-top:40px">${titlu}</h2><p class="muted" style="margin:-8px 0 16px">${explicatie}</p>
+    <div class="tbl-wrap"><table class="matrix" data-tabel="${tabelNume}"><thead><tr><th>Rol</th>${coloane.map(([, t]) => `<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>
+    ${D.roluri.map(r => admini.has(r.cod)
+      ? `<tr class="admin-row"><td><b>${esc(r.cod)}</b> ${esc(r.nume)}</td><td colspan="${coloane.length}">administrator: vede tot</td></tr>`
+      : `<tr><td><b>${esc(r.cod)}</b> ${esc(r.nume)}</td>${coloane.map(([c, t]) => r.cod === c ? '<td class="muted">·</td>'
+          : `<td><input type="checkbox" data-a="${esc(r.cod)}" data-b="${esc(c)}" ${bifat(r.cod, c) ? 'checked' : ''} aria-label="${esc(r.cod)}: ${esc(t)}"></td>`).join('')}</tr>`).join('')}
+    </tbody></table></div>`;
+  box.innerHTML = `<p class="muted">Bifele se salvează imediat. Angajații văd schimbarea la următoarea deschidere a ghidului.</p>`
+    + grila('Spațiile fiecărui rol', 'Ce magazine, laboratoare și secțiuni vede fiecare rol.',
+        D.spatii.map(s => [s.id, s.tip === 'magazin' ? s.nume : s.titlu]), (a, b) => are(rsa, a, b, 'role_code', 'space_id'), 'role_space_access')
+    + grila('Vede și procedurile rolurilor', 'Pe lângă procedurile proprii, ale cui proceduri și task-uri le mai vede (de exemplu VT le vede pe ale vânzătorilor).',
+        D.roluri.map(r => [r.cod, r.cod]), (a, b) => are(rra, a, b, 'viewer_role', 'sees_role'), 'role_role_access')
+    + grila('Paginile din meniu', 'Ce pagini apar în meniul fiecărui rol. Spațiile apar mereu.',
+        SECT, (a, b) => are(rsec, a, b, 'role_code', 'section'), 'role_section_access');
+
+  box.addEventListener('change', async e => {
+    const cb = e.target; if (!cb.matches('.matrix input')) return;
+    const t = cb.closest('table').dataset.tabel;
+    const [ka, kb] = { role_space_access: ['role_code', 'space_id'], role_role_access: ['viewer_role', 'sees_role'], role_section_access: ['role_code', 'section'] }[t];
+    const rand = { [ka]: cb.dataset.a, [kb]: cb.dataset.b };
+    cb.disabled = true;
+    const { error } = cb.checked ? await SB.from(t).insert(rand) : await SB.from(t).delete().eq(ka, rand[ka]).eq(kb, rand[kb]);
+    cb.disabled = false;
+    if (error) { cb.checked = !cb.checked; toast('Modificarea nu a fost salvată.', true); }
+    else toast(cb.checked ? 'Acces adăugat.' : 'Acces scos.');
+  }, { once: false });
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  try { await navigator.clipboard.writeText(b.dataset.copy); toast('Copiat.'); } catch (x) { toast('Selectează și copiază manual.', true); }
+});
 
 // ---------- Căutare ----------
 let INDEX = [];

@@ -93,14 +93,37 @@ design: fără logare nu dau acces la nimic, iar ce vede fiecare decide baza de 
 
 **Nu pune niciodată** cheia `service_role` / `secret` în pagină sau în repo.
 
+## 6. Panoul de administrare
+
+Pagina **Admin** (doar pentru GM) creează conturi, schimbă roluri, dezactivează,
+resetează parole și editează matricea de acces.
+
+1. **SQL Editor** → lipești
+   [`supabase/migrations/0003_panou_admin.sql`](supabase/migrations/0003_panou_admin.sql) → **Run**.
+2. **Edge Functions → Deploy a new function → Via Editor**
+   - Numele funcției: **`admin-users`** (exact așa)
+   - Ștergi codul de exemplu și lipești tot fișierul
+     [`supabase/functions/admin-users/index.ts`](supabase/functions/admin-users/index.ts)
+   - **Deploy function**
+3. În funcția `admin-users` → **Details** (sau **Settings**): dezactivezi
+   **Verify JWT with legacy secret** / **Enforce JWT verification**. Funcția își
+   verifică singură sesiunea și dreptul de admin.
+4. **Edge Functions → Secrets** (sau **Project Settings → Edge Functions**) →
+   **Add new secret**:
+   - Name: `ALLOWED_ORIGIN`
+   - Value: `https://arthurteut.github.io,https://echipa.madamemagnifique.ro`
+
+URL-ul proiectului și cheia secretă sunt puse automat în funcție de Supabase:
+nu le copiezi nicăieri.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
 |---|---|---|
 | Project URL | `assets/config.js` | da |
 | Cheia anon / publishable | `assets/config.js` | da |
-| Cheia service_role / secret | doar în Supabase (Edge Functions o primesc automat, de la pasul 3) | **nu** |
-| `ALLOWED_ORIGIN` | Edge Functions → Secrets, de la pasul 3 | da |
+| Cheia service_role / secret | doar în Supabase (funcția `admin-users` o primește automat) | **nu** |
+| `ALLOWED_ORIGIN` | Edge Functions → Secrets (vezi pasul 6) | da |
 | `SUPABASE_DB_URL` (opțional) | `.env` local, dacă vrei importul cu `psql "$SUPABASE_DB_URL" -f date-ghid.sql` | **nu** |
 
 ## De știut
@@ -109,4 +132,4 @@ design: fără logare nu dau acces la nimic, iar ce vede fiecare decide baza de 
   un ghid folosit zilnic nu se întâmplă; dacă se întâmplă, îl repornești din
   dashboard cu un clic.
 - **Fără email real**: pe adresele `@echipa.madamemagnifique.ro` nu se trimite
-  nimic. Parola uitată o resetează adminul (din panoul de admin, pasul 3).
+  nimic. Parola uitată o resetează adminul, din pagina **Admin**.

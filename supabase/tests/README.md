@@ -24,3 +24,13 @@ afișează ce primește: spațiile, procedurile, task-urile, procesele, rolurile
 abaterile, fișele și ajustările. De exemplu: VT vede doar cele 3 magazine și 78
 de proceduri (VT + V + BAR), V doar cele 30 ale lui, PP + B cele 2 task-uri de
 deschidere de la Porumbescu și Dumbrăvița, CB2B doar B2B și Laboratorul Fructus.
+
+Pasul 3 (`03_pas3_panou_admin.sql`, după 0003): GM modifică alte conturi și
+matricea; nu-și poate schimba propriul rol și nu poate schimba username-uri;
+VT nu-și poate da acces, nu se poate promova și nu poate scoate drepturi.
+
+Funcția `admin-users` are teste proprii, cu un client Supabase simulat:
+
+```bash
+ADMIN_USERS_TEST=1 deno test --allow-env supabase/functions/admin-users/
+```
