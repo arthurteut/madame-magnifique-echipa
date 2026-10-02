@@ -993,7 +993,7 @@ function parolaNoua() {
   return 'mm-' + Array.from(r, x => a[x % a.length]).join('');
 }
 async function functieAdmin(body) {
-  const { data, error } = await SB.functions.invoke('admin-users', { body });
+  const { data, error } = await SB.functions.invoke(CFG.adminFunction || 'admin-users', { body });
   if (error) {
     let mesaj = 'Operația nu a reușit. Verifică internetul și încearcă din nou.';
     try { const j = await error.context.json(); if (j && j.error) mesaj = j.error; } catch (e) {}

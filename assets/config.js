@@ -6,4 +6,6 @@
 window.MM_CONFIG = {
   supabaseUrl: 'https://dwldusjpjhylvvbskamx.supabase.co',
   supabaseAnonKey: 'sb_publishable_RnNcRBNGwgNhULcUBfeKXA_tBXL3el1',
+  // Numele funcției Edge cu codul din supabase/functions/admin-users (dat de Supabase la publicare).
+  adminFunction: 'smooth-handler',
 };

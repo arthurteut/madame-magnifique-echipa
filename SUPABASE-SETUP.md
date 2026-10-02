@@ -101,7 +101,8 @@ resetează parole și editează matricea de acces.
 1. **SQL Editor** → lipești
    [`supabase/migrations/0003_panou_admin.sql`](supabase/migrations/0003_panou_admin.sql) → **Run**.
 2. **Edge Functions → Deploy a new function → Via Editor**
-   - Numele funcției: **`admin-users`** (exact așa)
+   - Numele funcției: **`admin-users`**. Dacă Supabase îi dă alt nume (de exemplu
+     `smooth-handler`), treci acel nume la `adminFunction` în `assets/config.js`.
    - Ștergi codul de exemplu și lipești tot fișierul
      [`supabase/functions/admin-users/index.ts`](supabase/functions/admin-users/index.ts)
    - **Deploy function**
