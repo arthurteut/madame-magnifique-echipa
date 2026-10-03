@@ -538,8 +538,7 @@
         <a href="#/" data-nav="home">Spații</a>
         <a href="#/roluri" data-nav="roluri">Roluri</a>
         <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
-        <a href="#/cursuri" data-nav="cursuri">Cursuri</a>
-        <a href="#/brutar" data-nav="brutar">Brutar</a>
+        <a href="#/cursuri" data-nav="cursuri">Academia</a>
         <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
         <a href="#/admin" data-nav="admin" hidden>Admin</a>
         <span class="user-chip" id="userChip"></span>
@@ -575,14 +574,17 @@ const showErr = m => { document.getElementById('err').textContent = m; };
 const poate = sectiune => !ME || !ME.sectiuni || ME.sectiuni.has(sectiune);
 
 // Conturile care văd doar ghidul brutarului (rolul BRT): fără spații și fără alte pagini.
+// Academia Madame: cursurile (pagina „cursuri”) și ghidurile de meserie (pagina „brutar”).
+const poateAcademia = () => poate('cursuri') || poate('brutar');
 const doarBrutar = () => !!(ME && D && !ME.vedeTot && !D.spatii.length && poate('brutar')
   && !['roluri', 'proceduri', 'ghid', 'cursuri'].some(poate));
 function showApp() {
   document.querySelectorAll('#nav [data-nav]').forEach(a => {
-    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : a.dataset.nav === 'home' ? doarBrutar() : !poate(a.dataset.nav);
+    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : a.dataset.nav === 'home' ? doarBrutar()
+      : a.dataset.nav === 'cursuri' ? !poateAcademia() : !poate(a.dataset.nav);
   });
   document.getElementById('topSearchBox').hidden = doarBrutar();
-  document.querySelector('.bar .logo').setAttribute('href', doarBrutar() ? '#/brutar' : '#/');
+  document.querySelector('.bar .logo').setAttribute('href', doarBrutar() ? '#/cursuri' : '#/');
   document.getElementById('lock').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
@@ -782,11 +784,11 @@ function route() {
   else if (a === 'proceduri' && poate('proceduri')) { html = viewProcedures(params); nav = 'proceduri'; }
   else if (a === 'ghid' && poate('ghid')) { html = viewGuide(); nav = 'ghid'; }
   else if (a === 'd' && DOCS.id[b]) { html = viewDoc(DOCS.id[b]); nav = 'proceduri'; }
-  else if (a === 'brutar' && poate('brutar')) { html = viewBrutar(parts); nav = 'brutar'; }
-  else if (a === 'cursuri' && poate('cursuri')) { html = viewCursuri(); nav = 'cursuri'; }
+  else if (a === 'brutar' && poate('brutar')) { html = viewBrutar(parts); nav = 'cursuri'; }
+  else if (a === 'cursuri' && poateAcademia()) { html = viewCursuri(); nav = 'cursuri'; }
   else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
-  else if (doarBrutar()) { html = viewBrutar(['brutar']); nav = 'brutar'; }
+  else if (doarBrutar()) { html = viewCursuri(); nav = 'cursuri'; }
   else html = viewHome();
   $('#view').innerHTML = html;
   document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === nav));
@@ -842,10 +844,10 @@ function viewHome() {
       .filter(([, h]) => h).map(([t, h]) => `<div class="group-label">${t}</div><div class="grid">${h}</div>`).join('')
       || '<p class="lvl4">Contul tău nu are încă spații atribuite. Anunță administratorul ghidului.</p>'}
   </div></section>
-  ${poate('cursuri') ? `<section class="block"><div class="wrap"><div class="band-grid" style="align-items:end">
-    <div><span class="eyebrow">Ești nou în echipă?</span><h2 class="section-title" style="font-size:clamp(1.4rem,2.6vw,1.85rem);margin:8px 0 10px">Cursurile de onboarding</h2>
-    <p style="margin:0;max-width:60ch">Lecțiile, documentele și video-urile pentru rolul tău, cu un test scurt la final. Bifezi ce ai parcurs și reiei oricând.</p></div>
-    <div><a class="btn" href="#/cursuri">Cursurile mele →</a></div></div></div></section>` : ''}
+  ${poateAcademia() ? `<section class="block"><div class="wrap"><div class="band-grid" style="align-items:end">
+    <div><span class="eyebrow">Ești nou în echipă?</span><h2 class="section-title" style="font-size:clamp(1.4rem,2.6vw,1.85rem);margin:8px 0 10px">Academia Madame</h2>
+    <p style="margin:0;max-width:60ch">Cursurile de onboarding pentru rolul tău${poate('brutar') ? ', ghidul brutarului și calculatorul de pâine' : ''}. Bifezi ce ai parcurs și reiei oricând.</p></div>
+    <div><a class="btn" href="#/cursuri">Intră în Academie →</a></div></div></div></section>` : ''}
   <section class="block soft"><div class="wrap">
     <div class="block-head"><div><span class="eyebrow">Ce rol ai?</span><h2>Fișa ta de lucru</h2></div>${poate('roluri') ? '<a class="btn ghost" href="#/roluri">Toate rolurile</a>' : ''}</div>
     <div class="chips">${roleChips}</div>
@@ -1405,7 +1407,7 @@ async function incarcaAcces() {
   const admini = new Set(roluriToate.filter(r => r.is_admin).map(r => r.code));
   const vadTot = new Set(roluriToate.filter(r => r.sees_all && !r.is_admin).map(r => r.code));
   const are = (rows, a, b, ka, kb) => rows.some(r => r[ka] === a && r[kb] === b);
-  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['cursuri', 'Cursuri'], ['brutar', 'Ghidul brutarului'], ['ghid', 'Cum funcționează']];
+  const SECT = [['roluri', 'Roluri'], ['proceduri', 'Proceduri'], ['cursuri', 'Academia: cursuri'], ['brutar', 'Academia: ghidul brutarului'], ['ghid', 'Cum funcționează']];
   const grila = (titlu, explicatie, coloane, bifat, tabelNume) => `
     <h2 class="section-title" style="margin-top:40px">${titlu}</h2><p class="muted" style="margin:-8px 0 16px">${explicatie}</p>
     <div class="tbl-wrap"><table class="matrix" data-tabel="${tabelNume}"><thead><tr><th>Rol</th>${coloane.map(([, t]) => `<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>
@@ -1481,8 +1483,14 @@ const pentruCine = c => c.is_common ? 'Toată echipa' : (c.roluri.join(' · ') |
 function viewCursuri() {
   setTimeout(async () => {
     const box = document.getElementById('cursBody'); if (!box) return;
+    const ghiduri = poate('brutar') ? `<div class="group-label">Ghiduri de meserie</div><div class="grid" style="margin-bottom:12px">
+        <a class="tile photo" href="#/brutar"><img src="${IMG('paine-miez')}" alt="" loading="lazy"><div><span class="eyebrow">Producție · pâinea cu maia</span><h3>Ghidul brutarului</h3>
+          <p>Maiaua, făina, procesul pas cu pas, defectele și rețetele casei.</p></div><span class="go">Deschide →</span></a>
+        <a class="tile photo" href="#/brutar/calculator"><img src="${IMG('maia-borcan')}" alt="" loading="lazy"><div><span class="eyebrow">Unealtă</span><h3>Calculatorul de pâine</h3>
+          <p>Cât cântărești pentru orice număr de pâini, cu starterul inclus.</p></div><span class="go">Deschide →</span></a></div>` : '';
+    if (!poate('cursuri')) { box.innerHTML = ghiduri; return; }
     try { await incarcaCursuri(true); }
-    catch (e) { console.error('Cursuri:', e); box.innerHTML = '<p class="err">Cursurile nu s-au putut încărca. Reîncarcă pagina.</p>'; return; }
+    catch (e) { console.error('Cursuri:', e); box.innerHTML = ghiduri + '<p class="err">Cursurile nu s-au putut încărca. Reîncarcă pagina.</p>'; return; }
     if (!document.getElementById('cursBody')) return;
     const card = c => {
       const st = stareCurs(c);
@@ -1499,18 +1507,18 @@ function viewCursuri() {
     const gata = deFacut.filter(c => stareCurs(c).gata).length;
     const grupuri = [['Pentru toată echipa', comune], [`Pentru rolul tău · ${ME.role_code}`, ale], ['Pentru celelalte roluri', altele]]
       .filter(([, l]) => l.length);
-    box.innerHTML = (deFacut.length ? `<div class="stats" style="margin-bottom:36px">
+    box.innerHTML = ghiduri + (deFacut.length ? `<div class="stats" style="margin:${ghiduri ? '36px' : '0'} 0 36px">
         <div class="stat"><strong>${gata}</strong><span>din ${deFacut.length} cursuri terminate</span></div>
         <div class="stat"><strong>${deFacut.reduce((n, c) => n + c.lectii.filter(l => CURS.facute.has(l.id)).length, 0)}</strong><span>lecții parcurse</span></div>
       </div>` : '')
       + (grupuri.map(([t, l]) => `<div class="group-label">${esc(t)}</div><div class="grid" style="margin-bottom:12px">${l.map(card).join('')}</div>`).join('')
-      || `<p class="lvl4">Nu ai încă niciun curs. ${ME.admin ? 'Le adaugi din <a href="#/admin?tab=cursuri">Admin → Cursuri</a>.' : 'Administratorul le adaugă în curând.'}</p>`);
+      || (ghiduri ? '' : `<p class="lvl4">Nu ai încă niciun curs. ${ME.admin ? 'Le adaugi din <a href="#/admin?tab=cursuri">Admin → Cursuri</a>.' : 'Administratorul le adaugă în curând.'}</p>`));
     if (HAS_GSAP) gsap.from('#cursBody .course-card', { y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .06 });
   }, 0);
   return `
   <section class="band"><div class="wrap">
-    <span class="eyebrow">Onboarding</span><h1 data-split>Cursurile tale</h1>
-    <p class="sub">Lecții, documente și video-uri pentru rolul tău. Bifezi fiecare lecție după ce o parcurgi; la final te așteaptă un test scurt.</p>
+    <span class="eyebrow">Cursuri, ghiduri și unelte</span><h1 data-split>Academia Madame</h1>
+    <p class="sub">${poate('cursuri') ? 'Cursurile de onboarding pentru rolul tău și ghidurile de meserie. Bifezi fiecare lecție după ce o parcurgi; la final te așteaptă un test scurt.' : 'Ghidurile de meserie și uneltele de lucru.'}</p>
   </div></section>
   <section class="block"><div class="wrap" id="cursBody"><p class="muted">Se încarcă…</p></div></section>`;
 }
@@ -1581,14 +1589,14 @@ function testHtml(c, st, r) {
 
 function viewCurs(id, params) {
   setTimeout(() => randeazaCurs(id, params), 0);
-  return `<div id="cursPagina"><section class="band"><div class="wrap"><div class="crumbs"><a href="#/cursuri">Cursuri</a></div><p class="muted">Se încarcă…</p></div></section></div>`;
+  return `<div id="cursPagina"><section class="band"><div class="wrap"><div class="crumbs"><a href="#/cursuri">Academia Madame</a></div><p class="muted">Se încarcă…</p></div></section></div>`;
 }
 async function randeazaCurs(id, params = {}, rezultat) {
   let box = document.getElementById('cursPagina'); if (!box) return;
   try { await incarcaCursuri(); }
   catch (e) { console.error('Curs:', e); box.innerHTML = '<section class="block"><div class="wrap"><p class="err">Cursul nu s-a putut încărca. Reîncarcă pagina.</p></div></section>'; return; }
   const c = CURS.byId[id];
-  if (!c) { box.innerHTML = '<section class="band"><div class="wrap"><div class="crumbs"><a href="#/cursuri">Cursuri</a></div><h1>Cursul nu există</h1><p class="sub">Sau nu e pentru rolul tău.</p></div></section>'; return; }
+  if (!c) { box.innerHTML = '<section class="band"><div class="wrap"><div class="crumbs"><a href="#/cursuri">Academia Madame</a></div><h1>Cursul nu există</h1><p class="sub">Sau nu e pentru rolul tău.</p></div></section>'; return; }
   // Fișierele sunt private: linkuri semnate, valabile o oră.
   const cai = c.lectii.flatMap(l => l.fisiere.map(f => f.path)), urls = {};
   if (cai.length) {
@@ -1601,7 +1609,7 @@ async function randeazaCurs(id, params = {}, rezultat) {
   const deschisa = params.l ? +params.l : (c.lectii.find(l => !CURS.facute.has(l.id)) || {}).id;
   box.innerHTML = `
   <section class="band"><div class="wrap">
-    <div class="crumbs"><a href="#/cursuri">Cursuri</a> / ${esc(c.title)}</div>
+    <div class="crumbs"><a href="#/cursuri">Academia Madame</a> / ${esc(c.title)}</div>
     <span class="eyebrow">${c.is_common ? 'Pentru toată echipa' : 'Onboarding · ' + esc(c.roluri.join(', '))}${c.published ? '' : ' · ciornă'}</span>
     <h1>${esc(c.title)}</h1>
     ${c.description ? `<p class="sub">${esc(c.description)}</p>` : ''}
@@ -2092,7 +2100,7 @@ async function incarcaCapitole() {
 }
 const brutarBand = (crumb, titlu, sub, foto, alt) => `
   <section class="band"><div class="wrap ${foto ? 'band-grid' : ''}"><div>
-    <div class="crumbs"><a href="#/brutar">Ghidul brutarului</a>${crumb ? ' / ' + crumb : ''}</div>
+    <div class="crumbs"><a href="#/cursuri">Academia Madame</a> / <a href="#/brutar">Ghidul brutarului</a>${crumb ? ' / ' + crumb : ''}</div>
     <span class="eyebrow">Producție · pâinea cu maia</span>
     <h1>${titlu}</h1>${sub ? `<p class="sub">${sub}</p>` : ''}
   </div>${foto ? `<figure class="band-photo"><img src="${IMG(foto)}" alt="${esc(alt || '')}"></figure>` : ''}</div></section>`;
