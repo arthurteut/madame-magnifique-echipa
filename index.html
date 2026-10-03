@@ -343,6 +343,8 @@
   .callout { background: #fbf6ea; border-left: 3px solid var(--gold); padding: 14px 18px; margin: 0 0 22px; }
   .callout p { margin: 0 0 6px; } .callout ul { margin: 0; }
   .doc-text h4 { font: 500 1rem/1.3 'Montserrat', sans-serif; color: var(--ink); margin: 20px 0 8px; }
+  .doc-text b { font-weight: 600; color: var(--ink); }
+  .handbook > h3:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
   .handbook > h3 { font: 500 1.2rem/1.3 'Montserrat', sans-serif; letter-spacing: 0; text-transform: none; color: var(--ink); margin: 34px 0 12px; padding-top: 14px; border-top: 1px solid var(--line); }
   .chap-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; }
   .chap-nav .prow { grid-template-columns: auto 1fr; }
@@ -391,6 +393,22 @@
   /* ---------- Cursuri ---------- */
   .course-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: #fff; border: 1px solid var(--line); text-decoration: none; color: var(--ink-soft); transition: border-color .3s; }
   .course-card:hover { border-color: var(--ink); }
+  .cat-box { display: grid; grid-template-columns: minmax(240px, 34%) 1fr; background: #fff; border: 1px solid var(--line); margin-bottom: 32px; scroll-margin-top: 100px; }
+  .cat-photo { position: relative; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(20px, 3vw, 32px); color: #fff; background: #242424; overflow: hidden; }
+  .cat-photo img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cat-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24, 22, 20, .25) 0%, rgba(24, 22, 20, .5) 40%, rgba(24, 22, 20, .9) 100%); }
+  .cat-photo.fara-poza { background: radial-gradient(circle at 75% 20%, rgba(227, 208, 170, .28), transparent 55%), #242424; }
+  .cat-photo.fara-poza::before { content: attr(data-mono); position: absolute; top: 18px; right: 22px; z-index: 1; font-size: clamp(4rem, 9vw, 7rem); line-height: 1; color: rgba(227, 208, 170, .22); font-weight: 600; letter-spacing: -.04em; }
+  .cat-photo > * { position: relative; z-index: 1; }
+  .cat-photo h2 { color: #fff; font-size: clamp(1.5rem, 3vw, 2.1rem); margin: 4px 0 8px; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
+  .cat-photo p { margin: 0; font-size: .92rem; opacity: .92; text-shadow: 0 1px 10px rgba(0, 0, 0, .4); }
+  .cat-photo .eyebrow { color: #e3d0aa; }
+  .cat-body { padding: clamp(18px, 3vw, 28px); display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); align-content: start; }
+  .cat-body .course-card { background: #faf9f7; }
+  .cat-body .course-card.ghid { background: #f3ede1; border-color: #e3d0aa; }
+  .cat-body .gol { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .95rem; }
+  .cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; }
+  @media (max-width: 760px) { .cat-box { grid-template-columns: 1fr; } .cat-photo { min-height: 190px; } }
   .course-card h3 { font-size: 1.2rem; }
   .course-card p { margin: 0; font-size: .92rem; color: var(--muted); }
   .course-card .status { font-size: .85rem; color: var(--ink); margin-top: auto; }
@@ -404,7 +422,7 @@
   .pill.ok { background: var(--ink); color: #fff; border-color: var(--ink); }
   .lesson-text { max-width: 760px; }
   .lesson-text p { margin: 0 0 14px; }
-  .lesson-text h3 { font-size: 1.05rem; margin: 22px 0 10px; }
+  .lesson-text:not(.handbook) h3 { font-size: 1.05rem; margin: 22px 0 10px; }
   .lesson-text ul { margin: 0 0 14px; padding-left: 20px; }
   .lesson-text li { margin-bottom: 6px; }
   .video { position: relative; aspect-ratio: 16 / 9; background: #000; max-width: 860px; margin: 8px 0 20px; }
@@ -1047,7 +1065,8 @@ function viewProcess(p) {
 // rânduri goale între paragrafe.
 function textProcedura(t) {
   const out = []; let lista = null, tabel = null;
-  const linie = x => esc(x).replace(/_{3,}/g, '<span class="blank"></span>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  const linie = x => esc(x).replace(/_{3,}/g, '<span class="blank"></span>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+    .replace(/https:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
   let caseta = null;
   const inchide = () => {
     if (lista) { out.push(lista.tag === 'ol' ? `<ol start="${lista.start}">${lista.li.join('')}</ol>` : `<ul>${lista.li.join('')}</ul>`); lista = null; }
@@ -1480,46 +1499,78 @@ function textStare(st) {
   return `${st.facute} din ${st.total} lecții${test}`;
 }
 const pentruCine = c => c.is_common ? 'Toată echipa' : (c.roluri.join(' · ') || 'Niciun rol');
+// Casetele din Academia (categoria cursului vine din 0013; fără ea, cursul e „general”).
+const CATEGORII = [
+  { id: 'brutarie', nume: 'Brutărie', eyebrow: 'Producție · pâinea cu maia', poza: 'paine-miez', mono: 'B',
+    text: 'Maiaua, făina, procesul pas cu pas, defectele și rețetele casei.' },
+  { id: 'barista', nume: 'Barista', eyebrow: 'Cafea de specialitate', poza: null, mono: 'Ba',
+    text: 'De la sămânță la ceașcă: originea cafelei, parametrii și stația de espresso.' },
+  { id: 'patiserie-cofetarie', nume: 'Patiserie și cofetărie', eyebrow: 'Laborator', poza: 'academia-patiserie', mono: 'P',
+    text: 'Aluaturi, creme și tehnica din laboratoarele Madame.' },
+  { id: 'vanzare-servire', nume: 'Vânzare și servire', eyebrow: 'Ospitalitate', poza: 'academia-vanzare', mono: 'V',
+    text: 'Cum primim oaspeții, cum citim sala și cum lucrăm ca o echipă.' },
+  { id: 'general', nume: 'Cursuri generale', eyebrow: 'Pentru toată echipa', poza: null, mono: 'M',
+    text: 'Ce e bine să știe oricine lucrează la Madame.' },
+];
+const CAT = Object.fromEntries(CATEGORII.map(k => [k.id, k]));
+const catCurs = c => CAT[c.category] ? c.category : 'general';
 
 function viewCursuri() {
   setTimeout(async () => {
     const box = document.getElementById('cursBody'); if (!box) return;
-    const ghiduri = poate('brutar') ? `<div class="group-label">Ghiduri de meserie</div><div class="grid" style="margin-bottom:12px">
-        <a class="tile photo" href="#/brutar"><img src="${IMG('paine-miez')}" alt="" loading="lazy"><div><span class="eyebrow">Producție · pâinea cu maia</span><h3>Ghidul brutarului</h3>
-          <p>Maiaua, făina, procesul pas cu pas, defectele și rețetele casei.</p></div><span class="go">Deschide →</span></a>
-        <a class="tile photo" href="#/brutar/calculator"><img src="${IMG('maia-borcan')}" alt="" loading="lazy"><div><span class="eyebrow">Unealtă</span><h3>Calculatorul de pâine</h3>
-          <p>Cât cântărești pentru orice număr de pâini, cu starterul inclus.</p></div><span class="go">Deschide →</span></a></div>` : '';
-    if (!poate('cursuri')) { box.innerHTML = ghiduri; return; }
-    try { await incarcaCursuri(true); }
-    catch (e) { console.error('Cursuri:', e); box.innerHTML = ghiduri + '<p class="err">Cursurile nu s-au putut încărca. Reîncarcă pagina.</p>'; return; }
-    if (!document.getElementById('cursBody')) return;
+    // Ghidurile de meserie stau în caseta Brutărie.
+    const ghiduri = poate('brutar') ? `
+        <a class="course-card ghid" href="#/brutar"><span class="eyebrow">Ghid de meserie</span><h3>Ghidul brutarului</h3>
+          <p>Maiaua, făina, procesul pas cu pas, defectele și rețetele casei.</p><span class="status">Deschide →</span></a>
+        <a class="course-card ghid" href="#/brutar/calculator"><span class="eyebrow">Unealtă</span><h3>Calculatorul de pâine</h3>
+          <p>Cât cântărești pentru orice număr de pâini, cu starterul inclus.</p><span class="status">Deschide →</span></a>` : '';
+    let lista = [], eroare = false;
+    if (poate('cursuri')) {
+      try { await incarcaCursuri(true); lista = CURS.lista; }
+      catch (e) { console.error('Cursuri:', e); eroare = true; }
+      if (!document.getElementById('cursBody')) return;
+    }
     const card = c => {
       const st = stareCurs(c);
       return `<a class="course-card ${st.gata ? 'gata' : ''}" href="#/c/${c.id}">
-        <span class="eyebrow">${esc(pentruCine(c))}${c.published ? '' : ' · ciornă'}</span>
+        <span class="eyebrow">Curs${c.intrebari.length ? ' + test' : ''}${c.published ? '' : ' · ciornă'}</span>
         <h3>${esc(c.title)}</h3>${c.description ? `<p>${esc(c.description)}</p>` : ''}
         <div class="progress" aria-hidden="true"><i style="width:${st.procent}%"></i></div>
         <span class="status">${esc(textStare(st))}</span></a>`;
     };
-    const comune = CURS.lista.filter(c => c.is_common);
-    const ale = CURS.lista.filter(c => !c.is_common && c.roluri.includes(ME.role_code));
-    const altele = CURS.lista.filter(c => !c.is_common && !c.roluri.includes(ME.role_code));
-    const deFacut = [...comune, ...ale].filter(c => c.published);
+    const pe = grupeaza(lista, 'category');
+    lista.forEach(c => { if (!CAT[c.category]) (pe.general = pe.general || []).push(c); });
+    const casete = CATEGORII.filter(k => k.id !== 'general' || (pe.general || []).length).map(k => {
+      const cursuri = pe[k.id] || [], extra = k.id === 'brutarie' ? ghiduri : '';
+      const continut = extra + cursuri.map(card).join('');
+      return `<section class="cat-box" id="cat-${k.id}">
+        <div class="cat-photo ${k.poza ? '' : 'fara-poza'}" data-mono="${esc(k.mono)}">${k.poza ? `<img src="${IMG(k.poza)}" alt="" loading="lazy">` : ''}
+          <span class="eyebrow">${esc(k.eyebrow)}</span><h2>${esc(k.nume)}</h2><p>${esc(k.text)}</p></div>
+        <div class="cat-body">${continut || '<p class="gol">Cursurile din această categorie vin în curând.</p>'}</div>
+      </section>`;
+    });
+    const deFacut = lista.filter(c => c.published && (c.is_common || c.roluri.includes(ME.role_code)));
     const gata = deFacut.filter(c => stareCurs(c).gata).length;
-    const grupuri = [['Pentru toată echipa', comune], [`Pentru rolul tău · ${ME.role_code}`, ale], ['Alte cursuri', altele]]
-      .filter(([, l]) => l.length);
-    box.innerHTML = ghiduri + (deFacut.length ? `<div class="stats" style="margin:${ghiduri ? '36px' : '0'} 0 36px">
-        <div class="stat"><strong>${gata}</strong><span>din ${deFacut.length} cursuri terminate</span></div>
-        <div class="stat"><strong>${deFacut.reduce((n, c) => n + c.lectii.filter(l => CURS.facute.has(l.id)).length, 0)}</strong><span>lecții parcurse</span></div>
+    const parcurse = lista.reduce((n, c) => n + c.lectii.filter(l => CURS.facute.has(l.id)).length, 0);
+    box.innerHTML = (lista.length ? `<div class="stats" style="margin:0 0 28px">
+        ${deFacut.length ? `<div class="stat"><strong>${gata}</strong><span>din ${deFacut.length} cursuri pentru rolul tău terminate</span></div>` : ''}
+        <div class="stat"><strong>${parcurse}</strong><span>lecții parcurse</span></div>
       </div>` : '')
-      + (grupuri.map(([t, l]) => `<div class="group-label">${esc(t)}</div><div class="grid" style="margin-bottom:12px">${l.map(card).join('')}</div>`).join('')
-      || (ghiduri ? '' : `<p class="lvl4">Nu ai încă niciun curs. ${ME.admin ? 'Le adaugi din <a href="#/admin?tab=cursuri">Admin → Cursuri</a>.' : 'Administratorul le adaugă în curând.'}</p>`));
-    if (HAS_GSAP) gsap.from('#cursBody .course-card', { y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .06 });
+      + `<nav class="cat-nav" aria-label="Categorii">${CATEGORII.filter(k => casete.some(x => x.includes(`id="cat-${k.id}"`)))
+          .map(k => `<a class="btn ghost sm" href="#cat-${k.id}" data-cat="${k.id}">${esc(k.nume)}</a>`).join('')}</nav>`
+      + (eroare ? '<p class="err">Cursurile nu s-au putut încărca. Reîncarcă pagina.</p>' : '')
+      + casete.join('')
+      + (ME.admin && !lista.length && !eroare ? '<p class="lvl4">Cursurile le adaugi din <a href="#/admin?tab=cursuri">Admin → Cursuri</a>.</p>' : '');
+    // Linkurile din meniul de categorii derulează la casetă (fără să schimbe pagina).
+    box.querySelectorAll('[data-cat]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault(); document.getElementById('cat-' + a.dataset.cat).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+    if (HAS_GSAP) gsap.from('#cursBody .cat-box', { y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .08 });
   }, 0);
   return `
   <section class="band"><div class="wrap">
     <span class="eyebrow">Cursuri, ghiduri și unelte</span><h1 data-split>Academia Madame</h1>
-    <p class="sub">${poate('cursuri') ? 'Cursurile de onboarding pentru rolul tău și ghidurile de meserie. Bifezi fiecare lecție după ce o parcurgi; la final te așteaptă un test scurt.' : 'Ghidurile de meserie și uneltele de lucru.'}</p>
+    <p class="sub">Cursurile și ghidurile de meserie, pe categorii. Bifezi fiecare lecție după ce o parcurgi; la finalul cursurilor te așteaptă un test scurt.</p>
   </div></section>
   <section class="block"><div class="wrap" id="cursBody"><p class="muted">Se încarcă…</p></div></section>`;
 }
@@ -1532,19 +1583,8 @@ function videoEmbed(u) {
   if ((m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/))) return `https://drive.google.com/file/d/${m[1]}/preview`;
   return null;
 }
-// Text simplu → HTML: paragrafe, liste („- ”), subtitluri („## ”), linkuri.
-function textLectie(t) {
-  const link = s => esc(s).replace(/https:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
-  const out = [];
-  for (const bloc of String(t).replace(/\r/g, '').split(/\n\s*\n/)) {
-    let linii = bloc.split('\n').filter(x => x.trim());
-    while (linii.length && /^##\s+/.test(linii[0])) { out.push(`<h3>${esc(linii.shift().replace(/^##\s+/, ''))}</h3>`); }
-    if (!linii.length) continue;
-    if (linii.every(x => /^\s*[-•*]\s+/.test(x))) out.push(`<ul>${linii.map(x => `<li>${link(x.replace(/^\s*[-•*]\s+/, ''))}</li>`).join('')}</ul>`);
-    else out.push(`<p>${linii.map(link).join('<br>')}</p>`);
-  }
-  return out.join('');
-}
+// Lecțiile folosesc același format ca procedurile verificate (titluri, liste, tabele, casete).
+const textLectie = textProcedura;
 const marime = b => b >= 1048576 ? (b / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
 const extensie = n => (String(n).match(/\.([a-z0-9]{1,5})$/i) || [, 'fișier'])[1];
 function fisierHtml(f, url, extra = '') {
@@ -1560,7 +1600,7 @@ function lectieHtml(l, i, urls, deschisa) {
     <summary><span class="nr">${facut ? '✓' : i + 1}</span><span class="name">${esc(l.title)}</span>
       <span class="meta">${facut ? '<span class="pill ok">Parcursă</span>' : ''}${ICON.chev}</span></summary>
     <div class="proc-body">
-      ${l.body ? `<div class="lesson-text">${textLectie(l.body)}</div>` : ''}
+      ${l.body ? `<div class="lesson-text doc-text handbook">${textLectie(l.body)}</div>` : ''}
       ${l.video_url ? (emb ? `<div class="video"><iframe src="${esc(emb)}" title="${esc(l.title)}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`
         : `<p><a class="btn ghost sm" href="${esc(l.video_url)}" target="_blank" rel="noopener">Deschide video-ul ↗</a></p>`) : ''}
       ${imagini.map(f => `<a href="${esc(urls[f.path])}" target="_blank" rel="noopener"><img class="file-img" src="${esc(urls[f.path])}" alt="${esc(f.name)}" loading="lazy"></a>`).join('')}
@@ -1611,7 +1651,7 @@ async function randeazaCurs(id, params = {}, rezultat) {
   box.innerHTML = `
   <section class="band"><div class="wrap">
     <div class="crumbs"><a href="#/cursuri">Academia Madame</a> / ${esc(c.title)}</div>
-    <span class="eyebrow">${c.is_common ? 'Pentru toată echipa' : 'Onboarding · ' + esc(c.roluri.join(', '))}${c.published ? '' : ' · ciornă'}</span>
+    <span class="eyebrow">${esc(CAT[catCurs(c)].nume)} · ${esc(pentruCine(c))}${c.published ? '' : ' · ciornă'}</span>
     <h1>${esc(c.title)}</h1>
     ${c.description ? `<p class="sub">${esc(c.description)}</p>` : ''}
     <div class="progress" aria-hidden="true"><i style="width:${st.procent}%"></i></div>
@@ -1763,8 +1803,8 @@ async function incarcaCursuriAdmin(params) {
       <button class="btn" type="submit">Creează cursul</button>
     </form>
     <h2 class="section-title" style="margin-top:48px">Cursurile <span class="muted" style="font-size:.9rem">(${CURS.lista.length})</span></h2>
-    ${CURS.lista.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Curs</th><th>Pentru</th><th>Lecții</th><th>Test</th><th>Stare</th><th></th></tr></thead><tbody>
-      ${CURS.lista.map(c => `<tr><td><a href="#/admin?tab=cursuri&curs=${c.id}"><b>${esc(c.title)}</b></a></td><td>${esc(pentruCine(c))}</td><td>${c.lectii.length}</td>
+    ${CURS.lista.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Curs</th><th>Categoria</th><th>Pentru</th><th>Lecții</th><th>Test</th><th>Stare</th><th></th></tr></thead><tbody>
+      ${CURS.lista.map(c => `<tr><td><a href="#/admin?tab=cursuri&curs=${c.id}"><b>${esc(c.title)}</b></a></td><td>${esc(CAT[catCurs(c)].nume)}</td><td>${esc(pentruCine(c))}</td><td>${c.lectii.length}</td>
         <td>${c.intrebari.length ? `${c.intrebari.length} întrebări · ${c.pass_percent}%` : '—'}</td><td>${c.published ? 'Publicat' : '<span class="muted">Ciornă</span>'}</td>
         <td class="actions"><a class="btn ghost sm" href="#/admin?tab=cursuri&curs=${c.id}">Editează</a></td></tr>`).join('')}
     </tbody></table></div>` : '<p class="muted">Niciun curs încă.</p>'}`;
@@ -1825,6 +1865,8 @@ async function editorCurs(c) {
         <button class="btn danger sm" type="button" data-ed="sterge">Șterge cursul</button></div></div>
       <label>Titlu<input class="field" name="title" value="${esc(c.title)}" required></label>
       <label>Descriere scurtă<textarea class="field" name="description" rows="2" style="min-height:60px">${esc(c.description)}</textarea></label>
+      ${'category' in c ? `<label style="max-width:360px">Categoria în Academia<select class="field" name="category">${CATEGORII.map(k => `<option value="${k.id}" ${catCurs(c) === k.id ? 'selected' : ''}>${esc(k.nume)}</option>`).join('')}</select></label>`
+        : '<p class="muted" style="font-size:.88rem">Categoriile apar după ce rulezi 0013_categorii_academie.sql.</p>'}
       <div style="display:flex;flex-wrap:wrap">
         <label class="inline"><input type="checkbox" name="published" ${c.published ? 'checked' : ''}> Publicat (altfel e ciornă, o văd doar adminii)</label>
         <label class="inline"><input type="checkbox" name="is_common" ${c.is_common ? 'checked' : ''}> Pentru toată echipa</label>
@@ -1835,7 +1877,7 @@ async function editorCurs(c) {
       <button class="btn sm" type="button" data-ed="salveaza">Salvează cursul</button>
     </div>
     <div class="ed-sub">Lecțiile (${c.lectii.length})</div>
-    <div class="help">Textul: lași un rând gol între paragrafe; rândurile care încep cu <code>- </code> devin listă; un rând care începe cu <code>## </code> devine subtitlu.
+    <div class="help">Textul: un rând = un paragraf; <code>- </code> listă; <code>1. </code> pași; <code>## </code> subtitlu, <code>### </code> titlu mic; <code>&gt; </code> casetă evidențiată; <code>| a | b |</code> tabel (primul rând e capul de tabel); <code>**text**</code> îngroșat.
       Video: link YouTube (poate fi „nelistat”), Vimeo sau Google Drive (partajat „oricine are linkul”). Pozele apar direct în lecție; celelalte fișiere se deschid la click.</div>
     ${c.lectii.map((l, i) => edLectie(l, i, c.lectii.length)).join('')}
     <button class="btn ghost sm" type="button" data-ed="lectie-noua">+ Adaugă lecție</button>
@@ -1921,6 +1963,7 @@ async function salveazaBloc(c, ed, tacut) {
     const roluri = [...ed.querySelectorAll('input[name=rol]:checked')].map(x => x.value);
     const patch = { title, description: v('description').value.trim(), published: v('published').checked,
       is_common: v('is_common').checked, pass_percent: Math.min(100, Math.max(0, parseInt(v('pass_percent').value, 10) || 0)) };
+    if (v('category')) patch.category = v('category').value;
     const { error } = await SB.from('courses').update(patch).eq('id', id);
     if (error) throw error;
     for (const r of c.roluri.filter(r => !roluri.includes(r))) {

@@ -228,6 +228,25 @@ Apoi [`0012_academia_pentru_toti.sql`](supabase/migrations/0012_academia_pentru_
 toată echipa vede tot în Academie (toate cursurile publicate, ghidul brutarului,
 calculatorul). Rolurile bifate la un curs arată doar pentru cine e obligatoriu.
 
+### 14. Categoriile din Academie
+
+Rulează [`0013_categorii_academie.sql`](supabase/migrations/0013_categorii_academie.sql).
+Academia își grupează cursurile în casete, fiecare cu poza ei: **Brutărie** (cu
+ghidul brutarului și calculatorul), **Barista**, **Patiserie și cofetărie**,
+**Vânzare și servire** și, dacă există, **Cursuri generale**. Categoria unui curs
+se alege în Admin → Cursuri → editorul cursului. Cursurile de dinainte rămân
+„generale” până le muți.
+
+Un curs întreg (lecții + test) se poate încărca și dintr-un fișier JSON cu
+[`tools/curs_din_text.py`](tools/curs_din_text.py):
+
+```bash
+python3 tools/curs_din_text.py curs.json date-curs.sql
+```
+
+Fișierul `date-curs.sql` conține materialele cursului: îl rulezi în SQL Editor și
+**nu** îl pui în repo.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

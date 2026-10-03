@@ -61,3 +61,7 @@ Academia pentru toți (`12_academia_pentru_toti.sql`, după 0012): orice cont ve
 toate cursurile publicate și ghidul brutarului; ciornele și răspunsurile rămân
 doar ale adminului; BRT tot nu vede spații sau proceduri. Ultimul rând: „7 din 7”.
 Testele 05, 07 și 08 descriu accesul de dinainte de 0012 și se rulează înainte.
+
+Categoriile din Academie (`13_categorii_academie.sql`, după 0013): un curs nou e
+„general”, se mută în altă categorie, categoriile necunoscute sunt refuzate.
+Ultimul rând: „3 din 3”.
