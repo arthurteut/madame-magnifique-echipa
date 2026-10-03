@@ -205,6 +205,14 @@ le au în meniu.
 
 DP și SP le văd procedurile și task-urile. Totul se schimbă din **Admin → Acces pe rol**.
 
+Pentru cine lucrează în ambele secții:
+[`0010_rol_brutarie_patiserie.sql`](supabase/migrations/0010_rol_brutarie_patiserie.sql)
+adaugă **PBP · Producție brutărie și patiserie** (vede tot ce văd PBR și PPT).
+
+Conturile se pot crea și toate odată: **Admin → Utilizatori → Conturi din tabel**
+(lipești rândurile din tabelul „Conturi echipa”; primești lista cu parole, de
+copiat sau de printat ca bilețele).
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

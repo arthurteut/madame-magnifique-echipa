@@ -44,6 +44,9 @@ ROLURI_SUPLIMENTARE = [
     {"cod": "PBR", "nume": "Producție brutărie",
      "raspunde": "Produce pâinea în Laboratorul Peciu Nou, după ghidul brutarului, fișele tehnologice și procedurile secției.",
      "procese": []},
+    {"cod": "PBP", "nume": "Producție brutărie și patiserie",
+     "raspunde": "Lucrează în brutărie și în patiserie (Laboratorul Peciu Nou și Laboratorul Fructus), după ghidul brutarului, fișele tehnologice și procedurile secțiilor.",
+     "procese": []},
 ]
 
 
