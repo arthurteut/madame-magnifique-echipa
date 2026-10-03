@@ -1503,7 +1503,7 @@ const pentruCine = c => c.is_common ? 'Toată echipa' : (c.roluri.join(' · ') |
 const CATEGORII = [
   { id: 'brutarie', nume: 'Brutărie', eyebrow: 'Producție · pâinea cu maia', poza: 'paine-miez', mono: 'B',
     text: 'Maiaua, făina, procesul pas cu pas, defectele și rețetele casei.' },
-  { id: 'barista', nume: 'Barista', eyebrow: 'Cafea de specialitate', poza: null, mono: 'Ba',
+  { id: 'barista', nume: 'Barista', eyebrow: 'Cafea de specialitate', poza: 'academia-barista', pozaPoz: '50% 70%', mono: 'Ba',
     text: 'De la sămânță la ceașcă: originea cafelei, parametrii și stația de espresso.' },
   { id: 'patiserie-cofetarie', nume: 'Patiserie și cofetărie', eyebrow: 'Laborator', poza: 'academia-patiserie', mono: 'P',
     text: 'Aluaturi, creme și tehnica din laboratoarele Madame.' },
@@ -1544,7 +1544,7 @@ function viewCursuri() {
       const cursuri = pe[k.id] || [], extra = k.id === 'brutarie' ? ghiduri : '';
       const continut = extra + cursuri.map(card).join('');
       return `<section class="cat-box" id="cat-${k.id}">
-        <div class="cat-photo ${k.poza ? '' : 'fara-poza'}" data-mono="${esc(k.mono)}">${k.poza ? `<img src="${IMG(k.poza)}" alt="" loading="lazy">` : ''}
+        <div class="cat-photo ${k.poza ? '' : 'fara-poza'}" data-mono="${esc(k.mono)}">${k.poza ? `<img src="${IMG(k.poza)}" alt="" loading="lazy"${k.pozaPoz ? ` style="object-position:${k.pozaPoz}"` : ''}>` : ''}
           <span class="eyebrow">${esc(k.eyebrow)}</span><h2>${esc(k.nume)}</h2><p>${esc(k.text)}</p></div>
         <div class="cat-body">${continut || '<p class="gol">Cursurile din această categorie vin în curând.</p>'}</div>
       </section>`;
