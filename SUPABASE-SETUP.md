@@ -213,6 +213,17 @@ Conturile se pot crea și toate odată: **Admin → Utilizatori → Conturi din 
 (lipești rândurile din tabelul „Conturi echipa”; primești lista cu parole, de
 copiat sau de printat ca bilețele).
 
+## 13. Academia Madame
+
+**SQL Editor** → lipești
+[`supabase/migrations/0011_academia.sql`](supabase/migrations/0011_academia.sql) → **Run**.
+
+Pagina **Cursuri** se numește acum **Academia Madame** și cuprinde cursurile de
+onboarding și ghidurile de meserie (ghidul brutarului și calculatorul de pâine).
+Meniul nu mai are pagina separată **Brutar**. Ghidul brutarului îl primește și
+patiseria (PPT). În Admin → Acces pe rol, „Academia: cursuri” și „Academia: ghidul
+brutarului” se bifează separat.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

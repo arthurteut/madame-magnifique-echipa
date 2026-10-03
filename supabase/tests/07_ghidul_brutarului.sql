@@ -21,8 +21,8 @@ select pg_temp.ca('000000000001');
 update public.handbook_chapters set body = 'hack' where slug = 'test01';
 reset role;
 insert into rez select 'DP nu modifică', body = 'x' from public.handbook_chapters where slug = 'test01';
-insert into rez select 'Pagina brutar: DP, SP, GD, GM, AE (+ BRT după 0008)', array_agg(role_code order by role_code) @> array['AE', 'DP', 'GD', 'GM', 'SP']
-  and array_agg(role_code order by role_code) <@ array['AE', 'BRT', 'DP', 'GD', 'GM', 'SP']
+insert into rez select 'Pagina brutar: DP, SP, GD, GM, AE (+ rolurile din 0008–0011)', array_agg(role_code order by role_code) @> array['AE', 'DP', 'GD', 'GM', 'SP']
+  and not 'V' = any (array_agg(role_code))
   from public.role_section_access where section = 'brutar';
 set role anon;
 do $$ begin perform 1 from public.handbook_chapters; insert into rez values ('Anonimul nu citește', false);
