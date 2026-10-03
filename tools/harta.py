@@ -298,7 +298,7 @@ SPATII = [
         "subtitlu": "Brutărie și patiserie",
         "procese": ["P18", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P18", "P19"],
-        "roluri": ["DP", "SP", "GD", "LOG"],
+        "roluri": ["DP", "SP", "GD", "LOG", "PPT", "PBR"],
         "note": [
             {"titlu": "Ce se face aici",
              "text": "Brutăria (maia, frământare, dospire, coacere) și patiseria (laminare, formare, coacere, finisare). De aici pleacă pâinea și patiseria către cele trei magazine și către B2B."},
@@ -323,7 +323,7 @@ SPATII = [
         "subtitlu": "Cofetărie, creme și dulcețuri",
         "procese": ["P20", "P21", "P19"] + PRODUCTIE_COMUN,
         "specifice": ["P20", "P21", "P19"],
-        "roluri": ["DP", "SP", "GD", "LOG"],
+        "roluri": ["DP", "SP", "GD", "LOG", "PPT", "PCF"],
         "abateri_filtru": {"Fructus": ["Interfață D1"]},
         "note": [
             {"titlu": "Ce se face aici",

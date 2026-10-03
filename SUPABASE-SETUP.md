@@ -192,6 +192,19 @@ calculatorul) și ajunge direct acolo după logare. Migrarea face și ca paginil
 Cursuri și Cum funcționează să fie citite din baza de date doar de rolurile care
 le au în meniu.
 
+## 12. Rolurile de producție pe secții
+
+**SQL Editor** → lipești
+[`supabase/migrations/0009_roluri_productie.sql`](supabase/migrations/0009_roluri_productie.sql) → **Run**.
+
+| Rol | Spații | Pagini |
+|---|---|---|
+| PPT · Producție patiserie | Laboratorul Peciu Nou, Laboratorul Fructus | Roluri, Proceduri, Cursuri, Cum funcționează |
+| PCF · Producție cofetărie | Laboratorul Fructus | la fel |
+| PBR · Producție brutărie | Laboratorul Peciu Nou | la fel + Brutar |
+
+DP și SP le văd procedurile și task-urile. Totul se schimbă din **Admin → Acces pe rol**.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

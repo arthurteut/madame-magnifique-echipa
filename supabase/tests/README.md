@@ -52,3 +52,7 @@ capitolele, V nu; nimeni nu le modifică din pagină. Ultimul rând: „7 din 7�
 
 Rolul Brutar (`08_rol_brutar.sql`, după 0008): BRT citește ghidul și rețetele,
 nu vede spații, proceduri, cursuri sau „Cum funcționează”. Ultimul rând: „8 din 8”.
+
+Rolurile de producție (`09_roluri_productie.sql`, după 0009): PPT vede ambele
+laboratoare, PCF Laboratorul Fructus, PBR Peciu Nou și ghidul brutarului; DP și
+SP le văd rolurile, V nu. Ultimul rând: „11 din 11”.
