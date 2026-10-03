@@ -85,6 +85,10 @@
   .matrix input { width: 18px; height: 18px; accent-color: var(--ink); cursor: pointer; }
   .matrix tr.admin-row td { color: var(--muted); }
   .secret { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: #fdf8ee; border-left: 3px solid var(--gold); padding: 14px 16px; margin: 16px 0 0; }
+  .multi { margin-top: 36px; border: 1px solid var(--line); padding: 16px 20px; background: #fff; }
+  .multi > summary { cursor: pointer; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; list-style: none; }
+  .multi > summary::-webkit-details-marker { display: none; }
+  .multi textarea { width: 100%; margin-top: 8px; font: 400 .85rem/1.4 ui-monospace, Menlo, monospace; }
   .secret code { font: 500 1rem/1.4 ui-monospace, Menlo, monospace; background: #fff; padding: 4px 8px; border: 1px solid var(--line); }
   #toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 18px; font-size: .9rem; z-index: 50; max-width: calc(100% - 32px); }
   #toast.err { background: #9b2c2c; }
@@ -1330,12 +1334,20 @@ async function incarcaUtilizatori() {
     </form>
     <p class="muted" style="font-size:.85rem;margin:10px 0 0">Utilizatorul: litere mici, cifre, punct sau cratimă (ex.: <b>maria.v</b>). Angajatul se loghează cu el și cu parola de mai sus.</p>
     <div id="cnRezultat"></div>
+    <details class="multi" id="multi">
+      <summary><span class="section-title" style="margin:0">Conturi din tabel</span><span class="muted">mai multe deodată, din Excel</span></summary>
+      <p class="muted" style="font-size:.88rem">În tabelul „Conturi echipa”, foaia Echipa, selectezi rândurile (de la Nume complet până la Utilizator în ghid), le copiezi și le lipești aici. Ghidul găsește numele, rolul și utilizatorul; conturile care există deja sunt sărite.</p>
+      <textarea class="field" id="multiText" rows="6" placeholder="Ana Popescu&#9;V&#9;Porumbescu&#9;ana.v&#10;…"></textarea>
+      <div class="calc-act"><button class="btn ghost sm" type="button" id="multiVerifica">Verifică</button><button class="btn sm" type="button" id="multiCreeaza" disabled>Creează conturile</button></div>
+      <div id="multiRez"></div>
+    </details>
     <h2 class="section-title" style="margin-top:48px">Conturile echipei <span class="muted" style="font-size:.9rem">(${profiluri.length})</span></h2>
     <div class="tbl-wrap"><table class="tbl" id="tabConturi">
       <thead><tr><th>Nume</th><th>Utilizator</th><th>Rol</th><th>Stare</th><th></th></tr></thead>
       <tbody>${profiluri.map(rand).join('')}</tbody></table></div>
     <div id="rezParola"></div>`;
 
+  wireMultiple(profiluri);
   document.getElementById('contNou').addEventListener('submit', async e => {
     e.preventDefault();
     const btn = document.getElementById('cnBtn');
@@ -1648,6 +1660,77 @@ document.addEventListener('submit', async e => {
   await randeazaCurs(id, { l: -1 }, r);
   document.getElementById('test').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
+
+// ---------- Admin → Conturi din tabel ----------
+// Rândurile lipite din Excel (coloane separate prin Tab): numele = prima celulă cu litere,
+// rolul = celula care e un cod de rol, utilizatorul = ultima celulă de forma prenume.rol.
+const codRol = x => String(x).toUpperCase().replace(/\s+/g, '');
+const fara = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function citesteRanduri(text, profiluri) {
+  const roluri = Object.fromEntries(D.roluri.map(r => [codRol(r.cod), r.cod]));
+  const existente = new Set(profiluri.map(p => p.username)), vazute = new Set();
+  return text.split(/\r?\n/).map(l => l.split('\t').map(c => c.trim())).filter(c => c.some(Boolean))
+    .filter(c => !c.some(x => /^nume complet$/i.test(x)))
+    .map(c => {
+      const rol = c.map(x => roluri[codRol(x)]).find(Boolean) || '';
+      const nume = c.find(x => /\p{L}/u.test(x) && !roluri[codRol(x)] && !/^[a-z0-9._-]+$/.test(x)) || '';
+      let user = [...c].reverse().find(x => /^[a-z0-9._-]{3,40}$/.test(x) && x.includes('.')) || '';
+      if (!user && nume && rol) user = `${fara(nume.split(/\s+/)[0]).replace(/[^a-z0-9]/g, '')}.${fara(rol).replace(/[^a-z0-9]/g, '')}`;
+      let stare = 'ok';
+      if (!nume) stare = 'fără nume'; else if (!rol) stare = 'fără rol'; else if (!/^[a-z0-9._-]{3,40}$/.test(user)) stare = 'utilizator invalid';
+      else if (existente.has(user)) stare = 'există deja'; else if (vazute.has(user)) stare = 'dublură în listă';
+      if (stare === 'ok') vazute.add(user);
+      return { nume, rol, user, stare };
+    });
+}
+function wireMultiple(profiluri) {
+  let randuri = [];
+  const rez = document.getElementById('multiRez'), btn = document.getElementById('multiCreeaza');
+  const tabelRand = (r, extra = '') => `<tr class="${r.stare === 'ok' || r.stare === 'creat' ? '' : 'inactiv'}"><td>${esc(r.nume)}</td><td>${esc(r.rol)}</td><td>${esc(r.user)}</td>${extra}<td>${esc(r.stare)}</td></tr>`;
+  document.getElementById('multiVerifica').onclick = () => {
+    randuri = citesteRanduri(document.getElementById('multiText').value, profiluri);
+    const ok = randuri.filter(r => r.stare === 'ok').length;
+    rez.innerHTML = randuri.length ? `<p style="margin:16px 0 8px"><b>${ok}</b> conturi de creat din ${randuri.length} rânduri.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Nume</th><th>Rol</th><th>Utilizator</th><th>Stare</th></tr></thead><tbody>${randuri.map(r => tabelRand(r)).join('')}</tbody></table></div>`
+      : '<p class="err">Nu am găsit niciun rând. Lipește rândurile copiate din Excel.</p>';
+    btn.disabled = !ok; btn.textContent = ok ? `Creează ${ok} conturi` : 'Creează conturile';
+  };
+  btn.onclick = async () => {
+    const deFacut = randuri.filter(r => r.stare === 'ok');
+    if (!deFacut.length || !confirm(`Creezi ${deFacut.length} conturi?`)) return;
+    btn.disabled = true;
+    for (const [i, r] of deFacut.entries()) {
+      btn.textContent = `Se creează ${i + 1} din ${deFacut.length}…`;
+      r.parola = parolaNoua();
+      try { await functieAdmin({ action: 'create', full_name: r.nume, username: r.user, role_code: r.rol, password: r.parola }); r.stare = 'creat'; }
+      catch (x) { r.stare = x.message; r.parola = ''; }
+    }
+    const create = deFacut.filter(r => r.stare === 'creat');
+    const text = 'Nume\tUtilizator\tParola\n' + create.map(r => `${r.nume}\t${r.user}\t${r.parola}`).join('\n');
+    rez.innerHTML = `<div class="secret" style="display:block"><p style="margin:0 0 10px"><b>${create.length}</b> conturi create. Parolele apar o singură dată: copiază sau printează lista acum.</p>
+      <div class="calc-act" style="margin:0 0 12px"><button class="btn sm" type="button" data-copy="${esc(text)}">Copiază lista (pentru Excel)</button><button class="btn ghost sm" type="button" id="multiPrint">Printează bilețele</button></div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Nume</th><th>Rol</th><th>Utilizator</th><th>Parola</th><th>Stare</th></tr></thead><tbody>
+      ${deFacut.map(r => tabelRand(r, `<td><code>${esc(r.parola || '')}</code></td>`)).join('')}</tbody></table></div></div>`;
+    document.getElementById('multiPrint').onclick = () => printeazaBilete(create);
+    btn.textContent = 'Creează conturile';
+    toast(`${create.length} conturi create.`, create.length < deFacut.length);
+    const lista = await tabel('profiles', ['full_name']).catch(() => null);
+    if (lista) { profiluri.splice(0, profiluri.length, ...lista); }
+  };
+}
+// Câte un bilet pe angajat: adresa ghidului, utilizatorul și parola.
+function printeazaBilete(conturi) {
+  const w = window.open('', '_blank'); if (!w) return toast('Permite ferestrele pop-up pentru a printa.', true);
+  const adresa = location.origin + location.pathname.replace(/index\.html$/, '');
+  w.document.write(`<!doctype html><html lang="ro"><head><meta charset="utf-8"><title>Conturi · Ghidul echipei</title><style>
+    body{font:14px/1.5 Arial,sans-serif;color:#242424;margin:16px}.b{border:1px dashed #999;padding:14px 18px;margin:0 0 10px;break-inside:avoid}
+    .b h2{font-size:16px;margin:0 0 6px}.b code{font:600 15px ui-monospace,Menlo,monospace;background:#f3f1ec;padding:2px 6px}.m{color:#666;font-size:12px}
+  </style></head><body>${conturi.map(r => `<div class="b"><h2>${esc(r.nume)}</h2>
+    <div>Ghidul echipei Madame Magnifique: <b>${esc(adresa)}</b></div>
+    <div>Utilizator: <code>${esc(r.user)}</code> &nbsp; Parola: <code>${esc(r.parola)}</code></div>
+    <div class="m">Păstrează biletul pentru tine. Parola uitată ți-o resetează responsabilul.</div></div>`).join('')}</body></html>`);
+  w.document.close(); w.focus(); w.print();
+}
 
 // ---------- Admin → Cursuri ----------
 const FISIERE_OK = /\.(pdf|docx?|xlsx?|pptx?|jpe?g|png|webp|gif|heic)$/i;
