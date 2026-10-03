@@ -224,6 +224,10 @@ Meniul nu mai are pagina separată **Brutar**. Ghidul brutarului îl primește �
 patiseria (PPT). În Admin → Acces pe rol, „Academia: cursuri” și „Academia: ghidul
 brutarului” se bifează separat.
 
+Apoi [`0012_academia_pentru_toti.sql`](supabase/migrations/0012_academia_pentru_toti.sql):
+toată echipa vede tot în Academie (toate cursurile publicate, ghidul brutarului,
+calculatorul). Rolurile bifate la un curs arată doar pentru cine e obligatoriu.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

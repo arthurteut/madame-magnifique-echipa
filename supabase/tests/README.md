@@ -56,3 +56,8 @@ nu vede spații, proceduri, cursuri sau „Cum funcționează”. Ultimul rând:
 Rolurile de producție (`09_roluri_productie.sql`, după 0009): PPT vede ambele
 laboratoare, PCF Laboratorul Fructus, PBR Peciu Nou și ghidul brutarului; DP și
 SP le văd rolurile, V nu. Ultimul rând: „11 din 11”.
+
+Academia pentru toți (`12_academia_pentru_toti.sql`, după 0012): orice cont vede
+toate cursurile publicate și ghidul brutarului; ciornele și răspunsurile rămân
+doar ale adminului; BRT tot nu vede spații sau proceduri. Ultimul rând: „7 din 7”.
+Testele 05, 07 și 08 descriu accesul de dinainte de 0012 și se rulează înainte.
