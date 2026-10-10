@@ -9,7 +9,7 @@ curs.json:
     {
       "title": "Introducere în lumea cafelei",
       "description": "…",
-      "category": "barista",            # brutarie | barista | patiserie-cofetarie | vanzare-servire | general
+      "category": "barista",            # brutarie | barista | patiserie | cofetarie | patiserie-cofetarie (comun) | vanzare-servire | general
       "roles": ["BAR"],                 # pentru cine e „de făcut” (toți îl văd, după 0012)
       "is_common": false,
       "published": true,
@@ -31,7 +31,7 @@ import re
 import sys
 from pathlib import Path
 
-CATEGORII = {"general", "brutarie", "barista", "patiserie-cofetarie", "vanzare-servire"}
+CATEGORII = {"general", "brutarie", "barista", "patiserie", "cofetarie", "patiserie-cofetarie", "vanzare-servire"}
 
 
 def q(v):
