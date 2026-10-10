@@ -1505,14 +1505,19 @@ const CATEGORII = [
     text: 'Maiaua, făina, procesul pas cu pas, defectele și rețetele casei.' },
   { id: 'barista', nume: 'Barista', eyebrow: 'Cafea de specialitate', poza: 'academia-barista', pozaPoz: '50% 70%', mono: 'Ba',
     text: 'De la sămânță la ceașcă: originea cafelei, parametrii și stația de espresso.' },
-  { id: 'patiserie-cofetarie', nume: 'Patiserie și cofetărie', eyebrow: 'Laborator', poza: 'academia-patiserie', mono: 'P',
-    text: 'Aluaturi, creme și tehnica din laboratoarele Madame.' },
+  { id: 'patiserie', nume: 'Patiserie', eyebrow: 'Laborator · aluaturi', poza: 'academia-patiserie', mono: 'P', si: ['patiserie-cofetarie'],
+    text: 'Aluaturi de bază, brioșă, viennoiserie laminată, flanuri și aparate coapte.' },
+  { id: 'cofetarie', nume: 'Cofetărie', eyebrow: 'Laborator · creme și ciocolată', poza: 'academia-cofetarie', mono: 'C', si: ['patiserie-cofetarie'],
+    text: 'Creme, ganache și ciocolată, zahăr și meringi, entremets și prăjituri.' },
+  // Cursurile comune patiseriei și cofetăriei apar în ambele casete de mai sus (câmpul „si”).
+  { id: 'patiserie-cofetarie', nume: 'Comun patiserie și cofetărie', ascuns: true },
   { id: 'vanzare-servire', nume: 'Vânzare și servire', eyebrow: 'Ospitalitate', poza: 'academia-vanzare', mono: 'V',
     text: 'Cum primim oaspeții, cum citim sala și cum lucrăm ca o echipă.' },
   { id: 'general', nume: 'Cursuri generale', eyebrow: 'Pentru toată echipa', poza: null, mono: 'M',
     text: 'Ce e bine să știe oricine lucrează la Madame.' },
 ];
 const CAT = Object.fromEntries(CATEGORII.map(k => [k.id, k]));
+const CASETE = CATEGORII.filter(k => !k.ascuns);
 const catCurs = c => CAT[c.category] ? c.category : 'general';
 
 function viewCursuri() {
@@ -1533,15 +1538,16 @@ function viewCursuri() {
     const card = c => {
       const st = stareCurs(c);
       return `<a class="course-card ${st.gata ? 'gata' : ''}" href="#/c/${c.id}">
-        <span class="eyebrow">Curs${c.intrebari.length ? ' + test' : ''}${c.published ? '' : ' · ciornă'}</span>
+        <span class="eyebrow">Curs${c.category === 'patiserie-cofetarie' ? ' comun' : ''}${c.intrebari.length ? ' + test' : ''}${c.published ? '' : ' · ciornă'}</span>
         <h3>${esc(c.title)}</h3>${c.description ? `<p>${esc(c.description)}</p>` : ''}
         <div class="progress" aria-hidden="true"><i style="width:${st.procent}%"></i></div>
         <span class="status">${esc(textStare(st))}</span></a>`;
     };
     const pe = grupeaza(lista, 'category');
     lista.forEach(c => { if (!CAT[c.category]) (pe.general = pe.general || []).push(c); });
-    const casete = CATEGORII.filter(k => k.id !== 'general' || (pe.general || []).length).map(k => {
-      const cursuri = pe[k.id] || [], extra = k.id === 'brutarie' ? ghiduri : '';
+    const casete = CASETE.filter(k => k.id !== 'general' || (pe.general || []).length).map(k => {
+      const cursuri = [k.id, ...(k.si || [])].flatMap(id => pe[id] || []).sort((a, b) => a.position - b.position || a.id - b.id);
+      const extra = k.id === 'brutarie' ? ghiduri : '';
       const continut = extra + cursuri.map(card).join('');
       return `<section class="cat-box" id="cat-${k.id}">
         <div class="cat-photo ${k.poza ? '' : 'fara-poza'}" data-mono="${esc(k.mono)}">${k.poza ? `<img src="${IMG(k.poza)}" alt="" loading="lazy"${k.pozaPoz ? ` style="object-position:${k.pozaPoz}"` : ''}>` : ''}
@@ -1556,7 +1562,7 @@ function viewCursuri() {
         ${deFacut.length ? `<div class="stat"><strong>${gata}</strong><span>din ${deFacut.length} cursuri pentru rolul tău terminate</span></div>` : ''}
         <div class="stat"><strong>${parcurse}</strong><span>lecții parcurse</span></div>
       </div>` : '')
-      + `<nav class="cat-nav" aria-label="Categorii">${CATEGORII.filter(k => casete.some(x => x.includes(`id="cat-${k.id}"`)))
+      + `<nav class="cat-nav" aria-label="Categorii">${CASETE.filter(k => casete.some(x => x.includes(`id="cat-${k.id}"`)))
           .map(k => `<a class="btn ghost sm" href="#cat-${k.id}" data-cat="${k.id}">${esc(k.nume)}</a>`).join('')}</nav>`
       + (eroare ? '<p class="err">Cursurile nu s-au putut încărca. Reîncarcă pagina.</p>' : '')
       + casete.join('')

@@ -65,3 +65,7 @@ Testele 05, 07 și 08 descriu accesul de dinainte de 0012 și se rulează înain
 Categoriile din Academie (`13_categorii_academie.sql`, după 0013): un curs nou e
 „general”, se mută în altă categorie, categoriile necunoscute sunt refuzate.
 Ultimul rând: „3 din 3”.
+
+Patiserie și cofetărie (`14_patiserie_cofetarie.sql`, după 0014): categoriile
+patiserie, cofetarie și patiserie-cofetarie sunt acceptate, cele scrise greșit
+sunt refuzate. Ultimul rând: „2 din 2”.

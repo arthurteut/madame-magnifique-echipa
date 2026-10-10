@@ -247,6 +247,14 @@ python3 tools/curs_din_text.py curs.json date-curs.sql
 Fișierul `date-curs.sql` conține materialele cursului: îl rulezi în SQL Editor și
 **nu** îl pui în repo.
 
+### 15. Patiseria și cofetăria, separate
+
+Rulează [`0014_patiserie_cofetarie.sql`](supabase/migrations/0014_patiserie_cofetarie.sql).
+Caseta „Patiserie și cofetărie” se împarte în două: **Patiserie** (aluaturi,
+viennoiserie, flanuri) și **Cofetărie** (creme, ciocolată, zahăr, entremets).
+Cursurile comune (categoria „Comun patiserie și cofetărie”, ex. Fundamentele
+laboratorului) apar în ambele casete.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
