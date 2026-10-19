@@ -255,6 +255,27 @@ viennoiserie, flanuri) și **Cofetărie** (creme, ciocolată, zahăr, entremets)
 Cursurile comune (categoria „Comun patiserie și cofetărie”, ex. Fundamentele
 laboratorului) apar în ambele casete.
 
+### 16. P&L (profit și pierdere)
+
+Rulează [`0015_pl.sql`](supabase/migrations/0015_pl.sql). În meniu apare **P&L**,
+doar pentru **GM, AE, EC și ADM**. Lista e fixată și în baza de date
+(`can_use_pl()`): chiar dacă pagina „pl” ar fi bifată pentru alt rol, sumele nu
+ajung la el. Dacă scoți rândul `pl` al unuia dintre cele patru roluri din
+`role_section_access`, rolul acela pierde accesul.
+
+- Un P&L = o entitate (firma sau o locație) pe un an, cu setările lui (TVA pe
+  fluxuri, curs EUR/RON, CAM, ținte). Primul, „Madame Magnifique” pe anul curent,
+  îl creează migrarea; altele se creează din pagină (Setări → P&L nou).
+- Lunile se salvează automat în `pl_months`; ultima modificare ține data și contul.
+- Un P&L întreg îl poate șterge doar adminul (GM); lunile le poate goli oricine
+  dintre cele patru roluri.
+- Ghidul de interpretare (benchmark-uri, decizii, glosar) stă în `pl_guide`:
+  îl încarci cu `date-pl-ghid.sql`, care **nu** intră în repo.
+
+Formulele sunt cele din modelul ATC P&L Toolkit: vânzările se introduc cu TVA și
+se aduc la venit net cu cotele din setări; restul sumelor, fără TVA; toate
+procentele se raportează la venitul net.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

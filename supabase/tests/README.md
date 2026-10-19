@@ -69,3 +69,8 @@ Ultimul rând: „3 din 3”.
 Patiserie și cofetărie (`14_patiserie_cofetarie.sql`, după 0014): categoriile
 patiserie, cofetarie și patiserie-cofetarie sunt acceptate, cele scrise greșit
 sunt refuzate. Ultimul rând: „2 din 2”.
+
+P&L (`15_pl.sql`, după 0015): EC, ADM, AE și GM văd și completează P&L-ul; RL și
+V nu văd nimic, nici dacă pagina e bifată pentru RL; fără pagina „pl”, nici ADM
+nu mai vede; un P&L întreg îl șterge doar GM, iar lunile lui se șterg odată cu el.
+Ultimul rând: „20 din 20”.
