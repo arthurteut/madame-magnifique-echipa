@@ -102,6 +102,8 @@
   .bar nav { display: flex; gap: 4px; margin-left: auto; }
   .bar nav a { font: 500 .78rem/1 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; padding: 10px 12px; color: var(--ink-soft); border-bottom: 2px solid transparent; }
   .bar nav a:hover, .bar nav a.on { border-bottom-color: var(--ink); }
+  .bar nav a { white-space: nowrap; }
+  @media (min-width: 821px) and (max-width: 1320px) { .bar { gap: 16px; } .bar nav { gap: 0; } .bar nav a { padding: 10px 8px; letter-spacing: .06em; font-size: .72rem; } .search-top { flex-basis: 220px; min-width: 120px; } }
   .icon-btn { background: none; border: 0; padding: 8px; display: inline-flex; color: var(--ink); }
   .icon-btn svg { width: 22px; height: 22px; }
   #menuBtn { display: none; }
@@ -534,6 +536,8 @@
   .pl-luna-act { display: flex; gap: 8px; flex-wrap: wrap; }
   .pl-modif { margin: 0 0 16px; }
   .pl-nota { margin: 0 0 8px !important; }
+  .pl-sub { font: 600 .68rem/1.3 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin: 18px 0 2px; padding-top: 12px; border-top: 1px dashed var(--line); }
+  .pl-sub:first-of-type { border-top: 0; padding-top: 0; margin-top: 8px; }
   .calc-form .pl-linie { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 6px 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid #efeeec; }
   .calc-form .pl-linie > label, .pl-linie > span:first-child { display: block; font-size: .95rem; color: var(--ink-soft); }
   .pl-linie b { font-weight: 400; color: var(--ink); }
@@ -610,7 +614,7 @@
   .pl-cadru-b i.ok { background: #7fb08d; } .pl-cadru-b i.at { background: #e3b45e; } .pl-cadru-b i.al { background: #c46a6a; }
   .pl-cadru-b b { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
   .pl-mix { display: flex; height: 16px; margin-top: 10px; background: #f2f1ee; overflow: hidden; }
-  .pl-mix i.m0, .pl-mix-leg i.m0 { background: var(--ink); } .pl-mix i.m1, .pl-mix-leg i.m1 { background: var(--sand); } .pl-mix i.m2, .pl-mix-leg i.m2 { background: var(--stone); }
+  .pl-mix i.m0, .pl-mix-leg i.m0 { background: var(--ink); } .pl-mix i.m1, .pl-mix-leg i.m1 { background: var(--sand); } .pl-mix i.m2, .pl-mix-leg i.m2 { background: var(--stone); } .pl-mix i.m3, .pl-mix-leg i.m3 { background: #c98a1c; }
   .pl-setari small.muted { font-size: .76rem; }
   .pl-ghid { margin-bottom: 40px; scroll-margin-top: 100px; }
   .pl-gol { max-width: 640px; }
@@ -2471,29 +2475,47 @@ const poatePL = () => !!ME && PL_ROLURI.includes(ME.role_code) && poate('pl');
 const LUNI = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const LUNI_LUNG = ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie', 'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'];
 // Setările implicite (foaia „Setări”); procentele se țin ca procente (11 = 11%).
-const PL_SETARI = { curs: 5.08, tva_bauturi: 11, tva_food: 11, tva_retail: 11, tva_alte: 21, cam: 2.25,
+const PL_SETARI = { curs: 5.08, tva_bauturi: 11, tva_food: 11, tva_retail: 11, tva_alte: 11, cam: 2.25,
   cas: 25, cass: 10, impozit: 10, salariu_minim: 4325,
   t_cogs: 30, t_munca: 30, t_chelt: 30, t_net: 10, alarma_prime: 65, toleranta: 3 };
-// Liniile P&L-ului: [cheie, denumire, explicație, unitate, acceptă minus]. „=cheie” = linie calculată.
+// Liniile P&L-ului: [cheie, denumire, explicație, unitate, acceptă minus]. „=cheie” = linie calculată,
+// „#” = subtitlu în formular. Cheltuielile din secțiunea B2B intră și în totalurile firmei:
+// ambalajele la COGS, personalul la muncă (cu CAM), transportul și comisioanele la controlabile.
 const PL_SECT = [
   { id: 'venituri', titlu: 'Venituri', total: ['venit_net', 'Venit net (fără TVA)'],
     nota: 'Încasările CU TVA, cum le vezi în casa de marcat. TVA-ul se scade automat, cu cotele din Setări.', linii: [
-    ['bauturi', 'Băuturi', 'bar: cafea, ceai, răcoritoare'],
-    ['food', 'Food', 'patiserie, sandvișuri, prânz'],
-    ['retail', 'Retail', 'cafea boabe, produse ambalate, merch'],
-    ['alte_venituri', 'Alte venituri', 'evenimente, wholesale, subînchiriere'],
+    ['bauturi', 'Cafenea', 'cafea, ceai și băuturi servite la bar'],
+    ['food', 'Patiserie și cofetărie', 'viennoiserie, prăjituri, torturi: la vitrină și la comandă'],
+    ['retail', 'Brutărie', 'pâine și produse de brutărie'],
+    ['=alte_venituri', 'B2B și evenimente', 'suma încasărilor din secțiunea B2B'],
     ['retururi', 'Retururi și discounturi', 'cu TVA, ca sumă pozitivă: vouchere, reduceri, anulări'] ] },
+  { id: 'b2b', titlu: 'B2B · încasări și cheltuieli directe', total: ['b2b_contrib', 'Rămâne din B2B'],
+    nota: 'Cât aduce B2B și cât costă direct. Cheltuielile de aici intră și în totalurile firmei (COGS, muncă, controlabile): nu le mai trece și acolo.', linii: [
+    ['#', 'Încasări, cu TVA'],
+    ['b2b_horeca', 'Cafenele și HoReCa', 'cafenele, restaurante, hoteluri'],
+    ['b2b_firme', 'Firme (corporate)', 'comenzi pentru birouri, cadouri corporate, mic-dejunuri'],
+    ['b2b_evenimente', 'Evenimente și catering', 'nunți, botezuri, evenimente private sau de firmă'],
+    ['b2b_magazine', 'Magazine și distribuitori', 'magazine partenere, retail, distribuitori'],
+    ['=b2b_net', 'Venit net B2B', 'fără TVA, cu cota „B2B și evenimente” din Setări'],
+    ['#', 'Cheltuieli directe, fără TVA'],
+    ['b2b_transport', 'Transport și livrare', 'combustibil, curier, mașina de livrare'],
+    ['b2b_ambalaje', 'Ambalaje B2B', 'cutii, tăvi, etichete pentru livrări'],
+    ['b2b_personal', 'Personal B2B', 'salarii brute: coordonator, șoferi, personal de eveniment'],
+    ['b2b_comisioane', 'Discounturi, comisioane, mostre', 'discounturi pe volum, comisioane de distribuitor, mostre și degustări'],
+    ['=b2b_costuri', 'Total cheltuieli directe B2B', 'cu CAM-ul pe personalul B2B'] ] },
   { id: 'cogs', titlu: 'COGS · costul mărfii vândute', total: ['cogs', 'Total COGS'],
     nota: 'Fără TVA. Ce ai consumat luna asta, nu ce ai cumpărat: stoc inițial + achiziții − stoc final.', linii: [
     ['cafea', 'Cafea (boabe)'],
     ['lapte', 'Lapte, lactate și alternative vegetale'],
     ['food_cogs', 'Food', 'ingrediente sau produse finite'],
-    ['ambalaje', 'Ambalaje și consumabile bar', 'pahare, capace, hârtie'],
+    ['ambalaje', 'Ambalaje și consumabile bar', 'pahare, capace, hârtie; fără cele B2B'],
+    ['=b2b_ambalaje', 'Ambalaje B2B', 'din secțiunea B2B'],
     ['cost_retail', 'Cost retail', 'marfă pentru revânzare'],
     ['alte_cogs', 'Alte COGS', 'siropuri, ceai, ciocolată, apă'] ] },
   { id: 'munca', titlu: 'Munca · costul total al echipei', total: ['munca', 'Total muncă'],
     nota: 'Salariile brute din statul de plată: CAS, CASS și impozitul sunt deja în brut. CAM-ul angajatorului se adaugă automat.', linii: [
-    ['salarii', 'Salarii brute', 'toți angajații, inclusiv managementul'],
+    ['salarii', 'Salarii brute', 'toți angajații, inclusiv managementul; fără personalul B2B'],
+    ['=b2b_personal', 'Personal B2B', 'salarii brute, din secțiunea B2B'],
     ['=cam', 'CAM angajator'],
     ['beneficii', 'Tichete de masă, bonusuri, alte beneficii'],
     ['colaboratori', 'Colaboratori', 'PFA, SRL, prestări: trec aici, nu la cheltuieli'],
@@ -2506,7 +2528,9 @@ const PL_SECT = [
     ['comisioane', 'Comisioane POS, bănci, platforme de livrare'],
     ['birou', 'Birou, papetărie, mărunțișuri'],
     ['licente', 'Muzică, licențe, abonamente mici'],
-    ['alte_controlabile', 'Alte controlabile'] ] },
+    ['alte_controlabile', 'Alte controlabile'],
+    ['=b2b_transport', 'Transport și livrare B2B', 'din secțiunea B2B'],
+    ['=b2b_comisioane', 'Discounturi, comisioane, mostre B2B', 'din secțiunea B2B'] ] },
   { id: 'necontrolabile', titlu: 'Cheltuieli necontrolabile', total: ['necontrolabile', 'Total necontrolabile'],
     nota: 'Fără TVA. Fixe pe termen scurt: le schimbi doar renegociind sau mutând.', linii: [
     ['chirie_eur', 'Chirie lunară', 'în EUR, fără TVA; se convertește cu cursul din Setări', 'EUR'],
@@ -2524,8 +2548,9 @@ const PL_SECT = [
     ['impozit', 'Impozit', 'suma lunară estimată (micro 1–3% din venit sau 16% din profit)'],
     ['nerecurente', 'Nerecurente (+/−)', 'pozitiv = cheltuială, negativ = venit excepțional', 'lei', true] ] },
 ];
-const PL_LINIE = Object.fromEntries(PL_SECT.flatMap(s => s.linii.map(l => [l[0].replace('=', ''), l])));
-const plChei = id => PL_SECT.find(s => s.id === id).linii.map(l => l[0]).filter(k => k[0] !== '=');
+const PL_LINIE = Object.fromEntries(PL_SECT.flatMap(s => s.linii.filter(l => l[0] !== '#').map(l => [l[0].replace('=', ''), l])));
+const plChei = id => PL_SECT.find(s => s.id === id).linii.map(l => l[0]).filter(k => !'=#'.includes(k[0]));
+const B2B_INCASARI = ['b2b_horeca', 'b2b_firme', 'b2b_evenimente', 'b2b_magazine'];
 const PL_INTRARI = PL_SECT.flatMap(s => plChei(s.id));
 const plSetari = c => Object.assign({}, PL_SETARI, (c && c.settings) || {});
 
@@ -2536,14 +2561,20 @@ function plCalc(d, s) {
   r.bauturi_net = v('bauturi') / (1 + s.tva_bauturi / 100);
   r.food_net = v('food') / (1 + s.tva_food / 100);
   r.retail_net = v('retail') / (1 + s.tva_retail / 100);
-  r.alte_net = v('alte_venituri') / (1 + s.tva_alte / 100);
-  r.retururi_net = -v('retururi') / (1 + s.tva_bauturi / 100);   // la cota băuturilor (aproximare)
+  // B2B: suma încasărilor din secțiunea B2B (o lună salvată înainte de secțiune are doar linia veche).
+  const b2b = B2B_INCASARI.reduce((t, k) => t + v(k), 0);
+  r.alte_venituri = b2b || v('alte_venituri');
+  r.alte_net = r.alte_venituri / (1 + s.tva_alte / 100);
+  r.retururi_net = -v('retururi') / (1 + s.tva_bauturi / 100);   // la cota cafenelei (aproximare, ca în modelul ATC)
   r.venit_net = r.bauturi_net + r.food_net + r.retail_net + r.alte_net + r.retururi_net;
-  r.cogs = suma('cogs');
+  r.cogs = suma('cogs') + v('b2b_ambalaje');
   r.profit_brut = r.venit_net - r.cogs;
-  r.cam = v('salarii') * s.cam / 100;
-  r.munca = suma('munca') + r.cam;
-  r.controlabile = suma('controlabile');
+  r.cam = (v('salarii') + v('b2b_personal')) * s.cam / 100;
+  r.munca = suma('munca') + v('b2b_personal') + r.cam;
+  r.controlabile = suma('controlabile') + v('b2b_transport') + v('b2b_comisioane');
+  r.b2b_net = r.alte_net;
+  r.b2b_costuri = v('b2b_transport') + v('b2b_ambalaje') + v('b2b_personal') * (1 + s.cam / 100) + v('b2b_comisioane');
+  r.b2b_contrib = r.b2b_net - r.b2b_costuri;
   r.chirie = v('chirie_eur') * s.curs;
   r.necontrolabile = suma('necontrolabile') - v('chirie_eur') + r.chirie;
   r.profit_op = r.profit_brut - r.munca - r.controlabile - r.necontrolabile;
@@ -2559,7 +2590,11 @@ function plInd(r) {
   return { gol: !V, venit: V, net: r.profit_net || 0, cogs: p(r.cogs), mb, munca: p(r.munca), prime: p(r.cogs + r.munca),
     chelt: p(r.controlabile + r.necontrolabile + r.sub_linie), chirie: p(r.chirie), mop: p(r.profit_op), mn: p(r.profit_net),
     be, dist: V && be !== null ? V - be : null, perLeu: r.munca ? V / r.munca : null,
-    mixB: p(r.bauturi_net), mixF: p(r.food_net), mixR: p(r.retail_net + r.alte_net) };
+    mixB: p(r.bauturi_net), mixF: p(r.food_net), mixR: p(r.retail_net), mixA: p(r.alte_net),
+    b2bNet: r.b2b_net || 0, b2bCost: r.b2b_costuri || 0, b2bRamane: r.b2b_contrib || 0, b2bMarja: r.b2b_net ? r.b2b_contrib / r.b2b_net : null,
+    // Materia primă a produselor B2B nu se știe separat: o estimăm cu COGS-ul mediu al lunii (fără ambalajele B2B).
+    b2bDupaMP: r.b2b_net && V ? r.b2b_contrib - r.b2b_net * (r.cogs - (r.b2b_ambalaje || 0)) / V : null,
+    cogsMP: V ? (r.cogs - (r.b2b_ambalaje || 0)) / V : 0 };
 }
 // Semnalele față de ținte: în țintă = OK, peste țintă cu cel mult toleranța = Atenție, altfel Alarmă.
 function plSemnale(i, s) {
@@ -2698,8 +2733,9 @@ function plTabLuna() {
   const prev = [...Array(PLS.m - 1).keys()].map(i => PLS.m - 1 - i).find(m => plAreDate(rows[m]));
   const linie = (l) => {
     const [k, et, expl, unit = 'lei'] = l;
+    if (k === '#') return `<h3 class="pl-sub">${esc(et)}</h3>`;
     if (k[0] === '=') {
-      const nota = k === '=cam' ? `salariile brute × ${plIn(s.cam)}%` : `chiria în EUR × ${plIn(s.curs)} lei`;
+      const nota = k === '=cam' ? `salariile brute (cu B2B) × ${plIn(s.cam)}%` : k === '=chirie' ? `chiria în EUR × ${plIn(s.curs)} lei` : expl || '';
       return `<div class="pl-linie auto"><span><b>${esc(et)}</b><small>${esc(nota)}</small></span><output data-pl-out="${k.slice(1)}"></output></div>`;
     }
     return `<div class="pl-linie"><label for="pl-${k}"><b>${esc(et)}</b>${expl ? `<small>${esc(expl)}</small>` : ''}</label>
@@ -2760,6 +2796,15 @@ function plRezumat(r, i, sem, s) {
         <tr><td>Profit operațional</td><td>${lei(r.profit_op)} lei · ${pc(i.mop)}</td></tr>
       </tbody></table>
     </div>
+    ${i.b2bNet || i.b2bCost ? `<div class="calc-card">
+      <span class="eyebrow">B2B</span>
+      <table class="calc-tbl pl-ind"><tbody>
+        <tr><td>Venit net B2B <small>${pc(i.mixA)} din venitul net</small></td><td>${lei(i.b2bNet)} lei</td></tr>
+        <tr><td>Cheltuieli directe B2B</td><td>${lei(i.b2bCost)} lei</td></tr>
+        <tr><td>Rămâne din B2B <small>după costurile directe</small></td><td>${lei(i.b2bRamane)} lei · ${pc(i.b2bMarja)}</td></tr>
+        ${i.b2bDupaMP !== null ? `<tr class="sub"><td>după materia primă, estimat <small>cu COGS-ul mediu al lunii, ${pc(i.cogsMP)}</small></td><td>${lei(i.b2bDupaMP)} lei</td></tr>` : ''}
+      </tbody></table>
+    </div>` : ''}
     <div class="calc-card">
       <span class="eyebrow">Pragul de rentabilitate</span>
       ${i.be === null ? `<p class="calc-nota" style="margin:0">${i.gol ? 'Apare după ce completezi veniturile și costurile.' : 'Marja brută e zero sau negativă: nu există un prag. Uită-te întâi la prețuri și la COGS.'}</p>`
@@ -2817,13 +2862,19 @@ function plRanduriRaport() {
   const out = [], i = (k, unit) => out.push({ tip: 'i', k, et: PL_LINIE[k][1], unit: PL_LINIE[k][3] || unit || 'lei' });
   PL_SECT.forEach((sec, n) => {
     out.push({ tip: 'h', et: `${n + 1}. ${sec.titlu}${sec.id === 'venituri' ? ' (încasări cu TVA)' : ''}` });
-    for (const l of sec.linii) l[0][0] === '=' ? out.push({ tip: 'c', k: l[0].slice(1), et: l[1] }) : i(l[0], sec.id === 'venituri' ? 'brut' : 'lei');
+    if (sec.id === 'b2b') out[out.length - 1].et += ' (detaliu: cheltuielile sunt cuprinse și în secțiunile de mai jos)';
+    for (const l of sec.linii) {
+      if (l[0] === '#') out.push({ tip: 'h2', et: l[1] });
+      else if (l[0][0] === '=') out.push({ tip: 'c', k: l[0].slice(1), et: l[1], unit: l[0] === '=alte_venituri' ? 'brut' : 'lei' });
+      else i(l[0], sec.id === 'venituri' || B2B_INCASARI.includes(l[0]) ? 'brut' : 'lei');
+    }
     if (sec.id === 'venituri') {
       out.push({ tip: 'h2', et: 'Venit net (fără TVA)' });
-      [['bauturi_net', 'Băuturi'], ['food_net', 'Food'], ['retail_net', 'Retail'], ['alte_net', 'Alte venituri'], ['retururi_net', 'Retururi și discounturi']]
+      [['bauturi_net', 'bauturi'], ['food_net', 'food'], ['retail_net', 'retail'], ['alte_net', 'alte_venituri'], ['retururi_net', 'retururi']].map(([k, l]) => [k, PL_LINIE[l][1]])
         .forEach(([k, et]) => out.push({ tip: 'c', k, et: et + ', fără TVA' }));
       out.push({ tip: 't', k: 'venit_net', et: 'VENIT NET' });
     } else out.push({ tip: 't', k: sec.total[0], et: sec.total[1].toUpperCase() });
+    if (sec.id === 'b2b') out.push({ tip: 'p', k: 'b2bMarja', et: 'Marja B2B % (după costurile directe)' });
     if (sec.id === 'cogs') out.push({ tip: 't', k: 'profit_brut', et: 'PROFIT BRUT' }, { tip: 'p', k: 'mb', et: 'Marjă brută %' });
     if (sec.id === 'munca') out.push({ tip: 'p', k: 'prime', et: 'Prime cost % (COGS + muncă)' });
     if (sec.id === 'necontrolabile') out.push({ tip: 't', k: 'profit_op', et: 'PROFIT OPERAȚIONAL' }, { tip: 'p', k: 'mop', et: 'Marjă operațională %' });
@@ -2853,7 +2904,7 @@ function plTabRaport() {
         : `<tr class="${x.tip}${x.tare ? ' tare' : ''}"><td>${esc(x.et)}${x.unit === 'EUR' ? ' <small>EUR</small>' : ''}</td>${cel.map(v => `<td>${val(x, v)}</td>`).join('')}
           <td>${val(x, an)}</td><td>${x.tip === 'p' ? '' : pr === null ? '' : pc(pr)}</td></tr>`).join('')}</tbody>
     </table></div>
-    <p class="calc-nota">Retururile se scad la cota de TVA a băuturilor (aproximare, ca în modelul ATC). Lunile goale nu intră în total.</p>`;
+    <p class="calc-nota">Retururile se scad la cota de TVA a cafenelei (aproximare, ca în modelul ATC). Lunile goale nu intră în total.</p>`;
 }
 function plCsv() {
   const t = plTabelRaport(), nr2 = v => v === null || v === undefined ? '' : (Math.round(v * 100) / 100).toString().replace('.', ',');
@@ -2896,8 +2947,8 @@ function plTabDashboard() {
         }).join('')}</div>
         <p class="calc-nota">Bara e realizatul anului; linia neagră e ținta din Setări. Cheltuieli = controlabile + necontrolabile + sub linie.</p>
         <span class="eyebrow" style="display:block;margin-top:22px">Mixul veniturilor</span>
-        <div class="pl-mix">${[['Băuturi', ia.mixB], ['Food', ia.mixF], ['Retail + alte', ia.mixR]].map(([n, v], k) => `<i class="m${k}" style="width:${Math.max(0, v) * 100}%" title="${n}: ${pc(v)}"></i>`).join('')}</div>
-        <p class="pl-mix-leg">${[['Băuturi', ia.mixB], ['Food', ia.mixF], ['Retail + alte', ia.mixR]].map(([n, v], k) => `<span><i class="m${k}"></i>${n} ${pc(v)}</span>`).join('')}</p>
+        <div class="pl-mix">${plMix(ia).map(([n, v], k) => `<i class="m${k}" style="width:${Math.max(0, v) * 100}%" title="${n}: ${pc(v)}"></i>`).join('')}</div>
+        <p class="pl-mix-leg">${plMix(ia).map(([n, v], k) => `<span><i class="m${k}"></i>${n} ${pc(v)}</span>`).join('')}</p>
       </div>
     </div>
     <h2 class="section-title" style="margin-top:36px">Indicatorii lunii</h2>
@@ -2918,11 +2969,18 @@ function plTabDashboard() {
       ${rand('Prag de rentabilitate (lei)', 'be', leiN, null, 'venitul net la care luna iese pe zero')}
       ${rand('Distanța față de prag (lei)', 'dist', leiN)}
       ${rand('Venit net per leu de muncă', 'perLeu', x2, null, 'sub 3 echipa e mare; peste 4 verifică subdimensionarea')}
-      ${rand('Băuturi %', 'mixB', pc)}
-      ${rand('Food %', 'mixF', pc)}
-      ${rand('Retail + alte %', 'mixR', pc)}
+      ${PL_MIX.map(([k, l]) => rand(PL_LINIE[l][1] + ' %', k, pc)).join('')}
+      <tr class="h"><td colspan="14">B2B</td></tr>
+      ${rand('Venit net B2B (lei)', 'b2bNet', lei)}
+      ${rand('Cheltuieli directe B2B (lei)', 'b2bCost', lei, null, 'transport, ambalaje, personal cu CAM, discounturi și comisioane')}
+      ${rand('Rămâne din B2B (lei)', 'b2bRamane', lei)}
+      ${rand('Marja B2B %', 'b2bMarja', pc, null, 'după costurile directe')}
+      ${rand('După materia primă, estimat (lei)', 'b2bDupaMP', leiN, null, 'cu COGS-ul mediu al lunii')}
     </tbody></table></div>`;
 }
+// Mixul veniturilor: fiecare flux din venitul net.
+const PL_MIX = [['mixB', 'bauturi'], ['mixF', 'food'], ['mixR', 'retail'], ['mixA', 'alte_venituri']];
+const plMix = ia => PL_MIX.map(([k, l]) => [PL_LINIE[l][1], ia[k]]);
 // Graficul lunar: venitul net și profitul net (SVG, fără bibliotecă).
 function plGrafic(ind) {
   const W = 640, H = 240, st = 56, dr = 12, sus = 14, jos = 28;
@@ -2951,8 +3009,8 @@ function plGrafic(ind) {
 // ----- Setări -----
 const PL_CAMPURI_SETARI = [
   ['Afacerea', [['curs', 'Curs EUR/RON pentru chirie', 'lei', 'Actualizează-l dacă variază mult.']]],
-  ['TVA pe vânzări (scos din încasări)', [['tva_bauturi', 'Băuturi la bar / servire', '%'], ['tva_food', 'Food servit, patiserie', '%'],
-    ['tva_retail', 'Retail (alimente ambalate)', '%', 'Merch și obiecte non-alimentare: 21%.'], ['tva_alte', 'Alte venituri', '%', 'Implicit cota standard.']]],
+  ['TVA pe vânzări (scos din încasări)', [['tva_bauturi', 'Cafenea', '%', 'Băuturile alcoolice servite: 21%.'], ['tva_food', 'Patiserie și cofetărie', '%'],
+    ['tva_retail', 'Brutărie', '%'], ['tva_alte', 'B2B și evenimente', '%', 'Produse alimentare livrate: 11%. Servicii, închirieri: 21%.']]],
   ['Costul muncii', [['cam', 'CAM (angajator)', '%', 'Se adaugă peste brut.'], ['cas', 'CAS (din brut, informativ)', '%'], ['cass', 'CASS (din brut, informativ)', '%'],
     ['impozit', 'Impozit pe venit (din brut, informativ)', '%'], ['salariu_minim', 'Salariul minim brut', 'lei', 'Informativ, pentru schema de personal.']]],
   ['Țintele (% din venitul net)', [['t_cogs', 'COGS', '%'], ['t_munca', 'Munca', '%'], ['t_chelt', 'Cheltuieli', '%', 'Controlabile + necontrolabile + sub linie.'],

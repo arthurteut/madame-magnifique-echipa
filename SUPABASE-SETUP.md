@@ -267,6 +267,10 @@ ajung la el. Dacă scoți rândul `pl` al unuia dintre cele patru roluri din
   fluxuri, curs EUR/RON, CAM, ținte). Primul, „Madame Magnifique” pe anul curent,
   îl creează migrarea; altele se creează din pagină (Setări → P&L nou).
 - Lunile se salvează automat în `pl_months`; ultima modificare ține data și contul.
+- Veniturile sunt pe fluxurile Madame: Cafenea, Patiserie și cofetărie, Brutărie,
+  B2B și evenimente. Secțiunea **B2B** din fiecare lună ține încasările B2B pe
+  tipuri și cheltuielile directe (transport, ambalaje, personal, discounturi și
+  comisioane); acestea intră și în totalurile firmei. Nu e nevoie de altă migrare.
 - Un P&L întreg îl poate șterge doar adminul (GM); lunile le poate goli oricine
   dintre cele patru roluri.
 - Ghidul de interpretare (benchmark-uri, decizii, glosar) stă în `pl_guide`:
