@@ -744,6 +744,46 @@
     body.print-qr .qr-card.de-print .qr-img svg { max-width: 12cm; }
     body.print-qr .qr-card.de-print h3 { font-size: 28pt; }
   }
+  /* ---------- Jurnalul de croissant ---------- */
+  .jc-sus { display: flex; gap: 20px 32px; align-items: center; flex-wrap: wrap; margin-bottom: 28px; }
+  .jc-stats { margin: 0 !important; }
+  .jc-lista { display: grid; gap: 12px; max-width: 980px; }
+  .jc-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 20px 22px; background: #fff; border: 1px solid var(--line); text-decoration: none; color: var(--ink-soft); }
+  .jc-card:hover { border-color: var(--ink); }
+  .jc-card h3 { font-size: 1.15rem; margin: 6px 0 8px; }
+  .jc-card p { margin: 0 0 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .jc-card small { display: block; color: var(--muted); font-size: .86rem; }
+  .jc-scor { text-align: right; white-space: nowrap; }
+  .jc-scor b { font: 500 2rem/1 'Montserrat', sans-serif; color: var(--ink); }
+  .jc-scor i { font-style: normal; color: var(--muted); font-size: .9rem; }
+  .jc-cap { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 12px 16px; align-items: end; margin-bottom: 20px; }
+  .jc-cap label { display: grid; gap: 8px; }
+  .jc-cap .field { padding: 12px 14px; }
+  .jc-nume .field { font-size: 1.1rem; }
+  @media (max-width: 640px) { .jc-cap { grid-template-columns: 1fr; } }
+  .jc-pasi { display: flex; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--line); margin-bottom: 26px; scrollbar-width: none; }
+  .jc-pasi button { flex: none; display: flex; gap: 8px; align-items: baseline; padding: 14px 16px; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; font: 500 .76rem/1 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .jc-pasi button span { font-size: .68rem; color: var(--stone); letter-spacing: .04em; }
+  .jc-pasi button.on { color: var(--ink); border-bottom-color: var(--ink); }
+  .jc-pasi button.on span { color: var(--gold); }
+  .jc-h2 { display: flex; gap: 12px; align-items: baseline; font-size: clamp(1.4rem, 3vw, 1.8rem); margin: 0 0 18px; }
+  .jc-h2 span { font-size: .9rem; color: var(--gold); letter-spacing: .08em; }
+  .jc-corp:not(.calc) .calc-form { max-width: 820px; }
+  .jc .calc-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
+  @media (max-width: 520px) { .jc .calc-grid { grid-template-columns: 1fr 1fr; } .jc .calc-grid > label:has(select), .jc .calc-grid > label:has(input[type=text]:not([inputmode])) { grid-column: 1 / -1; } }
+  .jc-lat { grid-column: 1 / -1; }
+  .jc-lat textarea { resize: vertical; min-height: 84px; font: inherit; color: var(--ink-soft); }
+  .jc-check { grid-column: 1 / -1; }
+  .jc-scoruri { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; }
+  .jc-scoruri button { aspect-ratio: 1; max-height: 52px; border: 1px solid var(--line); background: #fff; font: 500 1rem/1 'Montserrat', sans-serif; color: var(--ink-soft); }
+  .jc-scoruri button:hover { border-color: var(--ink); }
+  .jc-scoruri button.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .jc-rap td:first-child { color: var(--ink-soft); }
+  .jc-jos { display: flex; justify-content: space-between; gap: 12px; max-width: 820px; margin-top: 8px; }
+  .jc-act { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); max-width: 820px; }
+  @media print {
+    .jc-pasi, .jc-jos, .jc-act, .jc-cap .pl-status { display: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -1043,6 +1083,7 @@ function route() {
   else if (a === 'cursuri' && poateAcademia()) { html = viewCursuri(); nav = 'cursuri'; }
   else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'pl' && poatePL()) { html = viewPL(params); nav = 'pl'; }
+  else if (a === 'jurnal' && poateJurnal()) { html = viewJurnal(parts); nav = 'cursuri'; }
   else if (a === 'tura') { html = viewTura(); nav = 'tura'; }
   else if (a === 'pontaj') { html = viewPontaj(params); nav = 'tura'; }
   else if (a === 'fisa' && (params.r || (params.s && params.c))) { html = viewFisa(params); nav = params.r ? 'echipa' : 'tura'; }
@@ -1788,7 +1829,9 @@ function viewCursuri() {
     lista.forEach(c => { if (!CAT[c.category]) (pe.general = pe.general || []).push(c); });
     const casete = CASETE.filter(k => k.id !== 'general' || (pe.general || []).length).map(k => {
       const cursuri = [k.id, ...(k.si || [])].flatMap(id => pe[id] || []).sort((a, b) => a.position - b.position || a.id - b.id);
-      const extra = k.id === 'brutarie' ? ghiduri : '';
+      const extra = k.id === 'brutarie' ? ghiduri : k.id === 'patiserie' && poateJurnal() ? `
+        <a class="course-card ghid" href="#/jurnal"><span class="eyebrow">Unealtă</span><h3>Jurnalul de croissant</h3>
+          <p>Fiecare batch de aluat laminat: rețeta, tururile, dospirea, coacerea și cum a ieșit.</p><span class="status">Deschide →</span></a>` : '';
       const continut = extra + cursuri.map(card).join('');
       return `<section class="cat-box" id="cat-${k.id}">
         <div class="cat-photo ${k.poza ? '' : 'fara-poza'}" data-mono="${esc(k.mono)}">${k.poza ? `<img src="${IMG(k.poza)}" alt="" loading="lazy"${k.pozaPoz ? ` style="object-position:${k.pozaPoz}"` : ''}>` : ''}
@@ -3893,6 +3936,225 @@ async function incarcaQR() {
       if (error) toast('Codul nu s-a schimbat.', true); else { toast('Cod nou. Printează-l și înlocuiește-l pe cel vechi.'); incarcaQR(); }
     }
   };
+}
+
+// ---------- Jurnalul de croissant (Academia → Patiserie) ----------
+// Migrarea 0018. Un batch = rețeta, détrempe, tururile, modelarea, dospirea, coacerea și
+// rezultatul. Jurnalul e comun patiseriei și șefilor; se salvează automat, pe măsură ce scrii.
+const JURNAL_ROLURI = ['PPT', 'PBP', 'PP + B', 'SP', 'DP', 'GM', 'AE'];
+const poateJurnal = () => !!ME && (ME.admin || JURNAL_ROLURI.includes(ME.role_code));
+// Câmpurile: [cheie, etichetă, unitate, tip (num | text | select | area | time | check), exemplu sau variante]
+const JC = [
+  { id: 'reteta', t: 'Rețeta', grupuri: [
+    ['Condițiile de lucru', [['tempAmbient', 'Temperatura în laborator', '°C', 'num', '22'], ['umiditateMediu', 'Umiditatea', '%', 'num', '55']]],
+    ['Ingredientele détrempe-ului', [['flourType', 'Tipul făinii', '', 'text', 'ex.: T65, T55, amestec'], ['flourWeight', 'Făină', 'g', 'num', '1000'],
+      ['milkWeight', 'Lapte', 'g', 'num', '300'], ['waterWeight', 'Apă', 'g', 'num', '200'], ['eggWeight', 'Ouă', 'g', 'num', '0'],
+      ['sugarWeight', 'Zahăr', 'g', 'num', '120'], ['saltWeight', 'Sare', 'g', 'num', '20'],
+      ['yeastType', 'Tipul drojdiei', '', 'select', ['proaspătă', 'instant', 'uscată activă']], ['yeastWeight', 'Drojdie', 'g', 'num', '40'],
+      ['butterType', 'Tipul untului din aluat', '', 'text', 'ex.: 82% grăsime'], ['butterWeight', 'Unt în aluat', 'g', 'num', '100']]],
+    ['Untul de laminare', [['butterTourageType', 'Tipul untului de tourage', '', 'text', 'ex.: foi 84%'], ['butterTourageWeight', 'Unt de tourage', 'g', 'num', '500']]],
+  ] },
+  { id: 'detrempe', t: 'Détrempe', grupuri: [
+    ['Frământarea', [['detrempeMethod', 'Metoda', '', 'select', ['spirală', 'planetară', 'manuală', 'autoliză + frământare']],
+      ['detrempeMixTime', 'Timp de frământare', 'min', 'num', '8'], ['detrempeTempFinala', 'Temperatura finală a aluatului', '°C', 'num', '24'],
+      ['detrempeConsistenta', 'Consistența aluatului', '', 'area', 'ex.: neted, elastic, ușor lipicios']]],
+    ['Fermentarea la temperatura camerei', [['detrempeFermentareTimpAmb', 'Durata', 'min', 'num', '30'], ['detrempeFermentareTempAmb', 'Temperatura', '°C', 'num', '22']]],
+    ['Odihna la frigider', [['detrempeFermentareTimpFrig', 'Durata', 'ore', 'num', '12'], ['detrempeFermentareTempFrig', 'Temperatura', '°C', 'num', '4']]],
+  ] },
+  { id: 'tourage', t: 'Tourage', grupuri: [
+    ['Laminarea', [['tourageMethod', 'Metoda', '', 'select', ['simplu', 'dublu', 'mixt']],
+      ['tourageNrTururi', 'Tururile', '', 'select', ['3 simple', '2 simple', '1 dublu + 1 simplu', '2 duble', '2 simple + 1 dublu', 'altfel (scrie la observații)']],
+      ['tourageTempUntAmbalare', 'Temperatura untului la închidere', '°C', 'num', '14'], ['tourageGrosimeUnt', 'Grosimea plăcii de unt', 'mm', 'num', '7']]],
+    ['Turul 1', [['tourageTur1Timp', 'Ora', '', 'time'], ['tourageTur1TempAluat', 'Temperatura aluatului', '°C', 'num', '16'],
+      ['tourageTur1Obs', 'Observații', '', 'area', 'ex.: untul s-a fisurat, aluatul trage înapoi'], ['touragePauza1', 'Pauza la frigider după tur', 'min', 'num', '30']]],
+    ['Turul 2', [['tourageTur2Timp', 'Ora', '', 'time'], ['tourageTur2TempAluat', 'Temperatura aluatului', '°C', 'num', '14'],
+      ['tourageTur2Obs', 'Observații', '', 'area', 'ex.: se simte untul prin aluat, straturi vizibile'], ['touragePauza2', 'Pauza la frigider după tur', 'min', 'num', '30']]],
+    ['Turul 3', [['tourageTur3Timp', 'Ora', '', 'time'], ['tourageTur3TempAluat', 'Temperatura aluatului', '°C', 'num', '13'],
+      ['tourageTur3Obs', 'Observații', '', 'area', 'ex.: aluat neted, straturi definite']]],
+  ] },
+  { id: 'modelare', t: 'Modelarea', grupuri: [
+    ['Laminarea finală și tăierea', [['grosimeLaminare', 'Grosimea finală', 'mm', 'num', '4'], ['dimensiuneTriunghi', 'Triunghiul', '', 'text', 'ex.: 10 × 25 cm'],
+      ['greutatePerBuc', 'Greutatea pe bucată', 'g', 'num', '80'], ['nrBucati', 'Bucăți obținute', 'buc', 'num', '40']]],
+  ] },
+  { id: 'dospire', t: 'Dospirea', grupuri: [
+    ['Dospitorul', [['dospireTempCam', 'Temperatura', '°C', 'num', '26'], ['dospireUmiditate', 'Umiditatea', '%', 'num', '75'], ['dospireDurata', 'Durata', 'min', 'num', '120'],
+      ['dospireAspect', 'Cum arată la final', '', 'area', 'ex.: volum dublu, tremură la atingere, straturi vizibile']]],
+  ] },
+  { id: 'coacere', t: 'Coacerea', grupuri: [
+    ['Cuptorul', [['coacereTempCuptor', 'Temperatura', '°C', 'num', '180'], ['coacereDurata', 'Durata', 'min', 'num', '18'],
+      ['coacereAbur', 'Abur la început', '', 'check'], ['coacereDurataAbur', 'Durata aburului', 'sec', 'num', '5'],
+      ['coacereEggWash', 'Dorura', '', 'select', ['ou + lapte', 'ou întreg', 'gălbenuș + smântână', 'doar gălbenuș', 'fără', 'alta']]]],
+  ] },
+  { id: 'rezultat', t: 'Rezultatul', grupuri: [
+    ['Cum a ieșit', [['rezultatCuloare', 'Culoarea', '', 'select', ['', 'prea deschisă', 'aurie deschisă', 'aurie, corectă', 'aurie închisă', 'prea închisă']],
+      ['rezultatVolum', 'Volumul', '', 'select', ['', 'subdezvoltat', 'acceptabil', 'bun', 'excelent', 'excesiv']],
+      ['rezultatStraturi', 'Straturile', '', 'select', ['', 'inexistente', 'puțin vizibile', 'vizibile', 'bine definite', 'excepționale']],
+      ['rezultatTextura', 'Interiorul (fagurele)', '', 'select', ['', 'dens, neaerisit', 'parțial aerisit', 'aerisit uniform', 'fagure corect', 'goluri mari']],
+      ['rezultatGust', 'Gustul', '', 'area', 'ex.: echilibru dulce-sărat, gust de unt, aromă de fermentare']]],
+  ] },
+  { id: 'note', t: 'Concluzii', grupuri: [
+    ['Ce reții din batch', [['notes', 'Note generale', '', 'area', 'Ce ai observat la batch-ul ăsta'],
+      ['probleme', 'Ce nu a mers', '', 'area', 'ex.: untul a ieșit prin aluat la turul 2, dospire insuficientă'],
+      ['imbunatatiri', 'Ce schimbi data viitoare', '', 'area', 'ex.: aluatul cu 2 °C mai rece, pauza dintre tururi mai lungă']]],
+  ] },
+];
+const JC_IMPLICIT = { yeastType: 'proaspătă', detrempeMethod: 'spirală', tourageMethod: 'simplu', tourageNrTururi: '3 simple', coacereEggWash: 'ou + lapte', coacereAbur: false };
+const jcNr = v => { const x = parseFloat(String(v ?? '').replace(',', '.')); return Number.isFinite(x) ? x : 0; };
+const jcProc = x => (Math.round(x * 10) / 10).toLocaleString('ro-RO') + '%';
+// Rapoartele de brutar ale rețetei: hidratarea, untul de laminare față de făină și de détrempe.
+function jcRapoarte(d) {
+  const f = jcNr(d.flourWeight); if (!f) return [];
+  const lichid = jcNr(d.milkWeight) + jcNr(d.waterWeight) + jcNr(d.eggWeight);
+  const detrempe = f + lichid + jcNr(d.sugarWeight) + jcNr(d.saltWeight) + jcNr(d.yeastWeight) + jcNr(d.butterWeight);
+  const t = jcNr(d.butterTourageWeight), out = [];
+  if (lichid) out.push(['Hidratare (lichide / făină)', jcProc(lichid / f * 100)]);
+  if (jcNr(d.sugarWeight)) out.push(['Zahăr', jcProc(jcNr(d.sugarWeight) / f * 100)]);
+  if (jcNr(d.saltWeight)) out.push(['Sare', jcProc(jcNr(d.saltWeight) / f * 100)]);
+  if (jcNr(d.yeastWeight)) out.push(['Drojdie', jcProc(jcNr(d.yeastWeight) / f * 100)]);
+  if (t) out.push(['Unt de tourage / făină', jcProc(t / f * 100)], ['Unt de tourage / détrempe', jcProc(t / detrempe * 100)]);
+  out.push(['Détrempe total', Math.round(detrempe).toLocaleString('ro-RO') + ' g']);
+  if (t) out.push(['Aluat laminat total', Math.round(detrempe + t).toLocaleString('ro-RO') + ' g']);
+  return out;
+}
+
+const jurnalBand = (crumb, titlu, sub, foto) => `
+  <section class="band"><div class="wrap ${foto ? 'band-grid' : ''}"><div>
+    <div class="crumbs"><a href="#/cursuri">Academia Madame</a> / <a href="#/cursuri">Patiserie</a>${crumb ? ` / <a href="#/jurnal">Jurnalul de croissant</a>` : ''}</div>
+    <span class="eyebrow">Patiserie · aluat laminat</span>
+    <h1>${titlu}</h1>${sub ? `<p class="sub">${sub}</p>` : ''}
+  </div>${foto ? `<figure class="band-photo"><img src="${IMG(foto)}" alt="Croissant Madame Magnifique, secționat"></figure>` : ''}</div></section>`;
+
+function viewJurnal(parts) {
+  const sub = parts[1];
+  if (sub) return viewBatch(sub);
+  setTimeout(async () => {
+    const box = document.getElementById('jurnalBody'); if (!box) return;
+    let lista, autori;
+    try {
+      const [l, a] = await Promise.all([SB.from('croissant_batches').select('id,day,name,score,data,created_by,updated_at').order('day', { ascending: false }).order('id', { ascending: false }),
+        SB.rpc('autori_jurnal')]);
+      if (l.error) throw l.error;
+      lista = l.data; autori = a.data || [];
+    } catch (e) { console.error('Jurnal:', e); box.innerHTML = '<p class="err">Jurnalul nu s-a putut încărca. Dacă e prima dată, rulează migrarea 0018_jurnal_croissant.sql.</p>'; return; }
+    if (!document.getElementById('jurnalBody')) return;
+    const autor = u => (autori.find(x => x.user_id === u) || {}).full_name || '';
+    const notate = lista.filter(b => b.score), ultimele = notate.slice(0, 10);
+    const medie = ultimele.length ? ultimele.reduce((s, b) => s + b.score, 0) / ultimele.length : null;
+    const cel = notate.slice().sort((a, b) => b.score - a.score || b.day.localeCompare(a.day))[0];
+    box.innerHTML = `<div class="jc-sus"><a class="btn" href="#/jurnal/nou">Batch nou</a>
+        ${lista.length ? `<div class="stats jc-stats"><div class="stat"><strong>${lista.length}</strong><span>batch-uri în jurnal</span></div>
+          ${medie !== null ? `<div class="stat"><strong>${medie.toLocaleString('ro-RO', { maximumFractionDigits: 1 })}</strong><span>scorul mediu, ultimele ${ultimele.length}</span></div>` : ''}
+          ${cel ? `<div class="stat"><strong>${cel.score}</strong><span>cel mai bun: ${esc(cel.name || 'fără nume')}</span></div>` : ''}</div>` : ''}</div>
+      ${lista.length ? `<div class="jc-lista">${lista.map(b => {
+        const d = b.data || {}, tag = [d.flourType, d.tourageNrTururi, d.nrBucati ? d.nrBucati + ' buc' : '', jcRapoarte(d).find(r => r[0] === 'Unt de tourage / făină') ? 'unt ' + jcRapoarte(d).find(r => r[0] === 'Unt de tourage / făină')[1] : ''].filter(Boolean);
+        return `<a class="jc-card" href="#/jurnal/${b.id}"><div><span class="eyebrow">${ziUman(b.day)}${autor(b.created_by) ? ' · ' + esc(autor(b.created_by)) : ''}</span>
+          <h3>${esc(b.name || 'Batch fără nume')}</h3>${tag.length ? `<p>${tag.map(t => `<span class="pill">${esc(t)}</span>`).join(' ')}</p>` : ''}
+          ${d.imbunatatiri ? `<small>Data viitoare: ${esc(d.imbunatatiri.slice(0, 140))}${d.imbunatatiri.length > 140 ? '…' : ''}</small>` : ''}</div>
+          <span class="jc-scor">${b.score ? `<b>${b.score}</b><i>/10</i>` : '<i>fără scor</i>'}</span></a>`;
+      }).join('')}</div>`
+      : `<div class="calc-card" style="max-width:640px"><span class="eyebrow">Jurnalul e gol</span><p style="margin:10px 0 0">Începe cu „Batch nou”: notezi rețeta, temperaturile la fiecare tur, dospirea, coacerea și cum a ieșit. După câteva batch-uri vezi ce funcționează.</p></div>`}`;
+  }, 0);
+  return jurnalBand('', 'Jurnalul de croissant', 'Fiecare batch de aluat laminat, de la détrempe la coacere: ce ai făcut, cum a ieșit și ce schimbi data viitoare.', 'croissant')
+    + `<section class="block"><div class="wrap" id="jurnalBody"><p class="muted">Se încarcă…</p></div></section>`;
+}
+
+function viewBatch(id) {
+  setTimeout(() => incarcaBatch(id), 0);
+  return jurnalBand('batch', '<span id="jcTitlu">Batch</span>', '', '')
+    + `<section class="block jc"><div class="wrap" id="batchBody"><p class="muted">Se încarcă…</p></div></section>`;
+}
+async function incarcaBatch(id) {
+  const box = document.getElementById('batchBody'); if (!box) return;
+  let b;
+  const { params } = parseHash();
+  if (id === 'nou') {
+    b = { id: null, day: ziLocala(), name: '', score: null, data: { ...JC_IMPLICIT }, created_by: SB_USER_ID };
+    if (params.din) {
+      const r = await SB.from('croissant_batches').select('name,data').eq('id', +params.din).maybeSingle();
+      if (r.data) {
+        // pornești de la un batch vechi: rețeta și procesul se păstrează, rezultatul și concluziile nu
+        const d = { ...r.data.data };
+        for (const k of Object.keys(d)) if (/^(rezultat|notes|probleme|imbunatatiri|tourageTur\dTimp|tourageTur\dObs|dospireAspect|detrempeConsistenta)/.test(k)) delete d[k];
+        b.data = d; b.name = '';
+      }
+    }
+  } else {
+    const r = await SB.from('croissant_batches').select('*').eq('id', +id).maybeSingle();
+    if (r.error || !r.data) { box.innerHTML = '<p class="lvl4">Batch-ul nu există.</p>'; return; }
+    b = r.data;
+  }
+  if (!document.getElementById('batchBody')) return;
+  let sec = Math.max(0, JC.findIndex(s => s.id === params.sec));
+  let timer = null, zbor = Promise.resolve(), stare = '';
+  const status = (t, err) => { stare = t; const el = document.getElementById('jcStare'); if (el) { el.textContent = t; el.classList.toggle('err', !!err); } };
+  const salveaza = async () => {
+    const rand = { day: b.day, name: b.name.trim(), score: b.score, data: b.data };
+    const r = b.id ? await SB.from('croissant_batches').update(rand).eq('id', b.id).select('id').single()
+      : await SB.from('croissant_batches').insert({ ...rand, created_by: SB_USER_ID }).select('id').single();
+    if (r.error) { console.error('Jurnal:', r.error); status('Nu s-a salvat. Verifică internetul.', true); return; }
+    if (!b.id) { b.id = r.data.id; history.replaceState(null, '', `#/jurnal/${b.id}`); deseneaza(); }
+    status('Salvat ✓');
+  };
+  const programeaza = () => { status('Se salvează…'); clearTimeout(timer); timer = setTimeout(() => { zbor = zbor.then(salveaza); }, 700); };
+  const camp = ([k, et, unit, tip = 'num', ex]) => {
+    const v = b.data[k] ?? '';
+    if (tip === 'check') return `<label class="inline jc-check"><input type="checkbox" data-jc="${k}" ${v ? 'checked' : ''}> ${esc(et)}</label>`;
+    if (k === 'coacereDurataAbur' && !b.data.coacereAbur) return '';
+    if (tip === 'area') return `<label class="jc-lat">${esc(et)}<textarea class="field" data-jc="${k}" rows="3" placeholder="${esc(ex || '')}">${esc(v)}</textarea></label>`;
+    if (tip === 'select') return `<label>${esc(et)}<select class="field" data-jc="${k}">${ex.map(o => `<option value="${esc(o)}" ${o === v ? 'selected' : ''}>${o ? esc(o) : '—'}</option>`).join('')}</select></label>`;
+    return `<label>${esc(et)}<span class="pct"><input class="field" data-jc="${k}" ${tip === 'num' ? 'inputmode="decimal"' : ''} type="${tip === 'time' ? 'time' : 'text'}" value="${esc(v)}" placeholder="${esc(ex || '')}">${unit ? `<i>${esc(unit)}</i>` : ''}</span></label>`;
+  };
+  const rapoarte = () => { const r = jcRapoarte(b.data); return r.length ? `<table class="calc-tbl jc-rap"><tbody>${r.map(([n, v]) => `<tr><td>${esc(n)}</td><td>${esc(v)}</td></tr>`).join('')}</tbody></table>` : '<p class="calc-nota" style="margin:0">Completează făina și ingredientele ca să vezi procentele de brutar.</p>'; };
+  const deseneaza = () => {
+    const s = JC[sec];
+    document.getElementById('jcTitlu').textContent = b.name || (b.id ? 'Batch fără nume' : 'Batch nou');
+    box.innerHTML = `<div class="jc-cap">
+        <label class="jc-nume"><span class="eyebrow">Numele batch-ului</span><input class="field" data-jcn="name" value="${esc(b.name)}" placeholder="ex.: Batch 12 · T65 + unt 84%"></label>
+        <label><span class="eyebrow">Data</span><input class="field" type="date" data-jcn="day" value="${esc(b.day)}"></label>
+        <p class="pl-status" id="jcStare">${esc(stare)}</p></div>
+      <nav class="jc-pasi" aria-label="Etapele batch-ului">${JC.map((x, i) => `<button type="button" class="${i === sec ? 'on' : ''}" data-sec="${i}"><span>${String(i + 1).padStart(2, '0')}</span>${esc(x.t)}</button>`).join('')}</nav>
+      <div class="${s.id === 'reteta' ? 'calc' : ''} jc-corp">
+        <form class="calc-form" autocomplete="off" onsubmit="return false">
+          <h2 class="jc-h2"><span>${String(sec + 1).padStart(2, '0')}</span>${esc(s.t)}</h2>
+          ${s.id === 'rezultat' ? `<fieldset><legend>Scorul batch-ului</legend><div class="jc-scoruri">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => `<button type="button" class="${b.score === n ? 'on' : ''}" data-scor="${n}">${n}</button>`).join('')}</div>
+            <p class="calc-nota">1 = de aruncat · 5 = vandabil, cu defecte · 8 = standardul Madame · 10 = fără nimic de reproșat</p></fieldset>` : ''}
+          ${s.grupuri.map(([titlu, campuri]) => `<fieldset><legend>${esc(titlu)}</legend><div class="calc-grid">${campuri.map(camp).join('')}</div></fieldset>`).join('')}
+        </form>
+        ${s.id === 'reteta' ? `<div class="calc-rez"><div class="calc-card"><span class="eyebrow">Procente de brutar</span><div id="jcRap">${rapoarte()}</div></div></div>` : ''}
+      </div>
+      <div class="jc-jos">${sec > 0 ? `<button class="btn ghost" type="button" data-sec="${sec - 1}">← ${esc(JC[sec - 1].t)}</button>` : '<span></span>'}
+        ${sec < JC.length - 1 ? `<button class="btn" type="button" data-sec="${sec + 1}">${esc(JC[sec + 1].t)} →</button>` : `<a class="btn" href="#/jurnal">Gata · înapoi la jurnal</a>`}</div>
+      ${b.id ? `<div class="jc-act"><a class="btn ghost sm" href="#/jurnal/nou?din=${b.id}">Batch nou pornind de la acesta</a><button class="btn ghost sm" type="button" onclick="window.print()">Printează</button>
+        ${b.created_by === SB_USER_ID || ME.admin ? '<button class="btn danger sm" type="button" data-sterge-batch>Șterge batch-ul</button>' : ''}</div>` : ''}`;
+    // pe telefon, etapa deschisă rămâne la vedere în bara de etape
+    const nav = box.querySelector('.jc-pasi'), on = nav && nav.querySelector('.on');
+    if (on) nav.scrollLeft = on.offsetLeft - (nav.clientWidth - on.offsetWidth) / 2;
+  };
+  deseneaza();
+  box.addEventListener('input', e => {
+    const el = e.target;
+    if (el.dataset.jc) {
+      b.data[el.dataset.jc] = el.type === 'checkbox' ? el.checked : el.value;
+      if (el.dataset.jc === 'coacereAbur') deseneaza();
+      const rap = document.getElementById('jcRap'); if (rap) rap.innerHTML = rapoarte();
+      programeaza();
+    } else if (el.dataset.jcn) {
+      b[el.dataset.jcn] = el.value;
+      if (el.dataset.jcn === 'name') document.getElementById('jcTitlu').textContent = el.value || 'Batch nou';
+      programeaza();
+    }
+  });
+  box.addEventListener('click', async e => {
+    const s = e.target.closest('[data-sec]'), sc = e.target.closest('[data-scor]');
+    if (s) { sec = +s.dataset.sec; deseneaza(); window.scrollTo({ top: box.offsetTop - 120, behavior: 'smooth' }); }
+    else if (sc) { b.score = +sc.dataset.scor; deseneaza(); programeaza(); }
+    else if (e.target.closest('[data-sterge-batch]')) {
+      if (!confirm('Ștergi definitiv batch-ul din jurnal?')) return;
+      clearTimeout(timer); await zbor;
+      const { error } = await SB.from('croissant_batches').delete().eq('id', b.id);
+      if (error) toast('Batch-ul nu s-a putut șterge.', true); else { toast('Batch șters.'); location.hash = '#/jurnal'; }
+    }
+  });
 }
 
 // ---------- Căutare ----------

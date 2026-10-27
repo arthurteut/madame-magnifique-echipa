@@ -307,6 +307,15 @@ Rulează [`0016_tura.sql`](supabase/migrations/0016_tura.sql) (activează și `p
   pagina *Tura* sau din clopoțel (pe iPhone: întâi „Add to Home Screen”, iOS 16.4+).
 - Orele magazinelor (`space_hours`) dau termenul fișelor de deschidere / închidere.
 
+### 18. Jurnalul de croissant
+
+Rulează [`0018_jurnal_croissant.sql`](supabase/migrations/0018_jurnal_croissant.sql). În Academia,
+caseta **Patiserie** primește „Jurnalul de croissant”: fiecare batch de aluat laminat (rețeta cu
+procentele de brutar calculate, détrempe, cele trei tururi, modelarea, dospirea, coacerea, scorul
+și concluziile), salvat automat. Jurnalul e comun și îl văd / completează doar PPT, PBP, PP + B,
+SP, DP, GM și AE; un batch îl șterge doar autorul sau adminul. „Batch nou pornind de la acesta”
+copiază rețeta și procesul, fără rezultat și concluzii.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

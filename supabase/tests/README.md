@@ -81,3 +81,7 @@ fără dublură și nu în două locuri deodată; fișa se pornește și se bife
 nu se schimbă din pagină și după final nu se mai bifează; șefii (VT, RL, GM) și AE primesc clock-in /
 clock-out, pas nefăcut și fișă gata, colegii nu; mementoul de dinainte de tură pleacă o singură dată,
 iar lipsa clock-ului după 10 minute ajunge la șefi. Ultimul rând: „35 din 35”.
+
+Jurnalul de croissant (`18_jurnal_croissant.sql`, după 0018): patiseria (PPT, PP + B), SP și AE
+citesc și scriu, vânzătorul nu vede și nu scrie nimic; autorul rămâne cel care a creat batch-ul,
+chiar dacă îl modifică altcineva; un batch îl șterge doar autorul. Ultimul rând: „12 din 12”.
