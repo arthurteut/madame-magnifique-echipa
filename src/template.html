@@ -7,6 +7,12 @@
 <title>Ghidul echipei · Madame Magnifique</title>
 <meta name="description" content="Ghidul intern al echipei Madame Magnifique.">
 <meta name="theme-color" content="#242424">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Madame">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -623,6 +629,121 @@
     .pl-tbl { min-width: 0; font-size: 7.5pt; } .pl-tbl th, .pl-tbl td { padding: 3px 4px; }
     .pl-tbl-wrap { overflow: visible; border: 0; }
   }
+  /* ---------- Tura, fișele bifate, echipa ---------- */
+  .mic { font-size: .82rem; }
+  .tura { max-width: 820px; }
+  .tura-card { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--stone); padding: clamp(18px, 3vw, 26px); }
+  .tura-card.in { border-left-color: #3d7a4f; }
+  .tura-card h2 { font-size: clamp(1.3rem, 3vw, 1.7rem); margin: 8px 0 8px; }
+  .tura-card p { margin: 0 0 14px; }
+  .tura-card .btn { width: 100%; max-width: 360px; padding: 18px 24px; margin: 4px 8px 4px 0; }
+  .fise { display: grid; gap: 10px; }
+  .fisa-rand { display: grid; grid-template-columns: minmax(0, 1fr) 90px 20px; gap: 14px; align-items: center; padding: 16px 18px; background: #fff; border: 1px solid var(--line); text-decoration: none; color: var(--ink-soft); }
+  .fisa-rand:hover { border-color: var(--ink); }
+  .fisa-rand.a-mea { border-left: 4px solid var(--gold); }
+  .fisa-rand.gata { background: #f2f7f3; }
+  .fisa-rand.tarziu { border-left: 4px solid #9b2c2c; }
+  .fisa-rand.mic { grid-template-columns: minmax(0, 1fr) 70px; padding: 10px 12px; margin-bottom: 6px; }
+  .fisa-titlu b { display: block; color: var(--ink); font-weight: 500; }
+  .fisa-titlu small { display: block; color: var(--muted); font-size: .82rem; margin-top: 2px; }
+  .fisa-prog { display: block; height: 6px; background: var(--line); overflow: hidden; }
+  .fisa-prog i { display: block; height: 100%; background: #3d7a4f; }
+  .fisa-prog.mare { height: 10px; flex: 1; }
+  .ture-lista { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .ture-lista div { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 16px; background: #fff; }
+  .ture-lista b { font-weight: 500; color: var(--ink); text-transform: capitalize; }
+  .push-card { display: flex; gap: 8px 16px; align-items: center; flex-wrap: wrap; margin-top: 32px; padding: 16px 18px; background: #fbf6ea; border-left: 3px solid var(--gold); }
+  .push-card span { flex: 1 1 260px; font-size: .9rem; }
+  .push-card.mic { margin: 0; border-left: 0; border-top: 1px solid var(--line); }
+  .fisa-pag .crumbs { margin-bottom: 10px; }
+  .fisa-h1 { font-size: clamp(1.5rem, 4vw, 2.1rem); margin: 6px 0 14px; }
+  .fisa-sus { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; position: sticky; top: var(--antet, 76px); background: var(--bg); padding: 10px 0; z-index: 2; }
+  .fisa-gata { display: flex; gap: 8px; align-items: center; background: #e3efe6; color: #2f6a40; padding: 12px 16px; margin: 0 0 16px; }
+  .fisa-gata svg { width: 20px; height: 20px; }
+  .fisa-sec { font: 600 .74rem/1.3 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 28px 0 10px; }
+  .fisa-intro { color: var(--muted); font-size: .92rem; margin: 0 0 10px; }
+  .pasi .pas { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .pas .bifa { width: 46px; height: 46px; border: 2px solid var(--stone); background: #fff; display: grid; place-items: center; font-size: 1.2rem; color: var(--ink); padding: 0; }
+  .pas .bifa svg { width: 26px; height: 26px; }
+  .pas .bifa:disabled { opacity: .55; cursor: default; }
+  .pas.facut .bifa { background: #3d7a4f; border-color: #3d7a4f; color: #fff; opacity: 1; }
+  .pas.nefacut .bifa { background: #9b2c2c; border-color: #9b2c2c; color: #fff; opacity: 1; }
+  .pas.facut .pas-txt > span { color: var(--muted); }
+  .pas-txt > span { display: block; font-size: 1.02rem; color: var(--ink); padding-top: 4px; }
+  .pas-txt ul { margin: 6px 0 0; padding-left: 18px; font-size: .9rem; color: var(--ink-soft); }
+  .pas-val { display: flex; gap: 8px; margin-top: 8px; max-width: 320px; }
+  .pas-val .field { padding: 10px 12px; width: auto; flex: 1; min-width: 0; }
+  .pas-val .btn { flex: none; }
+  @media (max-width: 640px) { .tura-band { padding: 22px 0; } .tura-band .sub { display: none; } .tura-band h1 { margin-bottom: 0; } }
+  .pas-da { display: flex; gap: 8px; margin-top: 8px; }
+  .pas-da button { min-width: 72px; padding: 10px 14px; border: 1px solid var(--ink); background: #fff; font: 500 .8rem/1 'Montserrat', sans-serif; letter-spacing: .1em; }
+  .pas-da button.on { background: var(--ink); color: #fff; }
+  .pas-cine { display: block; margin-top: 6px; color: var(--muted); font-size: .8rem; }
+  .pas-nu { background: none; border: 0; padding: 6px 0 0; color: var(--muted); font-size: .8rem; text-decoration: underline; }
+  .fisa-obs { border: 1px solid var(--line); background: #fff; padding: 16px 18px; margin: 28px 0 0; }
+  .fisa-obs legend { font: 600 .72rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0 6px; }
+  .fisa-obs textarea { margin-bottom: 10px; font: inherit; }
+  .echipa-sus { display: flex; gap: 12px 24px; align-items: end; flex-wrap: wrap; margin-bottom: 20px; }
+  .echipa-sus .field { padding: 10px 12px; }
+  .live { color: #2f6a40; font-size: .85rem; }
+  .sapt { display: flex; gap: 10px; align-items: center; }
+  .loc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 16px; }
+  .loc-card { background: #fff; border: 1px solid var(--line); }
+  .loc-cap { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 16px 18px; background: var(--greige); }
+  .loc-cap h3 { font-size: 1.15rem; }
+  .loc-sec { padding: 14px 18px; border-top: 1px solid var(--line); }
+  .loc-sec .eyebrow { display: block; margin-bottom: 10px; }
+  .om { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 8px 0; border-bottom: 1px solid #f0efed; font-size: .92rem; }
+  .om:last-child { border-bottom: 0; }
+  .om small { color: var(--muted); }
+  .om-ora { color: var(--muted); font-size: .84rem; text-align: right; }
+  .om .st { grid-column: 1 / -1; font-size: .82rem; }
+  .st.verde { color: #2f6a40; } .st.rosu { color: #9b2c2c; font-weight: 500; } .st.gri { color: var(--muted); }
+  .probleme { background: #fdf6f6; }
+  .probleme ul { margin: 0; padding-left: 18px; font-size: .9rem; }
+  .probleme li { margin-bottom: 6px; } .probleme small { color: var(--muted); }
+  .prog-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+  @media (max-width: 1000px) { .prog-grid { grid-template-columns: 1fr; } }
+  .prog-zi { background: #fff; border: 1px solid var(--line); padding: 10px; min-height: 120px; }
+  .prog-zi.azi { border-color: var(--ink); }
+  .prog-cap { display: flex; justify-content: space-between; gap: 6px; margin-bottom: 8px; text-transform: capitalize; }
+  .prog-cap small { color: var(--muted); }
+  .prog-tura { position: relative; background: var(--bg-soft); padding: 8px 28px 8px 10px; margin-bottom: 6px; font-size: .86rem; }
+  .prog-tura b { display: block; font-weight: 500; color: var(--ink); }
+  .prog-tura small { display: block; color: var(--muted); }
+  .prog-tura .icon-btn { position: absolute; top: 2px; right: 2px; padding: 4px 6px; font-size: 1.1rem; }
+  .prog-add { width: 100%; padding: 8px; border: 1px dashed var(--stone); background: none; color: var(--muted); font-size: .85rem; }
+  .prog-add:hover { border-color: var(--ink); color: var(--ink); }
+  .prog-form { margin-top: 20px; max-width: 640px; }
+  #clopotel { position: relative; background: none; border: 0; padding: 8px; display: inline-flex; color: var(--ink); }
+  #clopotel svg { width: 22px; height: 22px; }
+  #clopotel i { position: absolute; top: 2px; right: 0; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: #9b2c2c; color: #fff; font: 600 .62rem/17px 'Montserrat', sans-serif; font-style: normal; text-align: center; display: none; }
+  #clopotel.are i { display: block; }
+  .notif-lista { position: fixed; top: 70px; right: max(12px, calc((100vw - var(--wrap)) / 2 + var(--gutter))); width: min(400px, calc(100vw - 24px)); max-height: min(70vh, 560px); overflow: auto; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 50px rgba(0, 0, 0, .15); z-index: 40; }
+  .notif-cap { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #fff; }
+  .notif-cap button { background: none; border: 0; color: var(--muted); font-size: .8rem; text-decoration: underline; }
+  .notif { display: block; padding: 12px 16px; border-bottom: 1px solid #f0efed; text-decoration: none; color: var(--ink-soft); font-size: .9rem; }
+  .notif.noua { background: #fbf6ea; }
+  .notif b { display: block; color: var(--ink); font-weight: 500; }
+  .notif span { display: block; }
+  .notif small { color: var(--muted); font-size: .76rem; }
+  .qr-modal { position: fixed; inset: 0; background: rgba(20, 18, 16, .82); display: grid; place-items: center; z-index: 60; padding: 16px; }
+  .qr-box { background: #fff; padding: 20px; width: min(440px, 100%); text-align: center; }
+  .qr-box h3 { margin: 6px 0 12px; }
+  .qr-box video { width: 100%; aspect-ratio: 1; object-fit: cover; background: #000; }
+  .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .qr-card { background: #fff; border: 1px solid var(--line); padding: 20px; text-align: center; }
+  .qr-card h3 { margin: 6px 0 10px; font-size: 1.3rem; }
+  .qr-img svg { width: 100%; max-width: 240px; height: auto; }
+  .qr-card .calc-act { justify-content: center; }
+  @media print {
+    body.print-qr #app > header, body.print-qr #app > footer, body.print-qr .band, body.print-qr .tabs, body.print-qr #adminBody > p { display: none !important; }
+    body.print-qr .qr-card { display: none; border: 0; }
+    body.print-qr .qr-card.de-print { display: block; page-break-inside: avoid; }
+    body.print-qr .qr-card.de-print .calc-act { display: none; }
+    body.print-qr .qr-card.de-print .qr-img svg { max-width: 12cm; }
+    body.print-qr .qr-card.de-print h3 { font-size: 28pt; }
+  }
 </style>
 </head>
 <body>
@@ -663,10 +784,13 @@
         <a href="#/proceduri" data-nav="proceduri">Proceduri</a>
         <a href="#/cursuri" data-nav="cursuri">Academia</a>
         <a href="#/ghid" data-nav="ghid">Cum funcționează</a>
+        <a href="#/tura" data-nav="tura" hidden>Tura</a>
+        <a href="#/echipa" data-nav="echipa" hidden>Echipa</a>
         <a href="#/pl" data-nav="pl" hidden>P&amp;L</a>
         <a href="#/admin" data-nav="admin" hidden>Admin</a>
         <span class="user-chip" id="userChip"></span>
       </nav>
+      <button type="button" id="clopotel" hidden aria-label="Notificări"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i></i></button>
     </div>
   </header>
   <main id="view"></main>
@@ -705,7 +829,7 @@ const doarBrutar = () => !!(ME && D && !ME.vedeTot && !D.spatii.length && poateA
   && !['roluri', 'proceduri', 'ghid'].some(poate));
 function showApp() {
   document.querySelectorAll('#nav [data-nav]').forEach(a => {
-    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : a.dataset.nav === 'pl' ? !poatePL() : a.dataset.nav === 'home' ? doarBrutar()
+    a.hidden = a.dataset.nav === 'admin' ? !ME.admin : a.dataset.nav === 'pl' ? !poatePL() : a.dataset.nav === 'tura' ? !areTura() : a.dataset.nav === 'echipa' ? !vedeEchipa() : a.dataset.nav === 'home' ? doarBrutar()
       : a.dataset.nav === 'cursuri' ? !poateAcademia() : !poate(a.dataset.nav);
   });
   document.getElementById('topSearchBox').hidden = doarBrutar();
@@ -713,7 +837,10 @@ function showApp() {
   document.getElementById('lock').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
+  // Cine lucrează pe ture deschide aplicația direct pe „Tura”.
+  if (!location.hash.replace(/^#\/?/, '') && areTura()) history.replaceState(null, '', '#/tura');
   route();
+  pornesteNotificari().catch(e => console.warn('notificări:', e));
 }
 function showLock(msg) {
   D = ME = null;
@@ -750,6 +877,8 @@ async function incarcaDate() {
   ]);
   // Procedurile verificate (0006); dacă migrarea nu e rulată încă, ghidul merge și fără ele.
   const docs = await tabel('procedure_docs', ['position', 'id']).catch(e => { console.warn('procedure_docs:', e.message); return []; });
+  // Organigrama (0016); fără migrare, pagina merge și fără tură.
+  const organigrama = await tabel('role_parents', ['role_code']).catch(e => { console.warn('role_parents:', e.message); return []; });
   ME.admin = roluri.some(r => r.code === ME.role_code && r.is_admin);
   ME.vedeTot = ME.admin || roluri.some(r => r.code === ME.role_code && r.sees_all);
   ME.sectiuni = new Set(ME.admin ? ['roluri', 'proceduri', 'ghid', 'cursuri', 'brutar', 'pl']
@@ -771,7 +900,7 @@ async function incarcaDate() {
       min: str(t.minutes), cand: t.schedule, verif: t.verification, proc: t.procedure_code || '',
       teren: t.field_update, initial: t.original })),
     abateri: abateri.map(a => ({ loc: a.location, zona: a.area, text: a.text, dece: a.reason })),
-    docs,
+    docs, organigrama,
     legenda: ghid.map(g => ({ titlu: g.title, linii: g.lines || [] })),
     spatii: spatii.map(s => {
       const pr = sp.proc[s.id] || [], fapte = sp.fapte[s.id] || [];
@@ -901,6 +1030,7 @@ function route() {
   const { parts, params } = parseHash();
   const [a, b] = parts;
   let html, nav = 'home';
+  opresteCanale();
   if (a === 's' && SP[b]) html = viewSpace(SP[b], params);
   else if (a === 'p' && P[b]) html = viewProcess(P[b], params);
   else if (a === 'pr' && PROC[b] && poate('proceduri')) { html = viewProcedure(PROC[b]); nav = 'proceduri'; }
@@ -913,6 +1043,10 @@ function route() {
   else if (a === 'cursuri' && poateAcademia()) { html = viewCursuri(); nav = 'cursuri'; }
   else if (a === 'c' && /^\d+$/.test(b || '') && poate('cursuri')) { html = viewCurs(+b, params); nav = 'cursuri'; }
   else if (a === 'pl' && poatePL()) { html = viewPL(params); nav = 'pl'; }
+  else if (a === 'tura') { html = viewTura(); nav = 'tura'; }
+  else if (a === 'pontaj') { html = viewPontaj(params); nav = 'tura'; }
+  else if (a === 'fisa' && (params.r || (params.s && params.c))) { html = viewFisa(params); nav = params.r ? 'echipa' : 'tura'; }
+  else if (a === 'echipa' && vedeEchipa()) { html = viewEchipa(params); nav = 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
   else if (doarBrutar()) { html = viewCursuri(); nav = 'cursuri'; }
   else html = viewHome();
@@ -1423,8 +1557,8 @@ const parolaHtml = (u, p) => `<div class="secret"><span>Comunică-i angajatului:
   <span class="muted" style="font-size:.82rem">Parola nu mai apare după ce închizi pagina.</span></div>`;
 
 function viewAdmin(params) {
-  const tab = ['acces', 'cursuri', 'progres', 'proceduri'].includes(params.tab) ? params.tab : 'utilizatori';
-  setTimeout(() => ({ acces: incarcaAcces, cursuri: () => incarcaCursuriAdmin(params), progres: incarcaProgres, proceduri: incarcaProceduriAdmin, utilizatori: incarcaUtilizatori })[tab](), 0);
+  const tab = ['acces', 'cursuri', 'progres', 'proceduri', 'qr'].includes(params.tab) ? params.tab : 'utilizatori';
+  setTimeout(() => ({ acces: incarcaAcces, cursuri: () => incarcaCursuriAdmin(params), progres: incarcaProgres, proceduri: incarcaProceduriAdmin, qr: incarcaQR, utilizatori: incarcaUtilizatori })[tab](), 0);
   return `
   <section class="band"><div class="wrap">
     <span class="eyebrow">Doar pentru administratori</span>
@@ -1432,7 +1566,7 @@ function viewAdmin(params) {
     <p class="sub">Conturile echipei, ce vede fiecare rol și cursurile de onboarding.</p>
   </div></section>
   <section class="block"><div class="wrap">
-    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a><a href="#/admin?tab=cursuri" class="${tab === 'cursuri' ? 'on' : ''}">Cursuri</a><a href="#/admin?tab=progres" class="${tab === 'progres' ? 'on' : ''}">Progres</a><a href="#/admin?tab=proceduri" class="${tab === 'proceduri' ? 'on' : ''}">Proceduri verificate</a></nav>
+    <nav class="tabs"><a href="#/admin" class="${tab === 'utilizatori' ? 'on' : ''}">Utilizatori</a><a href="#/admin?tab=acces" class="${tab === 'acces' ? 'on' : ''}">Acces pe rol</a><a href="#/admin?tab=cursuri" class="${tab === 'cursuri' ? 'on' : ''}">Cursuri</a><a href="#/admin?tab=progres" class="${tab === 'progres' ? 'on' : ''}">Progres</a><a href="#/admin?tab=proceduri" class="${tab === 'proceduri' ? 'on' : ''}">Proceduri verificate</a><a href="#/admin?tab=qr" class="${tab === 'qr' ? 'on' : ''}">Coduri QR</a></nav>
     <div id="adminBody"><p class="muted">Se încarcă…</p></div>
   </div></section>`;
 }
@@ -3163,6 +3297,602 @@ function plWire(box) {
       plDeseneaza(); toast(`Am creat „${name} · ${year}”.`);
     }
   });
+}
+
+// ---------- Tura: clock-in cu QR, fișele bifate, echipa în timp real, notificări ----------
+// Migrarea 0016. Vânzătorul / barista / producția: „Tura” (clock-in, fișele zilei, bifat pas cu pas).
+// Șefii (organigrama din role_parents): „Echipa” (cine e în tură, cum merg fișele, programul pe ture).
+// Fiecare eveniment (clock-in/out, fișă gata, pas nefăcut, întârziere) ajunge la cei de deasupra
+// ca notificare în aplicație și push pe telefon.
+const TZ = 'Europe/Bucharest';
+const ziLocala = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(d);    // 2026-10-27
+const oraLocala = t => t ? new Intl.DateTimeFormat('ro-RO', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }).format(new Date(t)) : '';
+const hm = t => String(t || '').slice(0, 5);
+const ziUman = d => new Intl.DateTimeFormat('ro-RO', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(d + 'T12:00:00Z'));
+const ziScurta = d => new Intl.DateTimeFormat('ro-RO', { weekday: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(d + 'T12:00:00Z'));
+const plusZile = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+const luniDin = d => plusZile(d, -((new Date(d + 'T12:00:00Z').getUTCDay() + 6) % 7));
+const numeLoc = id => { const s = SP[id]; return s ? (s.tip === 'magazin' ? s.nume : s.titlu) : id; };
+let CANALE = [];
+const opresteCanale = () => { for (const c of CANALE) { try { SB.removeChannel(c); } catch (e) {} } CANALE = []; };
+const canal = (nume, tabele, la) => {
+  if (!SB.channel) return;
+  let c = SB.channel(nume + '-' + Math.random().toString(36).slice(2));
+  for (const [table, filter] of tabele) c = c.on('postgres_changes', { event: '*', schema: 'public', table, ...(filter ? { filter } : {}) }, la);
+  CANALE.push(c.subscribe());
+};
+const amanat = (f, ms = 400) => { let h; return () => { clearTimeout(h); h = setTimeout(f, ms); }; };
+
+// Organigrama (role_parents): cine e sub mine.
+const subordonati = rol => {
+  const out = new Set(), coada = [rol];
+  while (coada.length) { const r = coada.shift(); for (const x of D.organigrama || []) if (x.parent_code === r && !out.has(x.role_code)) { out.add(x.role_code); coada.push(x.role_code); } }
+  return out;
+};
+const areTura = () => !!ME && (D.organigrama || []).some(x => x.role_code === ME.role_code);
+const vedeEchipa = () => !!ME && (ME.vedeTot || subordonati(ME.role_code).size > 0);
+
+// ----- Pașii unei fișe, din textul ei -----
+// „## Secțiune”, „1. Pas”, „- detaliu”, rânduri cu „____” (valori de notat), „☐ DA ☐ NU” (da / nu), tabelul de temperaturi.
+function pasiDin(body, titlu) {
+  const pasi = []; let sec = '', ultim = null, cap = null, intro = [];
+  const pune = p => { if (intro.length) { p.i = intro.join(' '); intro = []; } p.sec = sec; pasi.push(p); ultim = p; };
+  const dimineata = /deschidere/i.test(titlu || '');
+  for (const r of String(body || '').split('\n')) {
+    const x = r.trim();
+    if (!x) { cap = null; continue; }
+    if (x.startsWith('## ')) { sec = x.slice(3).trim(); ultim = null; intro = []; continue; }
+    if (/^(Observații|Confirmare|Semnătur|Procedura se completează)/i.test(x)) continue;
+    if (x.startsWith('|')) {
+      const cel = x.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+      if (!cap) { cap = cel; continue; }
+      const k = cel.findIndex((c, i) => i > 0 && c.includes('____'));
+      if (k > 0) {
+        const col = dimineata ? 1 : cel.length - 1;
+        pune({ t: `${cel[0]} — ${(cap[col] || '').toLowerCase()}`, tip: 'valoare', u: /°C/.test(cel[col] || cel[k]) ? '°C' : '' });
+      } else pune({ t: cel.filter(Boolean).join(' · '), tip: 'pas' });
+      continue;
+    }
+    let m = x.match(/^(\d{1,2})\.\s+(.*)$/);
+    if (m) { pune({ t: m[2], tip: 'pas' }); continue; }
+    if (/^[-•]\s/.test(x) && ultim) { (ultim.d = ultim.d || []).push(x.replace(/^[-•]\s*/, '')); continue; }
+    if (/☐\s*(DA|NU)/.test(x)) {
+      const eticheta = x.split('☐')[0].replace(/[:\s]+$/, '').trim();
+      pune({ t: eticheta || x, tip: 'dans' });
+      m = x.match(/(?:☐\s*(?:DA|NU)\s*)+(.+?):\s*_{3,}\s*(.*)$/);
+      // „Observații: ____” de lângă DA / NU nu e un pas: observațiile se scriu jos, la fișă
+      if (m && !/observa/i.test(m[1])) pune({ t: `${eticheta} — ${m[1].toLowerCase()}`, tip: 'valoare', u: m[2].trim() });
+      continue;
+    }
+    if (x.includes('____')) {
+      m = x.match(/^(.*?):?\s*_{3,}\s*(.*)$/);
+      pune({ t: m[1].replace(/:$/, '').trim(), tip: 'valoare', u: m[2].trim() });
+      continue;
+    }
+    intro.push(x);
+  }
+  return pasi;
+}
+// Task-urile zilnice ale rolului la locație (din hartă, cu ajustările locale), în ordinea orei.
+function taskuriZilei(rol, spaceId) {
+  const aj = (SP[spaceId] && SP[spaceId].ajustari) || {};
+  return D.taskuri.map(t => aj[t.id] ? { ...t, cand: aj[t.id].cand || t.cand, rol: aj[t.id].rol || t.rol, t: aj[t.id].t || t.t } : t)
+    .filter(t => t.rol === rol && /^Zilnic/i.test(t.cand || ''))
+    .sort((a, b) => (a.cand.match(/\d{1,2}:\d{2}/) || ['99'])[0].padStart(5, '0').localeCompare((b.cand.match(/\d{1,2}:\d{2}/) || ['99'])[0].padStart(5, '0')))
+    .map(t => ({ t: t.t, tip: 'pas', sec: (t.cand.match(/\d{1,2}:\d{2}/) || [''])[0] ? 'Ora ' + t.cand.match(/\d{1,2}:\d{2}/)[0] : 'Pe parcursul zilei', ...(t.verif ? { d: ['Verificare: ' + t.verif] } : {}) }));
+}
+// Fișele de bifat la o locație, pentru rolul meu: deschiderea / închiderea locației, fișele rolului, task-urile zilei.
+function fiseleLocatiei(spaceId, rol) {
+  const docs = D.docs.filter(d => d.space_id === spaceId && !d.procedure_code && (!d.role_code || d.role_code === rol));
+  const tip = d => /închidere|inchidere/i.test(d.title + d.source_file) ? 'inchidere' : /deschidere/i.test(d.title + d.source_file) ? 'deschidere' : 'alta';
+  const out = docs.map(d => ({ cheie: 'doc:' + d.id, doc: d, titlu: (x => x.charAt(0).toUpperCase() + x.slice(1))(d.title.replace(/^Procedura de /, '')), tip: tip(d), rol: d.role_code || '' }));
+  if (taskuriZilei(rol, spaceId).length) out.push({ cheie: 'taskuri:' + rol, titlu: `Task-urile zilei · ${rol}`, tip: 'zilnic', rol });
+  const ord = { deschidere: 0, zilnic: 1, alta: 2, inchidere: 3 };
+  return out.sort((a, b) => ord[a.tip] - ord[b.tip] || a.rol.localeCompare(b.rol));
+}
+let ORE_LOC = null;
+async function oreLocatii() {
+  if (!ORE_LOC) ORE_LOC = await tabel('space_hours', ['space_id']).catch(() => []);
+  return ORE_LOC;
+}
+function oraLocatie(spaceId, zi, ce) {
+  const z = (ORE_LOC || []).find(h => h.space_id === spaceId && h.weekday === ((new Date(zi + 'T12:00:00Z').getUTCDay() + 6) % 7) + 1);
+  return z ? hm(z[ce]) : '';
+}
+// „2026-10-27” + „08:00” (ora României) → ISO
+function laOra(zi, ora) {
+  if (!ora) return null;
+  const guess = new Date(`${zi}T${ora}:00Z`);
+  const off = new Date(guess.toLocaleString('en-US', { timeZone: TZ })) - new Date(guess.toLocaleString('en-US', { timeZone: 'UTC' }));
+  return new Date(guess.getTime() - off).toISOString();
+}
+
+// ----- Pagina „Tura” -----
+async function dateTura() {
+  const azi = ziLocala();
+  const [ture, pontaj] = await Promise.all([
+    SB.from('shifts').select('*').eq('user_id', SB_USER_ID).gte('day', plusZile(azi, -1)).lte('day', plusZile(azi, 6)).order('day').order('starts'),
+    SB.from('clockings').select('*').eq('user_id', SB_USER_ID).order('clock_in', { ascending: false }).range(0, 9),
+  ]);
+  if (ture.error) throw ture.error;
+  if (pontaj.error) throw pontaj.error;
+  const deschis = (pontaj.data || []).find(c => !c.clock_out) || null;
+  return { azi, ture: ture.data || [], pontaj: pontaj.data || [], deschis };
+}
+function viewTura() {
+  setTimeout(incarcaTura, 0);
+  return `<section class="band tura-band"><div class="wrap">
+      <span class="eyebrow">${esc(ME.full_name)} · ${esc(ME.role_code)}</span>
+      <h1>Tura mea</h1>
+      <p class="sub">La sosire scanezi codul QR de la intrare, apoi bifezi fișele pas cu pas. La plecare scanezi din nou.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura" id="turaBody"><p class="muted">Se încarcă…</p></div></section>`;
+}
+async function incarcaTura() {
+  const box = document.getElementById('turaBody'); if (!box) return;
+  let t;
+  try { [t] = await Promise.all([dateTura(), oreLocatii()]); }
+  catch (e) { console.error('Tura:', e); box.innerHTML = '<p class="err">Tura nu s-a putut încărca. Dacă e prima dată, rulează în Supabase migrarea 0016_tura.sql.</p>'; return; }
+  if (!document.getElementById('turaBody')) return;
+  const azi = t.azi, ture = t.ture.filter(s => s.day === azi), urmatoare = t.ture.filter(s => s.day > azi);
+  const loc = t.deschis ? t.deschis.space_id : (ture[0] || {}).space_id;
+  let fise = [], runs = [], marks = [];
+  if (loc) {
+    fise = fiseleLocatiei(loc, ME.role_code);
+    const r = await SB.from('checklist_runs').select('id,cheie,title,finished_at,steps,due_at').eq('space_id', loc).eq('day', azi);
+    runs = r.data || [];
+    if (runs.length) marks = (await SB.from('checklist_marks').select('run_id,idx,status').in('run_id', runs.map(x => x.id))).data || [];
+  }
+  const tura = ture.find(s => s.space_id === loc) || ture[0];
+  const stare = t.deschis
+    ? `<div class="tura-card in"><span class="eyebrow">În tură</span><h2>${esc(numeLoc(t.deschis.space_id))}</h2>
+        <p>Clock-in la <b>${oraLocala(t.deschis.clock_in)}</b>${tura ? ` · programat(ă) ${hm(tura.starts)}–${hm(tura.ends)}` : ''}</p>
+        <button class="btn" type="button" data-scan="iesire">Încheie tura · scanează QR</button></div>`
+    : `<div class="tura-card"><span class="eyebrow">${tura ? 'Tura de azi' : 'Nu ești în tură'}</span>
+        <h2>${tura ? esc(numeLoc(tura.space_id)) + ` · ${hm(tura.starts)}–${hm(tura.ends)}` : 'Scanează codul de la intrare'}</h2>
+        ${tura && (tura.opens || tura.closes) ? `<p>${tura.opens ? '<span class="pill star">Deschizi</span> ' : ''}${tura.closes ? '<span class="pill star">Închizi</span>' : ''}</p>` : ''}
+        ${tura && tura.note ? `<p>${esc(tura.note)}</p>` : ''}
+        <button class="btn" type="button" data-scan="intrare">Clock-in · scanează QR</button>
+        <p class="muted mic">Merge și cu camera telefonului: îndrepți camera spre cod și deschizi linkul.</p></div>`;
+  const rand = f => {
+    const run = runs.find(r => r.cheie === f.cheie);
+    const total = run ? run.steps.length : 0, gata = run ? marks.filter(m => m.run_id === run.id).length : 0;
+    const termen = f.tip === 'deschidere' ? oraLocatie(loc, azi, 'opens') : f.tip === 'inchidere' ? oraLocatie(loc, azi, 'closes') : '';
+    const eu = tura && ((f.tip === 'deschidere' && tura.opens) || (f.tip === 'inchidere' && tura.closes));
+    return `<a class="fisa-rand ${run && run.finished_at ? 'gata' : ''} ${eu ? 'a-mea' : ''}" href="#/fisa?s=${enc(loc)}&c=${enc(f.cheie)}">
+      <span class="fisa-titlu"><b>${esc(f.titlu)}</b><small>${run && run.finished_at ? `Gata la ${oraLocala(run.finished_at)}` : run ? `${gata} din ${total} pași` : 'Nepornită'}${termen ? ` · termen ${termen}` : ''}${eu ? ' · ești programat(ă)' : ''}</small></span>
+      <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
+  };
+  box.innerHTML = `${stare}
+    ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
+      ${!t.deschis ? '<p class="muted" style="margin:-8px 0 14px">Le poți citi; ca să bifezi, fă întâi clock-in.</p>' : ''}
+      ${fise.length ? `<div class="fise">${fise.map(rand).join('')}</div>` : '<p class="lvl4">Pentru rolul tău nu sunt încă fișe de bifat la locația asta.</p>'}` : ''}
+    ${urmatoare.length ? `<h2 class="section-title" style="margin-top:36px">Turele următoare</h2>
+      <div class="ture-lista">${urmatoare.map(s => `<div><b>${ziUman(s.day)}</b><span>${esc(numeLoc(s.space_id))} · ${hm(s.starts)}–${hm(s.ends)}${s.opens ? ' · deschizi' : ''}${s.closes ? ' · închizi' : ''}</span></div>`).join('')}</div>` : ''}
+    ${pushCard()}
+    ${t.pontaj.filter(c => c.clock_out).length ? `<h2 class="section-title" style="margin-top:36px">Pontajul tău</h2>
+      <div class="ture-lista">${t.pontaj.filter(c => c.clock_out).slice(0, 7).map(c => `<div><b>${ziUman(ziLocala(new Date(c.clock_in)))}</b><span>${esc(numeLoc(c.space_id))} · ${oraLocala(c.clock_in)}–${oraLocala(c.clock_out)}</span></div>`).join('')}</div>` : ''}`;
+  if (loc) canal('tura', [['checklist_runs', `space_id=eq.${loc}`], ['clockings', `user_id=eq.${SB_USER_ID}`]], amanat(incarcaTura, 800));
+}
+
+// ----- Clock-in / clock-out -----
+const QR_RE = /#\/pontaj\?(.+)$/;
+async function pontaj(spaceId, token, ce) {
+  const { data, error } = await SB.rpc(ce === 'iesire' ? 'pontaj_iesire' : 'pontaj_intrare', { p_space: spaceId, p_token: token });
+  if (error) { toast(error.message || 'Nu a mers. Încearcă din nou.', true); return false; }
+  toast(ce === 'iesire' ? `Tura s-a încheiat la ${oraLocala(data.clock_out)}.` : `Clock-in la ${numeLoc(spaceId)}, ${oraLocala(data.clock_in)}. Spor la treabă!`);
+  return true;
+}
+// Linkul din codul QR (#/pontaj?s=…&k=…): cerem confirmarea, apoi pontăm.
+let QR_TOKEN = null;
+function viewPontaj(params) {
+  if (params.k) { QR_TOKEN = { s: params.s, k: params.k }; history.replaceState(null, '', `#/pontaj?s=${enc(params.s || '')}`); }
+  setTimeout(async () => {
+    const box = document.getElementById('pontajBody'); if (!box) return;
+    if (!QR_TOKEN || QR_TOKEN.s !== params.s) { box.innerHTML = '<p class="lvl4">Scanează din nou codul QR de la intrare.</p>'; return; }
+    let t;
+    try { t = await dateTura(); } catch (e) { box.innerHTML = '<p class="err">Nu s-a putut verifica tura. Reîncarcă pagina.</p>'; return; }
+    const iesire = t.deschis && t.deschis.space_id === params.s;
+    box.innerHTML = `<div class="tura-card ${iesire ? 'in' : ''}"><span class="eyebrow">Cod QR · ${esc(numeLoc(params.s))}</span>
+      <h2>${iesire ? 'Închei tura?' : 'Începi tura?'}</h2>
+      <p>${iesire ? `În tură din ${oraLocala(t.deschis.clock_in)}.` : t.deschis ? `Ai tura deschisă la ${esc(numeLoc(t.deschis.space_id))}: fă întâi clock-out acolo.` : 'Ora se salvează acum.'}</p>
+      <button class="btn" type="button" data-pontaj="${iesire ? 'iesire' : 'intrare'}">${iesire ? 'Clock-out' : 'Clock-in'}</button>
+      <a class="btn ghost" href="#/tura">Renunț</a></div>`;
+    box.querySelector('[data-pontaj]').addEventListener('click', async e => {
+      e.target.disabled = true;
+      if (await pontaj(QR_TOKEN.s, QR_TOKEN.k, e.target.dataset.pontaj)) { QR_TOKEN = null; location.hash = '#/tura'; }
+      else e.target.disabled = false;
+    });
+  }, 0);
+  return `<section class="block"><div class="wrap tura" id="pontajBody" style="max-width:560px"><p class="muted">Se verifică…</p></div></section>`;
+}
+// Scannerul din aplicație (camera + jsQR, încărcat doar când e nevoie).
+async function scaneaza(ce) {
+  const m = document.createElement('div');
+  m.className = 'qr-modal';
+  m.innerHTML = `<div class="qr-box"><p class="eyebrow">${ce === 'iesire' ? 'Clock-out' : 'Clock-in'}</p><h3>Îndreaptă camera spre codul QR</h3>
+    <video playsinline muted></video><p class="muted mic" id="qrStare">Pornesc camera…</p>
+    <button class="btn ghost" type="button" data-inchide>Închide</button></div>`;
+  document.body.appendChild(m);
+  let stream = null, gata = false;
+  const inchide = () => { gata = true; if (stream) stream.getTracks().forEach(t => t.stop()); m.remove(); };
+  m.querySelector('[data-inchide]').onclick = inchide;
+  const stareEl = m.querySelector('#qrStare');
+  try {
+    if (!window.jsQR) await new Promise((ok, nu) => { const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js'; s.onload = ok; s.onerror = nu; document.head.appendChild(s); });
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+  } catch (e) {
+    stareEl.textContent = 'Camera nu pornește aici. Scanează codul cu aplicația Cameră a telefonului și deschide linkul.';
+    return;
+  }
+  const v = m.querySelector('video'); v.srcObject = stream; await v.play().catch(() => {});
+  stareEl.textContent = 'Caut codul…';
+  const c = document.createElement('canvas'), ctx = c.getContext('2d', { willReadFrequently: true });
+  const pas = async () => {
+    if (gata) return;
+    if (v.readyState >= 2) {
+      c.width = v.videoWidth; c.height = v.videoHeight; ctx.drawImage(v, 0, 0);
+      const cod = window.jsQR(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height, { inversionAttempts: 'dontInvert' });
+      const p = cod && cod.data.match(QR_RE);
+      if (p) {
+        const q = new URLSearchParams(p[1]);
+        inchide();
+        if (await pontaj(q.get('s'), q.get('k'), ce)) route();
+        return;
+      }
+      if (cod) stareEl.textContent = 'Codul nu e al unei locații Madame.';
+    }
+    requestAnimationFrame(pas);
+  };
+  pas();
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-scan]'); if (b) scaneaza(b.dataset.scan); });
+
+// ----- Fișa: bifat pas cu pas, în timp real -----
+// #/fisa?s=locație&c=cheie (fișa zilei)  sau  #/fisa?r=id (o fișă din panou, doar citire)
+function viewFisa(params) {
+  setTimeout(() => incarcaFisa(params), 0);
+  return `<section class="block fisa-pag"><div class="wrap" id="fisaBody" style="max-width:820px"><p class="muted">Se încarcă…</p></div></section>`;
+}
+async function incarcaFisa(params) {
+  const box = document.getElementById('fisaBody'); if (!box) return;
+  const azi = ziLocala();
+  let run = null, eInTura = false, pasi = [], titlu = '', spaceId = params.s, cheie = params.c;
+  try {
+    await oreLocatii();
+    if (params.r) {
+      run = (await SB.from('checklist_runs').select('*').eq('id', +params.r).maybeSingle()).data;
+      if (!run) { box.innerHTML = '<p class="lvl4">Fișa nu există.</p>'; return; }
+      spaceId = run.space_id; cheie = run.cheie;
+    } else {
+      run = (await SB.from('checklist_runs').select('*').eq('space_id', spaceId).eq('day', azi).eq('cheie', cheie).maybeSingle()).data;
+    }
+    const t = await dateTura();
+    eInTura = !!(t.deschis && t.deschis.space_id === spaceId) && (!run || run.day === azi);
+    if (!run) {
+      const f = fiseleLocatiei(spaceId, (cheie.match(/^taskuri:(.+)$/) || [])[1] || ME.role_code).find(x => x.cheie === cheie);
+      if (!f) { box.innerHTML = '<p class="lvl4">Fișa nu mai există.</p>'; return; }
+      titlu = f.titlu;
+      pasi = f.doc ? pasiDin(f.doc.body, f.doc.title) : taskuriZilei(f.rol, spaceId);
+      if (eInTura && pasi.length) {
+        const termen = f.tip === 'deschidere' ? laOra(azi, oraLocatie(spaceId, azi, 'opens')) : f.tip === 'inchidere' ? laOra(azi, oraLocatie(spaceId, azi, 'closes')) : null;
+        const ins = await SB.from('checklist_runs').insert({ cheie, doc_id: f.doc ? f.doc.id : null, title: titlu, space_id: spaceId, day: azi, steps: pasi, due_at: termen }).select().single();
+        run = ins.data || (await SB.from('checklist_runs').select('*').eq('space_id', spaceId).eq('day', azi).eq('cheie', cheie).maybeSingle()).data;
+      }
+    }
+  } catch (e) { console.error('Fișa:', e); box.innerHTML = '<p class="err">Fișa nu s-a putut încărca.</p>'; return; }
+  if (run) { pasi = run.steps; titlu = run.title; }
+  let marks = run ? ((await SB.from('checklist_marks').select('*').eq('run_id', run.id)).data || []) : [];
+  const echipa = vedeEchipa() ? ((await SB.rpc('echipa_mea')).data || []) : [];
+  const cine = u => u === SB_USER_ID ? 'tu' : ((echipa.find(p => p.user_id === u) || {}).full_name || 'un coleg');
+  const poateBifa = () => eInTura && run && !run.finished_at;
+
+  const deseneaza = () => {
+    const M = Object.fromEntries(marks.map(m => [m.idx, m]));
+    const gata = marks.length, total = pasi.length;
+    let sec = null, html = '';
+    pasi.forEach((p, i) => {
+      if (p.sec !== sec) { sec = p.sec; html += sec ? `<h3 class="fisa-sec">${esc(sec)}</h3>` : ''; }
+      const m = M[i], st = m ? m.status : '';
+      html += `${p.i ? `<p class="fisa-intro">${esc(p.i)}</p>` : ''}<div class="pas ${st}" data-i="${i}">
+        ${p.tip === 'pas' ? `<button class="bifa" type="button" data-bifa="${i}" aria-label="Bifează" ${poateBifa() ? '' : 'disabled'}>${st === 'facut' ? ICON.check : st === 'nefacut' ? '✕' : ''}</button>` : `<span class="bifa ${st ? 'plin' : ''}">${st === 'facut' ? ICON.check : st === 'nefacut' ? '✕' : ''}</span>`}
+        <div class="pas-txt"><span>${esc(p.t)}</span>${p.d ? `<ul>${p.d.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+          ${p.tip === 'valoare' ? `<span class="pas-val"><input class="field" inputmode="decimal" data-val="${i}" value="${esc(m ? m.value : '')}" placeholder="${esc(p.u || 'valoare')}" ${poateBifa() ? '' : 'disabled'}><button class="btn sm" type="button" data-salv="${i}" ${poateBifa() ? '' : 'disabled'}>Notez</button></span>` : ''}
+          ${p.tip === 'dans' ? `<span class="pas-da"><button type="button" class="${m && m.value === 'DA' ? 'on' : ''}" data-da="${i}" ${poateBifa() ? '' : 'disabled'}>DA</button><button type="button" class="${m && m.value === 'NU' ? 'on' : ''}" data-nu="${i}" ${poateBifa() ? '' : 'disabled'}>NU</button></span>` : ''}
+          ${m ? `<small class="pas-cine">${st === 'nefacut' ? 'Nefăcut' : 'Făcut'} · ${esc(cine(m.marked_by))} · ${oraLocala(m.at)}${m.note ? ` · „${esc(m.note)}”` : ''}</small>` : ''}
+          ${poateBifa() && !m ? `<button class="pas-nu" type="button" data-nefacut="${i}">Nu s-a putut face</button>` : ''}
+        </div></div>`;
+    });
+    box.innerHTML = `<div class="crumbs"><a href="#/tura">Tura mea</a>${vedeEchipa() ? ' · <a href="#/echipa">Echipa</a>' : ''}</div>
+      <span class="eyebrow">${esc(numeLoc(spaceId))}${run ? ' · ' + ziUman(run.day) : ''}</span>
+      <h1 class="fisa-h1">${esc(titlu)}</h1>
+      <div class="fisa-sus"><div class="fisa-prog mare"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></div>
+        <b>${gata} / ${total}</b>${run && run.due_at ? `<span class="muted"> · termen ${oraLocala(run.due_at)}</span>` : ''}</div>
+      ${run && run.finished_at ? `<p class="fisa-gata">${ICON.check} Gata la ${oraLocala(run.finished_at)} · ${esc(cine(run.finished_by))}. Șefii au primit notificarea.</p>` : ''}
+      ${!eInTura && !(run && run.finished_at) ? `<p class="calc-avert">${run && run.day !== azi ? 'Fișă din altă zi: doar citire.' : 'Doar citire: ca să bifezi, fă clock-in la ' + esc(numeLoc(spaceId)) + '.'}</p>` : ''}
+      <div class="pasi">${html}</div>
+      ${run ? `<fieldset class="fisa-obs"><legend>Observații / probleme constatate</legend>
+        <textarea class="field" rows="3" data-obs ${eInTura ? '' : 'disabled'} placeholder="Ce nu a mers, ce lipsește, ce trebuie reparat…">${esc(run.note || '')}</textarea>
+        ${eInTura ? '<button class="btn sm" type="button" data-obs-salv>Trimite observația</button>' : ''}</fieldset>` : ''}`;
+  };
+  deseneaza();
+  // bara de progres rămâne sub antet (pe telefon antetul are și căutarea)
+  const antet = document.querySelector('header.top');
+  if (antet) document.documentElement.style.setProperty('--antet', antet.offsetHeight + 'px');
+  if (!run) return;
+  const marcheaza = async (i, status, value = '', note = '') => {
+    const rand = { run_id: run.id, idx: i, status, value, note, marked_by: SB_USER_ID, at: new Date().toISOString() };
+    const vechi = marks.slice();
+    marks = marks.filter(m => m.idx !== i).concat(rand); deseneaza();
+    const { error } = await SB.from('checklist_marks').upsert(rand, { onConflict: 'run_id,idx' });
+    if (error) { console.error(error); marks = vechi; deseneaza(); toast('Nu s-a salvat. Verifică dacă ești în tură și internetul.', true); }
+    else if (marks.length === pasi.length) setTimeout(reincarca, 600);
+  };
+  const reincarca = async () => {
+    const [r, mk] = await Promise.all([SB.from('checklist_runs').select('*').eq('id', run.id).single(), SB.from('checklist_marks').select('*').eq('run_id', run.id)]);
+    if (r.data) run = r.data;
+    if (mk.data) marks = mk.data;
+    if (document.getElementById('fisaBody')) deseneaza();
+  };
+  box.addEventListener('click', async e => {
+    const b = e.target.closest('[data-bifa],[data-salv],[data-da],[data-nu],[data-nefacut],[data-obs-salv]'); if (!b || !poateBifa() && !b.dataset.obsSalv) return;
+    if (b.dataset.bifa) {
+      const i = +b.dataset.bifa, m = marks.find(x => x.idx === i);
+      if (m) {
+        marks = marks.filter(x => x.idx !== i); deseneaza();
+        const { error } = await SB.from('checklist_marks').delete().eq('run_id', run.id).eq('idx', i);
+        if (error) { toast('Nu s-a putut debifa.', true); reincarca(); }
+      } else marcheaza(i, 'facut');
+    } else if (b.dataset.salv) {
+      const i = +b.dataset.salv, v = box.querySelector(`[data-val="${i}"]`).value.trim();
+      if (!v) return toast('Scrie valoarea.', true);
+      marcheaza(i, 'facut', v);
+    } else if (b.dataset.da || b.dataset.nu) {
+      marcheaza(+(b.dataset.da || b.dataset.nu), 'facut', b.dataset.da ? 'DA' : 'NU');
+    } else if (b.dataset.nefacut) {
+      const n = prompt('De ce nu s-a putut face? (ajunge la șefi)');
+      if (n === null) return;
+      marcheaza(+b.dataset.nefacut, 'nefacut', '', n.trim());
+    } else if (b.dataset.obsSalv !== undefined) {
+      const note = box.querySelector('[data-obs]').value.trim();
+      const { error } = await SB.from('checklist_runs').update({ note }).eq('id', run.id);
+      if (error) toast('Observația nu s-a salvat.', true); else toast(note ? 'Observația a ajuns la șefi.' : 'Observația a fost ștearsă.');
+    }
+  });
+  box.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('[data-val]')) box.querySelector(`[data-salv="${e.target.dataset.val}"]`).click(); });
+  canal('fisa', [['checklist_marks', `run_id=eq.${run.id}`], ['checklist_runs', `id=eq.${run.id}`]], amanat(reincarca, 300));
+}
+
+// ----- „Echipa”: azi (în timp real) și programul pe ture -----
+function viewEchipa(params) {
+  const tab = params.tab === 'program' ? 'program' : 'azi';
+  setTimeout(() => (tab === 'program' ? incarcaProgram : incarcaAzi)(params), 0);
+  return `<section class="band"><div class="wrap">
+      <span class="eyebrow">Pentru șefi · în timp real</span>
+      <h1>Echipa</h1>
+      <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
+    </div></section>
+    <section class="block"><div class="wrap">
+      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a></nav>
+      <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
+async function incarcaAzi(params) {
+  const box = document.getElementById('echipaBody'); if (!box) return;
+  const zi = /^\d{4}-\d{2}-\d{2}$/.test(params.zi || '') ? params.zi : ziLocala();
+  let oameni, ture, pontaje, runs, marks;
+  try {
+    await oreLocatii();
+    const [o, t, p, r] = await Promise.all([
+      SB.rpc('echipa_mea'),
+      SB.from('shifts').select('*').eq('day', zi).order('starts'),
+      SB.from('clockings').select('*').gte('clock_in', laOra(plusZile(zi, -1), '12:00')).lte('clock_in', laOra(plusZile(zi, 1), '06:00')),
+      SB.from('checklist_runs').select('id,cheie,title,space_id,steps,due_at,finished_at,finished_by,note').eq('day', zi),
+    ]);
+    for (const x of [o, t, p, r]) if (x.error) throw x.error;
+    oameni = o.data; ture = t.data; pontaje = p.data.filter(c => ziLocala(new Date(c.clock_in)) === zi || ture.some(s => s.id === c.shift_id)); runs = r.data;
+    marks = runs.length ? ((await SB.from('checklist_marks').select('run_id,idx,status,note,marked_by,at').in('run_id', runs.map(x => x.id))).data || []) : [];
+  } catch (e) { console.error('Echipa:', e); box.innerHTML = '<p class="err">Panoul nu s-a putut încărca. Dacă e prima dată, rulează migrarea 0016_tura.sql.</p>'; return; }
+  if (!document.getElementById('echipaBody')) return;
+  const om = u => oameni.find(x => x.user_id === u) || { full_name: 'Coleg', role_code: '' };
+  const acum = Date.now(), eAzi = zi === ziLocala();
+  const locuri = locatiiOperative().filter(s => ture.some(t => t.space_id === s.id) || pontaje.some(c => c.space_id === s.id) || runs.some(r => r.space_id === s.id));
+  const card = s => {
+    const tu = ture.filter(t => t.space_id === s.id), pt = pontaje.filter(c => c.space_id === s.id), rs = runs.filter(r => r.space_id === s.id);
+    const fara = pt.filter(c => !tu.some(t => t.user_id === c.user_id));
+    const randOm = (u, t) => {
+      const c = pt.filter(x => x.user_id === u).sort((a, b) => b.clock_in.localeCompare(a.clock_in))[0];
+      const start = t ? new Date(laOra(t.day, hm(t.starts))).getTime() : 0;
+      const intarziat = c && t && new Date(c.clock_in).getTime() > start + 5 * 60000;
+      const stare = c ? (c.clock_out ? `<span class="st gri">a plecat ${oraLocala(c.clock_out)}</span>` : `<span class="st verde">în tură din ${oraLocala(c.clock_in)}${intarziat ? ` · +${Math.ceil((new Date(c.clock_in).getTime() - start) / 60000)} min` : ''}</span>`)
+        : t && eAzi && acum > start + 10 * 60000 ? '<span class="st rosu">nu a făcut clock-in</span>' : '<span class="st gri">urmează</span>';
+      return `<div class="om"><span><b>${esc(om(u).full_name)}</b> <small>${esc(om(u).role_code)}</small></span>
+        <span class="om-ora">${t ? `${hm(t.starts)}–${hm(t.ends)}${t.opens ? ' · D' : ''}${t.closes ? ' · Î' : ''}` : 'fără program'}</span>${stare}</div>`;
+    };
+    const asteptate = [['deschidere', tu.some(t => t.opens)], ['inchidere', tu.some(t => t.closes)]]
+      .filter(([tip, da]) => da && !rs.some(r => new RegExp(tip === 'deschidere' ? 'deschidere' : 'închidere|inchidere', 'i').test(r.title)));
+    const probleme = marks.filter(m => rs.some(r => r.id === m.run_id) && (m.status === 'nefacut' || m.note))
+      .map(m => { const r = rs.find(x => x.id === m.run_id); return `<li><b>${esc(r.title)}</b>: ${m.status === 'nefacut' ? 'nefăcut — ' : ''}${esc((r.steps[m.idx] || {}).t || '')}${m.note ? ` — „${esc(m.note)}”` : ''} <small>${esc(om(m.marked_by).full_name)} · ${oraLocala(m.at)}</small></li>`; })
+      .concat(rs.filter(r => r.note).map(r => `<li><b>${esc(r.title)}</b>: „${esc(r.note)}”</li>`));
+    const ore = oraLocatie(s.id, zi, 'opens') ? `${oraLocatie(s.id, zi, 'opens')}–${oraLocatie(s.id, zi, 'closes')}` : '';
+    return `<div class="loc-card"><div class="loc-cap"><h3>${esc(numeLoc(s.id))}</h3>${ore ? `<span class="muted">program ${ore}</span>` : ''}</div>
+      <div class="loc-sec"><span class="eyebrow">Oamenii</span>${tu.map(t => randOm(t.user_id, t)).join('')}${fara.map(c => randOm(c.user_id, null)).join('') || (tu.length ? '' : '<p class="muted mic">Nimeni programat.</p>')}</div>
+      <div class="loc-sec"><span class="eyebrow">Fișele</span>
+        ${rs.map(r => { const n = marks.filter(m => m.run_id === r.id).length, tot = r.steps.length, nf = marks.filter(m => m.run_id === r.id && m.status === 'nefacut').length;
+          const intarziata = !r.finished_at && r.due_at && acum > new Date(r.due_at).getTime();
+          return `<a class="fisa-rand mic ${r.finished_at ? 'gata' : ''} ${intarziata ? 'tarziu' : ''}" href="#/fisa?r=${r.id}"><span class="fisa-titlu"><b>${esc(r.title)}</b>
+            <small>${r.finished_at ? `gata ${oraLocala(r.finished_at)}${r.due_at && new Date(r.finished_at) > new Date(r.due_at) ? ' (după termen)' : ''}` : `${n}/${tot}${r.due_at ? ` · termen ${oraLocala(r.due_at)}` : ''}${intarziata ? ' · întârziată' : ''}`}${nf ? ` · ${nf} nefăcute` : ''}</small></span>
+            <span class="fisa-prog"><i style="width:${tot ? Math.round(n / tot * 100) : 0}%"></i></span></a>`; }).join('')}
+        ${asteptate.map(([tip]) => `<div class="fisa-rand mic ${eAzi && acum > new Date(laOra(zi, oraLocatie(s.id, zi, tip === 'deschidere' ? 'opens' : 'closes')) || 0).getTime() ? 'tarziu' : ''}"><span class="fisa-titlu"><b>${tip === 'deschidere' ? 'Deschiderea' : 'Închiderea'}</b><small>nepornită${oraLocatie(s.id, zi, tip === 'deschidere' ? 'opens' : 'closes') ? ` · termen ${oraLocatie(s.id, zi, tip === 'deschidere' ? 'opens' : 'closes')}` : ''}</small></span></div>`).join('')}
+        ${!rs.length && !asteptate.length ? '<p class="muted mic">Nicio fișă pornită.</p>' : ''}</div>
+      ${probleme.length ? `<div class="loc-sec probleme"><span class="eyebrow">De rezolvat</span><ul>${probleme.join('')}</ul></div>` : ''}</div>`;
+  };
+  box.innerHTML = `<div class="echipa-sus"><label class="pl-sel"><span class="eyebrow">Ziua</span><input class="field" type="date" value="${zi}" data-zi></label>
+      ${eAzi ? '<span class="live">● în timp real</span>' : `<a class="btn ghost sm" href="#/echipa">Azi</a>`}</div>
+    ${locuri.length ? `<div class="loc-grid">${locuri.map(card).join('')}</div>` : `<div class="calc-card"><p style="margin:0">Nimeni programat sau în tură ${eAzi ? 'azi' : 'în ziua asta'}. Programul îl faci la <a href="#/echipa?tab=program">Program pe ture</a>.</p></div>`}
+    ${pushCard()}`;
+  box.querySelector('[data-zi]').addEventListener('change', e => { location.hash = '#/echipa?zi=' + e.target.value; });
+  if (eAzi) canal('echipa', [['clockings'], ['checklist_runs'], ['checklist_marks'], ['shifts']], amanat(() => incarcaAzi(params), 700));
+}
+
+async function incarcaProgram(params) {
+  const box = document.getElementById('echipaBody'); if (!box) return;
+  const locuri = locatiiOperative();
+  const s = locuri.find(x => x.id === params.s) ? params.s : (locuri[0] || {}).id;
+  const luni = luniDin(/^\d{4}-\d{2}-\d{2}$/.test(params.sapt || '') ? params.sapt : ziLocala());
+  const zile = [...Array(7).keys()].map(i => plusZile(luni, i));
+  let oameni, ture;
+  try {
+    const [o, t] = await Promise.all([SB.rpc('echipa_mea'),
+      SB.from('shifts').select('*').eq('space_id', s).gte('day', zile[0]).lte('day', zile[6]).order('starts')]);
+    if (o.error) throw o.error; if (t.error) throw t.error;
+    oameni = o.data; ture = t.data;
+  } catch (e) { console.error('Program:', e); box.innerHTML = '<p class="err">Programul nu s-a putut încărca.</p>'; return; }
+  if (!document.getElementById('echipaBody')) return;
+  const subs = subordonati(ME.role_code);
+  const planificabili = oameni.filter(p => p.active && (ME.admin || subs.has(p.role_code)));
+  const om = u => oameni.find(x => x.user_id === u) || { full_name: 'Coleg', role_code: '' };
+  const url = (x = {}) => '#/echipa?' + new URLSearchParams({ tab: 'program', s, sapt: luni, ...x }).toString();
+  box.innerHTML = `<div class="echipa-sus">
+      <label class="pl-sel"><span class="eyebrow">Locația</span><select class="field" data-loc>${locuri.map(x => `<option value="${x.id}" ${x.id === s ? 'selected' : ''}>${esc(numeLoc(x.id))}</option>`).join('')}</select></label>
+      <div class="sapt"><a class="btn ghost sm" href="${url({ sapt: plusZile(luni, -7) })}">←</a><b>${ziScurta(zile[0])} – ${ziScurta(zile[6])}</b><a class="btn ghost sm" href="${url({ sapt: plusZile(luni, 7) })}">→</a></div>
+      <button class="btn ghost sm" type="button" data-copiaza>Copiază săptămâna trecută</button></div>
+    <div class="prog-grid">${zile.map(z => `<div class="prog-zi ${z === ziLocala() ? 'azi' : ''}"><div class="prog-cap"><b>${ziScurta(z)}</b>${oraLocatie(s, z, 'opens') ? `<small>${oraLocatie(s, z, 'opens')}–${oraLocatie(s, z, 'closes')}</small>` : ''}</div>
+      ${ture.filter(t => t.day === z).map(t => `<div class="prog-tura"><b>${esc(om(t.user_id).full_name)}</b><small>${esc(om(t.user_id).role_code)} · ${hm(t.starts)}–${hm(t.ends)}${t.opens ? ' · deschide' : ''}${t.closes ? ' · închide' : ''}</small>
+        ${t.note ? `<small>${esc(t.note)}</small>` : ''}<button class="icon-btn" type="button" data-sterge-tura="${t.id}" aria-label="Șterge tura">×</button></div>`).join('')}
+      <button class="prog-add" type="button" data-zi-noua="${z}">+ Tură</button></div>`).join('')}</div>
+    <form class="calc-form prog-form" id="formTura" hidden autocomplete="off"><fieldset><legend>Tură nouă · <span data-zi-txt></span></legend><div class="calc-grid">
+      <label>Persoana<select class="field" name="user_id" required>${planificabili.map(p => `<option value="${p.user_id}">${esc(p.full_name)} · ${esc(p.role_code)}</option>`).join('')}</select></label>
+      <label>De la<input class="field" type="time" name="starts" value="07:30" required></label>
+      <label>Până la<input class="field" type="time" name="ends" value="15:30" required></label></div>
+      <label class="inline"><input type="checkbox" name="opens"> Deschide (primește mementoul și fișa de deschidere)</label>
+      <label class="inline"><input type="checkbox" name="closes"> Închide (fișa de închidere)</label>
+      <label style="margin-top:10px">Notă (opțional)<input class="field" name="note" maxlength="120"></label>
+      <div class="calc-act"><button class="btn" type="submit">Adaugă tura</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></fieldset></form>
+    ${planificabili.length ? '' : '<p class="calc-avert" style="margin-top:16px">Nu ai pe nimeni în subordine pe care să-l programezi.</p>'}`;
+  const form = box.querySelector('#formTura');
+  box.querySelector('[data-loc]').addEventListener('change', e => { location.hash = url({ s: e.target.value }); });
+  box.addEventListener('click', async e => {
+    const b = e.target.closest('[data-zi-noua],[data-sterge-tura],[data-copiaza],[data-renunt]'); if (!b) return;
+    if (b.dataset.ziNoua) { form.hidden = false; form.dataset.zi = b.dataset.ziNoua; form.querySelector('[data-zi-txt]').textContent = ziUman(b.dataset.ziNoua) + ', ' + numeLoc(s); form.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    else if (b.dataset.renunt !== undefined) form.hidden = true;
+    else if (b.dataset.stergeTura) {
+      if (!confirm('Ștergi tura?')) return;
+      const { error } = await SB.from('shifts').delete().eq('id', +b.dataset.stergeTura);
+      if (error) toast('Tura nu s-a putut șterge.', true); else incarcaProgram(params);
+    } else if (b.dataset.copiaza !== undefined) {
+      const { data, error } = await SB.from('shifts').select('*').eq('space_id', s).gte('day', plusZile(luni, -7)).lte('day', plusZile(luni, -1));
+      if (error || !data.length) return toast(error ? 'Nu s-a putut citi săptămâna trecută.' : 'Săptămâna trecută nu are ture aici.', true);
+      if (ture.length && !confirm(`Săptămâna asta are deja ${ture.length} ture. Adaug și turele de săptămâna trecută?`)) return;
+      const noi = data.map(t => ({ user_id: t.user_id, space_id: s, day: plusZile(t.day, 7), starts: t.starts, ends: t.ends, opens: t.opens, closes: t.closes, note: t.note }));
+      const r = await SB.from('shifts').insert(noi);
+      if (r.error) toast('Turele nu s-au copiat: ' + (r.error.message || ''), true); else { toast(`Am copiat ${noi.length} ture.`); incarcaProgram(params); }
+    }
+  });
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const f = form.elements;
+    const rand = { user_id: f.user_id.value, space_id: s, day: form.dataset.zi, starts: f.starts.value, ends: f.ends.value, opens: f.opens.checked, closes: f.closes.checked, note: f.note.value.trim() };
+    const { error } = await SB.from('shifts').insert(rand);
+    if (error) { console.error(error); return toast('Tura nu s-a salvat: ' + (error.message || ''), true); }
+    toast('Tura e în program. Omul primește mementoul cu 15 minute înainte.');
+    incarcaProgram(params);
+  });
+}
+
+// ----- Notificările: clopoțelul și push pe telefon -----
+let NOTIF = [];
+async function pornesteNotificari() {
+  const b = document.getElementById('clopotel'); if (!b) return;
+  const r = await SB.from('notifications').select('*').order('created_at', { ascending: false }).range(0, 29);
+  if (r.error) { b.hidden = true; return; }
+  NOTIF = r.data || []; b.hidden = false; badge();
+  if (SB.channel) SB.channel('notif-' + SB_USER_ID).on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${SB_USER_ID}` }, p => {
+    NOTIF.unshift(p.new); badge();
+    if (document.visibilityState === 'visible') toast(p.new.title);
+  }).subscribe();
+}
+function badge() {
+  const n = NOTIF.filter(x => !x.read_at).length, b = document.getElementById('clopotel');
+  if (b) { b.querySelector('i').textContent = n > 9 ? '9+' : n || ''; b.classList.toggle('are', n > 0); }
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('#clopotel'), lista = document.getElementById('notifLista');
+  if (b) {
+    if (lista) { lista.remove(); return; }
+    const el = document.createElement('div'); el.id = 'notifLista'; el.className = 'notif-lista';
+    el.innerHTML = `<div class="notif-cap"><b>Notificări</b><button type="button" data-toate>Marchează citite</button></div>
+      ${NOTIF.length ? NOTIF.map(x => `<a class="notif ${x.read_at ? '' : 'noua'}" href="${esc(x.url || '#/')}" data-n="${x.id}"><b>${esc(x.title)}</b>${x.body ? `<span>${esc(x.body)}</span>` : ''}<small>${oraLocala(x.created_at)} · ${ziScurta(ziLocala(new Date(x.created_at)))}</small></a>`).join('') : '<p class="muted mic" style="padding:12px 16px">Nicio notificare.</p>'}
+      ${pushCard(true)}`;
+    document.body.appendChild(el);
+    return;
+  }
+  if (!lista) return;
+  if (e.target.closest('[data-toate]')) {
+    const ids = NOTIF.filter(x => !x.read_at).map(x => x.id);
+    if (ids.length) await SB.from('notifications').update({ read_at: new Date().toISOString() }).in('id', ids);
+    NOTIF.forEach(x => { x.read_at = x.read_at || new Date().toISOString(); }); badge(); lista.remove(); return;
+  }
+  const a = e.target.closest('[data-n]');
+  if (a) { const x = NOTIF.find(n => n.id === +a.dataset.n); if (x && !x.read_at) { x.read_at = new Date().toISOString(); badge(); SB.from('notifications').update({ read_at: x.read_at }).eq('id', x.id).then(() => {}); } lista.remove(); return; }
+  if (!e.target.closest('#notifLista') && !e.target.closest('[data-push]')) lista.remove();
+});
+const eIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+const eInstalata = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+function pushCard(mic) {
+  const suport = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  if (suport && Notification.permission === 'granted' && localStorage.getItem('mm-push') === '1') return mic ? '' : '';
+  const ios = eIOS() && !eInstalata();
+  return `<div class="push-card ${mic ? 'mic' : ''}"><b>Notificări pe telefon</b>
+    <span>${ios ? 'Pe iPhone: apasă Share (pătratul cu săgeată) → „Add to Home Screen”, deschide aplicația de pe ecran și activează de acolo.'
+      : !suport ? 'Browserul ăsta nu primește notificări. Deschide site-ul în Chrome (Android) sau adaugă-l pe ecranul principal (iPhone).'
+      : Notification.permission === 'denied' ? 'Notificările sunt blocate pentru site. Le permiți din setările browserului.'
+      : 'Primești pe telefon mementourile turei și ce se întâmplă în echipă.'}</span>
+    ${suport && !ios && Notification.permission !== 'denied' ? '<button class="btn sm" type="button" data-push>Activează</button>' : ''}</div>`;
+}
+const b64uBytes = s => { const p = '='.repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(b, c => c.charCodeAt(0)); };
+async function activeazaPush() {
+  try {
+    if (await Notification.requestPermission() !== 'granted') return toast('Fără permisiune, notificările rămân doar în aplicație.', true);
+    const { data: cheie, error } = await SB.rpc('push_cheie_publica');
+    if (error || !cheie) return toast('Notificările pe telefon nu sunt încă configurate (cheia push lipsește).', true);
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64uBytes(cheie) });
+    const j = sub.toJSON();
+    const r = await SB.from('push_subscriptions').upsert({ endpoint: j.endpoint, user_id: SB_USER_ID, p256dh: j.keys.p256dh, auth: j.keys.auth, user_agent: navigator.userAgent.slice(0, 200) }, { onConflict: 'endpoint' });
+    if (r.error) throw r.error;
+    try { localStorage.setItem('mm-push', '1'); } catch (e) {}
+    document.querySelectorAll('.push-card').forEach(x => x.remove());
+    toast('Gata: primești notificările pe telefonul ăsta.');
+  } catch (e) { console.error('Push:', e); toast('Notificările nu s-au putut activa pe telefonul ăsta.', true); }
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-push]')) activeazaPush(); });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(e => console.warn('sw:', e));
+
+// ----- Admin → Coduri QR -----
+async function incarcaQR() {
+  const box = document.getElementById('adminBody'); if (!box) return;
+  const r = await SB.from('space_qr').select('*').order('space_id');
+  if (r.error) { box.innerHTML = '<p class="err">Codurile nu s-au putut încărca. Rulează migrarea 0016_tura.sql.</p>'; return; }
+  if (!window.qrcode) await new Promise(ok => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js'; s.onload = ok; s.onerror = ok; document.head.appendChild(s); });
+  const baza = location.origin + location.pathname;
+  const svg = t => { if (!window.qrcode) return ''; const q = window.qrcode(0, 'M'); q.addData(t); q.make(); return q.createSvgTag({ cellSize: 6, margin: 2, scalable: true }); };
+  box.innerHTML = `<p class="muted">Printează fiecare cod și lipește-l la intrarea locației. Echipa îl scanează la sosire (clock-in) și la plecare (clock-out). Dacă un cod ajunge unde nu trebuie (o poză trimisă cuiva), apasă „Cod nou” și printează-l din nou: cel vechi nu mai merge.</p>
+    <div class="qr-grid">${r.data.map(q => `<div class="qr-card" data-qr="${esc(q.space_id)}"><span class="eyebrow">Madame Magnifique</span><h3>${esc(numeLoc(q.space_id))}</h3>
+      <div class="qr-img">${svg(`${baza}#/pontaj?s=${q.space_id}&k=${q.token}`)}</div>
+      <p>Scanează la sosire și la plecare</p>
+      <div class="calc-act"><button class="btn sm" type="button" data-print="${esc(q.space_id)}">Printează</button><button class="btn ghost sm" type="button" data-cod-nou="${esc(q.space_id)}">Cod nou</button></div></div>`).join('')}</div>`;
+  box.onclick = async e => {
+    const p = e.target.closest('[data-print]'), n = e.target.closest('[data-cod-nou]');
+    if (p) { document.body.classList.add('print-qr'); box.querySelectorAll('.qr-card').forEach(c => c.classList.toggle('de-print', c.dataset.qr === p.dataset.print)); window.print(); document.body.classList.remove('print-qr'); }
+    if (n) {
+      if (!confirm(`Cod nou pentru ${numeLoc(n.dataset.codNou)}? Codul printat acum nu va mai merge.`)) return;
+      const token = Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('');
+      const { error } = await SB.from('space_qr').update({ token, updated_at: new Date().toISOString() }).eq('space_id', n.dataset.codNou);
+      if (error) toast('Codul nu s-a schimbat.', true); else { toast('Cod nou. Printează-l și înlocuiește-l pe cel vechi.'); incarcaQR(); }
+    }
+  };
 }
 
 // ---------- Căutare ----------

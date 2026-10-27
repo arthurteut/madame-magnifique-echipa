@@ -283,6 +283,30 @@ Formulele sunt cele din modelul ATC P&L Toolkit: vânzările se introduc cu TVA 
 se aduc la venit net cu cotele din setări; restul sumelor, fără TVA; toate
 procentele se raportează la venitul net.
 
+### 17. Tura: program, clock-in cu QR, fișe bifate, notificări
+
+Rulează [`0016_tura.sql`](supabase/migrations/0016_tura.sql) (activează și `pg_cron` și `pg_net`).
+
+- **Organigrama** (`role_parents`): V, BAR, PP + B → VT → RL → GM; PBR, PPT, PCF, BRT, GD →
+  PBP → SP → DP → GM. Notificările urcă pe toată linia, la cei care văd locația. AE vede
+  panoul, fără notificări.
+- **Program pe ture** (meniul *Echipa* → *Program pe ture*): îl fac cei de deasupra (RL / VT
+  la vânzare, SP / DP / PBP la producție), pe locație și săptămână, cu cine deschide / închide.
+- **Clock-in / clock-out** doar cu codul QR al locației (*Admin → Coduri QR*: printezi și
+  lipești la intrare; „Cod nou” anulează codul vechi). Funcțiile `pontaj_intrare` / `pontaj_iesire`.
+- **Fișele zilei** (meniul *Tura*): deschiderea și închiderea locației, fișele rolului (ex.
+  Preparator patiserie) și task-urile zilnice din hartă, bifate pas cu pas; se pot bifa doar
+  în tură. Fișa e comună echipei de la locație.
+- **Notificări** (clopoțelul + push pe telefon): clock-in / clock-out, fișă gata, pas nefăcut,
+  observație, întârziere (fără clock-in la 10 min după începutul turei, fișa de deschidere
+  negata la ora de deschidere, cea de închidere la o oră după închidere) și mementouri pentru
+  omul programat: cu 15 min înainte (scanează QR-ul) și la finalul turei (clock-out).
+- **Push**: cheile VAPID și adresa funcției stau în `push_config` (o citește doar
+  `service_role`). Publică funcția din [`supabase/functions/trimite-push`](supabase/functions/trimite-push/index.ts)
+  cu numele `trimite-push` și **fără** „Verify JWT”. Telefoanele activează notificările din
+  pagina *Tura* sau din clopoțel (pe iPhone: întâi „Add to Home Screen”, iOS 16.4+).
+- Orele magazinelor (`space_hours`) dau termenul fișelor de deschidere / închidere.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

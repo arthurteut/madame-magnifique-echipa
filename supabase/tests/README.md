@@ -74,3 +74,10 @@ P&L (`15_pl.sql`, după 0015): EC, ADM, AE și GM văd și completează P&L-ul; 
 V nu văd nimic, nici dacă pagina e bifată pentru RL; fără pagina „pl”, nici ADM
 nu mai vede; un P&L întreg îl șterge doar GM, iar lunile lui se șterg odată cu el.
 Ultimul rând: „20 din 20”.
+
+Tura (`16_tura.sql`, după 0016): RL, VT și SP fac programul, V și PBR nu; colegii din aceeași zi
+și locație se văd în program; clock-in doar cu codul QR al locației, legat de tura din program,
+fără dublură și nu în două locuri deodată; fișa se pornește și se bifează doar în tură, pașii ei
+nu se schimbă din pagină și după final nu se mai bifează; șefii (VT, RL, GM) primesc clock-in /
+clock-out, pas nefăcut și fișă gata, AE nu; mementoul de dinainte de tură pleacă o singură dată,
+iar lipsa clock-ului după 10 minute ajunge la șefi. Ultimul rând: „35 din 35”.
