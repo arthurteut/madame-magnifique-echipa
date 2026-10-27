@@ -289,7 +289,7 @@ Rulează [`0016_tura.sql`](supabase/migrations/0016_tura.sql) (activează și `p
 
 - **Organigrama** (`role_parents`): V, BAR, PP + B → VT → RL → GM; PBR, PPT, PCF, BRT, GD →
   PBP → SP → DP → GM. Notificările urcă pe toată linia, la cei care văd locația. AE vede
-  panoul, fără notificări.
+  panoul și primește și el toate notificările echipei (migrarea 0017, rolurile cu `sees_all`).
 - **Program pe ture** (meniul *Echipa* → *Program pe ture*): îl fac cei de deasupra (RL / VT
   la vânzare, SP / DP / PBP la producție), pe locație și săptămână, cu cine deschide / închide.
 - **Clock-in / clock-out** doar cu codul QR al locației (*Admin → Coduri QR*: printezi și

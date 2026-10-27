@@ -1,4 +1,4 @@
--- Tura (0016): program, clock-in cu QR, fișe bifate, notificări către șefi. Rulează după 0016.
+-- Tura (0016, 0017): program, clock-in cu QR, fișe bifate, notificări către șefi și AE. Rulează după 0017.
 -- Conturi proprii testului (…00000000a1 …), ca să nu depindă de celelalte teste.
 \set ON_ERROR_STOP off
 \pset footer off
@@ -81,9 +81,9 @@ do $$ begin
   insert into rez values ('Nu poți intra în tură în două locuri', false);
 exception when others then insert into rez values ('Nu poți intra în tură în două locuri', true); end $$;
 reset role;
-insert into rez select 'Clock-in: notificare la VT, RL și GM', array_agg(p.role_code order by p.role_code) = array['GM', 'RL', 'VT']
+insert into rez select 'Clock-in: notificare la VT, RL, GM și AE', array_agg(p.role_code order by p.role_code) = array['AE', 'GM', 'RL', 'VT']
   from public.notifications n join public.profiles p using (user_id) where n.kind = 'clock_in';
-insert into rez select 'AE nu primește notificări', not exists (select 1 from public.notifications where user_id = pg_temp.u('a9'));
+insert into rez select 'Barista (fără legătură cu tura) nu primește', not exists (select 1 from public.notifications where user_id = pg_temp.u('a3'));
 set role authenticated;
 
 -- Fișa
@@ -108,8 +108,8 @@ do $$ begin
   insert into rez select 'După final pașii nu se mai schimbă', status = 'nefacut' from public.checklist_marks where idx = 2;
 end $$;
 reset role;
-insert into rez select 'Pas nefăcut: șefii primesc notificarea', count(*) = 3 from public.notifications where kind = 'pas_nefacut';
-insert into rez select 'Fișa gata: șefii primesc notificarea', count(*) = 3 from public.notifications
+insert into rez select 'Pas nefăcut: șefii și AE primesc notificarea', count(*) = 4 from public.notifications where kind = 'pas_nefacut';
+insert into rez select 'Fișa gata: șefii și AE primesc notificarea', count(*) = 4 from public.notifications
   where kind = 'fisa_gata' and body like '%1 pași nefăcuți%';
 set role authenticated;
 
@@ -129,7 +129,7 @@ exception when others then insert into rez values ('Nimeni nu scrie notificări 
 select public.pontaj_iesire('porumbescu', (select token from cod));
 insert into rez select 'Clock-out închide tura', count(*) = 1 from public.clockings where clock_out is not null;
 reset role;
-insert into rez select 'Clock-out: notificare la șefi', count(*) = 3 from public.notifications where kind = 'clock_out';
+insert into rez select 'Clock-out: notificare la șefi și AE', count(*) = 4 from public.notifications where kind = 'clock_out';
 
 -- Verificările de la 5 minute
 insert into public.shifts (user_id, space_id, day, starts, ends, opens)
@@ -142,7 +142,7 @@ select public.verifica_ture();
 select public.verifica_ture();
 insert into rez select 'Memento cu 15 min înainte (o singură dată)', count(*) = 1 from public.notifications
   where kind = 'memento' and user_id = pg_temp.u('a2') and title like 'Deschizi Fructus%';
-insert into rez select 'Fără clock-in după 10 min: șefii află', count(*) = 3 from public.notifications
+insert into rez select 'Fără clock-in după 10 min: șefii și AE află', count(*) = 4 from public.notifications
   where kind = 'intarziere' and title like '%Cris BAR%nu a făcut clock-in';
 
 set role anon;
