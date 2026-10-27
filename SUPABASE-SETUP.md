@@ -271,6 +271,9 @@ ajung la el. Dacă scoți rândul `pl` al unuia dintre cele patru roluri din
   B2B și evenimente. Secțiunea **B2B** din fiecare lună ține încasările B2B pe
   tipuri și cheltuielile directe (transport, ambalaje, personal, discounturi și
   comisioane); acestea intră și în totalurile firmei. Nu e nevoie de altă migrare.
+- COGS-ul e pe materiile prime Madame: făină și cereale; unt, lactate și ouă;
+  zahăr, ciocolată și cacao; fructe, nuci și umpluturi; alte materii prime de
+  laborator; cafea, ceai și băuturi; ambalaje; marfă pentru revânzare; alte COGS.
 - Un P&L întreg îl poate șterge doar adminul (GM); lunile le poate goli oricine
   dintre cele patru roluri.
 - Ghidul de interpretare (benchmark-uri, decizii, glosar) stă în `pl_guide`:

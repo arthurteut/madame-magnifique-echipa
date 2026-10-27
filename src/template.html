@@ -2505,13 +2505,16 @@ const PL_SECT = [
     ['=b2b_costuri', 'Total cheltuieli directe B2B', 'cu CAM-ul pe personalul B2B'] ] },
   { id: 'cogs', titlu: 'COGS · costul mărfii vândute', total: ['cogs', 'Total COGS'],
     nota: 'Fără TVA. Ce ai consumat luna asta, nu ce ai cumpărat: stoc inițial + achiziții − stoc final.', linii: [
-    ['cafea', 'Cafea (boabe)'],
-    ['lapte', 'Lapte, lactate și alternative vegetale'],
-    ['food_cogs', 'Food', 'ingrediente sau produse finite'],
-    ['ambalaje', 'Ambalaje și consumabile bar', 'pahare, capace, hârtie; fără cele B2B'],
+    ['faina', 'Făină, cereale și semințe', 'făinuri, tărâțe, fulgi, semințe'],
+    ['lapte', 'Unt, lactate și ouă', 'unt, smântână, lapte, mascarpone, brânzeturi, ouă; și alternativele vegetale'],
+    ['zahar', 'Zahăr, ciocolată și cacao', 'zahăr, glucoză, miere, ciocolată de cuvertură, cacao, pralin'],
+    ['fructe', 'Fructe, nuci și umpluturi', 'fructe proaspete și congelate, piureuri, nuci, gemuri, umpluturi'],
+    ['food_cogs', 'Alte materii prime de laborator', 'drojdie, arome, gelatină, decoruri, ingredientele produselor sărate'],
+    ['cafea', 'Cafea, ceai și băuturi', 'cafea boabe, ceai, siropuri, apă, răcoritoare pentru cafenea; laptele intră mai sus'],
+    ['ambalaje', 'Ambalaje și consumabile', 'cutii de prăjituri și torturi, pungi de pâine, pahare, capace; fără cele B2B'],
     ['=b2b_ambalaje', 'Ambalaje B2B', 'din secțiunea B2B'],
-    ['cost_retail', 'Cost retail', 'marfă pentru revânzare'],
-    ['alte_cogs', 'Alte COGS', 'siropuri, ceai, ciocolată, apă'] ] },
+    ['cost_retail', 'Marfă pentru revânzare', 'produse cumpărate și vândute ca atare'],
+    ['alte_cogs', 'Alte COGS', 'tot ce se consumă în produs și nu intră mai sus'] ] },
   { id: 'munca', titlu: 'Munca · costul total al echipei', total: ['munca', 'Total muncă'],
     nota: 'Salariile brute din statul de plată: CAS, CASS și impozitul sunt deja în brut. CAM-ul angajatorului se adaugă automat.', linii: [
     ['salarii', 'Salarii brute', 'toți angajații, inclusiv managementul; fără personalul B2B'],
@@ -2591,6 +2594,7 @@ function plInd(r) {
     chelt: p(r.controlabile + r.necontrolabile + r.sub_linie), chirie: p(r.chirie), mop: p(r.profit_op), mn: p(r.profit_net),
     be, dist: V && be !== null ? V - be : null, perLeu: r.munca ? V / r.munca : null,
     mixB: p(r.bauturi_net), mixF: p(r.food_net), mixR: p(r.retail_net), mixA: p(r.alte_net),
+    costBauturi: r.bauturi_net ? (r.cafea || 0) / r.bauturi_net : null,
     b2bNet: r.b2b_net || 0, b2bCost: r.b2b_costuri || 0, b2bRamane: r.b2b_contrib || 0, b2bMarja: r.b2b_net ? r.b2b_contrib / r.b2b_net : null,
     // Materia primă a produselor B2B nu se știe separat: o estimăm cu COGS-ul mediu al lunii (fără ambalajele B2B).
     b2bDupaMP: r.b2b_net && V ? r.b2b_contrib - r.b2b_net * (r.cogs - (r.b2b_ambalaje || 0)) / V : null,
@@ -2958,6 +2962,7 @@ function plTabDashboard() {
       ${rand('Venit net (lei)', 'venit', lei)}
       ${rand('COGS %', 'cogs', pc, 'cogs')}
       ${rand('Marjă brută %', 'mb', pc)}
+      ${rand('Cost băuturi %', 'costBauturi', pc, null, 'din vânzările cafenelei; reper 20–25%, specialty 25–30%')}
       ${rand('Muncă %', 'munca', pc, 'munca')}
       ${rand('Prime cost %', 'prime', pc, 'prime')}
       ${rand('Cheltuieli %', 'chelt', pc, 'chelt', 'controlabile + necontrolabile + sub linie')}
