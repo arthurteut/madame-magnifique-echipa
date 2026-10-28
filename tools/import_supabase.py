@@ -87,6 +87,14 @@ def genereaza(d):
     out = ["-- Generat de tools/import_supabase.py. Conținut intern: nu se pune în repo.\n",
            "begin;\n\n"]
 
+    # 0) Contactele și „cui raportezi” completate pe teren (nume, telefoane) nu stau în
+    #    hartă (repo public): le păstrăm din baza de date și le punem la loc după import.
+    #    O secțiune (contactele sau echipamentele unei locații) se păstrează întreagă dacă are
+    #    măcar un telefon sau un „cui raportezi” scris pe teren (harta nu are niciunul).
+    out.append("create temp table _fise_teren on commit drop as select f.* from public.space_facts f\n"
+               "  where f.section in ('contacte', 'echipamente') and exists (select 1 from public.space_facts x\n"
+               "    where x.space_id = f.space_id and x.section = f.section and (x.phone <> '' or x.value <> ''));\n\n")
+
     # 1) Golește conținutul (în ordinea dependențelor). Rolurile și spațiile rămân
     #    (se actualizează pe loc): de ele țin conturile și matricea de acces.
     for t in ["space_task_overrides", "space_facts", "space_notes", "space_roles", "space_processes",
@@ -172,6 +180,11 @@ def genereaza(d):
                           "null", "''", "''"])
     out.append(insert("space_facts", ["space_id", "section", "position", "label", "value",
                                       "role_code", "person", "phone"], fapte))
+    out.append("delete from public.space_facts f where f.section in ('contacte', 'echipamente')\n"
+               "  and exists (select 1 from _fise_teren t where t.space_id = f.space_id and t.section = f.section);\n"
+               "insert into public.space_facts select t.* from _fise_teren t\n"
+               "  where exists (select 1 from public.spaces s where s.id = t.space_id)\n"
+               "    and (t.role_code is null or exists (select 1 from public.roles r where r.code = t.role_code));\n\n")
     out.append(insert("space_task_overrides", ["space_id", "task_id", "schedule", "role_code", "text"],
                       [[q(s["id"]), q(int(tid)), q(a["cand"]), q(a["rol"] or None), q(a.get("t", ""))]
                        for s in spatii for tid, a in (s.get("ajustari") or {}).items()]))

@@ -214,9 +214,9 @@ SPATII = [
             ["Sâmbătă", "09:00 – 16:00"],
             ["Duminică", "Închis"],
             ["Sosire echipă coacere și umplere (PP + B)", "06:00, zilele cu program"],
-            ["Sosire echipă de vânzare (VT, V, BAR)", "07:30"],
+            ["Sosire echipă de vânzare (VT, V, BAR)", "07:10"],
         ]),
-        # Dimineața la Porumbescu: PP + B deschide la 06:00, vânzarea vine la 07:30,
+        # Dimineața la Porumbescu: PP + B deschide la 06:00, vânzarea vine la 07:10,
         # magazinul deschide la 08:00.
         "ajustari": dimineata("08:00", deschidere=[
             ("Descuiere, dezarmare alarmă", "Zilnic, 06:00", "PP + B"),
@@ -229,7 +229,7 @@ SPATII = [
             {"titlu": "Zonă de coacere și umplere patiserie",
              "text": "Magazinul are zonă proprie de coacere și umplere: semipreparatele venite din producție se coc și se umplu aici, la comandă. Rol: Preparator patiserie și bucătar (PP + B)."},
             {"titlu": "Dimineața la Porumbescu",
-             "text": "Echipa de coacere și umplere (PP + B) vine la 06:00: descuie, dezarmează alarma și pornește echipamentele. Echipa de vânzare (VT, V, BAR) vine la 07:30 și pregătește magazinul până la deschiderea de la 08:00. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine, cu echipa venită cu 30–40 de minute înainte."},
+             "text": "Echipa de coacere și umplere (PP + B) vine la 06:00: descuie, dezarmează alarma și pornește echipamentele. Echipa de vânzare (VT, V, BAR) vine la 07:10 și pregătește magazinul până la deschiderea de la 08:00. Task-urile de dimineață au orele de aici, marcate cu galben. Sâmbăta magazinul deschide la 09:00: aceeași ordine, cu echipa venită cu 30–40 de minute înainte."},
         ],
     },
     {
