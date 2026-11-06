@@ -89,3 +89,10 @@ chiar dacă îl modifică altcineva; un batch îl șterge doar autorul. Ultimul 
 Locația fiecărui om (`19_locatia_omului.sql`, după 0019): adminul leagă un RL de Porumbescu; RL-ul
 vede doar Porumbescu și nu-și adaugă singur locații; un RL fără locații vede toate magazinele;
 clock-in-ul de la Fructus nu ajunge la RL-ul de Porumbescu, cel de la Porumbescu da. Ultimul rând: „9 din 9”.
+
+Jocul echipei (`20_joc.sql`, după 0020): clock-in la timp +10, fișa terminată adună pașii, fișa și
+problema semnalată, observația +5 și poartă numele celui care a scris-o; vânzătoarea nu rezolvă
+probleme și nu vede tabloul echipei sau clasamentul magazinelor; RL-ul rezolvă o problemă o singură
+dată (+5 lui, +10 celui care a semnalat-o, cu notificare); RL-ul de Porumbescu nu vede tabloul și
+programul de la Fructus, GM-ul vede orice locație; seria de ture la timp se numără corect; anonimul
+nu are acces. Ultimul rând: „25 din 25”. Testul jurnalului (18) își șterge acum conturile la final.

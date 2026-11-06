@@ -44,5 +44,9 @@ set role anon;
 do $$ begin perform 1 from public.croissant_batches; insert into rez values ('Anonimul nu citește', false);
 exception when others then insert into rez values ('Anonimul nu citește', true); end $$;
 reset role;
+-- conturile testului dispar, ca să nu schimbe numărătorile celorlalte teste
+delete from public.croissant_batches;
+delete from public.profiles where user_id::text like '00000000-0000-0000-0000-0000000000b%';
+delete from auth.users where id::text like '00000000-0000-0000-0000-0000000000b%';
 select * from rez;
 select count(*) filter (where ok) || ' din ' || count(*) as rezultat from rez;

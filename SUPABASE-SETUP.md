@@ -324,6 +324,26 @@ Un cont legat de locații vede doar acele locații (dintre cele ale rolului) și
 echipei doar de acolo; un cont fără locații vede, ca până acum, toate locațiile rolului. Responsabilul
 de locație (RL) deschide aplicația direct pe *Echipa → Azi*, cu legătura spre pagina locației.
 
+### 20. Jocul echipei: puncte, niveluri, insigne, clasamente
+
+Rulează [`0020_joc.sql`](supabase/migrations/0020_joc.sql). Punctele (XP) se calculează singure din
+ce se întâmplă deja în aplicație, nu se introduc de mână:
+
+| De unde | Puncte |
+|---|---|
+| Clock-in la timp (≤ 5 min după începutul turei) / până la 15 min / fără tură în program | +10 / +3 / +2 |
+| Pas făcut · fișă gata la termen (după termen) · fișă fără niciun pas nefăcut | +2 · +15 (+5) · +10 |
+| Lecție parcursă în Academie · primul test trecut la un curs | +5 · +30 |
+| Problemă semnalată (pas nefăcut, notă, observație) · rezolvată: celui care a semnalat / șefului | +5 · +10 / +5 |
+
+Pe *Tura* fiecare își vede nivelul (de la Ucenic la Maestru Madame), seria de ture începute la timp,
+punctele săptămânii, insignele și scorul echipei lui. Pe *Echipa → Azi* șefii (RL pentru locația lui,
+GM și AE pentru oricare) au tabloul locației: scorul săptămânii (media dintre clock-in la timp, fișe
+la termen, pași făcuți și probleme rezolvate) față de săptămâna trecută, nivelul echipei, obiectivele
+cu ținta de 90%, clasamentul oamenilor, clasamentul magazinelor și punctele zilei. La *De rezolvat*
+șeful apasă **Rezolvat**; cine a semnalat problema primește notificare și +10 XP.
+Tot aici: șefii văd programul și pontajul colegilor doar la locațiile lor.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

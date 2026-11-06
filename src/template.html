@@ -794,6 +794,118 @@
   .loc-alege div { display: grid; gap: 6px; min-width: 220px; padding: 10px; background: var(--bg-soft); border: 1px solid var(--line); }
   .loc-alege label { display: flex; gap: 8px; align-items: center; font-size: .88rem; white-space: nowrap; }
   .loc-alege small { white-space: normal; font-size: .76rem; }
+  /* ---------- Jocul echipei ---------- */
+  .inel { position: relative; width: 120px; aspect-ratio: 1; flex: none; }
+  .inel svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .inel circle { fill: none; stroke-width: 7; }
+  .inel-fond { stroke: var(--line); }
+  .inel-arc { stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(.2, .7, .2, 1); }
+  .inel > span { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+  .inel b { font: 500 2.1rem/1 'Montserrat', sans-serif; color: var(--ink); }
+  .inel small { font: 500 .6rem/1.2 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; max-width: 80px; }
+  .inel.mare { width: 150px; } .inel.mare b { font-size: 2.8rem; }
+  .inel.mediu { width: 112px; } .inel.mic { width: 54px; } .inel.mic b { font-size: 1.15rem; } .inel.mic circle { stroke-width: 10; }
+  .joc-banda { display: flex; align-items: center; gap: 14px; width: 100%; margin-top: 12px; padding: 12px 16px; background: var(--ink); color: var(--greige); border: 0; text-align: left; }
+  .joc-banda .inel-fond { stroke: #3d3d3d; } .joc-banda .inel b { color: #fff; }
+  .jb-txt { flex: 1; min-width: 0; display: grid; gap: 3px; }
+  .jb-txt .eyebrow { color: var(--sand); } .jb-txt b { font: 500 1.05rem/1.2 'Montserrat', sans-serif; color: #fff; }
+  .jb-txt small { color: #b9b6b0; font-size: .8rem; }
+  .jb-cifre { display: flex; gap: 16px; text-align: center; }
+  .jb-cifre b { display: block; font: 500 1.2rem/1 'Montserrat', sans-serif; color: var(--sand); }
+  .jb-cifre small { font: 500 .58rem/1 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #b9b6b0; }
+  @media (max-width: 420px) { .jb-cifre span:last-child { display: none; } }
+  .joc-progres { margin-top: 44px; scroll-margin-top: calc(var(--antet, 76px) + 12px); }
+  .jp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+  .jp-card { background: #fff; border: 1px solid var(--line); padding: 20px 22px; }
+  .jp-card > .eyebrow { display: block; margin-bottom: 12px; }
+  .jp-nivel { display: flex; gap: 22px; align-items: center; background: var(--ink); border-color: var(--ink); color: var(--greige); }
+  .jp-nivel .inel-fond { stroke: #3d3d3d; } .jp-nivel .inel b { color: #fff; } .jp-nivel .inel small { color: #b9b6b0; }
+  .jp-nivel .eyebrow { color: var(--sand); } .jp-nivel h3 { color: #fff; font-size: 1.5rem; margin: 8px 0 12px; }
+  .jp-nivel .muted, .jp-nivel .muted b { color: #b9b6b0; } .jp-nivel > div { flex: 1; min-width: 0; }
+  .xp-bara { height: 6px; background: #3d3d3d; overflow: hidden; margin-bottom: 8px; }
+  .xp-bara i { display: block; height: 100%; background: linear-gradient(90deg, var(--sand), var(--gold)); }
+  .jp-serie { margin: 12px 0 0; font-size: .88rem; } .jp-serie b { font: 500 1.1rem/1 'Montserrat', sans-serif; color: var(--sand); margin-right: 4px; }
+  @media (max-width: 480px) { .jp-nivel { flex-direction: column; align-items: flex-start; } }
+  .jp-mare { font: 500 2.2rem/1 'Montserrat', sans-serif; color: var(--ink); margin: 0 0 14px; } .jp-mare small { font-size: .9rem; color: var(--muted); }
+  .sursa { display: grid; grid-template-columns: 110px minmax(0, 1fr) 40px; gap: 10px; align-items: center; font-size: .88rem; padding: 4px 0; }
+  .sursa b { text-align: right; font-weight: 500; color: var(--ink); }
+  .sursa-bara { height: 6px; background: var(--bg-soft); } .sursa-bara i { display: block; height: 100%; background: var(--stone); }
+  .jp-echipa-r { display: flex; gap: 18px; align-items: center; }
+  .dl { font-size: .84rem; color: var(--muted); } .dl.sus { color: #2f6a40; } .dl.jos { color: #9b2c2c; }
+  .jp-h3 { font-size: 1.05rem; margin: 30px 0 12px; } .jp-h3 .muted { font: 400 .85rem 'Roboto', sans-serif; margin-left: 6px; }
+  .insigne { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .insigna { background: #fff; border: 1px solid var(--line); padding: 16px 14px; text-align: center; display: grid; gap: 4px; justify-items: center; }
+  .insigna b { font: 500 .88rem/1.25 'Montserrat', sans-serif; color: var(--muted); }
+  .insigna small { color: var(--muted); font-size: .74rem; line-height: 1.3; }
+  .ins-m { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 6px; font: 500 1rem/1 'Montserrat', sans-serif; letter-spacing: .06em; color: var(--stone); border: 1px dashed var(--stone); }
+  .insigna.are { border-color: var(--sand); background: #fffdf8; }
+  .insigna.are b { color: var(--ink); }
+  .insigna.are .ins-m { background: var(--ink); color: var(--sand); border: 2px solid var(--sand); box-shadow: 0 0 0 3px var(--ink); }
+  .ins-prog { width: 70%; height: 4px; background: var(--line); margin-top: 4px; } .ins-prog i { display: block; height: 100%; background: var(--stone); }
+  .feed { list-style: none; margin: 0; padding: 0; }
+  .feed li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #3a3a3a; font-size: .86rem; }
+  .feed li:last-child { border-bottom: 0; }
+  .feed b { font: 600 .82rem/1 'Montserrat', sans-serif; color: var(--sand); }
+  .feed i { font-style: normal; color: #fff; } .feed small { color: #8f8c86; font-size: .76rem; }
+  .feed.deschis { background: #fff; border: 1px solid var(--line); padding: 4px 18px; }
+  .feed.deschis li { border-bottom-color: #f0efed; } .feed.deschis b { color: #9a6a12; } .feed.deschis small { color: var(--muted); }
+  .jp-cum { margin-top: 18px; font-size: .9rem; } .jp-cum summary { cursor: pointer; color: var(--ink); }
+  .jp-cum ul { margin: 10px 0 0; padding-left: 18px; color: var(--ink-soft); } .jp-cum li { margin-bottom: 4px; }
+  .joc-tablou { background: var(--ink); color: var(--greige); padding: clamp(18px, 3vw, 30px); margin-bottom: 30px; }
+  .joc-tablou .eyebrow { color: var(--sand); }
+  .joc-tablou h2 { color: #fff; font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 8px; }
+  .joc-tablou .mic { font-size: .84rem; color: #b9b6b0; margin: 6px 0 0; } .joc-tablou .mic b { color: #fff; font-weight: 500; }
+  .joc-tablou .inel-fond { stroke: #3d3d3d; } .joc-tablou .inel b { color: #fff; } .joc-tablou .inel small { color: #b9b6b0; }
+  .joc-tablou .dl { color: #b9b6b0; } .joc-tablou .dl.sus { color: #8fd0a0; } .joc-tablou .dl.jos { color: #e79a9a; }
+  .jt-cap { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+  .jt-dreapta { display: flex; gap: 12px 18px; align-items: end; flex-wrap: wrap; }
+  .jt-alege { display: grid; gap: 6px; } .jt-alege .field { padding: 8px 10px; background: #2e2e2e; color: #fff; border-color: #4a4a4a; }
+  .jt-eu { color: var(--sand); font-size: .86rem; text-decoration: none; border-bottom: 1px solid #5a5345; padding-bottom: 2px; }
+  .jt-eu:hover { color: #fff; }
+  .jt-grid { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 16px; }
+  .jt-grid > div, .jt-card { background: #2c2c2c; border: 1px solid #3a3a3a; padding: 18px 20px; }
+  .jt-scor, .jt-nivel { display: flex; gap: 18px; align-items: center; }
+  .jt-scor > div, .jt-nivel > div { max-width: 220px; } .jt-nivel b { font: 500 1.3rem/1.1 'Montserrat', sans-serif; color: #fff; }
+  .jt-obj { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 22px; align-content: start; }
+  .jt-obj > .eyebrow { grid-column: 1 / -1; }
+  .obj-cap { display: flex; justify-content: space-between; gap: 8px; font-size: .88rem; margin-bottom: 6px; }
+  .obj-cap b { font: 500 1rem/1 'Montserrat', sans-serif; color: #fff; }
+  .obj-bara { position: relative; height: 6px; background: #3d3d3d; }
+  .obj-bara i { display: block; height: 100%; background: var(--stone); transition: width 1s ease; }
+  .obj-bara em { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--sand); }
+  .obj.atins .obj-bara i { background: linear-gradient(90deg, var(--sand), var(--gold)); }
+  .obj small { display: block; font-size: .76rem; color: #8f8c86; margin-top: 5px; } .obj.atins small { color: var(--sand); }
+  .jt-grid2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+  .jt-card > .eyebrow, .jt-obj > .eyebrow, .jp-card > .eyebrow { display: block; margin-bottom: 10px; line-height: 1.5; }
+  .clasament { list-style: none; margin: 0; padding: 0; }
+  .clasament li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #3a3a3a; }
+  .clasament li:last-child { border-bottom: 0; }
+  .loc-nr { font: 500 .95rem/1 'Montserrat', sans-serif; color: #8f8c86; text-align: center; }
+  .clasament .p1 .loc-nr { color: var(--ink); background: var(--gold); border-radius: 50%; width: 26px; height: 26px; display: grid; place-items: center; }
+  .clasament .p2 .loc-nr { color: var(--ink); background: var(--greige); border-radius: 50%; width: 26px; height: 26px; display: grid; place-items: center; }
+  .clasament .p3 .loc-nr { color: var(--ink); background: var(--stone); border-radius: 50%; width: 26px; height: 26px; display: grid; place-items: center; }
+  .cl-nume b { display: block; font-weight: 500; color: #fff; font-size: .92rem; } .cl-nume b a { color: #fff; }
+  .cl-nume small, .cl-xp small { display: block; color: #8f8c86; font-size: .74rem; }
+  .cl-xp { text-align: right; } .cl-xp b { font: 500 1.05rem/1 'Montserrat', sans-serif; color: var(--sand); }
+  .clasament li.aici { background: #353330; margin: 0 -10px; padding-left: 10px; padding-right: 10px; }
+  @media (max-width: 1180px) { .jt-grid { grid-template-columns: 1fr 1fr; } .jt-obj { grid-column: 1 / -1; } .jt-grid2 { grid-template-columns: 1fr 1fr; } .jt-grid2 > :last-child { grid-column: 1 / -1; } }
+  @media (max-width: 700px) { .jt-grid, .jt-grid2, .jt-obj { grid-template-columns: 1fr; } .jt-grid2 > :last-child { grid-column: auto; } .inel.mare { width: 118px; } .inel.mare b { font-size: 2.2rem; } .inel.mediu { width: 96px; } }
+  .probleme li { display: flex; justify-content: space-between; gap: 6px 12px; align-items: baseline; flex-wrap: wrap; }
+  .probleme li > span:first-child { flex: 1 1 220px; }
+  .probleme.toate { background: #f2f7f3; }
+  .rez-btn { flex: none; padding: 5px 10px; border: 1px solid var(--ink); background: #fff; font: 500 .7rem/1 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+  .rez-btn:hover { background: var(--ink); color: #fff; }
+  .rezolvata > span:first-child { color: var(--muted); text-decoration: line-through; text-decoration-color: #b9b6b0; }
+  .rez-gata { color: #2f6a40; font-size: .8rem; }
+  .rez-anul { background: none; border: 0; padding: 0; color: var(--muted); font-size: .76rem; text-decoration: underline; }
+  .felicitare { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 16px; background: rgba(20, 18, 16, .86); animation: fel-in .35s ease; }
+  .fel-box { width: min(420px, 100%); background: var(--ink); color: var(--greige); text-align: center; padding: 38px 28px 30px; border: 1px solid #4a4538; }
+  .fel-box .eyebrow { color: var(--sand); }
+  .fel-m { width: 104px; height: 104px; margin: 20px auto 18px; border-radius: 50%; display: grid; place-items: center; font: 500 2.6rem/1 'Montserrat', sans-serif; color: var(--sand); border: 2px solid var(--sand); box-shadow: 0 0 0 6px var(--ink), 0 0 0 7px #5a5345; animation: fel-m .7s cubic-bezier(.2, .9, .3, 1.3); }
+  .fel-box h2 { color: #fff; font-size: 1.7rem; margin-bottom: 10px; } .fel-box p { color: #b9b6b0; margin: 0 0 22px; }
+  .fel-box .btn { background: var(--sand); color: var(--ink); border-color: var(--sand); }
+  @keyframes fel-in { from { opacity: 0; } } @keyframes fel-m { from { transform: scale(.4); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .felicitare, .fel-m { animation: none; } .inel-arc, .obj-bara i { transition: none; } }
 </style>
 </head>
 <body>
@@ -3506,8 +3618,8 @@ function viewTura() {
 }
 async function incarcaTura() {
   const box = document.getElementById('turaBody'); if (!box) return;
-  let t;
-  try { [t] = await Promise.all([dateTura(), oreLocatii()]); }
+  let t, joc;
+  try { [t, , joc] = await Promise.all([dateTura(), oreLocatii(), jocEu()]); }
   catch (e) { console.error('Tura:', e); box.innerHTML = '<p class="err">Tura nu s-a putut încărca. Dacă e prima dată, rulează în Supabase migrarea 0016_tura.sql.</p>'; return; }
   if (!document.getElementById('turaBody')) return;
   const azi = t.azi, ture = t.ture.filter(s => s.day === azi), urmatoare = t.ture.filter(s => s.day > azi);
@@ -3539,15 +3651,19 @@ async function incarcaTura() {
       <span class="fisa-titlu"><b>${esc(f.titlu)}</b><small>${run && run.finished_at ? `Gata la ${oraLocala(run.finished_at)}` : run ? `${gata} din ${total} pași` : 'Nepornită'}${termen ? ` · termen ${termen}` : ''}${eu ? ' · ești programat(ă)' : ''}</small></span>
       <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
   };
-  box.innerHTML = `${stare}
+  box.innerHTML = `${stare}${joc ? jocBanda(joc) : ''}
     ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
       ${!t.deschis ? '<p class="muted" style="margin:-8px 0 14px">Le poți citi; ca să bifezi, fă întâi clock-in.</p>' : ''}
       ${fise.length ? `<div class="fise">${fise.map(rand).join('')}</div>` : '<p class="lvl4">Pentru rolul tău nu sunt încă fișe de bifat la locația asta.</p>'}` : ''}
+    ${joc ? jocProgres(joc) : ''}
     ${urmatoare.length ? `<h2 class="section-title" style="margin-top:36px">Turele următoare</h2>
       <div class="ture-lista">${urmatoare.map(s => `<div><b>${ziUman(s.day)}</b><span>${esc(numeLoc(s.space_id))} · ${hm(s.starts)}–${hm(s.ends)}${s.opens ? ' · deschizi' : ''}${s.closes ? ' · închizi' : ''}</span></div>`).join('')}</div>` : ''}
     ${pushCard()}
     ${t.pontaj.filter(c => c.clock_out).length ? `<h2 class="section-title" style="margin-top:36px">Pontajul tău</h2>
       <div class="ture-lista">${t.pontaj.filter(c => c.clock_out).slice(0, 7).map(c => `<div><b>${ziUman(ziLocala(new Date(c.clock_in)))}</b><span>${esc(numeLoc(c.space_id))} · ${oraLocala(c.clock_in)}–${oraLocala(c.clock_out)}</span></div>`).join('')}</div>` : ''}`;
+  const sus = box.querySelector('[data-progres]');
+  if (sus) sus.addEventListener('click', () => document.getElementById('progresul-tau').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  if (joc) verificaJoc(joc);
   if (loc) canal('tura', [['checklist_runs', `space_id=eq.${loc}`], ['clockings', `user_id=eq.${SB_USER_ID}`]], amanat(incarcaTura, 800));
 }
 
@@ -3756,7 +3872,10 @@ const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip
 async function incarcaAzi(params) {
   const box = document.getElementById('echipaBody'); if (!box) return;
   const zi = /^\d{4}-\d{2}-\d{2}$/.test(params.zi || '') ? params.zi : ziLocala();
-  let oameni, ture, pontaje, runs, marks;
+  let oameni, ture, pontaje, runs, marks, rezolvate = [], tablou = null;
+  const alegeri = locatiiOperative();
+  const sel = (alegeri.find(x => x.id === params.s) || alegeri.find(x => x.tip === 'magazin') || alegeri[0] || {}).id;
+  const pTablou = zi === ziLocala() && sel ? jocTablou(sel).catch(() => null) : Promise.resolve(null);
   try {
     await oreLocatii();
     const [o, t, p, r] = await Promise.all([
@@ -3768,6 +3887,8 @@ async function incarcaAzi(params) {
     for (const x of [o, t, p, r]) if (x.error) throw x.error;
     oameni = o.data; ture = t.data; pontaje = p.data.filter(c => ziLocala(new Date(c.clock_in)) === zi || ture.some(s => s.id === c.shift_id)); runs = r.data;
     marks = runs.length ? ((await SB.from('checklist_marks').select('run_id,idx,status,note,marked_by,at').in('run_id', runs.map(x => x.id))).data || []) : [];
+    if (runs.length) { const pr = await SB.from('probleme_rezolvate').select('*').in('run_id', runs.map(x => x.id)); rezolvate = pr.error ? [] : (pr.data || []); }
+    tablou = await pTablou;
   } catch (e) { console.error('Echipa:', e); box.innerHTML = '<p class="err">Panoul nu s-a putut încărca. Dacă e prima dată, rulează migrarea 0016_tura.sql.</p>'; return; }
   if (!document.getElementById('echipaBody')) return;
   const om = u => oameni.find(x => x.user_id === u) || { full_name: 'Coleg', role_code: '' };
@@ -3787,9 +3908,15 @@ async function incarcaAzi(params) {
     };
     const asteptate = [['deschidere', tu.some(t => t.opens)], ['inchidere', tu.some(t => t.closes)]]
       .filter(([tip, da]) => da && !rs.some(r => new RegExp(tip === 'deschidere' ? 'deschidere' : 'închidere|inchidere', 'i').test(r.title)));
+    // „De rezolvat”: șeful le închide cu „Rezolvat” (+5 XP lui, +10 celui care a semnalat)
+    const rezolvare = (run, idx) => rezolvate.find(x => x.run_id === run && (x.idx ?? null) === idx);
+    const butonRez = (run, idx) => { const x = rezolvare(run, idx); return x
+      ? `<span class="rez-gata">Rezolvat${x.resolved_by ? ' de ' + esc(x.resolved_by === SB_USER_ID ? 'tine' : om(x.resolved_by).full_name) : ''} · ${oraLocala(x.resolved_at)}</span> <button class="rez-anul" type="button" data-rez="${run}:${idx ?? ''}" data-anuleaza="1">anulează</button>`
+      : `<button class="rez-btn" type="button" data-rez="${run}:${idx ?? ''}">Rezolvat</button>`; };
     const probleme = marks.filter(m => rs.some(r => r.id === m.run_id) && (m.status === 'nefacut' || m.note))
-      .map(m => { const r = rs.find(x => x.id === m.run_id); return `<li><b>${esc(r.title)}</b>: ${m.status === 'nefacut' ? 'nefăcut — ' : ''}${esc((r.steps[m.idx] || {}).t || '')}${m.note ? ` — „${esc(m.note)}”` : ''} <small>${esc(om(m.marked_by).full_name)} · ${oraLocala(m.at)}</small></li>`; })
-      .concat(rs.filter(r => r.note).map(r => `<li><b>${esc(r.title)}</b>: „${esc(r.note)}”</li>`));
+      .map(m => { const r = rs.find(x => x.id === m.run_id); return `<li class="${rezolvare(m.run_id, m.idx) ? 'rezolvata' : ''}"><span><b>${esc(r.title)}</b>: ${m.status === 'nefacut' ? 'nefăcut — ' : ''}${esc((r.steps[m.idx] || {}).t || '')}${m.note ? ` — „${esc(m.note)}”` : ''} <small>${esc(om(m.marked_by).full_name)} · ${oraLocala(m.at)}</small></span>${butonRez(m.run_id, m.idx)}</li>`; })
+      .concat(rs.filter(r => r.note).map(r => `<li class="${rezolvare(r.id, null) ? 'rezolvata' : ''}"><span><b>${esc(r.title)}</b>: „${esc(r.note)}”</span>${butonRez(r.id, null)}</li>`));
+    const deschise = probleme.filter(x => !x.startsWith('<li class="rezolvata"')).length;
     const ore = oraLocatie(s.id, zi, 'opens') ? `${oraLocatie(s.id, zi, 'opens')}–${oraLocatie(s.id, zi, 'closes')}` : '';
     return `<div class="loc-card"><div class="loc-cap"><h3><a href="#/s/${enc(s.id)}">${esc(numeLoc(s.id))}</a></h3>${ore ? `<span class="muted">program ${ore}</span>` : ''}</div>
       <div class="loc-sec loc-link"><a href="#/s/${enc(s.id)}">Pagina locației: fișa, procesele, procedurile →</a> · <a href="#/echipa?tab=program&s=${enc(s.id)}">Programul →</a></div>
@@ -3802,14 +3929,27 @@ async function incarcaAzi(params) {
             <span class="fisa-prog"><i style="width:${tot ? Math.round(n / tot * 100) : 0}%"></i></span></a>`; }).join('')}
         ${asteptate.map(([tip]) => `<div class="fisa-rand mic ${eAzi && acum > new Date(laOra(zi, oraLocatie(s.id, zi, tip === 'deschidere' ? 'opens' : 'closes')) || 0).getTime() ? 'tarziu' : ''}"><span class="fisa-titlu"><b>${tip === 'deschidere' ? 'Deschiderea' : 'Închiderea'}</b><small>nepornită${oraLocatie(s.id, zi, tip === 'deschidere' ? 'opens' : 'closes') ? ` · termen ${oraLocatie(s.id, zi, tip === 'deschidere' ? 'opens' : 'closes')}` : ''}</small></span></div>`).join('')}
         ${!rs.length && !asteptate.length ? '<p class="muted mic">Nicio fișă pornită.</p>' : ''}</div>
-      ${probleme.length ? `<div class="loc-sec probleme"><span class="eyebrow">De rezolvat</span><ul>${probleme.join('')}</ul></div>` : ''}</div>`;
+      ${probleme.length ? `<div class="loc-sec probleme ${deschise ? '' : 'toate'}"><span class="eyebrow">De rezolvat${deschise ? ` · ${deschise}` : ' · totul rezolvat'}</span><ul>${probleme.join('')}</ul></div>` : ''}</div>`;
   };
-  box.innerHTML = `<div class="echipa-sus"><label class="pl-sel"><span class="eyebrow">Ziua</span><input class="field" type="date" value="${zi}" data-zi></label>
+  box.innerHTML = `${tablou ? htmlTablou(sel, tablou, alegeri) : ''}<div class="echipa-sus"><label class="pl-sel"><span class="eyebrow">Ziua</span><input class="field" type="date" value="${zi}" data-zi></label>
       ${eAzi ? '<span class="live">● în timp real</span>' : `<a class="btn ghost sm" href="#/echipa">Azi</a>`}</div>
     ${locuri.length ? `<div class="loc-grid">${locuri.map(card).join('')}</div>` : `<div class="calc-card"><p style="margin:0">Nimeni programat sau în tură ${eAzi ? 'azi' : 'în ziua asta'}. Programul îl faci la <a href="#/echipa?tab=program">Program pe ture</a>.</p></div>`}
     ${pushCard()}`;
   box.querySelector('[data-zi]').addEventListener('change', e => { location.hash = '#/echipa?zi=' + e.target.value; });
-  if (eAzi) canal('echipa', [['clockings'], ['checklist_runs'], ['checklist_marks'], ['shifts']], amanat(() => incarcaAzi(params), 700));
+  const alegeLoc = box.querySelector('[data-loc-joc]');
+  if (alegeLoc) alegeLoc.addEventListener('change', e => { location.hash = '#/echipa?s=' + enc(e.target.value); });
+  box.onclick = async ev => {
+    const b = ev.target.closest('[data-rez]'); if (!b) return;
+    const [run, i] = b.dataset.rez.split(':'), idx = i === '' ? null : +i;
+    b.disabled = true;
+    let r;
+    if (b.dataset.anuleaza) { const q = SB.from('probleme_rezolvate').delete().eq('run_id', +run); r = await (idx === null ? q.is('idx', null) : q.eq('idx', idx)); }
+    else r = await SB.from('probleme_rezolvate').insert({ run_id: +run, idx });
+    if (r.error) { toast(/probleme_rezolvate/.test(r.error.message || '') ? 'Rulează întâi migrarea 0020_joc.sql.' : 'Nu a mers. Încearcă din nou.', true); b.disabled = false; return; }
+    if (!b.dataset.anuleaza) toast('Rezolvată. +5 XP pentru tine, +10 pentru cine a semnalat-o.');
+    incarcaAzi(params);
+  };
+  if (eAzi) canal('echipa', [['clockings'], ['checklist_runs'], ['checklist_marks'], ['shifts'], ['probleme_rezolvate']], amanat(() => incarcaAzi(params), 700));
 }
 
 async function incarcaProgram(params) {
@@ -3970,6 +4110,160 @@ async function incarcaQR() {
       if (error) toast('Codul nu s-a schimbat.', true); else { toast('Cod nou. Printează-l și înlocuiește-l pe cel vechi.'); incarcaQR(); }
     }
   };
+}
+
+// ---------- Jocul echipei: puncte (XP), niveluri, insigne, clasamente (migrarea 0020) ----------
+// Punctele vin din ce se întâmplă deja: clock-in la timp, pașii și fișele, Academia, problemele semnalate și rezolvate.
+// Fiecare își vede progresul lui și scorul echipei; șefii (Echipa → Azi) văd tabloul locației și clasamentele.
+const NIVELURI = [[0, 'Ucenic'], [100, 'Ucenic II'], [250, 'Ucenic III'], [500, 'Calfă'], [850, 'Calfă II'], [1300, 'Calfă III'],
+  [1900, 'Meșter'], [2700, 'Meșter II'], [3700, 'Meșter III'], [5000, 'Maestru'], [7000, 'Maestru Madame']];
+function nivel(xp) {
+  let i = 0; while (i + 1 < NIVELURI.length && xp >= NIVELURI[i + 1][0]) i++;
+  const [de, nume] = NIVELURI[i], pana = NIVELURI[i + 1] ? NIVELURI[i + 1][0] : null;
+  return { n: i + 1, nume, de, pana, urmator: NIVELURI[i + 1] ? NIVELURI[i + 1][1] : '', pct: pana ? Math.min(100, Math.round((xp - de) / (pana - de) * 100)) : 100 };
+}
+// Echipa urcă mai încet: pragurile cresc cu pătratul nivelului (250, 1.000, 2.250, 4.000…).
+function nivelEchipa(xp) {
+  const n = Math.floor(Math.sqrt(Math.max(0, xp) / 250)) + 1, de = 250 * (n - 1) ** 2, pana = 250 * n ** 2;
+  return { n, de, pana, pct: Math.round((xp - de) / (pana - de) * 100) };
+}
+const fmtXp = n => new Intl.NumberFormat('ro-RO').format(n || 0);
+function inel(pct, mare, mic, cls = '') {
+  const r = 52, c = +(2 * Math.PI * r).toFixed(2), p = Math.max(0, Math.min(100, pct || 0));
+  return `<div class="inel ${cls}"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${r}" class="inel-fond"/>
+    <circle cx="60" cy="60" r="${r}" class="inel-arc" stroke-dasharray="${c}" stroke-dashoffset="${(c * (1 - p / 100)).toFixed(2)}"/></svg>
+    <span><b>${mare}</b>${mic ? `<small>${mic}</small>` : ''}</span></div>`;
+}
+const SURSE_XP = [['punctualitate', 'Punctualitate'], ['fise', 'Fișele'], ['academia', 'Academia'], ['probleme', 'Probleme']];
+const INSIGNE = [
+  ['I', 'Prima fișă', 'Termini prima fișă', j => j.contoare.fise_terminate, 1],
+  ['CC', 'Ca un ceas', '10 deschideri gata la termen', j => j.contoare.deschideri_la_timp, 10],
+  ['P', 'Punctual', '25 de clock-in la timp', j => j.contoare.clockin_la_timp, 25],
+  ['X', 'Serie de 10', '10 ture la rând începute la timp', j => j.serie_max, 10],
+  ['FC', 'Fără cusur', '10 fișe fără niciun pas nefăcut', j => j.contoare.fara_cusur, 10],
+  ['OV', 'Ochi de vultur', '5 probleme semnalate de tine, rezolvate', j => j.contoare.probleme_rezolvate, 5],
+  ['S', 'Student', 'Primul test trecut în Academie', j => j.contoare.teste_trecute, 1],
+  ['A', 'Academician', '5 teste trecute în Academie', j => j.contoare.teste_trecute, 5],
+];
+const insigne = j => INSIGNE.map(([m, nume, cum, f, tinta]) => { const v = Math.min(f(j) || 0, tinta); return { m, nume, cum, v, tinta, are: v >= tinta }; });
+const OBIECTIVE = [['ture', 'ture_la_timp', 'Clock-in la timp'], ['fise', 'fise_la_termen', 'Fișe gata la termen'], ['pasi', 'pasi_facuti', 'Pași făcuți'], ['probleme', 'rezolvate', 'Probleme rezolvate']];
+const TINTA = 90;
+const obiective = s => OBIECTIVE.map(([tot, ok, et]) => {
+  const n = s[tot] || 0, k = s[ok] || 0, p = n ? Math.round(k / n * 100) : null, atins = p !== null && p >= TINTA;
+  return `<div class="obj ${atins ? 'atins' : ''}"><div class="obj-cap"><span>${et}</span><b>${p === null ? '—' : p + '%'}</b></div>
+    <div class="obj-bara"><i style="width:${p || 0}%"></i><em style="left:${TINTA}%" title="Obiectiv ${TINTA}%"></em></div>
+    <small>${n ? `${k} din ${n}` : 'nimic de numărat încă'}${atins ? ' · obiectiv atins' : ''}</small></div>`;
+}).join('');
+const delta = (a, b, unit = '') => a == null || b == null ? '' : a === b ? '<span class="dl">la fel ca săptămâna trecută</span>'
+  : `<span class="dl ${a > b ? 'sus' : 'jos'}">${a > b ? '▲' : '▼'} ${Math.abs(a - b)}${unit} față de săptămâna trecută</span>`;
+// Pașii la rând ai aceluiași om, la aceeași fișă, devin un singur rând („12 pași făcuți · Deschiderea +24”).
+function stransePuncte(lista, max) {
+  const out = [];
+  for (const x of lista || []) {
+    const u = out[out.length - 1];
+    if (u && u.nume === x.nume && u.detaliu === x.detaliu && /^Pas făcut/.test(x.detaliu)) { u.puncte += x.puncte; u.n++; }
+    else out.push({ ...x, n: 1 });
+  }
+  return out.slice(0, max).map(x => ({ ...x, text: x.n > 1 ? x.detaliu.replace(/^Pas făcut/, `${x.n} pași făcuți`) : x.detaliu }));
+}
+async function jocEu() {
+  try { const { data, error } = await SB.rpc('joc_eu'); return error ? null : data; } catch (e) { return null; }
+}
+
+// ----- Tura: banda de sus și „Progresul tău” -----
+function jocBanda(j) {
+  const n = nivel(j.xp);
+  return `<button class="joc-banda" type="button" data-progres>${inel(n.pct, n.n, '', 'mic')}
+    <span class="jb-txt"><span class="eyebrow">Nivelul ${n.n}</span><b>${esc(n.nume)}</b>
+      <small>${fmtXp(j.xp)} XP${n.pana ? ` · încă ${fmtXp(n.pana - j.xp)} până la ${esc(n.urmator)}` : ' · nivelul maxim'}</small></span>
+    <span class="jb-cifre"><span><b>${j.serie || 0}</b><small>serie</small></span><span><b>+${fmtXp(j.xp_azi)}</b><small>azi</small></span></span></button>`;
+}
+function jocProgres(j) {
+  const n = nivel(j.xp), ins = insigne(j), max = Math.max(1, ...SURSE_XP.map(([k]) => (j.surse || {})[k] || 0));
+  const e = j.echipa, sc = e && e.saptamana ? e.saptamana.scor : null, ne = e ? nivelEchipa(e.xp_total) : null;
+  return `<section class="joc-progres" id="progresul-tau"><h2 class="section-title">Progresul tău</h2>
+    <div class="jp-grid">
+      <div class="jp-card jp-nivel">${inel(n.pct, n.n, 'nivel', 'mare')}
+        <div><span class="eyebrow">${fmtXp(j.xp)} XP în total</span><h3>${esc(n.nume)}</h3>
+          <div class="xp-bara"><i style="width:${n.pct}%"></i></div>
+          <p class="muted mic">${n.pana ? `${fmtXp(n.pana - j.xp)} XP până la <b>${esc(n.urmator)}</b>` : 'Ai atins cel mai înalt nivel. Respect.'}</p>
+          <p class="jp-serie"><b>${j.serie || 0}</b> ture la rând începute la timp<span class="muted"> · recordul tău: ${j.serie_max || 0}</span></p></div></div>
+      <div class="jp-card"><span class="eyebrow">Săptămâna asta</span><p class="jp-mare">+${fmtXp(j.xp_saptamana)} <small>XP</small></p>
+        ${SURSE_XP.map(([k, et]) => { const v = (j.surse || {})[k] || 0; return `<div class="sursa"><span>${et}</span><span class="sursa-bara"><i style="width:${Math.round(v / max * 100)}%"></i></span><b>${v}</b></div>`; }).join('')}</div>
+      ${e ? `<div class="jp-card jp-echipa"><span class="eyebrow">Echipa ta · ${esc(numeLoc(j.locatie))}</span>
+        <div class="jp-echipa-r">${inel(sc || 0, sc == null ? '—' : sc, 'scor', 'mediu')}
+          <div><p class="mic" style="margin:0 0 6px">Scorul săptămânii: clock-in la timp, fișe la termen, pași făcuți, probleme rezolvate.</p>
+            ${delta(sc, e.trecuta && e.trecuta.scor)}<p class="muted mic" style="margin:8px 0 0">Echipa e la nivelul <b>${ne.n}</b> · ${fmtXp(e.xp_total)} XP strânși împreună</p></div></div></div>` : ''}
+    </div>
+    <h3 class="jp-h3">Insigne <span class="muted">${ins.filter(x => x.are).length} din ${ins.length}</span></h3>
+    <div class="insigne">${ins.map(x => `<div class="insigna ${x.are ? 'are' : ''}" title="${esc(x.cum)}"><span class="ins-m">${x.m}</span>
+      <b>${esc(x.nume)}</b><small>${esc(x.cum)}</small>${x.are ? '' : `<span class="ins-prog"><i style="width:${Math.round(x.v / x.tinta * 100)}%"></i></span><small>${x.v} / ${x.tinta}</small>`}</div>`).join('')}</div>
+    ${(j.ultimele || []).length ? `<h3 class="jp-h3">Ultimele puncte</h3><ul class="feed deschis">${stransePuncte(j.ultimele, 8).map(u => `<li><b>+${u.puncte}</b><span>${esc(u.text)}</span><small>${ziScurta(ziLocala(new Date(u.la)))} · ${oraLocala(u.la)}</small></li>`).join('')}</ul>` : ''}
+    <details class="jp-cum"><summary>Cum câștigi puncte</summary><ul>
+      <li>Clock-in la timp (cel mult 5 minute după începutul turei): <b>+10</b>; până la 15 minute: +3</li>
+      <li>Fiecare pas făcut: <b>+2</b> · fișă terminată la termen: <b>+15</b> (după termen +5) · fără niciun pas nefăcut: <b>+10</b></li>
+      <li>Lecție parcursă în Academie: <b>+5</b> · primul test trecut la un curs: <b>+30</b></li>
+      <li>Problemă semnalată (pas nefăcut, notă, observație): <b>+5</b> · când șeful o rezolvă: <b>+10</b> pentru tine</li>
+    </ul></details></section>`;
+}
+// Nivel nou sau insignă nouă: o singură dată, pe telefonul pe care se vede.
+function verificaJoc(j) {
+  const n = nivel(j.xp), are = insigne(j).filter(x => x.are).map(x => x.nume), k = 'mm-joc-' + SB_USER_ID;
+  let vechi = null;
+  try { vechi = JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify({ n: n.n, ins: are })); } catch (e) {}
+  if (!vechi) return;
+  const noi = are.filter(x => !(vechi.ins || []).includes(x));
+  if (n.n > vechi.n) arataFelicitare('Nivel nou', n.n, n.nume, 'Ai urcat un nivel. Fiecare tură făcută bine contează.');
+  else if (noi.length) arataFelicitare('Insignă nouă', INSIGNE.find(x => x[1] === noi[0])[0], noi[0], INSIGNE.find(x => x[1] === noi[0])[2]);
+}
+function arataFelicitare(eticheta, mare, titlu, text) {
+  const d = document.createElement('div'); d.className = 'felicitare'; d.setAttribute('role', 'dialog');
+  d.innerHTML = `<div class="fel-box"><span class="eyebrow">${esc(eticheta)}</span><div class="fel-m">${esc(String(mare))}</div><h2>${esc(titlu)}</h2><p>${esc(text)}</p>
+    <button class="btn" type="button">Mai departe</button></div>`;
+  d.addEventListener('click', e => { if (e.target === d || e.target.closest('button')) d.remove(); });
+  document.body.appendChild(d); d.querySelector('button').focus();
+}
+
+// ----- Echipa → Azi: tabloul locației -----
+async function jocTablou(spaceId) {
+  const [e, l, eu] = await Promise.all([
+    SB.rpc('joc_echipa', { p_space: spaceId }), SB.rpc('joc_locatii'), areTura() ? jocEu() : Promise.resolve(null)]);
+  if (e.error || !e.data) return null;
+  return { e: e.data, locatii: l.error ? [] : (l.data || []), eu };
+}
+function htmlTablou(spaceId, t, alegeri) {
+  const e = t.e, s = e.saptamana || {}, sc = s.scor, ne = nivelEchipa(e.xp_total);
+  const oameni = (e.oameni || []).slice().sort((a, b) => b.xp_saptamana - a.xp_saptamana || b.xp - a.xp || a.nume.localeCompare(b.nume));
+  const loc = t.locatii.slice().sort((a, b) => (b.saptamana.scor ?? -1) - (a.saptamana.scor ?? -1) || b.saptamana.xp - a.saptamana.xp);
+  const vad = new Set(locatiiOperative().map(x => x.id));
+  const eu = t.eu ? nivel(t.eu.xp) : null;
+  return `<section class="joc-tablou">
+    <div class="jt-cap"><div><span class="eyebrow">Tabloul locației · săptămâna aceasta</span><h2>Echipa ${esc(numeLoc(spaceId))}</h2></div>
+      <div class="jt-dreapta">${alegeri.length > 1 ? `<label class="jt-alege"><span class="eyebrow">Locația</span><select class="field" data-loc-joc>${alegeri.map(x => `<option value="${esc(x.id)}" ${x.id === spaceId ? 'selected' : ''}>${esc(numeLoc(x.id))}</option>`).join('')}</select></label>` : ''}
+        ${eu ? `<a class="jt-eu" href="#/tura">Tu · nivelul ${eu.n}, ${esc(eu.nume)} · ${fmtXp(t.eu.xp)} XP →</a>` : ''}</div></div>
+    <div class="jt-grid">
+      <div class="jt-scor">${inel(sc || 0, sc == null ? '—' : sc, 'scorul săptămânii', 'mare')}
+        <div>${delta(sc, e.trecuta && e.trecuta.scor)}<p class="mic">Săptămâna trecută: <b>${e.trecuta && e.trecuta.scor != null ? e.trecuta.scor : '—'}</b> · luna asta: <b>${e.luna && e.luna.scor != null ? e.luna.scor : '—'}</b></p>
+          <p class="mic">+${fmtXp(s.xp)} XP strânși de echipă săptămâna asta</p></div></div>
+      <div class="jt-nivel">${inel(ne.pct, ne.n, 'nivelul echipei', 'mediu')}
+        <div><b>${fmtXp(e.xp_total)} XP</b><p class="mic">încă ${fmtXp(ne.pana - e.xp_total)} XP până la nivelul ${ne.n + 1}</p></div></div>
+      <div class="jt-obj"><span class="eyebrow">Obiectivele săptămânii · ținta ${TINTA}%</span>${obiective(s)}</div>
+    </div>
+    <div class="jt-grid2">
+      <div class="jt-card"><span class="eyebrow">Clasamentul echipei · XP săptămâna asta</span>
+        ${oameni.length ? `<ol class="clasament">${oameni.map((o, i) => { const n = nivel(o.xp); return `<li class="${i < 3 && o.xp_saptamana > 0 ? 'p' + (i + 1) : ''}">
+          <span class="loc-nr">${i + 1}</span><span class="cl-nume"><b>${esc(o.nume)}</b><small>${esc(o.rol)} · ${esc(n.nume)}${o.serie >= 3 ? ` · serie ${o.serie}` : ''}</small></span>
+          <span class="cl-xp"><b>${fmtXp(o.xp_saptamana)}</b><small>${o.xp_trecuta ? `${fmtXp(o.xp_trecuta)} săpt. trecută` : 'XP'}</small></span></li>`; }).join('')}</ol>`
+          : '<p class="mic muted">Încă nimeni. Primele puncte vin la primul clock-in.</p>'}</div>
+      <div class="jt-card"><span class="eyebrow">Clasamentul magazinelor · scorul săptămânii</span>
+        ${loc.length ? `<ol class="clasament">${loc.map((x, i) => `<li class="${x.id === spaceId ? 'aici' : ''} ${i === 0 && x.saptamana.scor != null ? 'p1' : ''}">
+          <span class="loc-nr">${i + 1}</span><span class="cl-nume"><b>${vad.has(x.id) && x.id !== spaceId ? `<a href="#/echipa?s=${enc(x.id)}">${esc(x.nume)}</a>` : esc(x.nume)}</b>
+            <small>${x.trecuta.scor != null ? `săpt. trecută ${x.trecuta.scor}` : 'săpt. trecută —'} · luna ${x.luna.scor ?? '—'}</small></span>
+          <span class="cl-xp"><b>${x.saptamana.scor ?? '—'}</b><small>${fmtXp(x.saptamana.xp)} XP</small></span></li>`).join('')}</ol>` : '<p class="mic muted">Clasamentul apare după ce rulezi migrarea 0020.</p>'}</div>
+      <div class="jt-card"><span class="eyebrow">Azi, în puncte</span>
+        ${(e.azi || []).length ? `<ul class="feed">${stransePuncte(e.azi, 12).map(x => `<li><b>+${x.puncte}</b><span><i>${esc(x.nume)}</i> · ${esc(x.text)}</span><small>${oraLocala(x.la)}</small></li>`).join('')}</ul>`
+          : '<p class="mic muted">Nimic încă azi. Fiecare clock-in, pas bifat și problemă rezolvată apare aici.</p>'}</div>
+    </div></section>`;
 }
 
 // ---------- Jurnalul de croissant (Academia → Patiserie) ----------
