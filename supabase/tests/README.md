@@ -85,3 +85,7 @@ iar lipsa clock-ului după 10 minute ajunge la șefi. Ultimul rând: „35 din 3
 Jurnalul de croissant (`18_jurnal_croissant.sql`, după 0018): patiseria (PPT, PP + B), SP și AE
 citesc și scriu, vânzătorul nu vede și nu scrie nimic; autorul rămâne cel care a creat batch-ul,
 chiar dacă îl modifică altcineva; un batch îl șterge doar autorul. Ultimul rând: „12 din 12”.
+
+Locația fiecărui om (`19_locatia_omului.sql`, după 0019): adminul leagă un RL de Porumbescu; RL-ul
+vede doar Porumbescu și nu-și adaugă singur locații; un RL fără locații vede toate magazinele;
+clock-in-ul de la Fructus nu ajunge la RL-ul de Porumbescu, cel de la Porumbescu da. Ultimul rând: „9 din 9”.

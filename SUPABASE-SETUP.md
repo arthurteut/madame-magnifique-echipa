@@ -316,6 +316,14 @@ procentele de brutar calculate, détrempe, cele trei tururi, modelarea, dospirea
 SP, DP, GM și AE; un batch îl șterge doar autorul sau adminul. „Batch nou pornind de la acesta”
 copiază rețeta și procesul, fără rezultat și concluzii.
 
+### 19. Locația fiecărui om
+
+Rulează [`0019_locatia_omului.sql`](supabase/migrations/0019_locatia_omului.sql). În *Admin →
+Utilizatori* apare coloana **Locații**: bifezi magazinul (sau laboratorul) de care răspunde omul.
+Un cont legat de locații vede doar acele locații (dintre cele ale rolului) și primește notificările
+echipei doar de acolo; un cont fără locații vede, ca până acum, toate locațiile rolului. Responsabilul
+de locație (RL) deschide aplicația direct pe *Echipa → Azi*, cu legătura spre pagina locației.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

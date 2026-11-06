@@ -784,6 +784,16 @@
   @media print {
     .jc-pasi, .jc-jos, .jc-act, .jc-cap .pl-status { display: none !important; }
   }
+  /* ---------- Locațiile fiecărui cont ---------- */
+  .loc-cap h3 a { text-decoration: none; } .loc-cap h3 a:hover { text-decoration: underline; }
+  .loc-link { font-size: .86rem; padding-top: 10px; padding-bottom: 10px; }
+  .loc-link a { color: var(--ink); }
+  .loc-alege summary { cursor: pointer; list-style: none; display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+  .loc-alege summary::-webkit-details-marker { display: none; }
+  .loc-alege[open] summary { margin-bottom: 8px; }
+  .loc-alege div { display: grid; gap: 6px; min-width: 220px; padding: 10px; background: var(--bg-soft); border: 1px solid var(--line); }
+  .loc-alege label { display: flex; gap: 8px; align-items: center; font-size: .88rem; white-space: nowrap; }
+  .loc-alege small { white-space: normal; font-size: .76rem; }
 </style>
 </head>
 <body>
@@ -878,7 +888,11 @@ function showApp() {
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('userChip').innerHTML = `<b>${esc(ME.full_name)}</b> · ${esc(ME.role_code)}`;
   // Cine lucrează pe ture deschide aplicația direct pe „Tura”.
-  if (!location.hash.replace(/^#\/?/, '') && areTura()) history.replaceState(null, '', '#/tura');
+  // Responsabilul de locație deschide pe panoul echipei (ca GM); restul celor pe ture, pe „Tura”.
+  if (!location.hash.replace(/^#\/?/, '')) {
+    if (ME.role_code === 'RL' && vedeEchipa()) history.replaceState(null, '', '#/echipa');
+    else if (areTura()) history.replaceState(null, '', '#/tura');
+  }
   route();
   pornesteNotificari().catch(e => console.warn('notificări:', e));
 }
@@ -1614,15 +1628,24 @@ function viewAdmin(params) {
 
 async function incarcaUtilizatori() {
   const box = document.getElementById('adminBody'); if (!box) return;
-  let profiluri;
+  let profiluri, legaturi = [];
   try { profiluri = await tabel('profiles', ['full_name']); }
   catch (e) { console.error(e); box.innerHTML = '<p class="err">Lista de conturi nu s-a putut încărca.</p>'; return; }
+  // Locațiile fiecărui cont (0019); fără migrare, coloana nu apare.
+  const cuLocatii = await tabel('profile_spaces', ['user_id']).then(r => { legaturi = r; return true; }).catch(() => false);
+  const locatii = p => {
+    const ale = legaturi.filter(l => l.user_id === p.user_id).map(l => l.space_id);
+    return `<td><details class="loc-alege"><summary>${ale.length ? ale.map(id => `<span class="pill">${esc(numeLoc(id))}</span>`).join(' ') : '<span class="muted">toate ale rolului</span>'}</summary>
+      <div>${D.spatii.map(s => `<label><input type="checkbox" data-loc="${esc(s.id)}" ${ale.includes(s.id) ? 'checked' : ''}> ${esc(numeLoc(s.id))}</label>`).join('')}
+      <small class="muted">Bifate: vede doar aceste locații (dintre cele ale rolului) și primește notificări doar de acolo. Nimic bifat: toate locațiile rolului.</small></div></details></td>`;
+  };
   const rand = p => {
     const eu = p.user_id === SB_USER_ID;
     return `<tr class="${p.active ? '' : 'inactiv'}" data-id="${esc(p.user_id)}">
       <td>${esc(p.full_name)}${eu ? ' <span class="me">(tu)</span>' : ''}</td>
       <td>${esc(p.username)}</td>
       <td><select data-act="rol" ${eu ? 'disabled' : ''} aria-label="Rolul lui ${esc(p.full_name)}">${roluriOptiuni(p.role_code)}</select></td>
+      ${cuLocatii ? locatii(p) : ''}
       <td><label><input type="checkbox" data-act="activ" ${p.active ? 'checked' : ''} ${eu ? 'disabled' : ''}> ${p.active ? 'activ' : 'dezactivat'}</label></td>
       <td class="actions">${eu ? '' : `<button class="btn ghost sm" type="button" data-act="parola">Resetează parola</button><button class="btn danger sm" type="button" data-act="sterge">Șterge</button>`}</td>
     </tr>`;
@@ -1647,7 +1670,7 @@ async function incarcaUtilizatori() {
     </details>
     <h2 class="section-title" style="margin-top:48px">Conturile echipei <span class="muted" style="font-size:.9rem">(${profiluri.length})</span></h2>
     <div class="tbl-wrap"><table class="tbl" id="tabConturi">
-      <thead><tr><th>Nume</th><th>Utilizator</th><th>Rol</th><th>Stare</th><th></th></tr></thead>
+      <thead><tr><th>Nume</th><th>Utilizator</th><th>Rol</th>${cuLocatii ? '<th>Locații</th>' : ''}<th>Stare</th><th></th></tr></thead>
       <tbody>${profiluri.map(rand).join('')}</tbody></table></div>
     <div id="rezParola"></div>`;
 
@@ -1669,6 +1692,16 @@ async function incarcaUtilizatori() {
 
   document.getElementById('tabConturi').addEventListener('change', async e => {
     const tr = e.target.closest('tr'), id = tr.dataset.id, act = e.target.dataset.act;
+    if (e.target.dataset.loc) {
+      const rand = { user_id: id, space_id: e.target.dataset.loc };
+      const { error } = e.target.checked ? await SB.from('profile_spaces').insert(rand)
+        : await SB.from('profile_spaces').delete().eq('user_id', id).eq('space_id', rand.space_id);
+      if (error) { console.error('Locații:', error); toast('Locația nu s-a salvat.', true); return incarcaUtilizatori(); }
+      legaturi = e.target.checked ? legaturi.concat(rand) : legaturi.filter(l => !(l.user_id === id && l.space_id === rand.space_id));
+      const ale = legaturi.filter(l => l.user_id === id).map(l => l.space_id);
+      tr.querySelector('.loc-alege summary').innerHTML = ale.length ? ale.map(s => `<span class="pill">${esc(numeLoc(s))}</span>`).join(' ') : '<span class="muted">toate ale rolului</span>';
+      return toast('Locații salvate. Se aplică la următoarea deschidere a ghidului.');
+    }
     const patch = act === 'rol' ? { role_code: e.target.value } : { active: e.target.checked };
     const { data, error } = await SB.from('profiles').update(patch).eq('user_id', id).select('user_id');
     if (error || !data || !data.length) {
@@ -3758,7 +3791,8 @@ async function incarcaAzi(params) {
       .map(m => { const r = rs.find(x => x.id === m.run_id); return `<li><b>${esc(r.title)}</b>: ${m.status === 'nefacut' ? 'nefăcut — ' : ''}${esc((r.steps[m.idx] || {}).t || '')}${m.note ? ` — „${esc(m.note)}”` : ''} <small>${esc(om(m.marked_by).full_name)} · ${oraLocala(m.at)}</small></li>`; })
       .concat(rs.filter(r => r.note).map(r => `<li><b>${esc(r.title)}</b>: „${esc(r.note)}”</li>`));
     const ore = oraLocatie(s.id, zi, 'opens') ? `${oraLocatie(s.id, zi, 'opens')}–${oraLocatie(s.id, zi, 'closes')}` : '';
-    return `<div class="loc-card"><div class="loc-cap"><h3>${esc(numeLoc(s.id))}</h3>${ore ? `<span class="muted">program ${ore}</span>` : ''}</div>
+    return `<div class="loc-card"><div class="loc-cap"><h3><a href="#/s/${enc(s.id)}">${esc(numeLoc(s.id))}</a></h3>${ore ? `<span class="muted">program ${ore}</span>` : ''}</div>
+      <div class="loc-sec loc-link"><a href="#/s/${enc(s.id)}">Pagina locației: fișa, procesele, procedurile →</a> · <a href="#/echipa?tab=program&s=${enc(s.id)}">Programul →</a></div>
       <div class="loc-sec"><span class="eyebrow">Oamenii</span>${tu.map(t => randOm(t.user_id, t)).join('')}${fara.map(c => randOm(c.user_id, null)).join('') || (tu.length ? '' : '<p class="muted mic">Nimeni programat.</p>')}</div>
       <div class="loc-sec"><span class="eyebrow">Fișele</span>
         ${rs.map(r => { const n = marks.filter(m => m.run_id === r.id).length, tot = r.steps.length, nf = marks.filter(m => m.run_id === r.id && m.status === 'nefacut').length;
