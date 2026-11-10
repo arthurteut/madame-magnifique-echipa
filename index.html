@@ -4115,12 +4115,12 @@ async function incarcaQR() {
 // ---------- Jocul echipei: puncte (XP), niveluri, insigne, clasamente (migrarea 0020) ----------
 // Punctele vin din ce se întâmplă deja: clock-in la timp, pașii și fișele, Academia, problemele semnalate și rezolvate.
 // Fiecare își vede progresul lui și scorul echipei; șefii (Echipa → Azi) văd tabloul locației și clasamentele.
-const NIVELURI = [[0, 'Ucenic'], [100, 'Ucenic II'], [250, 'Ucenic III'], [500, 'Calfă'], [850, 'Calfă II'], [1300, 'Calfă III'],
-  [1900, 'Meșter'], [2700, 'Meșter II'], [3700, 'Meșter III'], [5000, 'Maestru'], [7000, 'Maestru Madame']];
+// Pragurile de XP ale nivelurilor personale (nivelul 1 … 11).
+const NIVELURI = [0, 100, 250, 500, 850, 1300, 1900, 2700, 3700, 5000, 7000];
 function nivel(xp) {
-  let i = 0; while (i + 1 < NIVELURI.length && xp >= NIVELURI[i + 1][0]) i++;
-  const [de, nume] = NIVELURI[i], pana = NIVELURI[i + 1] ? NIVELURI[i + 1][0] : null;
-  return { n: i + 1, nume, de, pana, urmator: NIVELURI[i + 1] ? NIVELURI[i + 1][1] : '', pct: pana ? Math.min(100, Math.round((xp - de) / (pana - de) * 100)) : 100 };
+  let i = 0; while (i + 1 < NIVELURI.length && xp >= NIVELURI[i + 1]) i++;
+  const de = NIVELURI[i], pana = i + 1 < NIVELURI.length ? NIVELURI[i + 1] : null;
+  return { n: i + 1, nume: 'Nivelul ' + (i + 1), de, pana, urmator: 'nivelul ' + (i + 2), pct: pana ? Math.min(100, Math.round((xp - de) / (pana - de) * 100)) : 100 };
 }
 // Echipa urcă mai încet: pragurile cresc cu pătratul nivelului (250, 1.000, 2.250, 4.000…).
 function nivelEchipa(xp) {
@@ -4174,7 +4174,7 @@ async function jocEu() {
 function jocBanda(j) {
   const n = nivel(j.xp);
   return `<button class="joc-banda" type="button" data-progres>${inel(n.pct, n.n, '', 'mic')}
-    <span class="jb-txt"><span class="eyebrow">Nivelul ${n.n}</span><b>${esc(n.nume)}</b>
+    <span class="jb-txt"><span class="eyebrow">Progresul tău</span><b>${esc(n.nume)}</b>
       <small>${fmtXp(j.xp)} XP${n.pana ? ` · încă ${fmtXp(n.pana - j.xp)} până la ${esc(n.urmator)}` : ' · nivelul maxim'}</small></span>
     <span class="jb-cifre"><span><b>${j.serie || 0}</b><small>serie</small></span><span><b>+${fmtXp(j.xp_azi)}</b><small>azi</small></span></span></button>`;
 }
@@ -4213,7 +4213,7 @@ function verificaJoc(j) {
   try { vechi = JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify({ n: n.n, ins: are })); } catch (e) {}
   if (!vechi) return;
   const noi = are.filter(x => !(vechi.ins || []).includes(x));
-  if (n.n > vechi.n) arataFelicitare('Nivel nou', n.n, n.nume, 'Ai urcat un nivel. Fiecare tură făcută bine contează.');
+  if (n.n > vechi.n) arataFelicitare('Nivel nou', n.n, 'Nivelul ' + n.n, 'Ai urcat un nivel. Fiecare tură făcută bine contează.');
   else if (noi.length) arataFelicitare('Insignă nouă', INSIGNE.find(x => x[1] === noi[0])[0], noi[0], INSIGNE.find(x => x[1] === noi[0])[2]);
 }
 function arataFelicitare(eticheta, mare, titlu, text) {
@@ -4240,7 +4240,7 @@ function htmlTablou(spaceId, t, alegeri) {
   return `<section class="joc-tablou">
     <div class="jt-cap"><div><span class="eyebrow">Tabloul locației · săptămâna aceasta</span><h2>Echipa ${esc(numeLoc(spaceId))}</h2></div>
       <div class="jt-dreapta">${alegeri.length > 1 ? `<label class="jt-alege"><span class="eyebrow">Locația</span><select class="field" data-loc-joc>${alegeri.map(x => `<option value="${esc(x.id)}" ${x.id === spaceId ? 'selected' : ''}>${esc(numeLoc(x.id))}</option>`).join('')}</select></label>` : ''}
-        ${eu ? `<a class="jt-eu" href="#/tura">Tu · nivelul ${eu.n}, ${esc(eu.nume)} · ${fmtXp(t.eu.xp)} XP →</a>` : ''}</div></div>
+        ${eu ? `<a class="jt-eu" href="#/tura">Tu · nivelul ${eu.n} · ${fmtXp(t.eu.xp)} XP →</a>` : ''}</div></div>
     <div class="jt-grid">
       <div class="jt-scor">${inel(sc || 0, sc == null ? '—' : sc, 'scorul săptămânii', 'mare')}
         <div>${delta(sc, e.trecuta && e.trecuta.scor)}<p class="mic">Săptămâna trecută: <b>${e.trecuta && e.trecuta.scor != null ? e.trecuta.scor : '—'}</b> · luna asta: <b>${e.luna && e.luna.scor != null ? e.luna.scor : '—'}</b></p>
@@ -4252,7 +4252,7 @@ function htmlTablou(spaceId, t, alegeri) {
     <div class="jt-grid2">
       <div class="jt-card"><span class="eyebrow">Clasamentul echipei · XP săptămâna asta</span>
         ${oameni.length ? `<ol class="clasament">${oameni.map((o, i) => { const n = nivel(o.xp); return `<li class="${i < 3 && o.xp_saptamana > 0 ? 'p' + (i + 1) : ''}">
-          <span class="loc-nr">${i + 1}</span><span class="cl-nume"><b>${esc(o.nume)}</b><small>${esc(o.rol)} · ${esc(n.nume)}${o.serie >= 3 ? ` · serie ${o.serie}` : ''}</small></span>
+          <span class="loc-nr">${i + 1}</span><span class="cl-nume"><b>${esc(o.nume)}</b><small>${esc(o.rol)} · nivelul ${n.n}${o.serie >= 3 ? ` · serie ${o.serie}` : ''}</small></span>
           <span class="cl-xp"><b>${fmtXp(o.xp_saptamana)}</b><small>${o.xp_trecuta ? `${fmtXp(o.xp_trecuta)} săpt. trecută` : 'XP'}</small></span></li>`; }).join('')}</ol>`
           : '<p class="mic muted">Încă nimeni. Primele puncte vin la primul clock-in.</p>'}</div>
       <div class="jt-card"><span class="eyebrow">Clasamentul magazinelor · scorul săptămânii</span>
