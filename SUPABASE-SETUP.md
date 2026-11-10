@@ -336,7 +336,7 @@ ce se întâmplă deja în aplicație, nu se introduc de mână:
 | Lecție parcursă în Academie · primul test trecut la un curs | +5 · +30 |
 | Problemă semnalată (pas nefăcut, notă, observație) · rezolvată: celui care a semnalat / șefului | +5 · +10 / +5 |
 
-Pe *Tura* fiecare își vede nivelul (de la Ucenic la Maestru Madame), seria de ture începute la timp,
+Pe *Tura* fiecare își vede nivelul (de la 1 la 11), seria de ture începute la timp,
 punctele săptămânii, insignele și scorul echipei lui. Pe *Echipa → Azi* șefii (RL pentru locația lui,
 GM și AE pentru oricare) au tabloul locației: scorul săptămânii (media dintre clock-in la timp, fișe
 la termen, pași făcuți și probleme rezolvate) față de săptămâna trecută, nivelul echipei, obiectivele
