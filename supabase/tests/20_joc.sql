@@ -1,4 +1,4 @@
--- Jocul echipei (0020): puncte din clock-in, fișe și probleme rezolvate; cine vede ce. Rulează după 0020.
+-- Jocul echipei (0020, cu regulile din 0021): puncte din clock-in, fișe și probleme rezolvate; cine vede ce. Rulează după 0021.
 -- Conturi proprii testului (…00000000d1 …), șterse la final.
 \set ON_ERROR_STOP off
 \pset footer off
@@ -38,11 +38,11 @@ values ('doc:test-joc', 'Deschiderea', 'porumbescu', '[{"t":"Unu"},{"t":"Doi"},{
 insert into public.checklist_marks (run_id, idx, status) select id, 0, 'facut' from public.checklist_runs;
 insert into public.checklist_marks (run_id, idx, status) select id, 1, 'facut' from public.checklist_runs;
 insert into public.checklist_marks (run_id, idx, status, note) select id, 2, 'nefacut', 'Nu pornește' from public.checklist_runs;
--- 10 + 2×2 pași + 15 fișa la termen + 5 problemă semnalată (fără bonusul „fără cusur”)
-insert into rez select 'Fișa terminată: pași, fișă, problemă semnalată', (public.joc_eu() ->> 'xp')::int = 34;
+-- 10 + 2×2 pași + 15 fișa la termen (fără bonusul „fără cusur”; problema semnalată aduce puncte doar când e rezolvată)
+insert into rez select 'Fișa terminată: pași și fișă', (public.joc_eu() ->> 'xp')::int = 29;
 update public.checklist_runs set note = 'Lipsește laptele';
 insert into rez select 'Observația îi poartă numele', note_by = pg_temp.u('d1') from public.checklist_runs;
-insert into rez select 'Observația: +5 XP', (public.joc_eu() ->> 'xp')::int = 39;
+insert into rez select 'Observația nu aduce puncte la trimitere', (public.joc_eu() ->> 'xp')::int = 29;
 do $$ begin
   insert into public.probleme_rezolvate (run_id, idx) select id, 2 from public.checklist_runs;
   insert into rez values ('Vânzătoarea nu-și rezolvă singură problema', false);
@@ -65,7 +65,7 @@ do $$ begin
   insert into rez values ('O problemă se rezolvă o singură dată', false);
 exception when others then insert into rez values ('O problemă se rezolvă o singură dată', true); end $$;
 insert into rez select 'RL-ul: +5 XP pentru rezolvare', (public.joc_eu() ->> 'xp')::int = 5;
-insert into rez select 'Tabloul Porumbescu: Vera are 49 XP', (o ->> 'xp')::int = 49
+insert into rez select 'Tabloul Porumbescu: Vera are 39 XP', (o ->> 'xp')::int = 39
   from jsonb_array_elements(public.joc_echipa('porumbescu') -> 'oameni') o where o ->> 'nume' = 'Vera V';
 insert into rez select 'Scorul săptămânii: 2 din 3 pași, 1 din 2 probleme rezolvate',
   (s ->> 'pasi_facuti')::int = 2 and (s ->> 'pasi')::int = 3 and (s ->> 'rezolvate')::int = 1 and (s ->> 'probleme')::int = 2
@@ -85,7 +85,7 @@ insert into rez select 'RL-ul de Porumbescu nu vede programul de la Fructus', co
 insert into rez select 'RL-ul își vede programul de la Porumbescu', count(*) = 1 from public.shifts where space_id = 'porumbescu';
 
 select pg_temp.ca('d1');
-insert into rez select 'Rezolvarea: +10 XP celui care a semnalat', (public.joc_eu() ->> 'xp')::int = 49;
+insert into rez select 'Rezolvarea: +10 XP celui care a semnalat', (public.joc_eu() ->> 'xp')::int = 39;
 insert into rez select 'Contoarele insignelor', (c ->> 'fise_terminate')::int = 1 and (c ->> 'clockin_la_timp')::int = 1
   and (c ->> 'probleme_rezolvate')::int = 1 and (c ->> 'fara_cusur')::int = 0
   from (select public.joc_eu() -> 'contoare' as c) x;

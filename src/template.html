@@ -906,6 +906,96 @@
   .fel-box .btn { background: var(--sand); color: var(--ink); border-color: var(--sand); }
   @keyframes fel-in { from { opacity: 0; } } @keyframes fel-m { from { transform: scale(.4); opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { .felicitare, .fel-m { animation: none; } .inel-arc, .obj-bara i { transition: none; } }
+  /* ---------- Comunicare și punctaj transparent ---------- */
+  .plus { color: #2f6a40; } .minus { color: #9b2c2c; }
+  .tabs-om { margin-bottom: 24px; scrollbar-width: none; }
+  @media (max-width: 520px) { .tabs-om { gap: 0; } .tabs-om a { padding: 12px 10px; letter-spacing: .08em; font-size: .74rem; } }
+  .msg > .eyebrow, .semn-cap .eyebrow { line-height: 1.6; }
+  .tab-nr { display: inline-block; min-width: 17px; height: 17px; margin-left: 6px; padding: 0 4px; border-radius: 9px; background: #9b2c2c; color: #fff; font: 600 .62rem/17px 'Montserrat', sans-serif; font-style: normal; letter-spacing: 0; text-align: center; vertical-align: 1px; }
+  .tura-scurt { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tura-scurt .btn { flex: 1 1 180px; }
+  .qr-box.dlg { text-align: left; padding: 24px; }
+  .qr-box.dlg h3 { margin: 0 0 10px; font-size: 1.2rem; } .qr-box.dlg p { margin: 0 0 12px; font-size: .9rem; }
+  .qr-box.dlg textarea { font: inherit; resize: vertical; }
+  #xpStack { position: fixed; left: 50%; bottom: 112px; transform: translateX(-50%); z-index: 70; display: grid; gap: 8px; justify-items: center; width: min(420px, calc(100% - 24px)); pointer-events: none; }
+  .xp-pop { pointer-events: auto; display: flex; align-items: baseline; gap: 12px; width: 100%; padding: 12px 16px; background: var(--ink); color: var(--greige); text-decoration: none; border-left: 3px solid var(--gold); box-shadow: 0 12px 34px rgba(0, 0, 0, .28); animation: xp-in .45s cubic-bezier(.2, .9, .3, 1.2); transition: opacity .5s, transform .5s; }
+  .xp-pop b { flex: none; font: 600 1.05rem/1 'Montserrat', sans-serif; color: var(--sand); white-space: nowrap; }
+  .xp-pop span { font-size: .88rem; line-height: 1.35; }
+  .xp-pop.minus { border-left-color: #c0504d; color: var(--greige); } .xp-pop.minus b { color: #f0a5a2; }
+  .xp-pop.pleaca { opacity: 0; transform: translateY(-10px); }
+  @keyframes xp-in { from { opacity: 0; transform: translateY(18px) scale(.96); } }
+  .pasi .pas { position: relative; }
+  .xp-zbor { position: absolute; left: 4px; top: 0; padding: 3px 7px; background: var(--ink); color: var(--sand); font: 600 .78rem/1.2 'Montserrat', sans-serif; pointer-events: none; animation: xp-zbor 1.25s ease-out forwards; z-index: 3; }
+  @keyframes xp-zbor { 0% { opacity: 0; transform: translateY(6px); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-34px); } }
+  .jp-mare.minus { color: #9b2c2c; }
+  .jp-pm { display: flex; gap: 6px 16px; flex-wrap: wrap; margin: 0 0 16px; font-size: .9rem; } .jp-pm b { font-weight: 500; color: var(--ink); }
+  .jp-luna .pl-sel { min-width: 0; } .jp-luna .field { padding: 9px 36px 9px 10px; font-size: .9rem; }
+  .sursa.minus b { color: #9b2c2c; } .sursa.minus .sursa-bara i { background: #c9908e; }
+  .surse-pm { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); max-width: 560px; }
+  .surse-pm div { display: grid; grid-template-columns: minmax(0, 1fr) 80px 70px; gap: 10px; padding: 10px 16px; background: #fff; font-size: .92rem; }
+  .surse-pm b { text-align: right; font-weight: 500; }
+  .jr-sus { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: 34px 0 14px; }
+  .jr-filtru { display: flex; border: 1px solid var(--ink); }
+  .jr-filtru a { padding: 8px 12px; text-decoration: none; font: 500 .7rem/1 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+  .jr-filtru a.on { background: var(--ink); color: #fff; }
+  .jr-zi { margin-bottom: 10px; }
+  .jr-cap { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; background: var(--greige); font-size: .88rem; cursor: pointer; list-style: none; }
+  .jr-cap::-webkit-details-marker { display: none; }
+  .jr-zi:not([open]) .jr-cap b::after { content: ' ›'; color: var(--muted); }
+  .jr-cap b { font-weight: 500; color: var(--ink); text-transform: capitalize; } .jr-cap span { font: 600 .82rem/1.6 'Montserrat', sans-serif; }
+  .jr-lista { list-style: none; margin: 0; padding: 0 16px; background: #fff; border: 1px solid var(--line); }
+  .jr-zi .jr-lista { border-top: 0; }
+  .jr-lista li { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #f0efed; font-size: .92rem; color: var(--ink-soft); }
+  .jr-lista li:last-child { border-bottom: 0; }
+  .jr-lista li > b { font: 600 .9rem/1.4 'Montserrat', sans-serif; color: #2f6a40; }
+  .jr-lista li.minus > b, .jr-lista li > b.minus { color: #9b2c2c; }
+  .jr-lista li.minus { background: linear-gradient(90deg, #fdf6f6, #fff 70%); margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+  .jr-lista small { color: var(--muted); font-size: .76rem; white-space: nowrap; }
+  .ctst { font-style: normal; font-size: .8rem; color: var(--muted); }
+  .reguli { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px 28px; margin-top: 14px; }
+  .reguli .eyebrow { display: block; margin-bottom: 6px; }
+  .reguli table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .reguli td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .reguli td:last-child { text-align: right; white-space: nowrap; padding-left: 12px; font: 600 .84rem/1.6 'Montserrat', sans-serif; }
+  .msg-act { display: flex; gap: 8px 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; }
+  .msg-lista { display: grid; gap: 12px; max-width: 860px; }
+  .msg, .semn { background: #fff; border: 1px solid var(--line); padding: 18px 20px; }
+  .msg.nou { border-left: 4px solid var(--gold); background: #fffdf8; }
+  .msg h3 { font-size: 1.12rem; margin: 8px 0 6px; }
+  .msg-text, .semn-text { margin: 8px 0; white-space: pre-line; color: var(--ink); }
+  .msg-jos { display: flex; gap: 8px 12px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  .msg-jos small { flex: 1 1 220px; font-size: .8rem; }
+  .msg-stare { margin-top: 10px; font-size: .86rem; } .msg-stare summary { cursor: pointer; color: var(--ink); } .msg-stare p { margin: 6px 0 0; }
+  .msg.fb.apreciere { border-left: 4px solid #3d7a4f; } .msg.fb.imbunatatire { border-left: 4px solid #b9b6b0; }
+  .msg.fb.nou { background: #fffdf8; }
+  .xp-chip { display: inline-block; padding: 3px 7px; margin-right: 4px; font: 600 .74rem/1.2 'Montserrat', sans-serif; background: #e3efe6; color: #2f6a40; }
+  .xp-chip.minus { background: #f7e4e3; color: #9b2c2c; }
+  .frm { display: grid; gap: 14px; max-width: 720px; margin-bottom: 26px; }
+  .frm label { display: grid; gap: 6px; font-size: .86rem; color: var(--muted); }
+  .frm .field { padding: 11px 12px; font: inherit; color: var(--ink); } .frm textarea { resize: vertical; }
+  .frm select.field { -webkit-appearance: none; appearance: none; padding-right: 36px; background: #fff url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 8px center; }
+  .frm-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px; }
+  .frm-rad { display: flex; gap: 8px 18px; flex-wrap: wrap; align-items: center; }
+  .frm .frm-rad label, .frm label.frm-bifa { display: flex; gap: 8px; align-items: center; color: var(--ink-soft); font-size: .92rem; }
+  .frm p { margin: 0; } .frm .calc-act { margin-top: 0; }
+  .semn.urgent { border-left: 4px solid #9b2c2c; } .semn.rezolvata { background: #f7faf8; } .semn.respinsa { background: var(--bg-soft); }
+  .semn-cap { display: flex; justify-content: space-between; gap: 8px 12px; align-items: center; flex-wrap: wrap; }
+  .semn-rasp { margin: 10px 0 0; padding: 10px 12px; background: var(--bg-soft); font-size: .9rem; } .semn-rasp b { font-weight: 500; color: var(--ink); }
+  .pill.st-in_lucru { background: var(--sand); border-color: var(--sand); } .pill.st-rezolvata { background: #e3efe6; border-color: #e3efe6; color: #2f6a40; }
+  .pill.st-respinsa { color: var(--muted); } .pill.st-deschisa { border-color: var(--ink); }
+  .notif-jos { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 16px; border-top: 1px solid var(--line); font-size: .82rem; }
+  .jt-semn { display: block; margin-top: 16px; padding: 12px 16px; background: #3a2e2e; border-left: 3px solid #c0504d; color: var(--greige); text-decoration: none; font-size: .9rem; }
+  .jt-semn b { font: 600 1rem/1 'Montserrat', sans-serif; color: #fff; margin-right: 4px; } .jt-semn:hover { color: #fff; }
+  .feed li.minus b { color: #f0a5a2; } .cl-nume b a { text-decoration: none; } .cl-nume b a:hover { text-decoration: underline; }
+  .rap .nr { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .rap td.net { font: 600 1rem/1.5 'Montserrat', sans-serif; color: var(--ink); }
+  .rap-sub { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+  .rap-pierderi { text-align: left; font-size: .8rem; color: var(--ink-soft); margin-top: 4px; white-space: normal; min-width: 180px; }
+  .rap-pierderi summary { cursor: pointer; text-align: right; } .rap-pierderi ul { margin: 6px 0 0; padding-left: 16px; }
+  .rap-inchisa { font-size: .85rem; color: var(--ink); background: var(--greige); padding: 8px 12px; }
+  @media (max-width: 640px) { .jr-lista li { grid-template-columns: 46px minmax(0, 1fr); } .jr-lista li small { grid-column: 2; }
+    .surse-pm div { grid-template-columns: minmax(0, 1fr) 64px 56px; padding: 10px 12px; } .msg, .semn { padding: 16px; } }
+  @media (prefers-reduced-motion: reduce) { .xp-pop { animation: none; transition: none; } .xp-zbor { animation-duration: .01s; } }
 </style>
 </head>
 <body>
@@ -1007,6 +1097,7 @@ function showApp() {
   }
   route();
   pornesteNotificari().catch(e => console.warn('notificări:', e));
+  puncteNoiCurand();
 }
 function showLock(msg) {
   D = ME = null;
@@ -1214,6 +1305,9 @@ function route() {
   else if (a === 'pontaj') { html = viewPontaj(params); nav = 'tura'; }
   else if (a === 'fisa' && (params.r || (params.s && params.c))) { html = viewFisa(params); nav = params.r ? 'echipa' : 'tura'; }
   else if (a === 'echipa' && vedeEchipa()) { html = viewEchipa(params); nav = 'echipa'; }
+  else if (a === 'mesaje') { html = viewMesaje(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'semnalari') { html = viewSemnalari(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
   else if (doarBrutar()) { html = viewCursuri(); nav = 'cursuri'; }
   else html = viewHome();
@@ -3502,9 +3596,12 @@ const plusZile = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(
 const luniDin = d => plusZile(d, -((new Date(d + 'T12:00:00Z').getUTCDay() + 6) % 7));
 const numeLoc = id => { const s = SP[id]; return s ? (s.tip === 'magazin' ? s.nume : s.titlu) : id; };
 let CANALE = [];
-const opresteCanale = () => { for (const c of CANALE) { try { SB.removeChannel(c); } catch (e) {} } CANALE = []; };
+const CANALE_NUME = new Set();
+const opresteCanale = () => { for (const c of CANALE) { try { SB.removeChannel(c); } catch (e) {} } CANALE = []; CANALE_NUME.clear(); };
+// Un canal pe nume și pe pagină: paginile se reîncarcă la fiecare schimbare și ar aduna altfel abonări la nesfârșit.
 const canal = (nume, tabele, la) => {
-  if (!SB.channel) return;
+  if (!SB.channel || CANALE_NUME.has(nume)) return;
+  CANALE_NUME.add(nume);
   let c = SB.channel(nume + '-' + Math.random().toString(36).slice(2));
   for (const [table, filter] of tabele) c = c.on('postgres_changes', { event: '*', schema: 'public', table, ...(filter ? { filter } : {}) }, la);
   CANALE.push(c.subscribe());
@@ -3614,7 +3711,7 @@ function viewTura() {
       <h1>Tura mea</h1>
       <p class="sub">La sosire scanezi codul QR de la intrare, apoi bifezi fișele pas cu pas. La plecare scanezi din nou.</p>
     </div></section>
-    <section class="block"><div class="wrap tura" id="turaBody"><p class="muted">Se încarcă…</p></div></section>`;
+    <section class="block"><div class="wrap tura">${tabsOm('tura')}<div id="turaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 async function incarcaTura() {
   const box = document.getElementById('turaBody'); if (!box) return;
@@ -3652,6 +3749,8 @@ async function incarcaTura() {
       <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
   };
   box.innerHTML = `${stare}${joc ? jocBanda(joc) : ''}
+    <div class="tura-scurt"><a class="btn ghost sm" href="#/semnalari?nou=1${loc ? '&s=' + enc(loc) : ''}">Semnalează o problemă</a>
+      <a class="btn ghost sm" href="#/mesaje">Mesaje${joc && joc.de_confirmat ? ` · ${joc.de_confirmat} de confirmat` : ''}</a></div>
     ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
       ${!t.deschis ? '<p class="muted" style="margin:-8px 0 14px">Le poți citi; ca să bifezi, fă întâi clock-in.</p>' : ''}
       ${fise.length ? `<div class="fise">${fise.map(rand).join('')}</div>` : '<p class="lvl4">Pentru rolul tău nu sunt încă fișe de bifat la locația asta.</p>'}` : ''}
@@ -3663,7 +3762,8 @@ async function incarcaTura() {
       <div class="ture-lista">${t.pontaj.filter(c => c.clock_out).slice(0, 7).map(c => `<div><b>${ziUman(ziLocala(new Date(c.clock_in)))}</b><span>${esc(numeLoc(c.space_id))} · ${oraLocala(c.clock_in)}–${oraLocala(c.clock_out)}</span></div>`).join('')}</div>` : ''}`;
   const sus = box.querySelector('[data-progres]');
   if (sus) sus.addEventListener('click', () => document.getElementById('progresul-tau').scrollIntoView({ behavior: 'smooth', block: 'start' }));
-  if (joc) verificaJoc(joc);
+  if (joc) { verificaJoc(joc); puneDeConfirmat(joc.de_confirmat); }
+  puncteNoiCurand();
   if (loc) canal('tura', [['checklist_runs', `space_id=eq.${loc}`], ['clockings', `user_id=eq.${SB_USER_ID}`]], amanat(incarcaTura, 800));
 }
 
@@ -3673,6 +3773,7 @@ async function pontaj(spaceId, token, ce) {
   const { data, error } = await SB.rpc(ce === 'iesire' ? 'pontaj_iesire' : 'pontaj_intrare', { p_space: spaceId, p_token: token });
   if (error) { toast(error.message || 'Nu a mers. Încearcă din nou.', true); return false; }
   toast(ce === 'iesire' ? `Tura s-a încheiat la ${oraLocala(data.clock_out)}.` : `Clock-in la ${numeLoc(spaceId)}, ${oraLocala(data.clock_in)}. Spor la treabă!`);
+  puncteNoiCurand();
   return true;
 }
 // Linkul din codul QR (#/pontaj?s=…&k=…): cerem confirmarea, apoi pontăm.
@@ -3818,7 +3919,7 @@ async function incarcaFisa(params) {
     marks = marks.filter(m => m.idx !== i).concat(rand); deseneaza();
     const { error } = await SB.from('checklist_marks').upsert(rand, { onConflict: 'run_id,idx' });
     if (error) { console.error(error); marks = vechi; deseneaza(); toast('Nu s-a salvat. Verifică dacă ești în tură și internetul.', true); }
-    else if (marks.length === pasi.length) setTimeout(reincarca, 600);
+    else { if (status === 'facut') zboaraPuncte(i, '+2 XP'); puncteNoiFisa(); if (marks.length === pasi.length) setTimeout(reincarca, 600); }
   };
   const reincarca = async () => {
     const [r, mk] = await Promise.all([SB.from('checklist_runs').select('*').eq('id', run.id).single(), SB.from('checklist_marks').select('*').eq('run_id', run.id)]);
@@ -3857,15 +3958,15 @@ async function incarcaFisa(params) {
 
 // ----- „Echipa”: azi (în timp real) și programul pe ture -----
 function viewEchipa(params) {
-  const tab = params.tab === 'program' ? 'program' : 'azi';
-  setTimeout(() => (tab === 'program' ? incarcaProgram : incarcaAzi)(params), 0);
+  const tab = ['program', 'oameni'].includes(params.tab) ? params.tab : 'azi';
+  setTimeout(() => ({ program: incarcaProgram, oameni: incarcaOameni, azi: incarcaAzi })[tab](params), 0);
   return `<section class="band"><div class="wrap">
       <span class="eyebrow">Pentru șefi · în timp real</span>
       <h1>Echipa</h1>
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap">
-      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a></nav>
+      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a></nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -3946,7 +4047,7 @@ async function incarcaAzi(params) {
     if (b.dataset.anuleaza) { const q = SB.from('probleme_rezolvate').delete().eq('run_id', +run); r = await (idx === null ? q.is('idx', null) : q.eq('idx', idx)); }
     else r = await SB.from('probleme_rezolvate').insert({ run_id: +run, idx });
     if (r.error) { toast(/probleme_rezolvate/.test(r.error.message || '') ? 'Rulează întâi migrarea 0020_joc.sql.' : 'Nu a mers. Încearcă din nou.', true); b.disabled = false; return; }
-    if (!b.dataset.anuleaza) toast('Rezolvată. +5 XP pentru tine, +10 pentru cine a semnalat-o.');
+    if (!b.dataset.anuleaza) { toast('Rezolvată. Cine a semnalat-o primește +10 XP, tu +5 (primele 3 pe zi).'); puncteNoiCurand(); }
     incarcaAzi(params);
   };
   if (eAzi) canal('echipa', [['clockings'], ['checklist_runs'], ['checklist_marks'], ['shifts'], ['probleme_rezolvate']], amanat(() => incarcaAzi(params), 700));
@@ -4027,6 +4128,7 @@ async function pornesteNotificari() {
   if (SB.channel) SB.channel('notif-' + SB_USER_ID).on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${SB_USER_ID}` }, p => {
     NOTIF.unshift(p.new); badge();
     if (document.visibilityState === 'visible') toast(p.new.title);
+    puncteNoiCurand();
   }).subscribe();
 }
 function badge() {
@@ -4040,6 +4142,7 @@ document.addEventListener('click', async e => {
     const el = document.createElement('div'); el.id = 'notifLista'; el.className = 'notif-lista';
     el.innerHTML = `<div class="notif-cap"><b>Notificări</b><button type="button" data-toate>Marchează citite</button></div>
       ${NOTIF.length ? NOTIF.map(x => `<a class="notif ${x.read_at ? '' : 'noua'}" href="${esc(x.url || '#/')}" data-n="${x.id}"><b>${esc(x.title)}</b>${x.body ? `<span>${esc(x.body)}</span>` : ''}<small>${oraLocala(x.created_at)} · ${ziScurta(ziLocala(new Date(x.created_at)))}</small></a>`).join('') : '<p class="muted mic" style="padding:12px 16px">Nicio notificare.</p>'}
+      <div class="notif-jos"><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a><a href="#/progres">Punctele mele</a></div>
       ${pushCard(true)}`;
     document.body.appendChild(el);
     return;
@@ -4051,6 +4154,7 @@ document.addEventListener('click', async e => {
     NOTIF.forEach(x => { x.read_at = x.read_at || new Date().toISOString(); }); badge(); lista.remove(); return;
   }
   const a = e.target.closest('[data-n]');
+  if (e.target.closest('.notif-jos a')) { lista.remove(); return; }
   if (a) { const x = NOTIF.find(n => n.id === +a.dataset.n); if (x && !x.read_at) { x.read_at = new Date().toISOString(); badge(); SB.from('notifications').update({ read_at: x.read_at }).eq('id', x.id).then(() => {}); } lista.remove(); return; }
   if (!e.target.closest('#notifLista') && !e.target.closest('[data-push]')) lista.remove();
 });
@@ -4134,7 +4238,6 @@ function inel(pct, mare, mic, cls = '') {
     <circle cx="60" cy="60" r="${r}" class="inel-arc" stroke-dasharray="${c}" stroke-dashoffset="${(c * (1 - p / 100)).toFixed(2)}"/></svg>
     <span><b>${mare}</b>${mic ? `<small>${mic}</small>` : ''}</span></div>`;
 }
-const SURSE_XP = [['punctualitate', 'Punctualitate'], ['fise', 'Fișele'], ['academia', 'Academia'], ['probleme', 'Probleme']];
 const INSIGNE = [
   ['I', 'Prima fișă', 'Termini prima fișă', j => j.contoare.fise_terminate, 1],
   ['CC', 'Ca un ceas', '10 deschideri gata la termen', j => j.contoare.deschideri_la_timp, 10],
@@ -4176,35 +4279,25 @@ function jocBanda(j) {
   return `<button class="joc-banda" type="button" data-progres>${inel(n.pct, n.n, '', 'mic')}
     <span class="jb-txt"><span class="eyebrow">Progresul tău</span><b>${esc(n.nume)}</b>
       <small>${fmtXp(j.xp)} XP${n.pana ? ` · încă ${fmtXp(n.pana - j.xp)} până la ${esc(n.urmator)}` : ' · nivelul maxim'}</small></span>
-    <span class="jb-cifre"><span><b>${j.serie || 0}</b><small>serie</small></span><span><b>+${fmtXp(j.xp_azi)}</b><small>azi</small></span></span></button>`;
+    <span class="jb-cifre"><span><b>${j.serie || 0}</b><small>serie</small></span><span><b>${cuSemn(j.xp_azi) || '0'}</b><small>azi</small></span></span></button>`;
 }
 function jocProgres(j) {
-  const n = nivel(j.xp), ins = insigne(j), max = Math.max(1, ...SURSE_XP.map(([k]) => (j.surse || {})[k] || 0));
-  const e = j.echipa, sc = e && e.saptamana ? e.saptamana.scor : null, ne = e ? nivelEchipa(e.xp_total) : null;
+  const surse = Object.entries(j.surse || {}).filter(([, v]) => v).sort((a, b) => b[1] - a[1]), max = Math.max(1, ...surse.map(([, v]) => Math.abs(v)));
+  const l = j.luna || { castigat: 0, pierdut: 0, net: 0 };
   return `<section class="joc-progres" id="progresul-tau"><h2 class="section-title">Progresul tău</h2>
     <div class="jp-grid">
-      <div class="jp-card jp-nivel">${inel(n.pct, n.n, 'nivel', 'mare')}
-        <div><span class="eyebrow">${fmtXp(j.xp)} XP în total</span><h3>${esc(n.nume)}</h3>
-          <div class="xp-bara"><i style="width:${n.pct}%"></i></div>
-          <p class="muted mic">${n.pana ? `${fmtXp(n.pana - j.xp)} XP până la <b>${esc(n.urmator)}</b>` : 'Ai atins cel mai înalt nivel. Respect.'}</p>
-          <p class="jp-serie"><b>${j.serie || 0}</b> ture la rând începute la timp<span class="muted"> · recordul tău: ${j.serie_max || 0}</span></p></div></div>
-      <div class="jp-card"><span class="eyebrow">Săptămâna asta</span><p class="jp-mare">+${fmtXp(j.xp_saptamana)} <small>XP</small></p>
-        ${SURSE_XP.map(([k, et]) => { const v = (j.surse || {})[k] || 0; return `<div class="sursa"><span>${et}</span><span class="sursa-bara"><i style="width:${Math.round(v / max * 100)}%"></i></span><b>${v}</b></div>`; }).join('')}</div>
-      ${e ? `<div class="jp-card jp-echipa"><span class="eyebrow">Echipa ta · ${esc(numeLoc(j.locatie))}</span>
-        <div class="jp-echipa-r">${inel(sc || 0, sc == null ? '—' : sc, 'scor', 'mediu')}
-          <div><p class="mic" style="margin:0 0 6px">Scorul săptămânii: clock-in la timp, fișe la termen, pași făcuți, probleme rezolvate.</p>
-            ${delta(sc, e.trecuta && e.trecuta.scor)}<p class="muted mic" style="margin:8px 0 0">Echipa e la nivelul <b>${ne.n}</b> · ${fmtXp(e.xp_total)} XP strânși împreună</p></div></div></div>` : ''}
+      ${cardNivel(j)}
+      <div class="jp-card"><span class="eyebrow">Săptămâna asta</span><p class="jp-mare ${j.xp_saptamana < 0 ? 'minus' : ''}">${cuSemn(j.xp_saptamana)} <small>XP</small></p>
+        ${surse.length ? surse.map(([k, v]) => `<div class="sursa ${v < 0 ? 'minus' : ''}"><span>${esc(SURSE_NUME[k] || k)}</span><span class="sursa-bara"><i style="width:${Math.round(Math.abs(v) / max * 100)}%"></i></span><b>${cuSemn(v)}</b></div>`).join('')
+          : '<p class="muted mic">Primele puncte vin la primul clock-in.</p>'}
+        <p class="jp-pm" style="margin-top:14px"><span>Luna asta: <b>${cuSemn(l.net).replace('+', '')} XP</b> pentru bonus</span><span class="plus">+${fmtXp(l.castigat)}</span><span class="minus">−${fmtXp(l.pierdut)}</span></p></div>
+      ${cardEchipa(j)}
     </div>
-    <h3 class="jp-h3">Insigne <span class="muted">${ins.filter(x => x.are).length} din ${ins.length}</span></h3>
-    <div class="insigne">${ins.map(x => `<div class="insigna ${x.are ? 'are' : ''}" title="${esc(x.cum)}"><span class="ins-m">${x.m}</span>
-      <b>${esc(x.nume)}</b><small>${esc(x.cum)}</small>${x.are ? '' : `<span class="ins-prog"><i style="width:${Math.round(x.v / x.tinta * 100)}%"></i></span><small>${x.v} / ${x.tinta}</small>`}</div>`).join('')}</div>
-    ${(j.ultimele || []).length ? `<h3 class="jp-h3">Ultimele puncte</h3><ul class="feed deschis">${stransePuncte(j.ultimele, 8).map(u => `<li><b>+${u.puncte}</b><span>${esc(u.text)}</span><small>${ziScurta(ziLocala(new Date(u.la)))} · ${oraLocala(u.la)}</small></li>`).join('')}</ul>` : ''}
-    <details class="jp-cum"><summary>Cum câștigi puncte</summary><ul>
-      <li>Clock-in la timp (cel mult 5 minute după începutul turei): <b>+10</b>; până la 15 minute: +3</li>
-      <li>Fiecare pas făcut: <b>+2</b> · fișă terminată la termen: <b>+15</b> (după termen +5) · fără niciun pas nefăcut: <b>+10</b></li>
-      <li>Lecție parcursă în Academie: <b>+5</b> · primul test trecut la un curs: <b>+30</b></li>
-      <li>Problemă semnalată (pas nefăcut, notă, observație): <b>+5</b> · când șeful o rezolvă: <b>+10</b> pentru tine</li>
-    </ul></details></section>`;
+    ${(j.ultimele || []).length ? `<h3 class="jp-h3">Ultimele puncte</h3><ul class="jr-lista">${stransePuncte(j.ultimele, 8).map(u =>
+      `<li class="${u.puncte < 0 ? 'minus' : 'plus'}"><b>${cuSemn(u.puncte)}</b><span>${esc(u.text)}</span><small>${ziScurta(ziLocala(new Date(u.la)))} · ${oraLocala(u.la)}</small></li>`).join('')}</ul>` : ''}
+    <p style="margin:14px 0 0"><a class="btn ghost sm" href="#/progres">Tot jurnalul punctelor, cu motive</a></p>
+    ${insigneHtml(j)}
+    ${reguliHtml()}</section>`;
 }
 // Nivel nou sau insignă nouă: o singură dată, pe telefonul pe care se vede.
 function verificaJoc(j) {
@@ -4244,7 +4337,7 @@ function htmlTablou(spaceId, t, alegeri) {
     <div class="jt-grid">
       <div class="jt-scor">${inel(sc || 0, sc == null ? '—' : sc, 'scorul săptămânii', 'mare')}
         <div>${delta(sc, e.trecuta && e.trecuta.scor)}<p class="mic">Săptămâna trecută: <b>${e.trecuta && e.trecuta.scor != null ? e.trecuta.scor : '—'}</b> · luna asta: <b>${e.luna && e.luna.scor != null ? e.luna.scor : '—'}</b></p>
-          <p class="mic">+${fmtXp(s.xp)} XP strânși de echipă săptămâna asta</p></div></div>
+          <p class="mic">${cuSemn(s.xp)} XP strânși de echipă săptămâna asta</p></div></div>
       <div class="jt-nivel">${inel(ne.pct, ne.n, 'nivelul echipei', 'mediu')}
         <div><b>${fmtXp(e.xp_total)} XP</b><p class="mic">încă ${fmtXp(ne.pana - e.xp_total)} XP până la nivelul ${ne.n + 1}</p></div></div>
       <div class="jt-obj"><span class="eyebrow">Obiectivele săptămânii · ținta ${TINTA}%</span>${obiective(s)}</div>
@@ -4252,8 +4345,8 @@ function htmlTablou(spaceId, t, alegeri) {
     <div class="jt-grid2">
       <div class="jt-card"><span class="eyebrow">Clasamentul echipei · XP săptămâna asta</span>
         ${oameni.length ? `<ol class="clasament">${oameni.map((o, i) => { const n = nivel(o.xp); return `<li class="${i < 3 && o.xp_saptamana > 0 ? 'p' + (i + 1) : ''}">
-          <span class="loc-nr">${i + 1}</span><span class="cl-nume"><b>${esc(o.nume)}</b><small>${esc(o.rol)} · nivelul ${n.n}${o.serie >= 3 ? ` · serie ${o.serie}` : ''}</small></span>
-          <span class="cl-xp"><b>${fmtXp(o.xp_saptamana)}</b><small>${o.xp_trecuta ? `${fmtXp(o.xp_trecuta)} săpt. trecută` : 'XP'}</small></span></li>`; }).join('')}</ol>`
+          <span class="loc-nr">${i + 1}</span><span class="cl-nume"><b>${o.il_conduc ? `<a href="#/progres?u=${enc(o.user_id)}">${esc(o.nume)}</a>` : esc(o.nume)}</b><small>${esc(o.rol)} · nivelul ${n.n}${o.serie >= 3 ? ` · serie ${o.serie}` : ''}</small></span>
+          <span class="cl-xp"><b>${cuSemn(o.xp_saptamana).replace('+', '')}</b><small>${o.xp_trecuta ? `${fmtXp(o.xp_trecuta)} săpt. trecută` : 'XP'}</small></span></li>`; }).join('')}</ol>`
           : '<p class="mic muted">Încă nimeni. Primele puncte vin la primul clock-in.</p>'}</div>
       <div class="jt-card"><span class="eyebrow">Clasamentul magazinelor · scorul săptămânii</span>
         ${loc.length ? `<ol class="clasament">${loc.map((x, i) => `<li class="${x.id === spaceId ? 'aici' : ''} ${i === 0 && x.saptamana.scor != null ? 'p1' : ''}">
@@ -4261,9 +4354,442 @@ function htmlTablou(spaceId, t, alegeri) {
             <small>${x.trecuta.scor != null ? `săpt. trecută ${x.trecuta.scor}` : 'săpt. trecută —'} · luna ${x.luna.scor ?? '—'}</small></span>
           <span class="cl-xp"><b>${x.saptamana.scor ?? '—'}</b><small>${fmtXp(x.saptamana.xp)} XP</small></span></li>`).join('')}</ol>` : '<p class="mic muted">Clasamentul apare după ce rulezi migrarea 0020.</p>'}</div>
       <div class="jt-card"><span class="eyebrow">Azi, în puncte</span>
-        ${(e.azi || []).length ? `<ul class="feed">${stransePuncte(e.azi, 12).map(x => `<li><b>+${x.puncte}</b><span><i>${esc(x.nume)}</i> · ${esc(x.text)}</span><small>${oraLocala(x.la)}</small></li>`).join('')}</ul>`
+        ${(e.azi || []).length ? `<ul class="feed">${stransePuncte(e.azi, 12).map(x => `<li class="${x.puncte < 0 ? 'minus' : ''}"><b>${cuSemn(x.puncte)}</b><span><i>${esc(x.nume)}</i> · ${esc(x.text)}</span><small>${oraLocala(x.la)}</small></li>`).join('')}</ul>`
           : '<p class="mic muted">Nimic încă azi. Fiecare clock-in, pas bifat și problemă rezolvată apare aici.</p>'}</div>
-    </div></section>`;
+    </div>
+    ${e.semnalari_deschise ? `<a class="jt-semn" href="#/semnalari?s=${enc(spaceId)}"><b>${e.semnalari_deschise}</b> ${e.semnalari_deschise === 1 ? 'semnalare deschisă' : 'semnalări deschise'} de la echipă · vezi și rezolvă →</a>` : ''}</section>`;
+}
+
+// ---------- Comunicarea în aplicație și punctajul transparent (migrarea 0021) ----------
+// Semnalări (problemele de lucru, în loc de grupul de WhatsApp), Mesaje (anunțurile conducerii cu „Am citit”
+// și feedbackul de la șefi), Punctele mele (jurnalul: fiecare punct câștigat sau pierdut, cu motiv și contestație)
+// și, pentru șefi, Echipa → Oameni (raportul lunar pentru bonus).
+const SURSE_NUME = { punctualitate: 'Punctualitate', fise: 'Fișele', academia: 'Academia', probleme: 'Probleme rezolvate', sefi: 'De la șefi', anunturi: 'Anunțuri' };
+const CATEGORII_SEMN = [['marfa', 'Lipsă marfă sau produse'], ['echipament', 'Echipament defect'], ['client', 'Client sau reclamație'],
+  ['echipa', 'Echipă și program'], ['curatenie', 'Curățenie și igienă'], ['altele', 'Altceva']];
+const STARE_SEMN = { deschisa: 'Deschisă', in_lucru: 'În lucru', rezolvata: 'Rezolvată', respinsa: 'Nu s-a confirmat' };
+const REGULI = {
+  castigi: [
+    ['Clock-in la timp (cel mult 5 minute după începutul turei)', '+10'],
+    ['Clock-in cu 5–15 minute întârziere', '+3'],
+    ['Clock-in fără tură în program (o dată pe zi)', '+2'],
+    ['Fiecare pas făcut dintr-o fișă', '+2'],
+    ['Fișă terminată la termen (după termen: +5)', '+15'],
+    ['Fișă fără niciun pas nefăcut', '+10'],
+    ['Lecție parcursă în Academie', '+5'],
+    ['Primul test trecut la un curs', '+30'],
+    ['Problemă sau semnalare a ta, rezolvată de șef (primele 3 pe zi)', '+10'],
+    ['Ai rezolvat o problemă sau o semnalare, ca șef (primele 3 pe zi)', '+5'],
+    ['Apreciere de la șef (cel mult 20 pe zi)', '+5, +10, +20'],
+  ],
+  pierzi: [
+    ['Clock-in cu peste 15 minute întârziere', '−5'],
+    ['Fișa de deschidere sau de închidere nefăcută până la sfârșitul zilei (celui programat să deschidă sau să închidă)', '−10'],
+    ['Anunț neconfirmat cu „Am citit” în 24 de ore', '−2'],
+    ['„De îmbunătățit” de la șef (cel mult 10 pe zi)', '−5, −10'],
+  ],
+};
+const lunaUman = d => new Intl.DateTimeFormat('ro-RO', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(String(d).slice(0, 10) + 'T12:00:00Z'));
+const cuSemn = n => (n > 0 ? '+' : n < 0 ? '−' : '') + fmtXp(Math.abs(n));
+const dataOra = t => `${ziScurta(ziLocala(new Date(t)))} · ${oraLocala(t)}`;
+const catNume = c => (CATEGORII_SEMN.find(x => x[0] === c) || ['', 'Altceva'])[1];
+const eroareMig = (e, implicit) => !e ? implicit : /PGRST20|42883|42P01|schema cache|does not exist/i.test((e.code || '') + ' ' + (e.message || ''))
+  ? 'Partea asta se activează după ce rulezi în Supabase migrarea 0021_comunicare_si_puncte.sql.' : (e.message || implicit);
+const reguliHtml = () => `<details class="jp-cum"><summary>Regulile: cum câștigi și cum pierzi puncte</summary>
+  <div class="reguli"><div><span class="eyebrow">Câștigi</span><table>${REGULI.castigi.map(([t, p]) => `<tr><td>${t}</td><td class="plus">${p}</td></tr>`).join('')}</table></div>
+    <div><span class="eyebrow">Pierzi</span><table>${REGULI.pierzi.map(([t, p]) => `<tr><td>${t}</td><td class="minus">${p}</td></tr>`).join('')}</table>
+      <p class="muted mic">Orice pierdere apare în jurnal cu motivul ei și se poate contesta până la închiderea lunii. Dacă șeful admite contestația, punctele se dau înapoi.</p></div></div></details>`;
+
+// Filele comune paginilor omului: Tura mea · Mesaje · Semnalări · Punctele mele (· Echipa, pentru șefi)
+function tabsOm(activ) {
+  const t = [];
+  if (areTura()) t.push(['tura', 'Tura', '#/tura']);
+  t.push(['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
+  if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);
+  return `<nav class="tabs tabs-om">${t.map(([k, et, h]) => `<a href="${h}" class="${k === activ ? 'on' : ''}">${et}${k === 'mesaje' ? '<i class="tab-nr" data-de-confirmat hidden></i>' : ''}</a>`).join('')}</nav>`;
+}
+function puneDeConfirmat(n) {
+  document.querySelectorAll('[data-de-confirmat]').forEach(i => { i.textContent = n > 9 ? '9+' : n || ''; i.hidden = !n; });
+}
+// O întrebare cu răspuns scris (în locul ferestrei „prompt” a browserului). Întoarce textul, sau null la „Renunț”.
+function intreaba(titlu, o = {}) {
+  return new Promise(gata => {
+    const d = document.createElement('div'); d.className = 'qr-modal'; d.setAttribute('role', 'dialog');
+    d.innerHTML = `<form class="qr-box dlg"><h3>${esc(titlu)}</h3>${o.text ? `<p class="muted">${esc(o.text)}</p>` : ''}
+      ${o.faraText ? '' : `<textarea class="field" rows="3" maxlength="2000" placeholder="${esc(o.loc || '')}" ${o.obligatoriu ? `required minlength="${o.min || 3}"` : ''}></textarea>`}
+      <div class="calc-act"><button class="btn" type="submit">${esc(o.buton || 'Trimite')}</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>`;
+    const inchide = v => { d.remove(); gata(v); };
+    d.addEventListener('click', e => { if (e.target === d || e.target.closest('[data-renunt]')) inchide(null); });
+    d.querySelector('form').addEventListener('submit', e => { e.preventDefault(); const t = d.querySelector('textarea'); inchide(t ? t.value.trim() : ''); });
+    document.body.appendChild(d); (d.querySelector('textarea') || d.querySelector('button')).focus();
+  });
+}
+
+// ----- Punctele noi, pe ecran: „+10 XP · Clock-in la timp” -----
+async function puncteNoi(faraPasi) {
+  if (!SB || !SB_USER_ID) return;
+  const k = 'mm-puncte-' + SB_USER_ID; let dupa = null;
+  try { dupa = localStorage.getItem(k); } catch (e) {}
+  const { data, error } = await SB.rpc('puncte_noi', { p_dupa: dupa });
+  if (error || !data) return;
+  try { localStorage.setItem(k, data.acum); } catch (e) {}
+  const ev = (data.evenimente || []).filter(e => !faraPasi || !String(e.cheie).startsWith('pas:'));
+  if (dupa && ev.length) arataPuncte(ev);
+}
+const puncteNoiCurand = amanat(() => puncteNoi().catch(() => {}), 900);
+const puncteNoiFisa = amanat(() => puncteNoi(true).catch(() => {}), 900);
+// „+2 XP” care urcă de lângă bifa pasului abia făcut
+function zboaraPuncte(i, text) {
+  const pas = document.querySelector(`#fisaBody .pas[data-i="${i}"]`); if (!pas) return;
+  const z = document.createElement('span'); z.className = 'xp-zbor'; z.textContent = text; pas.appendChild(z);
+  setTimeout(() => z.remove(), 1300);
+}
+function arataPuncte(ev) {
+  let st = document.getElementById('xpStack');
+  if (!st) { st = document.createElement('div'); st.id = 'xpStack'; st.setAttribute('role', 'status'); document.body.appendChild(st); }
+  const lista = stransePuncte(ev, 99), arat = lista.slice(-4), rest = lista.length - arat.length;
+  arat.forEach((e, i) => setTimeout(() => {
+    const p = document.createElement('a'); p.href = '#/progres'; p.className = 'xp-pop ' + (e.puncte < 0 ? 'minus' : 'plus');
+    p.innerHTML = `<b>${cuSemn(e.puncte)} XP</b><span>${esc(e.text)}${i === arat.length - 1 && rest > 0 ? ` · și încă ${rest} în jurnal` : ''}</span>`;
+    st.appendChild(p); setTimeout(() => p.classList.add('pleaca'), 5200); setTimeout(() => p.remove(), 5800);
+  }, i * 450));
+}
+
+// ----- Pagina „Punctele mele” (și progresul unui om, pentru șefii lui) -----
+function cardNivel(j) {
+  const n = nivel(j.xp);
+  return `<div class="jp-card jp-nivel">${inel(n.pct, n.n, 'nivel', 'mare')}
+    <div><span class="eyebrow">${cuSemn(j.xp).replace('+', '')} XP în total</span><h3>${esc(n.nume)}</h3>
+      <div class="xp-bara"><i style="width:${Math.max(0, n.pct)}%"></i></div>
+      <p class="muted mic">${n.pana ? `${fmtXp(n.pana - j.xp)} XP până la <b>${esc(n.urmator)}</b>` : 'Cel mai înalt nivel. Respect.'}</p>
+      <p class="jp-serie"><b>${j.serie || 0}</b> ture la rând începute la timp<span class="muted"> · record: ${j.serie_max || 0}</span></p></div></div>`;
+}
+function cardEchipa(j) {
+  const e = j.echipa; if (!e) return '';
+  const sc = e.saptamana ? e.saptamana.scor : null, ne = nivelEchipa(e.xp_total);
+  return `<div class="jp-card jp-echipa"><span class="eyebrow">Echipa · ${esc(numeLoc(j.locatie))}</span>
+    <div class="jp-echipa-r">${inel(sc || 0, sc == null ? '—' : sc, 'scor', 'mediu')}
+      <div><p class="mic" style="margin:0 0 6px">Scorul săptămânii: clock-in la timp, fișe la termen, pași făcuți, probleme rezolvate.</p>
+        ${delta(sc, e.trecuta && e.trecuta.scor)}<p class="muted mic" style="margin:8px 0 0">Echipa e la nivelul <b>${ne.n}</b> · ${fmtXp(e.xp_total)} XP strânși împreună</p></div></div></div>`;
+}
+const insigneHtml = j => { const ins = insigne(j); return `<h3 class="jp-h3">Insigne <span class="muted">${ins.filter(x => x.are).length} din ${ins.length}</span></h3>
+  <div class="insigne">${ins.map(x => `<div class="insigna ${x.are ? 'are' : ''}" title="${esc(x.cum)}"><span class="ins-m">${x.m}</span>
+    <b>${esc(x.nume)}</b><small>${esc(x.cum)}</small>${x.are ? '' : `<span class="ins-prog"><i style="width:${Math.round(x.v / x.tinta * 100)}%"></i></span><small>${x.v} / ${x.tinta}</small>`}</div>`).join('')}</div>`; };
+function viewProgres(params) {
+  setTimeout(() => incarcaProgres(params), 0);
+  const alt = params.u && params.u !== SB_USER_ID;
+  return `<section class="band tura-band"><div class="wrap">
+      <span class="eyebrow" id="progresSus">${alt ? 'Progresul unui om din echipă' : esc(ME.full_name) + ' · ' + esc(ME.role_code)}</span>
+      <h1 id="progresTitlu">${alt ? 'Progres' : 'Punctele mele'}</h1>
+      <p class="sub">Fiecare punct câștigat sau pierdut, cu motivul lui. Punctele nete ale lunii contează la bonus.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura">${alt ? '<p class="crumbs"><a href="#/echipa?tab=oameni">← Oamenii mei</a></p>' : tabsOm('progres')}
+      <div id="progresBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaProgres(params) {
+  const box = document.getElementById('progresBody'); if (!box) return;
+  const u = params.u && params.u !== SB_USER_ID ? params.u : null;
+  const luna = /^\d{4}-\d{2}$/.test(params.luna || '') ? params.luna + '-01' : null;
+  const [a, b] = await Promise.all([SB.rpc('joc_om', { p_user: u }), SB.rpc('jurnal_puncte', { p_user: u, p_luna: luna })]);
+  if (!document.getElementById('progresBody')) return;
+  if (a.error || b.error || !a.data || !b.data) {
+    console.error('Progres:', a.error || b.error);
+    box.innerHTML = `<p class="err">${esc(eroareMig(a.error || b.error, 'Punctele nu s-au putut încărca.'))}</p>`; return;
+  }
+  const j = a.data, jr = b.data, eu = !u, filtru = ['plus', 'minus'].includes(params.f) ? params.f : '';
+  if (u) { document.getElementById('progresTitlu').textContent = j.nume; document.getElementById('progresSus').textContent = `Progresul unui om din echipă · ${j.rol}`; }
+  else puneDeConfirmat(j.de_confirmat);
+  const s = jr.sumar, curenta = jr.luna.slice(0, 7) === ziLocala().slice(0, 7);
+  const leg = extra => `#/progres?${[u ? 'u=' + enc(u) : '', ...extra].filter(Boolean).join('&')}`;
+  const ev = jr.evenimente.filter(e => filtru === 'plus' ? e.puncte > 0 : filtru === 'minus' ? e.puncte < 0 : true)
+    .sort((x, y) => y.zi.localeCompare(x.zi) || y.la.localeCompare(x.la));
+  const zile = [];
+  for (const e of ev) { let z = zile[zile.length - 1]; if (!z || z.zi !== e.zi) { z = { zi: e.zi, ev: [] }; zile.push(z); } z.ev.push(e); }
+  const rand = e => {
+    const stare = e.puncte >= 0 ? '' : e.contestatie === 'deschisa' ? '<em class="ctst">contestată · se așteaptă decizia</em>'
+      : e.contestatie === 'respinsa' ? `<em class="ctst">contestație respinsă${e.raspuns ? ': „' + esc(e.raspuns) + '”' : ''}</em>`
+      : eu && !jr.inchisa ? `<button class="rez-anul" type="button" data-contest="${esc(e.cheie)}" data-detaliu="${esc(e.detaliu)}">Contestă</button>` : '';
+    return `<li class="${e.puncte < 0 ? 'minus' : 'plus'}"><b>${cuSemn(e.puncte)}</b><span>${esc(e.text)}${stare ? '<br>' + stare : ''}</span><small>${oraLocala(e.la)}</small></li>`;
+  };
+  const surse = Object.entries(jr.surse || {}).sort((x, y) => (y[1].plus - y[1].minus) - (x[1].plus - x[1].minus));
+  const ct = (j.contestatii || []); let nrZi = 0;
+  box.innerHTML = `<div class="jp-grid">
+      <div class="jp-card jp-luna"><span class="eyebrow">${esc(lunaUman(jr.luna))} · ${jr.inchisa ? 'lună închisă' : curenta ? 'în curs' : 'încă deschisă'}</span>
+        <p class="jp-mare ${s.net < 0 ? 'minus' : ''}">${cuSemn(s.net).replace('+', '')} <small>XP pentru bonus</small></p>
+        <p class="jp-pm"><span class="plus">+${fmtXp(s.castigat)} câștigate</span><span class="minus">−${fmtXp(s.pierdut)} pierdute</span></p>
+        <label class="pl-sel"><span class="eyebrow">Altă lună</span><select class="field" data-luna>${(jr.luni || []).map(m =>
+          `<option value="${m.luna.slice(0, 7)}" ${m.luna === jr.luna ? 'selected' : ''}>${esc(lunaUman(m.luna))}${m.inchisa ? ' · închisă' : ''}</option>`).join('')}</select></label></div>
+      ${cardNivel(j)}
+      ${cardEchipa(j)}
+    </div>
+    ${u && j.user_id ? `<div class="calc-act"><a class="btn sm" href="#/mesaje?catre=${enc(u)}">Trimite-i feedback</a></div>` : ''}
+    ${surse.length ? `<h3 class="jp-h3">De unde vin punctele lunii</h3><div class="surse-pm">${surse.map(([k, v]) =>
+      `<div><span>${esc(SURSE_NUME[k] || k)}</span><b class="plus">${v.plus ? '+' + fmtXp(v.plus) : ''}</b><b class="minus">${v.minus ? '−' + fmtXp(v.minus) : ''}</b></div>`).join('')}</div>` : ''}
+    <div class="jr-sus"><h3 class="jp-h3" style="margin:0">Jurnalul punctelor</h3>
+      <nav class="jr-filtru"><a href="${leg([luna ? 'luna=' + params.luna : ''])}" class="${filtru ? '' : 'on'}">Toate</a><a href="${leg([luna ? 'luna=' + params.luna : '', 'f=plus'])}" class="${filtru === 'plus' ? 'on' : ''}">Câștigate</a><a href="${leg([luna ? 'luna=' + params.luna : '', 'f=minus'])}" class="${filtru === 'minus' ? 'on' : ''}">Pierdute</a></nav></div>
+    ${zile.length ? zile.map(z => { const suma = z.ev.reduce((t, e) => t + e.puncte, 0);
+        return `<details class="jr-zi" ${nrZi++ < 3 || z.ev.some(e => e.puncte < 0) ? 'open' : ''}><summary class="jr-cap"><b>${ziUman(z.zi)}</b><span class="${suma < 0 ? 'minus' : 'plus'}">${cuSemn(suma)} XP</span></summary><ul class="jr-lista">${stransePuncte(z.ev, 999).map(rand).join('')}</ul></details>`; }).join('')
+      : `<p class="lvl4">${filtru === 'minus' ? 'Nicio pierdere în luna asta.' : 'Niciun punct încă în luna asta. Primele vin la primul clock-in.'}</p>`}
+    ${ct.length ? `<h3 class="jp-h3">Contestații</h3><ul class="jr-lista ctst-lista">${ct.map(c => `<li><b class="${c.status === 'admisa' ? 'plus' : 'minus'}">${c.status === 'admisa' ? '+' + Math.abs(c.puncte) : cuSemn(c.puncte)}</b>
+        <span>${esc(c.detaliu)}<br><em class="ctst">${c.status === 'deschisa' ? 'se așteaptă decizia' : c.status === 'admisa' ? 'admisă: punctele s-au dat înapoi' : 'respinsă'}${c.raspuns ? ' · „' + esc(c.raspuns) + '”' : ''}${c.decis_de ? ' · ' + esc(c.decis_de) : ''}</em></span>
+        <small>${ziScurta(c.zi)}</small></li>`).join('')}</ul>` : ''}
+    ${insigneHtml(j)}
+    ${reguliHtml()}`;
+  box.querySelector('[data-luna]').addEventListener('change', e => { location.hash = leg(['luna=' + e.target.value]); });
+  box.onclick = async e => {
+    const b = e.target.closest('[data-contest]'); if (!b) return;
+    const motiv = await intreaba('Contești pierderea de puncte', { text: b.dataset.detaliu, loc: 'De ce nu e corectă? Scrie pe scurt ce s-a întâmplat.', obligatoriu: true, min: 5, buton: 'Trimite contestația' });
+    if (motiv === null) return;
+    const r = await SB.rpc('contesta', { p_cheie: b.dataset.contest, p_motiv: motiv });
+    if (r.error) return toast(r.error.message || 'Contestația nu s-a trimis.', true);
+    toast('Contestația a plecat la șeful tău. Primești notificare când decide.');
+    incarcaProgres(params);
+  };
+  if (eu) verificaJoc(j);
+}
+
+// ----- Pagina „Mesaje”: anunțurile conducerii și feedbackul de la șefi -----
+function viewMesaje(params) {
+  setTimeout(() => incarcaMesaje(params), 0);
+  return `<section class="band tura-band"><div class="wrap">
+      <span class="eyebrow">De la conducere către echipă</span><h1>Mesaje</h1>
+      <p class="sub">Anunțurile conducerii și feedbackul primit de la șefi. Fiecare anunț se confirmă cu „Am citit”.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura">${tabsOm('mesaje')}<div id="mesajeBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaMesaje(params) {
+  const box = document.getElementById('mesajeBody'); if (!box) return;
+  const { data: m, error } = await SB.rpc('mesajele_mele');
+  if (!document.getElementById('mesajeBody')) return;
+  if (error || !m) { console.error('Mesaje:', error); box.innerHTML = `<p class="err">${esc(eroareMig(error, 'Mesajele nu s-au putut încărca.'))}</p>`; return; }
+  puneDeConfirmat(m.de_confirmat);
+  const acum = Date.now();
+  const anunt = a => {
+    const trecut = acum > new Date(a.termen).getTime(), nou = a.destinatar && !a.citit_la;
+    return `<article class="msg ${nou ? 'nou' : ''}">
+      <span class="eyebrow">${a.space_id ? esc(numeLoc(a.space_id)) : 'Toată firma'} · ${esc(a.al_meu ? 'trimis de tine' : a.de_la || 'conducere')} · ${dataOra(a.created_at)}</span>
+      <h3>${esc(a.title)}</h3>${a.body ? `<p class="msg-text">${esc(a.body)}</p>` : ''}
+      ${nou ? `<div class="msg-jos"><button class="btn sm" type="button" data-citit="${a.id}">Am citit</button>
+          <small class="${trecut ? 'minus' : 'muted'}">${trecut ? 'Termenul de 24 de ore a trecut: −2 XP. Confirmă totuși, ca să știe șeful că ai văzut.' : `Confirmă până ${dataOra(a.termen)}; un anunț neconfirmat în 24 de ore înseamnă −2 XP.`}</small></div>`
+        : a.destinatar ? `<small class="muted">Ai confirmat ${dataOra(a.citit_la)}</small>` : ''}
+      ${a.stare ? `<details class="msg-stare"><summary>Citit de ${a.stare.citite} din ${a.stare.total}</summary>${a.stare.necitite.length
+          ? `<p class="mic">Nu au confirmat încă: ${a.stare.necitite.map(esc).join(', ')}</p>` : '<p class="mic">Toată lumea a confirmat.</p>'}</details>` : ''}
+      ${a.al_meu ? `<button class="rez-anul" type="button" data-retrage-anunt="${a.id}">Retrage anunțul</button>` : ''}</article>`;
+  };
+  const fb = f => `<article class="msg fb ${f.fel} ${f.primit && !f.read_at ? 'nou' : ''}">
+      <span class="eyebrow">${f.fel === 'apreciere' ? 'Apreciere' : 'De îmbunătățit'} · ${f.primit ? 'de la ' + esc(f.de_la || 'conducere') : 'către ' + esc(f.catre || '') + (f.dat_de_mine ? '' : ' · de la ' + esc(f.de_la || ''))} · ${dataOra(f.created_at)}</span>
+      <p class="msg-text">${f.puncte ? `<b class="xp-chip ${f.puncte < 0 ? 'minus' : 'plus'}">${cuSemn(f.puncte)} XP</b> ` : ''}${esc(f.text)}</p>
+      ${f.raspuns ? `<p class="semn-rasp"><b>${f.primit ? 'Răspunsul tău' : 'Răspunsul lui'}:</b> ${esc(f.raspuns)}</p>` : ''}
+      ${f.primit && !f.read_at ? `<div class="msg-jos"><button class="btn sm" type="button" data-fb-citit="${f.id}">Am citit</button><button class="btn ghost sm" type="button" data-fb-raspuns="${f.id}">Răspund</button>
+          ${f.puncte < 0 ? `<button class="rez-anul" type="button" data-fb-contest="${f.id}" data-detaliu="${esc(f.text)}">Contestă pierderea</button>` : ''}</div>`
+        : f.primit ? `<small class="muted">Ai confirmat ${dataOra(f.read_at)}</small>${!f.raspuns ? ` <button class="rez-anul" type="button" data-fb-raspuns="${f.id}">Răspund</button>` : ''}`
+        : `<small class="muted">${f.read_at ? 'A confirmat ' + dataOra(f.read_at) : 'Încă necitit'}</small>${f.dat_de_mine ? ` <button class="rez-anul" type="button" data-retrage-fb="${f.id}">Retrage</button>` : ''}`}</article>`;
+  const primite = m.feedback.filter(f => f.primit), date = m.feedback.filter(f => !f.primit);
+  box.innerHTML = `${m.pot_anunta ? `<div class="msg-act"><button class="btn sm" type="button" data-form="anunt">Anunț nou</button>
+        <button class="btn ghost sm" type="button" data-form="feedback">Feedback pentru un om</button></div><div id="msgForm"></div>` : ''}
+    <h2 class="section-title">Anunțuri</h2>
+    ${m.anunturi.length ? `<div class="msg-lista">${m.anunturi.map(anunt).join('')}</div>` : '<p class="lvl4">Niciun anunț deocamdată.</p>'}
+    ${primite.length || !m.pot_anunta ? `<h2 class="section-title" style="margin-top:40px">Feedback primit</h2>
+      ${primite.length ? `<div class="msg-lista">${primite.map(fb).join('')}</div>` : '<p class="lvl4">Încă nu ai primit feedback de la șefi.</p>'}` : ''}
+    ${date.length ? `<h2 class="section-title" style="margin-top:40px">Feedback dat echipei</h2><div class="msg-lista">${date.map(fb).join('')}</div>` : ''}`;
+  const reia = () => incarcaMesaje({});
+  const formular = async (care, catre) => {
+    const loc = document.getElementById('msgForm'); if (!loc) return;
+    if (care === 'anunt') {
+      const locuri = locatiiOperative();
+      loc.innerHTML = `<form class="calc-card frm" data-trimite="anunt"><span class="eyebrow">Anunț nou</span>
+        <label>Pentru cine<select class="field" name="space_id">${m.pot_anunta_firma ? '<option value="">Toată firma</option>' : ''}${locuri.map(s => `<option value="${esc(s.id)}">Echipa ${esc(numeLoc(s.id))}</option>`).join('')}</select></label>
+        <label>Titlu<input class="field" name="title" required minlength="3" maxlength="140" placeholder="Ex.: Vitrina de lunch se face la 10:45"></label>
+        <label>Text (opțional)<textarea class="field" name="body" rows="4" maxlength="4000" placeholder="Detaliile: de când, de ce, cine răspunde."></textarea></label>
+        <p class="muted mic">Fiecare om din echipă primește notificare și confirmă cu „Am citit” în 24 de ore.</p>
+        <div class="calc-act"><button class="btn" type="submit">Trimite anunțul</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>`;
+    } else {
+      loc.innerHTML = '<p class="muted">Se încarcă oamenii…</p>';
+      const r = await SB.rpc('joc_raport', { p_luna: null });
+      const oameni = ((r.data && r.data.oameni) || []).filter(o => o.il_conduc).sort((x, y) => x.nume.localeCompare(y.nume));
+      if (!oameni.length) { loc.innerHTML = '<p class="lvl4">Nu ai oameni în subordine cărora să le trimiți feedback.</p>'; return; }
+      loc.innerHTML = `<form class="calc-card frm" data-trimite="feedback"><span class="eyebrow">Feedback pentru un om</span>
+        <label>Pentru<select class="field" name="to_user">${oameni.map(o => `<option value="${esc(o.user_id)}" ${o.user_id === catre ? 'selected' : ''}>${esc(o.nume)} · ${esc(o.rol)}</option>`).join('')}</select></label>
+        <div class="frm-rad"><label><input type="radio" name="fel" value="apreciere" checked> Apreciere</label><label><input type="radio" name="fel" value="imbunatatire"> De îmbunătățit</label></div>
+        <div class="frm-rad" data-puncte></div>
+        <label>Ce anume (omul vede textul și poate răspunde)<textarea class="field" name="text" rows="4" required minlength="5" maxlength="2000" placeholder="Concret: ce a făcut bine sau ce trebuie făcut altfel, și când."></textarea></label>
+        <div class="calc-act"><button class="btn" type="submit">Trimite feedbackul</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>`;
+      const puncte = () => { const fel = loc.querySelector('[name=fel]:checked').value;
+        loc.querySelector('[data-puncte]').innerHTML = (fel === 'apreciere' ? [0, 5, 10, 20] : [0, -5, -10]).map((p, i) =>
+          `<label><input type="radio" name="puncte" value="${p}" ${i === 0 ? 'checked' : ''}> ${p ? cuSemn(p) + ' XP' : 'fără puncte'}</label>`).join('')
+          + `<small class="muted">${fel === 'apreciere' ? 'cel mult 20 XP pe zi pentru un om' : 'cel mult 10 XP pe zi; omul poate contesta'}</small>`; };
+      puncte(); loc.querySelectorAll('[name=fel]').forEach(x => x.addEventListener('change', puncte));
+    }
+    loc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+  box.onsubmit = async e => {
+    const f = e.target.closest('[data-trimite]'); if (!f) return;
+    e.preventDefault();
+    const el = f.elements, buton = f.querySelector('[type=submit]'); buton.disabled = true;
+    const r = f.dataset.trimite === 'anunt'
+      ? await SB.from('anunturi').insert({ space_id: el.space_id.value || null, title: el.title.value.trim(), body: el.body.value.trim() })
+      : await SB.from('feedback').insert({ to_user: el.to_user.value, fel: el.fel.value, puncte: +el.puncte.value, text: el.text.value.trim() });
+    if (r.error) { buton.disabled = false; return toast(r.error.message || 'Nu s-a trimis.', true); }
+    toast(f.dataset.trimite === 'anunt' ? 'Anunțul a plecat. Vezi aici cine l-a confirmat.' : 'Feedbackul a ajuns la om, cu notificare.');
+    reia();
+  };
+  box.onclick = async e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const d = b.dataset; let r = null;
+    if (d.form) return formular(d.form);
+    if (d.renunt !== undefined) { const loc = document.getElementById('msgForm'); if (loc) loc.innerHTML = ''; return; }
+    if (d.citit) r = await SB.from('anunturi_citiri').update({ read_at: new Date().toISOString() }).eq('anunt_id', +d.citit).eq('user_id', SB_USER_ID);
+    else if (d.fbCitit) r = await SB.from('feedback').update({ read_at: new Date().toISOString() }).eq('id', +d.fbCitit);
+    else if (d.fbRaspuns) {
+      const t = await intreaba('Răspunsul tău', { loc: 'Scrie pe scurt. Îl vede cine ți-a dat feedbackul.', obligatoriu: true, buton: 'Trimite răspunsul' });
+      if (t === null) return;
+      r = await SB.from('feedback').update({ read_at: new Date().toISOString(), raspuns: t }).eq('id', +d.fbRaspuns);
+    } else if (d.fbContest) {
+      const t = await intreaba('Contești pierderea de puncte', { text: d.detaliu, loc: 'De ce nu e corectă?', obligatoriu: true, min: 5, buton: 'Trimite contestația' });
+      if (t === null) return;
+      r = await SB.rpc('contesta', { p_cheie: 'feedback:' + d.fbContest, p_motiv: t });
+      if (!r.error) toast('Contestația a plecat. O decide cineva de deasupra celui care ți-a dat observația.');
+    } else if (d.retrageAnunt) { if (!confirm('Retragi anunțul? Dispare pentru toată lumea.')) return; r = await SB.from('anunturi').delete().eq('id', +d.retrageAnunt); }
+    else if (d.retrageFb) { if (!confirm('Retragi feedbackul? Dispar și punctele lui.')) return; r = await SB.from('feedback').delete().eq('id', +d.retrageFb); }
+    else return;
+    if (r && r.error) return toast(r.error.message || 'Nu a mers. Încearcă din nou.', true);
+    reia();
+  };
+  if (params.catre && m.pot_anunta) formular('feedback', params.catre);
+  canal('mesaje', [['anunturi'], ['anunturi_citiri'], ['feedback']], amanat(reia, 900));
+}
+
+// ----- Pagina „Semnalări”: problemele de lucru -----
+function viewSemnalari(params) {
+  setTimeout(() => incarcaSemnalari(params), 0);
+  return `<section class="band tura-band"><div class="wrap">
+      <span class="eyebrow">Probleme de lucru</span><h1>Semnalări</h1>
+      <p class="sub">Lipsă marfă, un echipament defect, o situație cu un client: scrii aici, nu pe grup. Ajunge la șefi, iar tu vezi ce s-a făcut.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura">${tabsOm('semnalari')}<div id="semnBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaSemnalari(params) {
+  const box = document.getElementById('semnBody'); if (!box) return;
+  const { data, error } = await SB.rpc('semnalarile', { p_space: null });
+  if (!document.getElementById('semnBody')) return;
+  if (error) { console.error('Semnalări:', error); box.innerHTML = `<p class="err">${esc(eroareMig(error, 'Semnalările nu s-au putut încărca.'))}</p>`; return; }
+  const toate = (data || []).filter(s => !params.s || s.space_id === params.s), eDeschisa = s => s.status === 'deschisa' || s.status === 'in_lucru';
+  const deschise = toate.filter(eDeschisa), arat = params.toate ? toate : deschise;
+  const locuri = locatiiOperative();
+  let ultim = ''; try { ultim = localStorage.getItem('mm-loc-semn') || ''; } catch (e) {}
+  const implicit = (locuri.find(s => s.id === params.s) || locuri.find(s => s.id === ultim) || locuri.find(s => s.tip === 'magazin') || locuri[0] || {}).id;
+  const card = s => `<article class="semn ${s.status} ${s.urgent && eDeschisa(s) ? 'urgent' : ''}">
+      <div class="semn-cap"><span class="eyebrow">${esc(numeLoc(s.space_id))} · ${esc(catNume(s.categorie))}</span>
+        <span>${s.urgent && eDeschisa(s) ? '<span class="pill crit">Urgent</span> ' : ''}${s.privata ? '<span class="pill">Doar șefii</span> ' : ''}<span class="pill st-${s.status}">${STARE_SEMN[s.status]}</span></span></div>
+      <p class="semn-text">${esc(s.text)}</p>
+      <small class="muted">${esc(s.a_mea ? 'Semnalată de tine' : s.autor || 'Coleg')} · ${dataOra(s.created_at)}${s.status === 'in_lucru' && s.preluat_de ? ` · preluată de ${esc(s.preluat_de)}` : ''}${s.rezolvat_de && !eDeschisa(s) ? ` · ${s.status === 'rezolvata' ? 'rezolvată' : 'închisă'} de ${esc(s.rezolvat_de)}, ${dataOra(s.rezolvat_la)}` : ''}</small>
+      ${s.raspuns ? `<p class="semn-rasp"><b>Răspuns:</b> ${esc(s.raspuns)}</p>` : ''}
+      ${s.pot_decide ? `<div class="calc-act">${eDeschisa(s) ? `${s.status === 'deschisa' ? `<button class="btn ghost sm" type="button" data-semn="${s.id}" data-st="in_lucru">Preiau</button>` : ''}
+          <button class="btn sm" type="button" data-semn="${s.id}" data-st="rezolvata">Rezolvat</button><button class="btn ghost sm" type="button" data-semn="${s.id}" data-st="respinsa">Nu se confirmă</button>`
+          : `<button class="rez-anul" type="button" data-semn="${s.id}" data-st="deschisa">Redeschide</button>`}</div>` : ''}
+      ${s.a_mea && s.status === 'deschisa' ? `<button class="rez-anul" type="button" data-retrage="${s.id}">Retrage semnalarea</button>` : ''}</article>`;
+  box.innerHTML = `<div class="msg-act"><button class="btn sm" type="button" data-nou>Semnalează o problemă</button>
+      <nav class="jr-filtru"><a href="#/semnalari${params.s ? '?s=' + enc(params.s) : ''}" class="${params.toate ? '' : 'on'}">Deschise · ${deschise.length}</a><a href="#/semnalari?toate=1${params.s ? '&s=' + enc(params.s) : ''}" class="${params.toate ? 'on' : ''}">Toate</a></nav></div>
+    <form class="calc-card frm" id="semnForm" ${params.nou ? '' : 'hidden'}><span class="eyebrow">Semnalare nouă</span>
+      <div class="frm-2"><label>Locația<select class="field" name="space_id">${locuri.map(s => `<option value="${esc(s.id)}" ${s.id === implicit ? 'selected' : ''}>${esc(numeLoc(s.id))}</option>`).join('')}</select></label>
+        <label>Ce fel de problemă<select class="field" name="categorie">${CATEGORII_SEMN.map(([k, et]) => `<option value="${k}">${et}</option>`).join('')}</select></label></div>
+      <label>Ce s-a întâmplat<textarea class="field" name="text" rows="4" required minlength="3" maxlength="2000" placeholder="Pe scurt: ce, unde, de când. Ex.: Frigiderul de la bar arată 9 °C de la ora 10."></textarea></label>
+      <label class="frm-bifa"><input type="checkbox" name="urgent"> E urgent: blochează lucrul sau vânzarea</label>
+      <label class="frm-bifa"><input type="checkbox" name="privata"> Doar pentru șefi (colegii nu o văd)</label>
+      <p class="muted mic">Ajunge la șefii tăi cu notificare. Când e rezolvată, primești +10 XP (primele 3 pe zi).</p>
+      <div class="calc-act"><button class="btn" type="submit">Trimite semnalarea</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>
+    ${arat.length ? `<div class="msg-lista">${arat.map(card).join('')}</div>`
+      : `<p class="lvl4">${params.toate ? 'Nicio semnalare în ultimele 45 de zile.' : 'Nicio semnalare deschisă. Dacă apare ceva, scrie aici.'}</p>`}`;
+  const form = box.querySelector('#semnForm'), reia = () => incarcaSemnalari({ ...params, nou: '' });
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const el = form.elements, buton = form.querySelector('[type=submit]'); buton.disabled = true;
+    const { error: er } = await SB.from('semnalari').insert({ space_id: el.space_id.value, categorie: el.categorie.value, text: el.text.value.trim(), urgent: el.urgent.checked, privata: el.privata.checked });
+    if (er) { buton.disabled = false; return toast(er.message || 'Semnalarea nu s-a trimis.', true); }
+    try { localStorage.setItem('mm-loc-semn', el.space_id.value); } catch (x) {}
+    toast('Semnalarea a ajuns la șefi. Te anunțăm când o preia cineva.');
+    reia();
+  });
+  box.onclick = async e => {
+    const b = e.target.closest('button'); if (!b || b.type === 'submit') return;
+    const d = b.dataset; let r;
+    if (d.nou !== undefined) { form.hidden = false; form.elements.text.focus(); return; }
+    if (d.renunt !== undefined) { form.hidden = true; return; }
+    if (d.retrage) { if (!confirm('Retragi semnalarea?')) return; r = await SB.from('semnalari').delete().eq('id', +d.retrage); }
+    else if (d.semn) {
+      const st = d.st, intrebare = { in_lucru: ['Preiei semnalarea', 'Ce urmează? (opțional; îl vede cine a semnalat)', 'Preiau', false],
+        rezolvata: ['Marchezi ca rezolvată', 'Ce s-a făcut? (opțional)', 'Rezolvat', false], respinsa: ['Nu se confirmă', 'De ce? Îl vede cine a semnalat.', 'Închide semnalarea', true] }[st];
+      let t = '';
+      if (intrebare) { t = await intreaba(intrebare[0], { loc: intrebare[1], buton: intrebare[2], obligatoriu: intrebare[3] }); if (t === null) return; }
+      r = await SB.from('semnalari').update({ status: st, ...(t ? { raspuns: t } : {}) }).eq('id', +d.semn);
+      if (!r.error && st === 'rezolvata') { toast('Rezolvată. Cine a semnalat primește +10 XP, tu +5 (primele 3 pe zi).'); puncteNoiCurand(); }
+    } else return;
+    if (r.error) return toast(r.error.message || 'Nu a mers. Încearcă din nou.', true);
+    reia();
+  };
+  canal('semnalari', [['semnalari']], amanat(reia, 900));
+}
+
+// ----- Echipa → Oameni: raportul lunar (pentru bonus), contestațiile de decis, închiderea lunii -----
+async function incarcaOameni(params) {
+  const box = document.getElementById('echipaBody'); if (!box) return;
+  const luna = /^\d{4}-\d{2}$/.test(params.luna || '') ? params.luna + '-01' : null;
+  const { data: r, error } = await SB.rpc('joc_raport', { p_luna: luna });
+  if (!document.getElementById('echipaBody')) return;
+  if (error || !r) { console.error('Raport:', error); box.innerHTML = `<p class="err">${esc(eroareMig(error, 'Raportul nu s-a putut încărca.'))}</p>`; return; }
+  const oameni = r.oameni || [], ct = r.contestatii || [];
+  const rand = o => { const n = nivel(o.xp_total || 0), eu = o.user_id === SB_USER_ID;
+    return `<tr><td><a href="#/progres${eu ? '' : '?u=' + enc(o.user_id)}${luna ? (eu ? '?' : '&') + 'luna=' + params.luna : ''}"><b>${esc(o.nume)}</b></a>${eu ? ' <span class="me">tu</span>' : ''}<small class="rap-sub">${esc(o.rol)}${o.locatie ? ' · ' + esc(numeLoc(o.locatie)) : ''} · nivelul ${n.n}</small></td>
+      <td class="nr plus">+${fmtXp(o.castigat)}</td><td class="nr minus">${o.pierdut ? '−' + fmtXp(o.pierdut) : '0'}${(o.pierderi || []).length ? `<details class="rap-pierderi"><summary>${o.pierderi.length} ${o.pierderi.length === 1 ? 'pierdere' : 'pierderi'}</summary><ul>${o.pierderi.map(p => `<li>${ziScurta(p.zi)}: ${esc(p.detaliu)} (${cuSemn(p.puncte)})</li>`).join('')}</ul></details>` : ''}</td>
+      <td class="nr net">${cuSemn(o.net).replace('+', '')}</td>
+      <td class="nr">${o.ture != null ? (o.ture ? `${o.ture_la_timp} / ${o.ture}` : '—') : ''}</td>
+      <td class="actions">${eu ? '' : `<a class="btn ghost sm" href="#/mesaje?catre=${enc(o.user_id)}">Feedback</a>`}</td></tr>`; };
+  box.innerHTML = `<div class="echipa-sus"><label class="pl-sel"><span class="eyebrow">Luna</span><select class="field" data-luna>${(r.luni || []).map(m =>
+        `<option value="${m.luna.slice(0, 7)}" ${m.luna === r.luna ? 'selected' : ''}>${esc(lunaUman(m.luna))}${m.inchisa ? ' · închisă' : ''}</option>`).join('')}</select></label>
+      <span class="${r.inchisa ? 'rap-inchisa' : 'live'}">${r.inchisa ? `Închisă ${dataOra(r.inchisa.la)}${r.inchisa.de ? ' de ' + esc(r.inchisa.de) : ''}: cifrele nu se mai schimbă` : '● lună deschisă: cifrele se mai pot schimba'}</span>
+      ${r.pot_inchide ? '<button class="btn sm" type="button" data-inchide>Închide luna</button>' : ''}
+      ${r.pot_redeschide ? '<button class="btn ghost sm" type="button" data-redeschide>Redeschide luna</button>' : ''}
+      <button class="btn ghost sm" type="button" data-csv>Descarcă tabelul</button></div>
+    ${ct.length ? `<h2 class="section-title">Contestații de decis · ${ct.length}</h2><div class="msg-lista" style="margin-bottom:32px">${ct.map(c => `<article class="msg nou">
+        <span class="eyebrow">${esc(c.nume || 'Coleg')} · ${ziScurta(c.zi)}</span>
+        <p class="msg-text"><b class="xp-chip minus">${cuSemn(c.puncte)} XP</b> ${esc(c.detaliu)}</p>
+        <p class="semn-rasp"><b>Contestă:</b> ${esc(c.motiv)}</p>
+        ${c.pot_decide ? `<div class="calc-act"><button class="btn sm" type="button" data-ctst="${c.id}" data-admite="1">Admit · punctele se dau înapoi</button><button class="btn ghost sm" type="button" data-ctst="${c.id}">Resping</button></div>`
+          : '<small class="muted">O decide cineva de deasupra celui care a dat observația.</small>'}</article>`).join('')}</div>` : ''}
+    <h2 class="section-title">Punctele lunii · ${esc(lunaUman(r.luna))}</h2>
+    ${oameni.length ? `<div class="tbl-wrap"><table class="tbl rap"><thead><tr><th>Om</th><th class="nr">Câștigate</th><th class="nr">Pierdute</th><th class="nr">Net (bonus)</th><th class="nr">Ture la timp</th><th></th></tr></thead>
+      <tbody>${oameni.map(rand).join('')}</tbody></table></div>` : '<p class="lvl4">Niciun om în subordine cu puncte în luna asta.</p>'}
+    <p class="muted mic" style="margin-top:14px">Apasă pe un nume ca să vezi jurnalul omului: fiecare punct, cu motivul lui. Punctele nete ale lunii sunt cele care contează la bonus; după „Închide luna” rămân înghețate.</p>
+    ${reguliHtml()}`;
+  box.querySelector('[data-luna]').addEventListener('change', e => { location.hash = '#/echipa?tab=oameni&luna=' + e.target.value; });
+  const reia = () => incarcaOameni(params);
+  box.onclick = async e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const d = b.dataset; let x;
+    if (d.csv !== undefined) {
+      const linii = [['Nume', 'Rol', 'Locatie', 'Castigate', 'Pierdute', 'Net', 'Ture la timp', 'Ture']].concat(oameni.map(o =>
+        [o.nume, o.rol, o.locatie ? numeLoc(o.locatie) : '', o.castigat, o.pierdut, o.net, o.ture_la_timp ?? '', o.ture ?? '']));
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob(['﻿' + linii.map(l => l.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+      a.download = `puncte-${r.luna.slice(0, 7)}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return;
+    }
+    if (d.inchide !== undefined) {
+      if (!confirm(`Închizi luna ${lunaUman(r.luna)}? Punctele fiecărui om rămân înghețate, pentru bonus, și nu se mai pot contesta.`)) return;
+      x = await SB.rpc('inchide_luna', { p_luna: r.luna });
+      if (!x.error) toast('Luna e închisă. Fiecare om a primit cifra lui.');
+    } else if (d.redeschide !== undefined) {
+      if (!confirm('Redeschizi luna? Cifrele înghețate se șterg și se recalculează la următoarea închidere.')) return;
+      x = await SB.rpc('redeschide_luna', { p_luna: r.luna });
+    } else if (d.ctst) {
+      const admite = !!d.admite;
+      const t = await intreaba(admite ? 'Admiți contestația' : 'Respingi contestația', { loc: admite ? 'Răspuns pentru om (opțional)' : 'De ce rămâne pierderea? Omul vede răspunsul.', obligatoriu: !admite, buton: admite ? 'Admit' : 'Resping' });
+      if (t === null) return;
+      x = await SB.rpc('decide_contestatie', { p_id: +d.ctst, p_admisa: admite, p_raspuns: t });
+    } else return;
+    if (x.error) return toast(x.error.message || 'Nu a mers. Încearcă din nou.', true);
+    reia();
+  };
+  canal('oameni', [['contestatii']], amanat(reia, 900));
 }
 
 // ---------- Jurnalul de croissant (Academia → Patiserie) ----------

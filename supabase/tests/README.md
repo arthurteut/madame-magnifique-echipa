@@ -96,3 +96,19 @@ probleme și nu vede tabloul echipei sau clasamentul magazinelor; RL-ul rezolvă
 dată (+5 lui, +10 celui care a semnalat-o, cu notificare); RL-ul de Porumbescu nu vede tabloul și
 programul de la Fructus, GM-ul vede orice locație; seria de ture la timp se numără corect; anonimul
 nu are acces. Ultimul rând: „25 din 25”. Testul jurnalului (18) își șterge acum conturile la final.
+
+Comunicarea și punctajul transparent (`21_comunicare_si_puncte.sql`, după 0021): semnalarea pornește
+mereu deschisă, colegii o văd, cea „doar pentru șefi” nu; doar șefii o preiau și o rezolvă, textul ei
+nu se schimbă, respingerea cere motiv; rezolvarea aduce +10 și +5, cu plafon de 3 pe zi. Anunțul îl
+trimit doar șefii, pe toată firma doar GM / AE; destinatarii sunt colegii locației, iar cine nu
+confirmă în 24 de ore pierde 2 puncte. Feedbackul cu puncte îl dau doar șefii, la locația lor, cu
+plafon pe zi; omul îl confirmă și răspunde, dar nu-și schimbă punctele. Se contestă doar pierderile,
+o singură dată; cine a dat observația și cei de sub el nu o judecă, GM o admite și punctele se dau
+înapoi. Întârzierea peste 15 minute costă 5 puncte, o singură dată pe tură; fișa de deschidere
+nefăcută costă 10, dar nu dacă a făcut-o un coleg sau dacă locația nu are fișă. Raportul lunar îl văd
+șefii, pentru oamenii lor; luna o închide doar GM / AE, nu în curs și nu cu contestații nedecise;
+după închidere cifrele rămân înghețate. Ultimul rând: „58 din 58”.
+
+Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina reală în Playwright și
+trimite fiecare operație către baza locală, ca un cont anume: aceleași RLS, triggere și funcții ca în
+Supabase. Așa se verifică fluxurile cap-coadă (clock-in, fișă, semnalare, feedback, contestație).

@@ -334,7 +334,9 @@ ce se întâmplă deja în aplicație, nu se introduc de mână:
 | Clock-in la timp (≤ 5 min după începutul turei) / până la 15 min / fără tură în program | +10 / +3 / +2 |
 | Pas făcut · fișă gata la termen (după termen) · fișă fără niciun pas nefăcut | +2 · +15 (+5) · +10 |
 | Lecție parcursă în Academie · primul test trecut la un curs | +5 · +30 |
-| Problemă semnalată (pas nefăcut, notă, observație) · rezolvată: celui care a semnalat / șefului | +5 · +10 / +5 |
+| Problemă semnalată, când șeful o rezolvă: celui care a semnalat / șefului (primele 3 pe zi) | +10 / +5 |
+
+(De la 0021 problema semnalată nu mai aduce puncte la trimitere, ci doar când e rezolvată.)
 
 Pe *Tura* fiecare își vede nivelul (de la 1 la 11), seria de ture începute la timp,
 punctele săptămânii, insignele și scorul echipei lui. Pe *Echipa → Azi* șefii (RL pentru locația lui,
@@ -343,6 +345,40 @@ la termen, pași făcuți și probleme rezolvate) față de săptămâna trecut�
 cu ținta de 90%, clasamentul oamenilor, clasamentul magazinelor și punctele zilei. La *De rezolvat*
 șeful apasă **Rezolvat**; cine a semnalat problema primește notificare și +10 XP.
 Tot aici: șefii văd programul și pontajul colegilor doar la locațiile lor.
+
+### 21. Comunicarea în aplicație și punctajul transparent
+
+Rulează [`0021_comunicare_si_puncte.sql`](supabase/migrations/0021_comunicare_si_puncte.sql). Fără el,
+paginile de mai jos spun că lipsește migrarea, iar restul site-ului merge ca înainte.
+
+- **Semnalări** (`#/semnalari`): problemele de lucru se scriu în aplicație, nu pe grup. Le vede echipa
+  locației și șefii (cu bifa „doar pentru șefi” le văd doar șefii). Șeful le preia, le rezolvă sau scrie
+  de ce nu se confirmă; cine a semnalat e anunțat la fiecare pas.
+- **Mesaje** (`#/mesaje`): anunțurile conducerii, pentru o locație (orice șef care o vede) sau pentru
+  toată firma (GM, AE). Destinatarii se fixează la trimitere și confirmă cu „Am citit”; autorul vede cine
+  nu a confirmat. Tot aici, feedbackul de la șefi: apreciere (0, +5, +10, +20 XP) sau „de îmbunătățit”
+  (0, −5, −10 XP), mereu cu text. Îl dă șeful direct sau cineva de deasupra lui, cu o locație comună.
+  Plafon pe zi pentru un om: +20 din aprecieri, −10 din observații.
+- **Punctele mele** (`#/progres`): jurnalul lunii, cu fiecare punct câștigat sau pierdut și motivul lui.
+  Șefii deschid jurnalul oamenilor lor din *Echipa → Oameni și puncte*.
+
+| Se pierd puncte pentru | Puncte |
+|---|---|
+| Clock-in cu peste 15 minute întârziere (omul e avertizat la 10 minute) | −5 |
+| Fișa de deschidere / închidere a locației nefăcută până la 03:00 a doua zi (celui programat să deschidă / să închidă; doar unde locația are o astfel de fișă) | −10 |
+| Anunț neconfirmat în 24 de ore (omul e avertizat cu 4 ore înainte) | −2 |
+| „De îmbunătățit” de la șef | −5 / −10 |
+
+Orice pierdere se poate **contesta** din jurnal. O decide șeful omului; o observație dată de un șef o
+decide cineva de deasupra lui. Dacă e admisă, punctele se dau înapoi.
+
+**Raportul lunar** (*Echipa → Oameni și puncte*): punctele câștigate, pierdute și nete ale fiecărui om,
+cu descărcare în tabel. GM sau AE apasă **Închide luna** după ce luna s-a terminat și nu mai sunt
+contestații nedecise; cifrele rămân înghețate în `puncte_luna` (pentru bonus), iar pierderile lunii nu se
+mai pot contesta. Adminul o poate redeschide.
+
+Verificările de la 5 minute (`verifica-ture`, din 0016) trimit acum și avertismentele către om. Nu e
+nimic de configurat în plus.
 
 ## Variabilele, pe scurt
 
