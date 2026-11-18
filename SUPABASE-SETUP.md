@@ -411,6 +411,22 @@ sistemul de bonusare pe magazin, iar aplicația îi măsoară criteriile.
 Regulile eliminatorii se aplică automat: magazin în declin = nimic din sistem; fără prima de calitate
 = niciun bonus pentru acel om. Partea celui fără primă nu se împarte celorlalți.
 
+## 23. P&L: importul din Gesto
+
+Nu e nimic de rulat în Supabase. În pagina **P&L**, tabul **Import Gesto** (la un P&L de locație, nu la
+cel consolidat) citește în browser două rapoarte și completează luna:
+
+- **Centralizatorul de documente** (Excel, pe o perioadă care cuprinde luna): încasările pe card,
+  numerar, Tazz și BonApp, TVA-ul real din bonuri, avizele către clienți (B2B) și marfa primită la preț
+  de cost, de la laborator („Depozit”), de la alte magazine și de la furnizori direcți.
+- **Cost Margin — Departament** (opțional, câte un fișier pe locație și lună): împarte încasările pe
+  Cafenea, Patiserie și cofetărie, Brutărie și Alte vânzări și dă costul de rețetă.
+
+Înainte de salvare se vede ce ajunge pe fiecare linie. Furnizorii direcți se așază pe o linie de COGS,
+iar alegerea se ține minte pentru lunile următoare. Schimburile mari între gestiuni (mutări de stoc) vin
+nebifate. Fișierele nu se încarcă nicăieri: în baza de date ajung doar sumele lunii. Reimportul aceleiași
+luni înlocuiește cifrele importate, fără să le dubleze; cheltuielile scrise de mână rămân.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

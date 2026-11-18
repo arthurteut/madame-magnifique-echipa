@@ -542,6 +542,14 @@
   .pl-luna-act { display: flex; gap: 8px; flex-wrap: wrap; }
   .pl-modif { margin: 0 0 16px; }
   .pl-nota { margin: 0 0 8px !important; }
+  .pl-imp .frm { max-width: none; } .pl-imp table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 6px 0 18px; }
+  .pl-imp th { text-align: left; font: 600 .68rem Montserrat, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--ink); }
+  .pl-imp td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; } .pl-imp td.n, .pl-imp th.n { text-align: right; white-space: nowrap; }
+  .pl-imp td small { display: block; color: var(--muted); } .pl-imp select.field { padding: 7px 30px 7px 9px; font-size: .88rem; min-width: 0; width: 100%; max-width: 280px; }
+  .pl-imp h3 { margin: 22px 0 4px; font-size: 1.02rem; } .pl-imp .atentie td { background: #fbf6ea; }
+  .pl-imp-fis { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 12px 0; }
+  .pl-gesto { border-left: 3px solid var(--sand, #e3d0aa); background: #f7f5f0; padding: 12px 14px; margin: 0 0 16px; font-size: .9rem; line-height: 1.55; }
+  .pl-gesto b { font-weight: 600; }
   .pl-sub { font: 600 .68rem/1.3 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin: 18px 0 2px; padding-top: 12px; border-top: 1px dashed var(--line); }
   .pl-sub:first-of-type { border-top: 0; padding-top: 0; margin-top: 8px; }
   .calc-form .pl-linie { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 6px 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid #efeeec; }
@@ -2951,6 +2959,7 @@ const PL_SECT = [
     ['bauturi', 'Cafenea', 'cafea, ceai și băuturi servite la bar'],
     ['food', 'Patiserie și cofetărie', 'viennoiserie, prăjituri, torturi: la vitrină și la comandă'],
     ['retail', 'Brutărie', 'pâine și produse de brutărie'],
+    ['altev', 'Alte vânzări', 'ambalaje, avansuri și ce nu intră în departamentele de mai sus'],
     ['=alte_venituri', 'B2B și evenimente', 'suma încasărilor din secțiunea B2B'],
     ['retururi', 'Retururi și discounturi', 'cu TVA, ca sumă pozitivă: vouchere, reduceri, anulări'] ] },
   { id: 'b2b', titlu: 'B2B · încasări și cheltuieli directe', total: ['b2b_contrib', 'Rămâne din B2B'],
@@ -2969,6 +2978,7 @@ const PL_SECT = [
     ['=b2b_costuri', 'Total cheltuieli directe B2B', 'cu CAM-ul pe personalul B2B'] ] },
   { id: 'cogs', titlu: 'COGS · costul mărfii vândute', total: ['cogs', 'Total COGS'],
     nota: 'Fără TVA. Ce ai consumat luna asta, nu ce ai cumpărat: stoc inițial + achiziții − stoc final.', linii: [
+    ['laborator', 'Produse primite de la laborator', 'la magazine: marfa primită de la laborator, la preț de cost (din Gesto)'],
     ['faina', 'Făină, cereale și semințe', 'făinuri, tărâțe, fulgi, semințe'],
     ['lapte', 'Unt, lactate și ouă', 'unt, smântână, lapte, mascarpone, brânzeturi, ouă; și alternativele vegetale'],
     ['zahar', 'Zahăr, ciocolată și cacao', 'zahăr, glucoză, miere, ciocolată de cuvertură, cacao, pralin'],
@@ -3025,15 +3035,18 @@ const plSetari = c => Object.assign({}, PL_SETARI, (c && c.settings) || {});
 function plCalc(d, s) {
   const v = k => Number(d[k]) || 0, suma = id => plChei(id).reduce((t, k) => t + v(k), 0);
   const r = Object.fromEntries(PL_INTRARI.map(k => [k, v(k)]));
-  r.bauturi_net = v('bauturi') / (1 + s.tva_bauturi / 100);
-  r.food_net = v('food') / (1 + s.tva_food / 100);
-  r.retail_net = v('retail') / (1 + s.tva_retail / 100);
+  // O lună importată din Gesto are TVA-ul real din bonuri (_tva) și din avize (_tva_b2b): ține locul cotelor din Setări.
+  const tva = k => d._tva > 0 ? d._tva : s[k], tvaB2b = d._tva_b2b > 0 ? d._tva_b2b : s.tva_alte;
+  r.bauturi_net = v('bauturi') / (1 + tva('tva_bauturi') / 100);
+  r.food_net = v('food') / (1 + tva('tva_food') / 100);
+  r.retail_net = v('retail') / (1 + tva('tva_retail') / 100);
+  r.altev_net = v('altev') / (1 + tva('tva_retail') / 100);
   // B2B: suma încasărilor din secțiunea B2B (o lună salvată înainte de secțiune are doar linia veche).
   const b2b = B2B_INCASARI.reduce((t, k) => t + v(k), 0);
   r.alte_venituri = b2b || v('alte_venituri');
-  r.alte_net = r.alte_venituri / (1 + s.tva_alte / 100);
-  r.retururi_net = -v('retururi') / (1 + s.tva_bauturi / 100);   // la cota cafenelei (aproximare, ca în modelul ATC)
-  r.venit_net = r.bauturi_net + r.food_net + r.retail_net + r.alte_net + r.retururi_net;
+  r.alte_net = r.alte_venituri / (1 + tvaB2b / 100);
+  r.retururi_net = -v('retururi') / (1 + tva('tva_bauturi') / 100);   // la cota cafenelei (aproximare, ca în modelul ATC)
+  r.venit_net = r.bauturi_net + r.food_net + r.retail_net + r.altev_net + r.alte_net + r.retururi_net;
   r.cogs = suma('cogs') + v('b2b_ambalaje');
   r.profit_brut = r.venit_net - r.cogs;
   r.cam = (v('salarii') + v('b2b_personal')) * s.cam / 100;
@@ -3091,7 +3104,7 @@ function plNr(t) {
 
 let PL = null;                                  // { carti, luni: {carte: {luna: rând}}, ghid, t }
 let PLS = { carte: null, tab: 'luna', m: 1 };   // ce e deschis
-const PL_TABURI = [['luna', 'Luna'], ['raport', 'Raport anual'], ['dashboard', 'Dashboard'], ['setari', 'Setări'], ['ghid', 'Ghid']];
+const PL_TABURI = [['luna', 'Luna'], ['import', 'Import Gesto'], ['raport', 'Raport anual'], ['dashboard', 'Dashboard'], ['setari', 'Setări'], ['ghid', 'Ghid']];
 const PL_DE_SALVAT = new Map();
 let PL_TIMER = null, PL_ZBOR = Promise.resolve();
 
@@ -3139,8 +3152,8 @@ function plLunaImplicita() {
   for (let m = 1; m <= 12; m++) if (!plAreDate(rows[m])) return m;
   return 12;
 }
-function plCorecteazaTab() { if (typeof PLS.carte === 'string' && ['luna', 'setari'].includes(PLS.tab)) PLS.tab = 'raport'; }
-const plUrl = () => `#/pl?b=${PLS.carte ?? ''}&tab=${PLS.tab}${PLS.tab === 'luna' ? `&m=${PLS.m}` : ''}`;
+function plCorecteazaTab() { if (typeof PLS.carte === 'string' && ['luna', 'import', 'setari'].includes(PLS.tab)) PLS.tab = 'raport'; }
+const plUrl = () => `#/pl?b=${PLS.carte ?? ''}&tab=${PLS.tab}${['luna', 'import'].includes(PLS.tab) ? `&m=${PLS.m}` : ''}`;
 
 function viewPL(params) {
   setTimeout(async () => {
@@ -3183,11 +3196,12 @@ function plDeseneaza() {
       <label class="pl-sel"><span class="eyebrow">P&amp;L-ul</span><select class="field" data-pl-carte aria-label="Alege P&L-ul">${optiuni}</select></label>
       <p class="pl-status" id="plStatus" aria-live="polite">${PL_DE_SALVAT.size ? 'Se salvează…' : ''}</p>
     </div>
-    <nav class="tabs pl-tabs">${PL_TABURI.filter(([t]) => !cons || !['luna', 'setari'].includes(t))
+    <nav class="tabs pl-tabs">${PL_TABURI.filter(([t]) => !cons || !['luna', 'import', 'setari'].includes(t))
       .map(([t, n]) => `<a href="${plUrl().replace(/tab=\w+(&m=\d+)?/, 'tab=' + t)}" data-pl-tab="${t}" class="${PLS.tab === t ? 'on' : ''}">${n}</a>`).join('')}</nav>
-    <div id="plTab">${{ luna: plTabLuna, raport: plTabRaport, dashboard: plTabDashboard, setari: plTabSetari, ghid: plTabGhid }[PLS.tab]()}</div>`;
+    <div id="plTab">${{ luna: plTabLuna, import: plTabImport, raport: plTabRaport, dashboard: plTabDashboard, setari: plTabSetari, ghid: plTabGhid }[PLS.tab]()}</div>`;
   if (PLS.tab === 'luna') plActualizeaza();
   if (PLS.tab === 'ghid') plIncarcaGhid();
+  if (PLS.tab === 'import') plImportWire();
 }
 
 // ----- Luna: formularul și rezultatul, live -----
@@ -3219,6 +3233,7 @@ function plTabLuna() {
             ${plAreDate(rand) ? '<button class="btn ghost sm" type="button" data-pl-goleste>Golește luna</button>' : ''}
           </div></div>
         <p class="calc-nota pl-modif" id="plModif">${plModificat(rand)}</p>
+        ${plNotaGesto(d)}
         ${PL_SECT.map((sec, i) => `<fieldset><legend>${i + 1}. ${esc(sec.titlu)}</legend>
           <p class="calc-nota pl-nota">${esc(sec.nota)}</p>
           ${sec.linii.map(linie).join('')}
@@ -3325,6 +3340,221 @@ async function plSalveaza() {
 }
 window.addEventListener('beforeunload', e => { if (PL_DE_SALVAT.size) { e.preventDefault(); e.returnValue = ''; } });
 
+// ----- Import Gesto: centralizatorul de documente și vânzările pe departamente -----
+// Fișierele se citesc în browser și nu pleacă nicăieri; în baza de date ajung doar sumele lunii.
+// Centralizatorul dă, pe locație și lună: încasările, TVA-ul din bonuri, avizele către clienți (B2B) și marfa primită, la cost.
+// Raportul „Cost Margin — Departament” dă împărțirea vânzărilor pe departamente și costul de rețetă.
+let PLI = { cz: null, numeCz: '', dep: null, numeDep: '', loc: null, rez: null };
+const plNorm = t => String(t ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+const r2 = x => Math.round((Number(x) || 0) * 100) / 100;
+const GESTO_DEP = { cafea: 'bauturi', lactate: 'bauturi', patiserie: 'food', cofetarie: 'food', paine: 'retail' };
+let PL_XLSX = null;
+function plXlsx() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  return PL_XLSX = PL_XLSX || new Promise((ok, rau) => {
+    const sc = document.createElement('script');
+    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    sc.onload = () => ok(window.XLSX); sc.onerror = () => { PL_XLSX = null; rau(new Error('Cititorul de Excel nu s-a putut încărca.')); };
+    document.head.appendChild(sc);
+  });
+}
+async function plCitesteExcel(file) {
+  const X = await plXlsx(), wb = X.read(await file.arrayBuffer(), { type: 'array' });
+  return X.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: null });
+}
+// Luna unui document: Excel ține data ca număr de zile; un text „2026-10-01 …” sau „01.10.2026” merge și el.
+function plLunaDoc(v) {
+  if (typeof v === 'number' && window.XLSX) { const d = window.XLSX.SSF.parse_date_code(v); return d ? `${d.y}-${String(d.m).padStart(2, '0')}` : null; }
+  if (v instanceof Date) return `${v.getFullYear()}-${String(v.getMonth() + 1).padStart(2, '0')}`;
+  const t = String(v ?? ''); let m = t.match(/(\d{4})-(\d{2})-\d{2}/); if (m) return `${m[1]}-${m[2]}`;
+  m = t.match(/\d{1,2}[./](\d{1,2})[./](\d{4})/); return m ? `${m[2]}-${m[1].padStart(2, '0')}` : null;
+}
+function plGestoCentralizator(aoa) {
+  const hi = aoa.findIndex(r => r && r.some(c => plNorm(c) === 'tip operatie'));
+  if (hi < 0) throw new Error('Nu pare centralizatorul de documente din Gesto: lipsește coloana „Tip operatie”.');
+  const h = aoa[hi].map(plNorm), col = n => h.indexOf(n), nr = v => (typeof v === 'number' ? v : plNr(v)) || 0;
+  const C = { tip: col('tip operatie'), data: col('data doc.'), furn: col('furnizor'), stoc: col('val. stoc'), oper: col('val. operatie'), vanz: col('val vanzare'),
+    adaos: col('valoare adaos'), tva: col('tva'), pos: col('pos'), card: col('card'), num: col('numerar'), tazz: col('incasare tazz'), bonapp: col('incasare bonapp') };
+  for (const k of ['data', 'stoc', 'vanz', 'tva', 'pos']) if (C[k] < 0) throw new Error('Centralizatorul nu are toate coloanele așteptate (data, valori, POS).');
+  const R = [];
+  for (const r of aoa.slice(hi + 1)) {
+    if (!r || !r[C.pos] || !r[C.data]) continue;
+    const luna = plLunaDoc(r[C.data]); if (!luna) continue;
+    const g = k => C[k] >= 0 ? nr(r[C[k]]) : 0;
+    R.push({ tip: plNorm(r[C.tip]), luna, loc: String(r[C.pos]).split(':')[0].trim(), furn: String(r[C.furn] ?? '').trim(),
+      stoc: g('stoc'), oper: g('oper'), vanz: g('vanz'), adaos: g('adaos'), tva: g('tva'), card: g('card'), num: g('num'), tazz: g('tazz'), bonapp: g('bonapp') });
+  }
+  if (!R.length) throw new Error('Centralizatorul nu are niciun document.');
+  return { R, locatii: [...new Set(R.map(x => x.loc))], luni: [...new Set(R.map(x => x.luna))].sort() };
+}
+// Cifrele unei locații într-o lună.
+function plGestoLuna(cz, loc, ym) {
+  const interne = new Set([...cz.locatii.map(plNorm), 'depozit']), z = () => ({ primit: 0, trimis: 0 });
+  const s = { bonuri: 0, lista: 0, vanz: 0, net: 0, tva: 0, card: 0, num: 0, tazz: 0, bonapp: 0, depozit: 0, retur: 0, parteneri: {}, furnizori: {},
+    b2b: 0, b2bNet: 0, b2bCost: 0, b2bNr: 0, consum: 0, reglare: 0, inventar: 0, docs: 0 };
+  for (const d of cz.R) {
+    if (d.loc !== loc || d.luna !== ym) continue;
+    s.docs++;
+    const intern = interne.has(plNorm(d.furn));
+    if (d.tip === 'vanzare') { s.bonuri++; s.lista += d.oper; s.vanz += d.vanz; s.net += d.adaos; s.tva += d.tva; s.card += d.card; s.num += d.num; s.tazz += d.tazz; s.bonapp += d.bonapp; }
+    else if (d.tip === 'receptie') {
+      if (plNorm(d.furn) === 'depozit') s.depozit += d.stoc;
+      else if (intern) (s.parteneri[d.furn] = s.parteneri[d.furn] || z()).primit += d.stoc;
+      else s.furnizori[d.furn || 'Fără furnizor'] = (s.furnizori[d.furn || 'Fără furnizor'] || 0) + d.stoc;
+    } else if (d.tip === 'aviz') {
+      if (plNorm(d.furn) === 'depozit') s.retur += d.stoc;                       // marfă trimisă înapoi la laborator
+      else if (intern) (s.parteneri[d.furn] = s.parteneri[d.furn] || z()).trimis += d.stoc;
+      else { s.b2b += d.vanz; s.b2bNet += d.vanz - d.tva; s.b2bCost += d.stoc; s.b2bNr++; }
+    } else if (d.tip === 'bon de consum') s.consum += d.stoc;
+    else if (d.tip === 'nota reglare stoc') s.reglare += d.stoc;
+    else if (d.tip === 'inventar') s.inventar += d.stoc;
+  }
+  s.incasat = s.card + s.num + s.tazz + s.bonapp;
+  return s;
+}
+// „Cost Margin — Departament”: vânzările fără TVA nu sunt în export, dar ies din marjă: vânzări = marja totală / marja %.
+function plGestoDepartamente(aoa) {
+  const hi = aoa.findIndex(r => r && r.some(c => plNorm(c) === 'departament'));
+  if (hi < 0) throw new Error('Nu pare raportul „Cost Margin — Departament”: lipsește coloana „Departament”.');
+  const h = aoa[hi].map(plNorm), cm = h.indexOf('marja totala'), cp = h.indexOf('marja %'), cd = h.indexOf('departament');
+  if (cm < 0 || cp < 0) throw new Error('Raportul pe departamente nu are coloanele „Marja totala” și „Marja %”.');
+  const dep = [];
+  for (const r of aoa.slice(hi + 1)) {
+    if (!r || !r[cd]) continue;
+    const m = Number(r[cm]) || 0, p = Number(r[cp]) || 0, vanz = p ? m / (p / 100) : 0;
+    dep.push({ nume: String(r[cd]).trim(), linie: GESTO_DEP[plNorm(r[cd])] || 'altev', vanz, cogs: vanz - m });
+  }
+  if (!dep.length) throw new Error('Raportul pe departamente e gol.');
+  return { dep, vanz: dep.reduce((t, x) => t + x.vanz, 0), cogs: dep.reduce((t, x) => t + x.cogs, 0) };
+}
+const plYm = () => `${plCarte().year}-${String(PLS.m).padStart(2, '0')}`;
+function plTabImport() {
+  const c = plCarte();
+  return `<div class="pl-imp">
+    <div class="calc-card">
+      <span class="eyebrow">${esc(c.name)} · ${c.year}</span>
+      <h2 style="margin:4px 0 8px">Import din Gesto</h2>
+      <p class="calc-nota" style="margin:0 0 6px">Alegi luna, încarci rapoartele și vezi ce ajunge pe fiecare linie înainte să salvezi. Fișierele se citesc doar aici, în browser.</p>
+      <label class="pl-sel" style="max-width:260px"><span class="eyebrow">Luna</span><select class="field" data-pli-luna>${LUNI_LUNG.map((n, i) => `<option value="${i + 1}" ${i + 1 === PLS.m ? 'selected' : ''}>${n} ${c.year}</option>`).join('')}</select></label>
+      <div class="pl-imp-fis">
+        <label><b>1. Centralizatorul de documente</b><small class="muted" style="display:block">Centralizatorul de documente din Gesto, exportat în Excel, pe o perioadă care cuprinde luna întreagă.</small>
+          <input type="file" accept=".xlsx,.xls,.csv" data-pli-fis="cz" style="margin-top:8px">${PLI.numeCz ? `<small class="muted" style="display:block">Încărcat: ${esc(PLI.numeCz)}</small>` : ''}</label>
+        <label><b>2. Vânzările pe departamente</b> <span class="muted">(opțional)</span><small class="muted" style="display:block">Gesto → Dashboard Operațional → Cost Margin — Departament, pentru această locație și lună, fără TVA → Previzualizează XLS.</small>
+          <input type="file" accept=".xlsx,.xls,.csv" data-pli-fis="dep" style="margin-top:8px">${PLI.numeDep ? `<small class="muted" style="display:block">Încărcat: ${esc(PLI.numeDep)}</small>` : ''}</label>
+      </div>
+    </div>
+    <div id="plImpRez">${PLI.cz ? '' : '<p class="muted" style="margin-top:16px">Încarcă centralizatorul ca să vezi cifrele lunii.</p>'}</div>
+  </div>`;
+}
+function plImportWire() {
+  const box = document.querySelector('.pl-imp'); if (!box) return;
+  box.addEventListener('change', async e => {
+    const el = e.target;
+    if (el.matches('[data-pli-luna]')) { PLS.m = +el.value; history.replaceState(null, '', plUrl()); plImportPreview(); }
+    else if (el.matches('[data-pli-loc]')) { PLI.loc = el.value; plImportPreview(); }
+    else if (el.matches('[data-pli-fis]') && el.files[0]) {
+      const ce = el.dataset.pliFis, f = el.files[0];
+      try {
+        const aoa = await plCitesteExcel(f);
+        if (ce === 'cz') { PLI.cz = plGestoCentralizator(aoa); PLI.numeCz = f.name; PLI.loc = null; }
+        else { PLI.dep = plGestoDepartamente(aoa); PLI.numeDep = f.name; }
+        plImportPreview();
+      } catch (er) { console.error('Import Gesto:', er); el.value = ''; toast(er.message || 'Fișierul nu s-a putut citi.', true); }
+    }
+  });
+  box.addEventListener('click', e => { if (e.target.closest('[data-pli-pune]')) plImportPune(); });
+  plImportPreview();
+}
+function plImportPreview() {
+  const box = document.getElementById('plImpRez'); if (!box || !PLI.cz) return;
+  const c = plCarte(), cz = PLI.cz, ym = plYm(), setari = c.settings || {};
+  if (!PLI.loc || !cz.locatii.includes(PLI.loc))
+    PLI.loc = cz.locatii.find(l => l === setari.gesto_loc) || cz.locatii.find(l => plNorm(c.name).includes(plNorm(l))) || cz.locatii[0];
+  const s = PLI.rez = plGestoLuna(cz, PLI.loc, ym), luna = `${LUNI_LUNG[PLS.m - 1]} ${c.year}`;
+  const selLoc = `<label class="pl-sel" style="max-width:260px"><span class="eyebrow">Locația din Gesto</span><select class="field" data-pli-loc>${cz.locatii.map(l => `<option ${l === PLI.loc ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></label>`;
+  if (!s.docs) {
+    box.innerHTML = `<div class="calc-card" style="margin-top:16px">${selLoc}<p class="err" style="margin-top:12px">Centralizatorul nu are documente pentru ${esc(PLI.loc)} în ${luna}. Lunile din fișier: ${cz.luni.map(x => esc(x)).join(', ')}.</p></div>`;
+    return;
+  }
+  const dep = PLI.dep, tvaEf = s.net > 0 ? s.tva / s.net * 100 : 0;
+  const parti = { bauturi: 0, food: 0, retail: 0, altev: 0 };
+  if (dep && dep.vanz > 0) for (const x of dep.dep) parti[x.linie] += x.vanz / dep.vanz; else parti.food = 1;
+  const potrivire = dep && s.net > 0 ? Math.abs(dep.vanz - s.net) / s.net : 0;
+  const optCogs = sel => plChei('cogs').map(k => `<option value="${k}" ${k === sel ? 'selected' : ''}>${esc(PL_LINIE[k][1])}</option>`).join('');
+  const furn = Object.entries(s.furnizori).sort((a, b) => b[1] - a[1]), part = Object.entries(s.parteneri);
+  const b2bSel = setari.gesto_b2b || 'b2b_firme';
+  box.innerHTML = `<div class="calc-card" style="margin-top:16px">
+      ${selLoc}
+      <h3>Venituri · ${luna}</h3>
+      <table><thead><tr><th>Linia din P&amp;L</th><th class="n">Parte</th><th class="n">Încasări cu TVA</th></tr></thead><tbody>
+        ${[['bauturi', 'Cafea, Lactate'], ['food', 'Patiserie, Cofetărie'], ['retail', 'Pâine'], ['altev', 'Ambalaje, Avans, Altele']].map(([k, din]) =>
+          `<tr><td>${esc(PL_LINIE[k][1])}<small>${dep ? 'departamentele ' + din : ''}</small></td><td class="n">${pc(parti[k])}</td><td class="n">${lei(s.incasat * parti[k])} lei</td></tr>`).join('')}
+        <tr><td><b>Total încasat</b><small>card ${lei(s.card)} · numerar ${lei(s.num)} · Tazz ${lei(s.tazz)}${s.bonapp ? ' · BonApp ' + lei(s.bonapp) : ''} · ${s.bonuri.toLocaleString('ro-RO')} bonuri</small></td><td></td><td class="n"><b>${lei(s.incasat)} lei</b></td></tr>
+      </tbody></table>
+      <p class="calc-nota">TVA-ul real din bonuri: <b>${plIn(r2(tvaEf))}%</b>, deci venit net de aproximativ <b>${lei(s.incasat / (1 + tvaEf / 100))} lei</b>. Valoarea bonurilor în Gesto e ${lei(s.vanz)} lei, cu ${lei(s.vanz - s.incasat)} lei ${s.vanz >= s.incasat ? 'peste' : 'sub'} încasări.
+        ${!dep ? ' <b>Fără raportul pe departamente, tot venitul intră la „' + esc(PL_LINIE.food[1]) + '”.</b>' : ''}
+        ${potrivire > 0.08 ? ` <b>Atenție:</b> raportul pe departamente însumează ${lei(dep.vanz)} lei fără TVA, față de ${lei(s.net)} lei în centralizator. Verifică dacă e pentru aceeași locație și lună.` : ''}</p>
+      <h3>B2B · avize către clienți</h3>
+      ${s.b2bNr ? `<table><tbody><tr><td>${s.b2bNr} avize<small>${lei(s.b2bNet)} lei fără TVA · marfa a costat ${lei(s.b2bCost)} lei</small></td>
+        <td><select class="field" data-pli-b2b>${B2B_INCASARI.map(k => `<option value="${k}" ${k === b2bSel ? 'selected' : ''}>${esc(PL_LINIE[k][1])}</option>`).join('')}</select></td>
+        <td class="n">${lei(s.b2b)} lei</td></tr></tbody></table>` : '<p class="muted">Niciun aviz către clienți în luna asta.</p>'}
+      <h3>Costul mărfii · la preț de cost</h3>
+      <table><thead><tr><th>De unde</th><th>Linia din P&amp;L</th><th class="n">Lei</th></tr></thead><tbody>
+        <tr><td><label><input type="checkbox" data-pli-int="Depozit" checked> De la laborator (Depozit)</label>${s.retur ? `<small>primit ${lei(s.depozit)} · trimis înapoi ${lei(s.retur)}</small>` : ''}</td><td>${esc(PL_LINIE.laborator[1])}</td><td class="n">${lei(s.depozit - s.retur)} lei</td></tr>
+        ${part.map(([n, x]) => { const mare = s.depozit > 0 && Math.max(x.primit, x.trimis) > s.depozit; return `<tr class="${mare ? 'atentie' : ''}"><td><label><input type="checkbox" data-pli-int="${esc(n)}" ${mare ? '' : 'checked'}> Schimb cu ${esc(n)}</label>
+          <small>primit ${lei(x.primit)} · trimis ${lei(x.trimis)}${mare ? ' · pare o mutare de stoc, nu e bifată' : ''}</small></td><td>${esc(PL_LINIE.laborator[1])}</td><td class="n">${lei(x.primit - x.trimis)} lei</td></tr>`; }).join('')}
+        ${furn.map(([n, v]) => `<tr><td>${esc(n)}<small>furnizor direct</small></td><td><select class="field" data-pli-furn="${esc(n)}">${optCogs((setari.gesto_furnizori || {})[n] || 'cost_retail')}</select></td><td class="n">${lei(v)} lei</td></tr>`).join('')}
+      </tbody></table>
+      <p class="calc-nota">${dep ? `Costul de rețetă din Gesto pentru ce s-a vândut: <b>${lei(dep.cogs)} lei</b> (${pc(dep.vanz ? dep.cogs / dep.vanz : 0)} din vânzări). În P&L intră marfa primită; cele două se văd alături în pagina lunii. ` : ''}
+        Reglarea de stoc după inventar: ${lei(s.reglare)} lei. Stocul la inventar: ${s.inventar ? lei(s.inventar) + ' lei' : 'fără inventar în lună'}. Bonuri de consum: ${lei(s.consum)} lei (nu se adaugă la cost: marfa lor e deja în cea primită).</p>
+      <div class="calc-act"><button class="btn" type="button" data-pli-pune>Pune în ${luna}</button>
+        <span class="muted mic">Se schimbă doar liniile de mai sus. Salariile, chiria și celelalte cheltuieli rămân cum sunt.</span></div>
+    </div>`;
+}
+async function plImportPune() {
+  const box = document.getElementById('plImpRez'), s = PLI.rez, c = plCarte(); if (!box || !s || !s.docs) return;
+  const dep = PLI.dep, rand = plRandLuna(true), d = rand.data, vechi = (d._gesto || {}).chei || [];
+  if (plAreDate(rand) && !d._gesto && ['bauturi', 'food', 'retail', 'laborator'].some(k => d[k]) && !confirm(`${LUNI_LUNG[PLS.m - 1]} are deja venituri scrise de mână. Le înlocuiesc cu cele din Gesto?`)) return;
+  for (const k of vechi) delete d[k];
+  const chei = [], pune = (k, v) => { v = r2(v); if (!v) return; d[k] = r2((d[k] || 0) + v); if (!chei.includes(k)) chei.push(k); };
+  const parti = { bauturi: 0, food: 0, retail: 0, altev: 0 };
+  if (dep && dep.vanz > 0) for (const x of dep.dep) parti[x.linie] += x.vanz / dep.vanz; else parti.food = 1;
+  for (const k in parti) { delete d[k]; pune(k, s.incasat * parti[k]); }
+  const b2bEl = box.querySelector('[data-pli-b2b]'), b2bLinie = b2bEl ? b2bEl.value : null;
+  if (b2bLinie) { delete d[b2bLinie]; pune(b2bLinie, s.b2b); }
+  let lab = 0; const bifate = [];
+  box.querySelectorAll('[data-pli-int]').forEach(el => {
+    if (!el.checked) return;
+    const n = el.dataset.pliInt; bifate.push(n);
+    lab += n === 'Depozit' ? s.depozit - s.retur : s.parteneri[n].primit - s.parteneri[n].trimis;
+  });
+  delete d.laborator; if (lab > 0) pune('laborator', lab);
+  const harta = Object.assign({}, (c.settings || {}).gesto_furnizori);
+  const peLinie = {};
+  box.querySelectorAll('[data-pli-furn]').forEach(el => { harta[el.dataset.pliFurn] = el.value; peLinie[el.value] = (peLinie[el.value] || 0) + s.furnizori[el.dataset.pliFurn]; });
+  for (const k in peLinie) { delete d[k]; pune(k, peLinie[k]); }
+  d._tva = s.net > 0 ? r2(s.tva / s.net * 100) : 0;
+  d._tva_b2b = s.b2bNet > 0 ? r2((s.b2b - s.b2bNet) / s.b2bNet * 100) : 0;
+  if (!d._tva) delete d._tva; if (!d._tva_b2b) delete d._tva_b2b;
+  d._gesto = { la: new Date().toISOString(), loc: PLI.loc, incasat: r2(s.incasat), bonuri: s.bonuri, vanz: r2(s.vanz), tazz: r2(s.tazz), primit: r2(lab + Object.values(peLinie).reduce((t, x) => t + x, 0)),
+    reteta: dep ? r2(dep.cogs) : null, reteta_vanz: dep ? r2(dep.vanz) : null, reglare: r2(s.reglare), inventar: r2(s.inventar), surse: bifate, chei };
+  plProgrameaza(rand);
+  const settings = Object.assign({}, c.settings, { gesto_furnizori: harta, gesto_loc: PLI.loc }, b2bLinie ? { gesto_b2b: b2bLinie } : {});
+  const { data, error } = await SB.from('pl_books').update({ settings }).eq('id', c.id).select().single();
+  if (error) console.error('Import Gesto, corespondențe:', error); else Object.assign(c, data);
+  PLS.tab = 'luna'; plDeseneaza();
+  toast(`Am pus cifrele din Gesto în ${LUNI_LUNG[PLS.m - 1]}. Verifică-le și completează restul.`);
+}
+// Urma importului, în pagina lunii: de unde vin cifrele și cele două costuri, alături.
+function plNotaGesto(d) {
+  const g = d && d._gesto; if (!g) return '';
+  const net = g.incasat / (1 + (d._tva || 0) / 100), cand = new Date(g.la).toLocaleString('ro-RO', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  return `<div class="pl-gesto"><b>Importat din Gesto</b> (${esc(g.loc)}, ${cand}). Încasări ${lei(g.incasat)} lei din ${Number(g.bonuri || 0).toLocaleString('ro-RO')} bonuri, din care Tazz ${lei(g.tazz)} lei; TVA real ${plIn(d._tva || 0)}%.
+    <br>Marfa primită, la cost: <b>${lei(g.primit)} lei</b> (${pc(net ? g.primit / net : 0)} din venitul net al magazinului).
+    ${g.reteta !== null && g.reteta !== undefined ? `Costul de rețetă din Gesto: <b>${lei(g.reteta)} lei</b> (${pc(g.reteta_vanz ? g.reteta / g.reteta_vanz : 0)}). Diferența de ${lei(g.primit - g.reteta)} lei înseamnă pierderi, stoc rămas sau rețete fără cost.` : ''}
+    ${g.reglare ? `<br>Reglare de stoc după inventar: ${lei(g.reglare)} lei.` : ''}</div>`;
+}
+
 // ----- Raport anual (foaia „P&L”) -----
 function plRanduriRaport() {
   const out = [], i = (k, unit) => out.push({ tip: 'i', k, et: PL_LINIE[k][1], unit: PL_LINIE[k][3] || unit || 'lei' });
@@ -3338,7 +3568,7 @@ function plRanduriRaport() {
     }
     if (sec.id === 'venituri') {
       out.push({ tip: 'h2', et: 'Venit net (fără TVA)' });
-      [['bauturi_net', 'bauturi'], ['food_net', 'food'], ['retail_net', 'retail'], ['alte_net', 'alte_venituri'], ['retururi_net', 'retururi']].map(([k, l]) => [k, PL_LINIE[l][1]])
+      [['bauturi_net', 'bauturi'], ['food_net', 'food'], ['retail_net', 'retail'], ['altev_net', 'altev'], ['alte_net', 'alte_venituri'], ['retururi_net', 'retururi']].map(([k, l]) => [k, PL_LINIE[l][1]])
         .forEach(([k, et]) => out.push({ tip: 'c', k, et: et + ', fără TVA' }));
       out.push({ tip: 't', k: 'venit_net', et: 'VENIT NET' });
     } else out.push({ tip: 't', k: sec.total[0], et: sec.total[1].toUpperCase() });
@@ -3573,7 +3803,7 @@ function plWire(box) {
     else if (t.dataset.plMini !== undefined) document.getElementById('plRez')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     else if (t.dataset.plCopiaza) {
       const sursa = PL.luni[plCarte().id][+t.dataset.plCopiaza], rand = plRandLuna(true);
-      rand.data = Object.assign({}, sursa.data);
+      rand.data = Object.fromEntries(Object.entries(sursa.data).filter(([k]) => k[0] !== '_'));
       plProgrameaza(rand); plDeseneaza();
       toast(`Am copiat sumele din ${LUNI_LUNG[+t.dataset.plCopiaza - 1]}. Schimbă-le pe cele diferite.`);
     } else if (t.dataset.plGoleste !== undefined) {
@@ -3601,7 +3831,7 @@ function plWire(box) {
     e.preventDefault();
     const f = e.target, btn = f.querySelector('[type=submit]');
     if (f.id === 'plSetari') {
-      const settings = {}, gresite = [];
+      const settings = Object.fromEntries(Object.entries(plCarte().settings || {}).filter(([k]) => k.startsWith('gesto_'))), gresite = [];
       for (const [, campuri] of PL_CAMPURI_SETARI) for (const [k, et] of campuri) {
         const v = plNr(f.elements[k].value);
         if (v === null || Number.isNaN(v) || v < 0) gresite.push(et); else settings[k] = v;
