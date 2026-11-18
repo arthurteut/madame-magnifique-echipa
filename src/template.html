@@ -996,6 +996,52 @@
   @media (max-width: 640px) { .jr-lista li { grid-template-columns: 46px minmax(0, 1fr); } .jr-lista li small { grid-column: 2; }
     .surse-pm div { grid-template-columns: minmax(0, 1fr) 64px 56px; padding: 10px 12px; } .msg, .semn { padding: 16px; } }
   @media (prefers-reduced-motion: reduce) { .xp-pop { animation: none; transition: none; } .xp-zbor { animation-duration: .01s; } }
+  /* ---------- Bonusul pe magazin ---------- */
+  .bn-mag { background: var(--ink); color: var(--greige); padding: clamp(18px, 3vw, 28px); margin-bottom: 28px; }
+  .bn-mag .eyebrow { color: var(--sand); } .bn-mag h2 { color: #fff; font-size: 1.3rem; margin: 10px 0 8px; }
+  .bn-mag p { margin: 8px 0 0; font-size: .95rem; } .bn-mag p b { color: #fff; font-weight: 500; } .bn-mag .mic { font-size: .82rem; color: #b9b6b0; }
+  .bn-cifra { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+  .bn-cifra b { font: 500 clamp(2.4rem, 8vw, 3.4rem)/1 'Montserrat', sans-serif; color: var(--sand); }
+  .bn-mag.declin .bn-cifra b { color: #f0a5a2; } .bn-cifra span { color: #b9b6b0; }
+  .bn-verdict { padding: 10px 14px; background: #2c2c2c; border-left: 3px solid var(--gold); }
+  .bn-mag.declin .bn-verdict { border-left-color: #c0504d; }
+  .bn-trepte { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: .9rem; }
+  .bn-trepte th { text-align: left; font: 500 .66rem/1.3 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8f8c86; padding: 6px 8px 6px 0; border-bottom: 1px solid #4a4a4a; }
+  .bn-trepte td { padding: 8px 8px 8px 0; border-bottom: 1px solid #3a3a3a; }
+  .bn-trepte td:last-child, .bn-trepte th:last-child { text-align: right; padding-right: 0; }
+  .bn-trepte tr.atins td { color: var(--sand); font-weight: 500; }
+  .bn-eu, .tura section + section, .bn-admin { margin-top: 36px; }
+  .bn-randuri { border: 1px solid var(--line); background: #fff; }
+  .bn-rand { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding: 14px 18px; border-bottom: 1px solid #f0efed; }
+  .bn-rand:last-child { border-bottom: 0; }
+  .bn-rand span b { display: block; font-weight: 500; color: var(--ink); } .bn-rand small { display: block; color: var(--muted); font-size: .84rem; margin-top: 2px; }
+  .bn-rand.minus small { color: #9b2c2c; }
+  .bn-suma { flex: none; font: 500 1.05rem/1.3 'Montserrat', sans-serif; color: var(--ink); white-space: nowrap; }
+  .bn-total { background: var(--greige); } .bn-total .bn-suma { font-size: 1.35rem; }
+  .bn-criterii { display: grid; gap: 10px; }
+  .bn-crit { background: #fff; border: 1px solid var(--line); padding: 14px 18px; display: grid; gap: 8px; }
+  .bn-crit-cap { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; } .bn-crit-cap b { font-weight: 500; color: var(--ink); }
+  .bn-crit .field { padding: 9px 12px; font: inherit; } .bn-crit .frm-rad label { display: flex; gap: 6px; align-items: center; font-size: .92rem; }
+  .bn-crit .semn-rasp { margin: 0; }
+  .pill.bn-nu { background: #f7e4e3; border-color: #f7e4e3; color: #9b2c2c; }
+  .bn-dovada { display: grid; gap: 3px; font-size: .86rem; color: var(--ink-soft); padding: 8px 12px; background: var(--bg-soft); } .bn-dovada b { font-weight: 500; color: var(--ink); }
+  .bn-cal { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; } .bn-cal p { flex: 1 1 260px; margin: 0; font-size: .92rem; }
+  .bn-cal-nr { flex: none; text-align: center; padding: 14px 20px; background: var(--ink); color: var(--greige); min-width: 130px; }
+  .bn-cal-nr b { display: block; font: 500 2.2rem/1 'Montserrat', sans-serif; color: #fff; } .bn-cal-nr.plus b { color: var(--sand); } .bn-cal-nr.minus b { color: #f0a5a2; }
+  .bn-cal-nr small { font: 500 .58rem/1.4 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #b9b6b0; }
+  .bn-admin .calc-card { margin-bottom: 14px; } .bn-admin .frm { max-width: none; margin-bottom: 14px; }
+  .bn-echipa select, .bn-echipa .bn-nr { padding: 7px 8px; border: 1px solid var(--line); background: #fff; border-radius: 0; font: inherit; font-size: .88rem; }
+  .bn-echipa .bn-nr { width: 96px; text-align: right; }
+  .bn-adauga { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; } .bn-adauga .field { flex: 1 1 200px; width: auto; padding: 9px 12px; }
+  .bn-setari summary { cursor: pointer; color: var(--ink); font-weight: 500; }
+  .bn-treapta { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 8px; }
+  .bn-inchide { display: flex; gap: 10px 16px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
+  .nota-card { margin-top: 12px; padding: 16px 18px; background: #fffdf8; border: 1px solid var(--sand); display: grid; gap: 10px; }
+  .nota-card p { margin: 0; } .nota-card .field { font: inherit; padding: 10px 12px; }
+  .nota-rand { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
+  .nota-rand button { padding: 12px 0; border: 1px solid var(--stone); background: #fff; font: 500 .95rem/1 'Montserrat', sans-serif; color: var(--ink-soft); }
+  .nota-rand button.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  @media (max-width: 420px) { .nota-rand { grid-template-columns: repeat(4, minmax(0, 1fr)); } .bn-rand { padding: 12px 14px; } }
 </style>
 </head>
 <body>
@@ -1060,7 +1106,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
 <script src="assets/config.js"></script>
 <script>
-let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null;
+let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null, BONUS_LOC = [];
 
 // ---------- Autentificare (Supabase) ----------
 // Angajatul scrie doar utilizatorul; contul are în spate un email intern,
@@ -1100,7 +1146,7 @@ function showApp() {
   puncteNoiCurand();
 }
 function showLock(msg) {
-  D = ME = null;
+  D = ME = null; BONUS_LOC = [];
   document.getElementById('app').classList.add('hidden');
   document.getElementById('lock').classList.remove('hidden');
   if (msg) showErr(msg);
@@ -1192,6 +1238,7 @@ async function deschideSesiunea(user) {
   ME = prof; SB_USER_ID = user.id; CURS = null; CAPITOLE = null;
   D = await incarcaDate();
   prepare();
+  BONUS_LOC = await SB.rpc('bonus_locatii').then(r => (r.error || !Array.isArray(r.data) ? [] : r.data), () => []);
   showApp();
 }
 
@@ -1308,6 +1355,7 @@ function route() {
   else if (a === 'mesaje') { html = viewMesaje(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'semnalari') { html = viewSemnalari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
+  else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
   else if (doarBrutar()) { html = viewCursuri(); nav = 'cursuri'; }
   else html = viewHome();
@@ -3715,8 +3763,9 @@ function viewTura() {
 }
 async function incarcaTura() {
   const box = document.getElementById('turaBody'); if (!box) return;
-  let t, joc;
-  try { [t, , joc] = await Promise.all([dateTura(), oreLocatii(), jocEu()]); }
+  let t, joc, ba;
+  try { [t, , joc, ba] = await Promise.all([dateTura(), oreLocatii(), jocEu(),
+    BONUS_LOC.length ? SB.rpc('bonus_azi').then(r => (r.error ? null : r.data), () => null) : null]); }
   catch (e) { console.error('Tura:', e); box.innerHTML = '<p class="err">Tura nu s-a putut încărca. Dacă e prima dată, rulează în Supabase migrarea 0016_tura.sql.</p>'; return; }
   if (!document.getElementById('turaBody')) return;
   const azi = t.azi, ture = t.ture.filter(s => s.day === azi), urmatoare = t.ture.filter(s => s.day > azi);
@@ -3748,7 +3797,7 @@ async function incarcaTura() {
       <span class="fisa-titlu"><b>${esc(f.titlu)}</b><small>${run && run.finished_at ? `Gata la ${oraLocala(run.finished_at)}` : run ? `${gata} din ${total} pași` : 'Nepornită'}${termen ? ` · termen ${termen}` : ''}${eu ? ' · ești programat(ă)' : ''}</small></span>
       <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
   };
-  box.innerHTML = `${stare}${joc ? jocBanda(joc) : ''}
+  box.innerHTML = `${stare}${ba && ba.pot_nota ? notaCard(ba) : ''}${joc ? jocBanda(joc) : ''}
     <div class="tura-scurt"><a class="btn ghost sm" href="#/semnalari?nou=1${loc ? '&s=' + enc(loc) : ''}">Semnalează o problemă</a>
       <a class="btn ghost sm" href="#/mesaje">Mesaje${joc && joc.de_confirmat ? ` · ${joc.de_confirmat} de confirmat` : ''}</a></div>
     ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
@@ -3762,6 +3811,7 @@ async function incarcaTura() {
       <div class="ture-lista">${t.pontaj.filter(c => c.clock_out).slice(0, 7).map(c => `<div><b>${ziUman(ziLocala(new Date(c.clock_in)))}</b><span>${esc(numeLoc(c.space_id))} · ${oraLocala(c.clock_in)}–${oraLocala(c.clock_out)}</span></div>`).join('')}</div>` : ''}`;
   const sus = box.querySelector('[data-progres]');
   if (sus) sus.addEventListener('click', () => document.getElementById('progresul-tau').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  leagaNota(box);
   if (joc) { verificaJoc(joc); puneDeConfirmat(joc.de_confirmat); }
   puncteNoiCurand();
   if (loc) canal('tura', [['checklist_runs', `space_id=eq.${loc}`], ['clockings', `user_id=eq.${SB_USER_ID}`]], amanat(incarcaTura, 800));
@@ -3966,7 +4016,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap">
-      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a></nav>
+      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -4290,7 +4340,7 @@ function jocProgres(j) {
       <div class="jp-card"><span class="eyebrow">Săptămâna asta</span><p class="jp-mare ${j.xp_saptamana < 0 ? 'minus' : ''}">${cuSemn(j.xp_saptamana)} <small>XP</small></p>
         ${surse.length ? surse.map(([k, v]) => `<div class="sursa ${v < 0 ? 'minus' : ''}"><span>${esc(SURSE_NUME[k] || k)}</span><span class="sursa-bara"><i style="width:${Math.round(Math.abs(v) / max * 100)}%"></i></span><b>${cuSemn(v)}</b></div>`).join('')
           : '<p class="muted mic">Primele puncte vin la primul clock-in.</p>'}
-        <p class="jp-pm" style="margin-top:14px"><span>Luna asta: <b>${cuSemn(l.net).replace('+', '')} XP</b> pentru bonus</span><span class="plus">+${fmtXp(l.castigat)}</span><span class="minus">−${fmtXp(l.pierdut)}</span></p></div>
+        <p class="jp-pm" style="margin-top:14px"><span>Luna asta: <b>${cuSemn(l.net).replace('+', '')} XP</b></span><span class="plus">+${fmtXp(l.castigat)}</span><span class="minus">−${fmtXp(l.pierdut)}</span></p></div>
       ${cardEchipa(j)}
     </div>
     ${(j.ultimele || []).length ? `<h3 class="jp-h3">Ultimele puncte</h3><ul class="jr-lista">${stransePuncte(j.ultimele, 8).map(u =>
@@ -4398,13 +4448,15 @@ const eroareMig = (e, implicit) => !e ? implicit : /PGRST20|42883|42P01|schema c
 const reguliHtml = () => `<details class="jp-cum"><summary>Regulile: cum câștigi și cum pierzi puncte</summary>
   <div class="reguli"><div><span class="eyebrow">Câștigi</span><table>${REGULI.castigi.map(([t, p]) => `<tr><td>${t}</td><td class="plus">${p}</td></tr>`).join('')}</table></div>
     <div><span class="eyebrow">Pierzi</span><table>${REGULI.pierzi.map(([t, p]) => `<tr><td>${t}</td><td class="minus">${p}</td></tr>`).join('')}</table>
-      <p class="muted mic">Orice pierdere apare în jurnal cu motivul ei și se poate contesta până la închiderea lunii. Dacă șeful admite contestația, punctele se dau înapoi.</p></div></div></details>`;
+      <p class="muted mic">Orice pierdere apare în jurnal cu motivul ei și se poate contesta până la închiderea lunii. Dacă șeful admite contestația, punctele se dau înapoi.</p>
+      <p class="muted mic">Punctele nu sunt bani și nu schimbă salariul. Bonusul magazinului are regulile lui, pe pagina Bonus; acolo, fișele de deschidere și de închidere făcute sunt dovada pentru criteriul de proceduri.</p></div></div></details>`;
 
 // Filele comune paginilor omului: Tura mea · Mesaje · Semnalări · Punctele mele (· Echipa, pentru șefi)
 function tabsOm(activ) {
   const t = [];
   if (areTura()) t.push(['tura', 'Tura', '#/tura']);
   t.push(['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
+  if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
   if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);
   return `<nav class="tabs tabs-om">${t.map(([k, et, h]) => `<a href="${h}" class="${k === activ ? 'on' : ''}">${et}${k === 'mesaje' ? '<i class="tab-nr" data-de-confirmat hidden></i>' : ''}</a>`).join('')}</nav>`;
 }
@@ -4481,7 +4533,7 @@ function viewProgres(params) {
   return `<section class="band tura-band"><div class="wrap">
       <span class="eyebrow" id="progresSus">${alt ? 'Progresul unui om din echipă' : esc(ME.full_name) + ' · ' + esc(ME.role_code)}</span>
       <h1 id="progresTitlu">${alt ? 'Progres' : 'Punctele mele'}</h1>
-      <p class="sub">Fiecare punct câștigat sau pierdut, cu motivul lui. Punctele nete ale lunii contează la bonus.</p>
+      <p class="sub">Fiecare punct câștigat sau pierdut, cu motivul lui. Punctele aduc niveluri, insigne și loc în clasament; nu sunt bani.</p>
     </div></section>
     <section class="block"><div class="wrap tura">${alt ? '<p class="crumbs"><a href="#/echipa?tab=oameni">← Oamenii mei</a></p>' : tabsOm('progres')}
       <div id="progresBody"><p class="muted">Se încarcă…</p></div></div></section>`;
@@ -4515,7 +4567,7 @@ async function incarcaProgres(params) {
   const ct = (j.contestatii || []); let nrZi = 0;
   box.innerHTML = `<div class="jp-grid">
       <div class="jp-card jp-luna"><span class="eyebrow">${esc(lunaUman(jr.luna))} · ${jr.inchisa ? 'lună închisă' : curenta ? 'în curs' : 'încă deschisă'}</span>
-        <p class="jp-mare ${s.net < 0 ? 'minus' : ''}">${cuSemn(s.net).replace('+', '')} <small>XP pentru bonus</small></p>
+        <p class="jp-mare ${s.net < 0 ? 'minus' : ''}">${cuSemn(s.net).replace('+', '')} <small>XP în luna asta</small></p>
         <p class="jp-pm"><span class="plus">+${fmtXp(s.castigat)} câștigate</span><span class="minus">−${fmtXp(s.pierdut)} pierdute</span></p>
         <label class="pl-sel"><span class="eyebrow">Altă lună</span><select class="field" data-luna>${(jr.luni || []).map(m =>
           `<option value="${m.luna.slice(0, 7)}" ${m.luna === jr.luna ? 'selected' : ''}>${esc(lunaUman(m.luna))}${m.inchisa ? ' · închisă' : ''}</option>`).join('')}</select></label></div>
@@ -4757,9 +4809,9 @@ async function incarcaOameni(params) {
         ${c.pot_decide ? `<div class="calc-act"><button class="btn sm" type="button" data-ctst="${c.id}" data-admite="1">Admit · punctele se dau înapoi</button><button class="btn ghost sm" type="button" data-ctst="${c.id}">Resping</button></div>`
           : '<small class="muted">O decide cineva de deasupra celui care a dat observația.</small>'}</article>`).join('')}</div>` : ''}
     <h2 class="section-title">Punctele lunii · ${esc(lunaUman(r.luna))}</h2>
-    ${oameni.length ? `<div class="tbl-wrap"><table class="tbl rap"><thead><tr><th>Om</th><th class="nr">Câștigate</th><th class="nr">Pierdute</th><th class="nr">Net (bonus)</th><th class="nr">Ture la timp</th><th></th></tr></thead>
+    ${oameni.length ? `<div class="tbl-wrap"><table class="tbl rap"><thead><tr><th>Om</th><th class="nr">Câștigate</th><th class="nr">Pierdute</th><th class="nr">Net</th><th class="nr">Ture la timp</th><th></th></tr></thead>
       <tbody>${oameni.map(rand).join('')}</tbody></table></div>` : '<p class="lvl4">Niciun om în subordine cu puncte în luna asta.</p>'}
-    <p class="muted mic" style="margin-top:14px">Apasă pe un nume ca să vezi jurnalul omului: fiecare punct, cu motivul lui. Punctele nete ale lunii sunt cele care contează la bonus; după „Închide luna” rămân înghețate.</p>
+    <p class="muted mic" style="margin-top:14px">Apasă pe un nume ca să vezi jurnalul omului: fiecare punct, cu motivul lui. Punctele nu sunt bani: aduc niveluri și loc în clasament. După „Închide luna” punctele lunii rămân înghețate și nu se mai pot contesta.${BONUS_LOC.length ? ' Banii se calculează în pagina <a href="#/bonus">Bonus</a>.' : ''}</p>
     ${reguliHtml()}`;
   box.querySelector('[data-luna]').addEventListener('change', e => { location.hash = '#/echipa?tab=oameni&luna=' + e.target.value; });
   const reia = () => incarcaOameni(params);
@@ -4774,7 +4826,7 @@ async function incarcaOameni(params) {
       a.download = `puncte-${r.luna.slice(0, 7)}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return;
     }
     if (d.inchide !== undefined) {
-      if (!confirm(`Închizi luna ${lunaUman(r.luna)}? Punctele fiecărui om rămân înghețate, pentru bonus, și nu se mai pot contesta.`)) return;
+      if (!confirm(`Închizi luna ${lunaUman(r.luna)}? Punctele fiecărui om rămân înghețate și nu se mai pot contesta.`)) return;
       x = await SB.rpc('inchide_luna', { p_luna: r.luna });
       if (!x.error) toast('Luna e închisă. Fiecare om a primit cifra lui.');
     } else if (d.redeschide !== undefined) {
@@ -4790,6 +4842,250 @@ async function incarcaOameni(params) {
     reia();
   };
   canal('oameni', [['contestatii']], amanat(reia, 900));
+}
+
+// ---------- Bonusul pe magazin (migrarea 0022) ----------
+// Fiecare om își vede luna: creșterea magazinului față de anul trecut, din ce i se compune bonusul și de ce.
+// Responsabilul de magazin evaluează conformitatea; GM / AE introduce vânzările, echipa și închide luna.
+// Aici nu e nicio sumă: treptele, sumele și criteriile vin din baza de date (bonus_setari).
+const leiB = x => x === null || x === undefined || !isFinite(x) ? '—' : new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 2 }).format(x);
+const nota1 = x => x === null || x === undefined ? '—' : String(+x).replace('.', ',');
+const lunaDoar = d => new Intl.DateTimeFormat('ro-RO', { month: 'long', timeZone: 'UTC' }).format(new Date(String(d).slice(0, 10) + 'T12:00:00Z'));
+const nrSauNull = v => { const x = String(v ?? '').trim().replace(/\s/g, '').replace(',', '.'); return x === '' || !isFinite(+x) ? null : +x; };
+function viewBonus(params) {
+  setTimeout(() => incarcaBonus(params), 0);
+  return `<section class="band tura-band"><div class="wrap">
+      <span class="eyebrow">Sistemul de bonusare pe magazin</span><h1>Bonus</h1>
+      <p class="sub">Din ce se compune bonusul lunii la magazinul tău, unde ești acum și de ce. Toate sumele sunt brute.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura">${tabsOm('bonus')}<div id="bonusBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+// Starea unui criteriu, ca etichetă.
+const bnStare = ok => ok === true ? '<span class="pill st-rezolvata">Îndeplinit</span>' : ok === false ? '<span class="pill bn-nu">Neîndeplinit</span>' : '<span class="pill">Neevaluat</span>';
+// Lista de criterii (conformitate sau management), cu dovezi și, pentru cine evaluează, cu formular.
+function bnCriterii(lista, prefix, pot, dovada) {
+  return lista.map(k => { const auto = prefix === 'mg' && k.auto, bifat = k.ok ?? (k.propunere ?? null);
+    return `<div class="bn-crit" data-crit="${esc(k.cheie)}"><div class="bn-crit-cap"><b>${esc(k.nume)}</b>${bnStare(k.ok)}</div>
+      ${dovada ? dovada(k) : ''}${auto ? '<small class="muted">Se calculează singur, din rezultatele echipei.</small>' : ''}
+      ${k.nota && !(pot && !auto) ? `<p class="semn-rasp">${esc(k.nota)}</p>` : ''}
+      ${pot && !auto ? `<div class="frm-rad"><label><input type="radio" name="${prefix}-${esc(k.cheie)}" value="1" ${bifat === true ? 'checked' : ''}> Îndeplinit</label>
+          <label><input type="radio" name="${prefix}-${esc(k.cheie)}" value="0" ${bifat === false ? 'checked' : ''}> Neîndeplinit</label></div>
+        <input class="field" name="${prefix}-nota-${esc(k.cheie)}" value="${esc(k.nota || '')}" maxlength="500" placeholder="De ce (obligatoriu dacă nu e îndeplinit; omul îl vede)">` : ''}</div>`; }).join('');
+}
+function bnMagazin(c) {
+  const v = c.vanzari, t = v.an_trecut, a = v.acum, stiut = v.crestere !== null && v.crestere !== undefined, prima = v.repere[0];
+  return `<section class="bn-mag ${stiut && v.declin ? 'declin' : ''}">
+    <span class="eyebrow">${esc(numeLoc(c.space_id))} · ${esc(lunaUman(c.luna))}${c.inchisa ? ' · lună închisă' : ''}</span>
+    ${stiut ? `<div class="bn-cifra"><b>${v.crestere > 0 ? '+' : v.crestere < 0 ? '−' : ''}${nota1(Math.abs(v.crestere))}%</b><span>față de ${lunaDoar(c.luna)} ${t.an}</span></div>
+        <p>Media zilnică de vânzări: <b>${lei(a.medie_zilnica)} lei</b>, față de ${lei(t.medie_zilnica)} lei anul trecut.</p>
+        <p class="bn-verdict">${v.declin ? 'Magazin în declin: luna asta nu se plătește nimic din sistemul magazinului.'
+          : v.fond > 0 ? `Treapta de ${nota1(v.treapta.prag)}% e atinsă: fondul magazinului e <b>${leiB(v.fond)} lei</b>.`
+          : `Creștere sub prima treaptă${prima ? ` (${nota1(prima.prag)}%)` : ''}: fără fond de magazin. Conformitatea se poate plăti în continuare.`}</p>`
+      : `<h2>Creșterea se calculează la sfârșitul lunii</h2>
+        <p>Se compară media zilnică de vânzări a lunii cu ${t ? `cea din ${lunaDoar(c.luna)} ${t.an}: <b>${lei(t.medie_zilnica)} lei pe zi</b>` : 'cea din aceeași lună a anului trecut (lipsește încă din referințe)'}. Sub 0%, magazinul e în declin și nu se plătește nimic din sistem.</p>`}
+    ${v.repere.length ? `<table class="bn-trepte"><thead><tr><th>Creștere</th><th>Media zilnică necesară</th><th>Fondul magazinului</th></tr></thead>
+      <tbody>${v.repere.map(r => `<tr class="${v.treapta && +v.treapta.prag === +r.prag ? 'atins' : ''}"><td>de la ${nota1(r.prag)}%</td><td>${r.medie_necesara ? lei(r.medie_necesara) + ' lei' : '—'}</td><td>${leiB(r.fond)} lei</td></tr>`).join('')}</tbody></table>
+      <p class="mic">Fondul se împarte: ${nota1(c.setari.procent_vanzare)}% celor care vând, după aportul fiecăruia la vânzările lunii, și ${nota1(c.setari.procent_coacere)}% celui care coace.</p>` : ''}
+    ${t && (t.bonuri_zi || t.bon_mediu) ? `<p class="mic">Reperul din ${lunaDoar(c.luna)} ${t.an}: ${t.bonuri_zi ? lei(t.bonuri_zi) + ' bonuri pe zi' : ''}${t.bonuri_zi && t.bon_mediu ? ' · ' : ''}${t.bon_mediu ? 'bon mediu ' + lei(t.bon_mediu) + ' lei' : ''}.</p>` : ''}
+  </section>`;
+}
+function bnEu(c) {
+  const e = c.eu; if (!e) return '';
+  const v = c.vanzari, stiut = v.crestere !== null && v.crestere !== undefined, cf = c.conformitate, cal = c.calitate, mg = c.management, fara = e.prima_calitate === false;
+  const rand = (nume, suma, motiv) => `<div class="bn-rand"><span><b>${nume}</b><small>${motiv}</small></span><b class="bn-suma">${suma === null || suma === undefined ? '—' : leiB(suma) + ' lei'}</b></div>`;
+  const cazute = (cf.criterii || []).filter(k => k.ok === false).map(k => esc(k.nume) + (k.nota ? ` (${esc(k.nota)})` : ''));
+  const magazin = !stiut ? 'se calculează după ce se introduc vânzările lunii' : v.declin ? 'magazin în declin' : null;
+  return `<section class="bn-eu"><h2 class="section-title">Bonusul tău · ${esc(lunaUman(c.luna))}</h2>
+    <div class="bn-randuri">
+      <div class="bn-rand ${fara ? 'minus' : ''}"><span><b>Prima de calitate</b><small>${e.prima_calitate === true ? 'Încasată: ai acces la bonusurile de mai jos.'
+        : fara ? 'Neîncasată. Fără prima de calitate nu se accesează niciun alt bonus în luna asta.' : 'Încă nehotărâtă. O stabilește conducerea la sfârșitul lunii; fără ea nu se accesează niciun alt bonus.'}</small></span>
+        <b class="bn-suma">${e.prima_calitate === true ? 'da' : fara ? 'nu' : '…'}</b></div>
+      ${rand('Baremul magazinului', e.barem, magazin || (v.fond > 0 ? (e.fel === 'vanzare'
+          ? `cota ta: ${nota1(e.cota)}% din partea de vânzare${e.cota_egala ? ' (împărțită egal: aportul la vânzări nu e încă introdus)' : ', după aportul tău la vânzări'}`
+          : `${nota1(c.setari.procent_coacere)}% din fondul magazinului`) : 'creștere sub prima treaptă'))}
+      ${e.fel === 'vanzare' ? rand('Conformitatea', e.conformitate, magazin || (!cf.completa ? 'neevaluată încă de responsabilul de magazin'
+          : cf.indeplinita ? `toate criteriile îndeplinite; cota ta: ${nota1(e.cota)}%` : 'nu se plătește: neîndeplinit ' + cazute.join('; '))) : ''}
+      ${e.fel === 'coacere' && c.setari.calitate_suma > 0 ? rand('Calitatea vitrinei', e.calitate, magazin || (cal.medie === null ? 'nicio notă în luna asta: criteriul nu se poate verifica'
+          : cal.indeplinit ? `media notelor ${nota1(cal.medie)} (prag ${nota1(cal.prag)}), în ${cal.zile} zile notate` : `media notelor ${nota1(cal.medie)}, sub pragul de ${nota1(cal.prag)}`)) : ''}
+      ${e.manager && mg && mg.total ? rand('Bonusul de management', e.management, `${mg.indeplinite} din ${mg.total} criterii × ${leiB(mg.pe_criteriu)} lei`) : ''}
+      <div class="bn-rand bn-total"><span><b>${c.inchisa ? 'Total' : 'Total estimat'}</b><small>${c.inchisa ? `Închis ${dataOra(c.inchisa.la)}${c.inchisa.de ? ' de ' + esc(c.inchisa.de) : ''}. Sumă brută.`
+        : 'Sumă brută. Se poate schimba până când conducerea închide bonusul lunii.'}</small></span><b class="bn-suma">${leiB(e.total)} lei</b></div>
+    </div></section>`;
+}
+function bnConformitate(c) {
+  const cf = c.conformitate, p = c.proceduri, d = c.dovezi || {}; if (!cf.criterii.length) return '';
+  const fise = (x, nume) => x ? `<span>${nume}: <b>${x.facute} din ${x.asteptate}</b> făcute${x.la_termen < x.facute ? ` (${x.la_termen} la termen)` : ''}${x.scuzate ? `, ${x.scuzate} cu contestație admisă` : ''}</span>` : '';
+  const dovada = k => k.auto === 'proceduri' ? `<div class="bn-dovada">${fise(p.deschideri, 'Deschideri')}${fise(p.inchideri, 'Închideri')}
+        ${p.ture ? `<span>Clock-in la timp: <b>${p.ture_la_timp} din ${p.ture}</b> ture</span>` : ''}
+        ${p.lipsa.length ? `<span class="minus">Fișe lipsă: ${p.lipsa.map(x => `${ziScurta(x.zi)} (${x.tip === 'deschidere' ? 'deschidere' : 'închidere'})`).join(', ')}</span>` : ''}
+        <span>${p.procent === null || p.procent === undefined ? 'Nicio zi încheiată încă în luna asta.'
+          : `După fișe: <b class="${p.propunere ? 'plus' : 'minus'}">${p.propunere ? 'îndeplinit' : 'neîndeplinit'}</b> (${nota1(p.procent)}% din fișe făcute; pragul e ${nota1(c.setari.prag_proceduri)}%)`}</span></div>`
+    : k.cheie === 'reclamatii' ? `<div class="bn-dovada"><span>${(d.reclamatii || []).length ? `Semnalări despre clienți luna asta: ${d.reclamatii.map(r => `${ziScurta(r.zi)} „${esc(r.text)}”`).join('; ')}` : 'Nicio semnalare despre clienți în aplicație luna asta.'}</span></div>`
+    : k.cheie === 'ospitalitate' ? `<div class="bn-dovada"><span>Feedback de la șefi luna asta: ${d.aprecieri || 0} aprecieri, ${d.observatii || 0} de îmbunătățit.</span></div>` : '';
+  return `<section><h2 class="section-title">Conformitatea vânzării</h2>
+    <p class="muted" style="margin:-8px 0 14px">Suma de conformitate (${leiB(c.setari.conformitate_suma)} lei, împărțită după aport) se plătește doar dacă toate criteriile sunt îndeplinite și magazinul nu e în declin.</p>
+    <form class="bn-criterii" data-bn="conformitate">${bnCriterii(cf.criterii, 'cf', c.pot_evalua, dovada)}
+      ${c.pot_evalua ? '<div class="calc-act"><button class="btn sm" type="submit">Salvează evaluarea</button></div>' : ''}</form>
+    ${cf.la ? `<small class="muted">Evaluată ${dataOra(cf.la)}${cf.de ? ' de ' + esc(cf.de) : ''}.</small>` : ''}</section>`;
+}
+function bnCalitate(c) {
+  const q = c.calitate; if (!(c.setari.calitate_suma > 0)) return '';
+  return `<section><h2 class="section-title">Calitatea vitrinei</h2>
+    <div class="bn-cal"><div class="bn-cal-nr ${q.medie === null ? '' : q.indeplinit ? 'plus' : 'minus'}"><b>${nota1(q.medie)}</b><small>media lunii · prag ${nota1(q.prag)}</small></div>
+      <p>${q.zile} ${q.zile === 1 ? 'zi notată' : 'zile notate'} luna asta. Nota o dă zilnic cine vinde, din pagina Tura; sub ${nota1(q.prag)} se scrie și motivul.
+        Dacă media lunii e cel puțin ${nota1(q.prag)}, cine coace primește bonusul de calitate (${leiB(c.setari.calitate_suma)} lei).</p></div>
+    ${q.note.length ? `<ul class="jr-lista">${q.note.slice(0, 31).map(n => `<li class="${+n.nota < +q.prag ? 'minus' : 'plus'}"><b>${nota1(n.nota)}</b>
+      <span>${n.comentariu ? esc(n.comentariu) : 'fără observații'}<br><em class="ctst">${esc(n.cine || '')}</em></span><small>${ziScurta(n.zi)}</small></li>`).join('')}</ul>` : ''}</section>`;
+}
+function bnManagement(c) {
+  const m = c.management; if (!m || !m.total) return '';
+  return `<section><h2 class="section-title">Bonusul de management</h2>
+    <p class="muted" style="margin:-8px 0 14px">${leiB(c.setari.management_suma)} lei, împărțiți egal pe ${m.total} criterii (${leiB(m.pe_criteriu)} lei fiecare). Fiecare criteriu se judecă separat.</p>
+    <form class="bn-criterii" data-bn="management">${bnCriterii(m.criterii, 'mg', c.pot_administra && !c.inchisa)}
+      ${c.pot_administra && !c.inchisa ? '<div class="calc-act"><button class="btn sm" type="submit">Salvează criteriile</button></div>' : ''}</form>
+    ${m.la ? `<small class="muted">Bifate ${dataOra(m.la)}${m.de ? ' de ' + esc(m.de) : ''}.</small>` : ''}</section>`;
+}
+function bnAdmin(c, oameniToti) {
+  const v = c.vanzari, a = v.acum || {}, t = v.an_trecut || {}, s = c.setari, pl = c.plafon || {}, deschis = !c.inchisa, an = +c.luna.slice(0, 4);
+  const inEchipa = new Set(c.oameni.map(o => o.user_id)), deAdaugat = (oameniToti || []).filter(o => !inEchipa.has(o.user_id));
+  return `<section class="bn-admin"><h2 class="section-title">Pentru conducere</h2>
+    ${!c.pornita ? '<p class="lvl4">Luna asta nu e pornită la locația asta. <button class="rez-anul" type="button" data-porneste>Pornește luna</button></p>' : ''}
+    <form class="calc-card frm" data-bn="vanzari"><span class="eyebrow">Vânzările lunii</span>
+      <div class="frm-2"><label>Media zilnică de vânzări în ${esc(lunaUman(c.luna))} (lei)<input class="field" name="medie" inputmode="decimal" value="${a.medie_zilnica ?? ''}" ${deschis ? '' : 'disabled'}></label>
+        <label>Media zilnică în ${lunaDoar(c.luna)} ${an - 1} (lei)<input class="field" name="medie_t" inputmode="decimal" value="${t.medie_zilnica ?? ''}" ${deschis ? '' : 'disabled'}></label>
+        <label>Vânzarea lunii, fără TVA (lei)<input class="field" name="vanzari" inputmode="decimal" value="${a.vanzari ?? ''}" ${deschis ? '' : 'disabled'}></label>
+        <label>Bonuri pe zi<input class="field" name="bonuri_zi" inputmode="decimal" value="${a.bonuri_zi ?? ''}" ${deschis ? '' : 'disabled'}></label>
+        <label>Bon mediu (lei)<input class="field" name="bon_mediu" inputmode="decimal" value="${a.bon_mediu ?? ''}" ${deschis ? '' : 'disabled'}></label></div>
+      ${deschis ? '<div class="calc-act"><button class="btn sm" type="submit">Salvează vânzările</button></div>' : ''}</form>
+    <div class="calc-card"><span class="eyebrow">Echipa lunii și sumele</span>
+      <div class="tbl-wrap"><table class="tbl rap bn-echipa"><thead><tr><th>Om</th><th>Face</th><th>Manager</th><th class="nr">Aport la vânzări</th><th>Prima de calitate</th>
+        <th class="nr">Barem</th><th class="nr">Conform.</th><th class="nr">Calitate</th><th class="nr">Manag.</th><th class="nr">Total</th><th></th></tr></thead>
+        <tbody>${c.oameni.map(o => `<tr data-om="${esc(o.user_id)}"><td><b>${esc(o.nume)}</b><small class="rap-sub">${esc(o.rol)}</small></td>
+          <td><select data-c="fel" ${deschis ? '' : 'disabled'}><option value="vanzare" ${o.fel === 'vanzare' ? 'selected' : ''}>vinde</option><option value="coacere" ${o.fel === 'coacere' ? 'selected' : ''}>coace</option></select></td>
+          <td><input type="checkbox" data-c="manager" ${o.manager ? 'checked' : ''} ${deschis ? '' : 'disabled'} aria-label="Manager de locație"></td>
+          <td class="nr">${o.fel === 'vanzare' ? `<input class="field bn-nr" data-c="aport" inputmode="decimal" value="${o.aport || ''}" ${deschis ? '' : 'disabled'} aria-label="Aport la vânzări">${o.cota !== null ? `<small class="rap-sub">${nota1(o.cota)}%</small>` : ''}` : ''}</td>
+          <td><select data-c="prima_calitate" ${deschis ? '' : 'disabled'}><option value="">nehotărât</option><option value="true" ${o.prima_calitate === true ? 'selected' : ''}>încasată</option><option value="false" ${o.prima_calitate === false ? 'selected' : ''}>neîncasată</option></select></td>
+          <td class="nr">${leiB(o.barem)}</td><td class="nr">${leiB(o.conformitate)}</td><td class="nr">${leiB(o.calitate)}</td><td class="nr">${leiB(o.management)}</td><td class="nr net">${leiB(o.total)}</td>
+          <td>${deschis ? '<button class="rez-anul" type="button" data-scoate>scoate</button>' : ''}</td></tr>`).join('') || '<tr><td colspan="11" class="muted">Niciun om în echipa lunii.</td></tr>'}</tbody></table></div>
+      ${deschis && c.pornita && deAdaugat.length ? `<div class="bn-adauga"><select class="field" data-adauga-om>${deAdaugat.map(o => `<option value="${esc(o.user_id)}">${esc(o.nume)} · ${esc(o.rol)}</option>`).join('')}</select>
+        <button class="btn ghost sm" type="button" data-adauga>Adaugă în echipă</button></div>` : ''}
+      ${pl.total_sistem !== null && pl.total_sistem !== undefined ? `<p class="mic ${pl.plafon && pl.procent > pl.plafon ? 'minus' : 'muted'}" style="margin:12px 0 0">Sistemul magazinului (barem, conformitate, calitate) costă luna asta <b>${leiB(pl.total_sistem)} lei</b>${pl.procent !== null && pl.procent !== undefined ? ` = ${nota1(pl.procent)}% din vânzările lunii` : ''}${pl.plafon ? `; plafonul e ${nota1(pl.plafon)}%` : ''}.</p>` : ''}</div>
+    <details class="calc-card bn-setari"><summary>Regulile magazinului: trepte, sume, praguri</summary>
+      <form class="frm" data-bn="setari" style="margin-top:14px">
+        <div data-trepte>${(s.trepte || []).map(x => `<div class="bn-treapta"><label>Creștere de la (%)<input class="field" data-prag inputmode="decimal" value="${x.prag}"></label><label>Fond (lei)<input class="field" data-fond inputmode="decimal" value="${x.fond}"></label><button class="rez-anul" type="button" data-sterge-treapta>șterge</button></div>`).join('')}</div>
+        <button class="rez-anul" type="button" data-treapta-noua>+ treaptă</button>
+        <div class="frm-2"><label>Partea celor care vând (%)<input class="field" name="procent_vanzare" inputmode="decimal" value="${s.procent_vanzare}"></label>
+          <label>Partea celui care coace (%)<input class="field" name="procent_coacere" inputmode="decimal" value="${s.procent_coacere}"></label>
+          <label>Conformitatea (lei)<input class="field" name="conformitate_suma" inputmode="decimal" value="${s.conformitate_suma}"></label>
+          <label>Fișe făcute pentru criteriul „proceduri” (%)<input class="field" name="prag_proceduri" inputmode="decimal" value="${s.prag_proceduri}"></label>
+          <label>Bonusul de calitate (lei)<input class="field" name="calitate_suma" inputmode="decimal" value="${s.calitate_suma}"></label>
+          <label>Media minimă a notelor<input class="field" name="calitate_prag" inputmode="decimal" value="${s.calitate_prag}"></label>
+          <label>Bonusul de management (lei)<input class="field" name="management_suma" inputmode="decimal" value="${s.management_suma}"></label>
+          <label>Plafon din vânzări (%)<input class="field" name="plafon_procent" inputmode="decimal" value="${s.plafon_procent ?? ''}"></label></div>
+        <p class="muted mic">Schimbările se aplică lunilor încă deschise. Criteriile (numele lor) se schimbă din SQL.</p>
+        <div class="calc-act"><button class="btn sm" type="submit">Salvează regulile</button></div></form></details>
+    ${c.pornita ? `<div class="bn-inchide">${c.inchisa ? `<span class="rap-inchisa">Bonusul lunii e închis: cifrele nu se mai schimbă.</span>${ME.admin ? ' <button class="btn ghost sm" type="button" data-redeschide>Redeschide</button>' : ''}`
+      : c.luna_terminata ? '<button class="btn" type="button" data-inchide>Închide bonusul lunii</button><small class="muted">Fiecare om primește suma lui în notificare, iar cifrele rămân înghețate.</small>'
+      : '<small class="muted">Bonusul se închide după ce se termină luna: vânzările introduse, prima de calitate hotărâtă pentru fiecare om, conformitatea și criteriile de management evaluate, fără contestații nedecise.</small>'}</div>` : ''}
+  </section>`;
+}
+async function incarcaBonus(params) {
+  const box = document.getElementById('bonusBody'); if (!box) return;
+  const loc = BONUS_LOC.includes(params.s) ? params.s : BONUS_LOC[0];
+  const luna = /^\d{4}-\d{2}$/.test(params.luna || '') ? params.luna + '-01' : null;
+  const r = await SB.rpc('bonus_calcul', { p_space: loc, p_luna: luna });
+  if (!document.getElementById('bonusBody')) return;
+  const c = r.data;
+  if (r.error || !c) { console.error('Bonus:', r.error); box.innerHTML = `<p class="err">${esc(eroareMig(r.error, 'Bonusul nu s-a putut încărca.').replace('0021_comunicare_si_puncte', '0022_bonus'))}</p>`; return; }
+  const leg = extra => `#/bonus?${['s=' + enc(loc), ...extra].filter(Boolean).join('&')}`;
+  const sus = `<div class="echipa-sus">${BONUS_LOC.length > 1 ? `<label class="pl-sel"><span class="eyebrow">Locația</span><select class="field" data-loc>${BONUS_LOC.map(s => `<option value="${esc(s)}" ${s === loc ? 'selected' : ''}>${esc(numeLoc(s))}</option>`).join('')}</select></label>` : ''}
+    <label class="pl-sel"><span class="eyebrow">Luna</span><select class="field" data-luna>${(c.luni || []).map(m => `<option value="${m.luna.slice(0, 7)}" ${m.luna === c.luna ? 'selected' : ''}>${esc(lunaUman(m.luna))}${m.inchisa ? ' · închisă' : ''}</option>`).join('')}</select></label></div>`;
+  if (!c.activ) { box.innerHTML = sus + '<p class="lvl4">Pentru locația asta bonusul nu e configurat.</p>'; }
+  else {
+    let oameniToti = null;
+    if (c.pot_administra && !c.inchisa) { const x = await SB.rpc('joc_raport', { p_luna: null }); oameniToti = x.error ? [] : ((x.data && x.data.oameni) || []); }
+    if (!document.getElementById('bonusBody')) return;
+    box.innerHTML = `${sus}${bnMagazin(c)}${bnEu(c)}${bnConformitate(c)}${bnCalitate(c)}${bnManagement(c)}${c.pot_administra ? bnAdmin(c, oameniToti) : ''}
+      <p class="muted mic" style="margin-top:28px">Punctele (XP) nu sunt bani: aduc niveluri, insigne și loc în clasament. La bonus contează doar ce e pe pagina asta; fișele de deschidere și de închidere făcute sunt dovada pentru criteriul de proceduri.</p>`;
+  }
+  const reia = () => incarcaBonus(params);
+  const sel = q => box.querySelector(q);
+  if (sel('[data-loc]')) sel('[data-loc]').addEventListener('change', e => { location.hash = `#/bonus?s=${enc(e.target.value)}${luna ? '&luna=' + params.luna : ''}`; });
+  sel('[data-luna]').addEventListener('change', e => { location.hash = leg(['luna=' + e.target.value]); });
+  if (!c.activ) return;
+  const cheie = { space_id: loc, luna: c.luna }, [an, lu] = [+c.luna.slice(0, 4), +c.luna.slice(5, 7)];
+  const gata = (x, mesaj) => { if (x.error) { toast(x.error.message || 'Nu s-a salvat.', true); return false; } if (mesaj) toast(mesaj); reia(); return true; };
+  box.onsubmit = async e => {
+    const f = e.target.closest('[data-bn]'); if (!f) return;
+    e.preventDefault();
+    const ce = f.dataset.bn, el = f.elements;
+    if (ce === 'conformitate' || ce === 'management') {
+      const pre = ce === 'conformitate' ? 'cf' : 'mg', valori = {};
+      f.querySelectorAll('[data-crit]').forEach(d => { const k = d.dataset.crit, ales = f.querySelector(`[name="${pre}-${k}"]:checked`);
+        if (ales) valori[k] = { ok: ales.value === '1', nota: (f.querySelector(`[name="${pre}-nota-${k}"]`) || {}).value || '' }; });
+      if (!Object.keys(valori).length) return toast('Alege „îndeplinit” sau „neîndeplinit” la cel puțin un criteriu.', true);
+      return gata(await SB.rpc('bonus_evalueaza', { p_space: loc, p_luna: c.luna, p_ce: ce, p_valori: valori }), ce === 'conformitate' ? 'Evaluarea e salvată. Cei care vând au fost anunțați.' : 'Criteriile sunt salvate.');
+    }
+    if (ce === 'vanzari') {
+      const randuri = [{ space_id: loc, an, luna: lu, medie_zilnica: nrSauNull(el.medie.value), vanzari: nrSauNull(el.vanzari.value), bonuri_zi: nrSauNull(el.bonuri_zi.value), bon_mediu: nrSauNull(el.bon_mediu.value) }];
+      const x = await SB.from('bonus_vanzari').upsert(randuri, { onConflict: 'space_id,an,luna' });
+      if (x.error) return gata(x);
+      if (nrSauNull(el.medie_t.value) !== null) return gata(await SB.from('bonus_vanzari').upsert([{ space_id: loc, an: an - 1, luna: lu, medie_zilnica: nrSauNull(el.medie_t.value) }], { onConflict: 'space_id,an,luna' }), 'Vânzările sunt salvate.');
+      return gata(x, 'Vânzările sunt salvate.');
+    }
+    if (ce === 'setari') {
+      const trepte = [...f.querySelectorAll('.bn-treapta')].map(d => ({ prag: nrSauNull(d.querySelector('[data-prag]').value), fond: nrSauNull(d.querySelector('[data-fond]').value) }))
+        .filter(x => x.prag !== null && x.fond !== null).sort((x, y) => x.prag - y.prag);
+      const nr = k => nrSauNull(el[k].value) ?? 0;
+      return gata(await SB.from('bonus_setari').update({ trepte, procent_vanzare: nr('procent_vanzare'), procent_coacere: nr('procent_coacere'), conformitate_suma: nr('conformitate_suma'),
+        prag_proceduri: nr('prag_proceduri'), calitate_suma: nr('calitate_suma'), calitate_prag: nrSauNull(el.calitate_prag.value) ?? 9.5, management_suma: nr('management_suma'),
+        plafon_procent: nrSauNull(el.plafon_procent.value) }).eq('space_id', loc), 'Regulile sunt salvate.');
+    }
+  };
+  box.onchange = async e => {
+    const camp = e.target.closest('[data-c]'), tr = e.target.closest('[data-om]'); if (!camp || !tr) return;
+    const k = camp.dataset.c, val = k === 'manager' ? camp.checked : k === 'aport' ? (nrSauNull(camp.value) ?? 0) : k === 'prima_calitate' ? (camp.value === '' ? null : camp.value === 'true') : camp.value;
+    gata(await SB.from('bonus_oameni').update({ [k]: val }).eq('space_id', loc).eq('luna', c.luna).eq('user_id', tr.dataset.om));
+  };
+  box.onclick = async e => {
+    const b = e.target.closest('button'); if (!b || b.type === 'submit') return;
+    const d = b.dataset;
+    if (d.treaptaNoua !== undefined) { sel('[data-trepte]').insertAdjacentHTML('beforeend', '<div class="bn-treapta"><label>Creștere de la (%)<input class="field" data-prag inputmode="decimal"></label><label>Fond (lei)<input class="field" data-fond inputmode="decimal"></label><button class="rez-anul" type="button" data-sterge-treapta>șterge</button></div>'); return; }
+    if (d.stergeTreapta !== undefined) { b.closest('.bn-treapta').remove(); return; }
+    if (d.porneste !== undefined) return gata(await SB.rpc('bonus_porneste', { p_space: loc, p_luna: c.luna }), 'Luna e pornită, cu echipa din luna trecută.');
+    if (d.adauga !== undefined) return gata(await SB.from('bonus_oameni').insert({ ...cheie, user_id: sel('[data-adauga-om]').value, fel: 'vanzare' }));
+    if (d.scoate !== undefined) { if (!confirm('Scoți omul din echipa de bonus a lunii?')) return; return gata(await SB.from('bonus_oameni').delete().eq('space_id', loc).eq('luna', c.luna).eq('user_id', b.closest('[data-om]').dataset.om)); }
+    if (d.inchide !== undefined) { if (!confirm(`Închizi bonusul pe ${lunaUman(c.luna)} la ${numeLoc(loc)}? Sumele rămân înghețate și fiecare om o primește pe a lui în notificare.`)) return;
+      return gata(await SB.rpc('bonus_inchide', { p_space: loc, p_luna: c.luna }), 'Bonusul lunii e închis.'); }
+    if (d.redeschide !== undefined) { if (!confirm('Redeschizi bonusul lunii? Sumele înghețate se șterg și se recalculează.')) return; return gata(await SB.rpc('bonus_redeschide', { p_space: loc, p_luna: c.luna })); }
+  };
+}
+// Nota zilnică a vitrinei, pe pagina Tura (pentru cine vinde, în tură).
+function notaCard(ba) {
+  const n = ba.nota_mea, prag = ba.prag;
+  return `<div class="nota-card" data-nota-loc="${esc(ba.space_id)}" data-prag="${prag}" data-are="${n ? 1 : ''}"><span class="eyebrow">Calitatea vitrinei · azi</span>
+    <p>${n ? `Ai dat azi nota <b>${nota1(n.nota)}</b>. O poți schimba până la sfârșitul zilei.` : 'Ce notă dai azi produselor din vitrină?'}</p>
+    <div class="nota-rand">${[10, 9.5, 9, 8.5, 8, 7, 6, 5].map(x => `<button type="button" data-nota="${x}" class="${n && +n.nota === x ? 'on' : ''}">${nota1(x)}</button>`).join('')}</div>
+    <textarea class="field" rows="2" maxlength="1000" data-nota-com placeholder="Ce nu a fost în regulă? (îl vede cine coace)" hidden>${esc(n ? n.comentariu : '')}</textarea>
+    <button class="btn sm" type="button" data-nota-salv hidden>Salvează nota</button>
+    <small class="muted">${ba.medie_luna !== null && ba.medie_luna !== undefined ? `Media lunii: ${nota1(ba.medie_luna)}, în ${ba.zile_notate} zile notate. ` : ''}La o notă sub ${nota1(prag)} scrii și motivul.</small></div>`;
+}
+function leagaNota(box) {
+  const card = box.querySelector('[data-nota-loc]'); if (!card) return;
+  const com = card.querySelector('[data-nota-com]'), salv = card.querySelector('[data-nota-salv]'), prag = +card.dataset.prag; let ales = null;
+  const salveaza = async () => {
+    const rand = { nota: ales, comentariu: ales < prag ? com.value.trim() : '' };
+    const x = card.dataset.are ? await SB.from('note_calitate').update(rand).eq('space_id', card.dataset.notaLoc).eq('zi', ziLocala()).eq('user_id', SB_USER_ID)
+      : await SB.from('note_calitate').insert({ space_id: card.dataset.notaLoc, ...rand });
+    if (x.error) return toast(x.error.message || 'Nota nu s-a salvat.', true);
+    toast(`Nota de azi: ${nota1(ales)}. Mulțumim.`); incarcaTura();
+  };
+  card.addEventListener('click', e => {
+    const b = e.target.closest('[data-nota]');
+    if (b) { ales = +b.dataset.nota; card.querySelectorAll('[data-nota]').forEach(x => x.classList.toggle('on', x === b));
+      if (ales >= prag) { com.hidden = salv.hidden = true; salveaza(); } else { com.hidden = salv.hidden = false; com.focus(); } }
+    else if (e.target.closest('[data-nota-salv]')) { if (com.value.trim().length < 3) return toast('Scrie pe scurt ce nu a fost în regulă.', true); salveaza(); }
+  });
 }
 
 // ---------- Jurnalul de croissant (Academia → Patiserie) ----------

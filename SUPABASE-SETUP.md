@@ -374,11 +374,42 @@ decide cineva de deasupra lui. Dacă e admisă, punctele se dau înapoi.
 
 **Raportul lunar** (*Echipa → Oameni și puncte*): punctele câștigate, pierdute și nete ale fiecărui om,
 cu descărcare în tabel. GM sau AE apasă **Închide luna** după ce luna s-a terminat și nu mai sunt
-contestații nedecise; cifrele rămân înghețate în `puncte_luna` (pentru bonus), iar pierderile lunii nu se
+contestații nedecise; cifrele rămân înghețate în `puncte_luna`, iar pierderile lunii nu se
 mai pot contesta. Adminul o poate redeschide.
 
 Verificările de la 5 minute (`verifica-ture`, din 0016) trimit acum și avertismentele către om. Nu e
 nimic de configurat în plus.
+
+## 22. Bonusul pe magazin
+
+Rulează [`0022_bonus.sql`](supabase/migrations/0022_bonus.sql), apoi fișierul intern cu datele
+(`45-bonus-date.sql`: treptele, sumele, criteriile și vânzările de referință). Datele sunt interne și
+nu stau în acest depozit; fără ele, pagina nu apare la nicio locație. Fără migrare, pagina spune că
+lipsește, iar restul site-ului merge ca înainte.
+
+Punctele (XP) **nu sunt bani**: rămân pentru niveluri, insigne și clasament. Banii vin doar din
+sistemul de bonusare pe magazin, iar aplicația îi măsoară criteriile.
+
+- **Bonus** (`#/bonus`, filă în *Tura* și *Echipa*, doar la locațiile cu bonus configurat): creșterea
+  față de aceeași lună a anului trecut (media zilnică de vânzări), treapta atinsă, media necesară
+  pentru fiecare treaptă și bonusul fiecăruia. Omul își vede doar sumele lui; GM și AE le văd pe toate.
+- **Echipa lunii**: se preia din luna trecută sau din conturile legate de locație (RL este managerul,
+  PP + B coace). GM / AE o corectează, scriu vânzările lunii, aportul fiecăruia la vânzări și cine a
+  încasat prima de calitate.
+- **Conformitatea**: o evaluează lunar responsabilul de magazin, criteriu cu criteriu. La procedurile
+  de deschidere / închidere aplicația arată dovada din fișe; un verdict contrar fișelor cere o notă.
+  „Neîndeplinit” cere motiv, iar omul îl vede. Suma se plătește doar dacă toate criteriile sunt
+  îndeplinite (pragul fișelor se schimbă din `bonus_setari.prag_proceduri`, implicit 100%).
+- **Nota de calitate**: cine vinde dă zilnic, din pagina Tura, o notă produselor din vitrină (din
+  jumătate în jumătate de punct; sub prag scrie și motivul). Cine coace vede notele și media lunii.
+- **Bonusul de management**: criteriile de echipă le calculează aplicația, pe cele individuale le
+  bifează GM / AE.
+- **Închiderea**: GM / AE apasă *Închide bonusul lunii* după ce luna s-a terminat, vânzările sunt
+  scrise și evaluările făcute. Sumele îngheață, fiecare primește o notificare cu suma lui brută.
+  Adminul poate redeschide luna.
+
+Regulile eliminatorii se aplică automat: magazin în declin = nimic din sistem; fără prima de calitate
+= niciun bonus pentru acel om. Partea celui fără primă nu se împarte celorlalți.
 
 ## Variabilele, pe scurt
 

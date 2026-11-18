@@ -109,6 +109,14 @@ nefăcută costă 10, dar nu dacă a făcut-o un coleg sau dacă locația nu are
 șefii, pentru oamenii lor; luna o închide doar GM / AE, nu în curs și nu cu contestații nedecise;
 după închidere cifrele rămân înghețate. Ultimul rând: „58 din 58”.
 
+Bonusul pe magazin (`22_bonus.sql`, după 0022; cifrele din test sunt inventate): creșterea se calculează
+din media zilnică față de aceeași lună a anului trecut și alege treapta; fondul se împarte între vânzare
+(după aport) și coacere; declinul și lipsa primei de calitate taie tot; conformitatea e tot sau nimic,
+o evaluează doar responsabilul locației, cu motiv la „neîndeplinit”; nota zilnică o dă doar cine vinde,
+o dată pe zi, cu motiv sub prag; bonusul de management își calculează singur criteriile de echipă;
+vânzătoarea își vede doar sumele ei; luna o închide doar GM / AE, iar după închidere nu se mai schimbă
+nimic. Ultimul rând: „47 din 47”.
+
 Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina reală în Playwright și
 trimite fiecare operație către baza locală, ca un cont anume: aceleași RLS, triggere și funcții ca în
 Supabase. Așa se verifică fluxurile cap-coadă (clock-in, fișă, semnalare, feedback, contestație).
