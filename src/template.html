@@ -577,6 +577,18 @@
     .cmd-foaie thead { display: none; } .cmd-foaie tr { display: block; border-bottom: 1px solid var(--ink); padding: 8px 0; } .cmd-foaie td { display: block; border: 0; padding: 3px 0; } .cmd-foaie .n { text-align: left; }
     .cmd-cine-l { flex-wrap: wrap; }
   }
+  .liv.a-mea { border-left: 3px solid var(--ink); } .liv.acum { border-color: var(--ink); } .liv.livrat { background: #f7faf7; } .liv.problema { border-left: 3px solid #c0504d; }
+  .pill.liv-pe_drum { background: var(--sand); border-color: var(--sand); } .pill.liv-livrat { background: #e3efe6; border-color: #e3efe6; color: #2f6a40; }
+  .pill.liv-problema { background: #f6dedd; border-color: #f6dedd; color: #9a3b2f; } .pill.liv-de_facut { border-color: var(--ink); }
+  .liv-det { margin: 0 0 8px; font-size: .95rem; color: var(--ink-soft); line-height: 1.6; } .liv-det b { color: var(--ink); font-weight: 500; } .liv-harta { font-size: .82rem; }
+  ul.liv-cont, .liv-cont ul { list-style: none; margin: 8px 0; padding: 0; border-top: 1px solid var(--line); } .liv-cont li { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+  .liv-cont i { font-style: normal; color: var(--ink-soft); } .liv-cont em { font-style: normal; font-size: .76rem; color: #9a3b2f; } details.liv-cont summary { cursor: pointer; font-size: .9rem; padding: 6px 0; }
+  .liv-gata { margin: 8px 0; font-size: .92rem; color: #2f6a40; } .liv-prob { margin: 8px 0; font-size: .95rem; color: #9a3b2f; }
+  .liv-jos { display: flex; gap: 10px 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 10px; } .liv-jos .calc-act { margin-top: 0; align-items: center; }
+  .liv-sof .field { padding: 8px 30px 8px 10px; font-size: .9rem; } .liv-cine { font-size: .9rem; color: var(--muted); } .liv-cine b { color: var(--ink); font-weight: 500; }
+  .liv-rezumat { margin: 0; font-size: 1rem; } .liv-rosu { color: #9a3b2f; } .liv-dovada { margin: 12px 0 0; padding: 14px; background: var(--bg-soft); max-width: none; }
+  .liv-poza { max-width: min(92vw, 900px); } .liv-poza img { display: block; max-width: 100%; max-height: 76vh; margin: 0 auto 12px; }
+  .liv .btn.sm { padding-top: 11px; padding-bottom: 11px; }
   /* Pe desktop formularul ține toată pagina: detaliile comenzii în stânga, produsele în dreapta. */
   @media (min-width: 1100px) {
     .frm.cmd-form { grid-template-columns: minmax(340px, 1fr) minmax(0, 1.7fr); column-gap: 40px; padding: 28px 32px; align-items: start; }
@@ -1425,6 +1437,7 @@ function route() {
   else if (a === 'mesaje') { html = viewMesaje(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'semnalari') { html = viewSemnalari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'comenzi') { html = viewComenzi(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -4309,7 +4322,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap lat">
-      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -5059,10 +5072,162 @@ function cmdLeagaCatalog(box, reia) {
   });
 }
 
+// ---------- Fișa de livrare (migrarea 0025) ----------
+// Livrările zilei ies din comenzi (B2B, marfa magazinelor) și din sarcinile scrise de mână.
+// Șoferul îl pune biroul sau o preia șoferul; „Livrat” cere cine a primit și o poză.
+const LIV_FEL = { comanda: 'Client B2B', magazin: 'Marfă pentru magazin', sarcina: 'Sarcină' };
+const LIV_STARE = { de_facut: 'De făcut', pe_drum: 'Pe drum', livrat: 'Livrat', problema: 'Problemă', anulata: 'Anulată' };
+const livEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not exist/i.test((e.code || '') + ' ' + (e.message || ''))
+  ? 'Livrările se activează după ce rulezi în Supabase migrarea 0025_livrari.sql.' : (e.message || implicit);
+const livUrl = (zi, extra = '') => `#/livrari?zi=${zi}${extra}`;
+const livTitlu = l => l.fel === 'magazin' ? `Marfă pentru ${l.titlu}` : l.titlu;
+function viewLivrari(params) {
+  setTimeout(() => incarcaLivrari(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Șoferi și transport</span><h1>Livrări</h1>
+      <p class="sub">Ce e de dus azi și mâine, cine duce și ce s-a livrat. Comenzile apar aici singure.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('livrari')}<div id="livBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+// Poza se micșorează în browser înainte de încărcare (latura mare de cel mult 1600 px).
+function livMicsoreaza(file) {
+  return new Promise((ok, rau) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      c.toBlob(b => b ? ok(b) : rau(new Error('Poza nu s-a putut pregăti.')), 'image/jpeg', 0.82);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rau(new Error('Fișierul ales nu e o poză.')); };
+    img.src = url;
+  });
+}
+function livCard(l, d) {
+  const activa = ['de_facut', 'pe_drum'].includes(l.stare), pot = d.birou || (d.sofer && (l.al_meu || !l.sofer_id));
+  const harta = l.unde && l.fel !== 'magazin' ? ` <a class="liv-harta" href="https://www.google.com/maps/search/?api=1&query=${enc(l.unde + ', Timișoara')}" target="_blank" rel="noopener">hartă</a>` : '';
+  const det = [l.de_unde ? `de ridicat din <b>${esc(l.de_unde)}</b>` : '', l.unde ? `la <b>${esc(l.unde)}</b>${harta}` : '', l.ora ? `ora <b>${esc(l.ora)}</b>` : '', l.aviz_pe ? `aviz pe ${esc(l.aviz_pe)}` : ''].filter(Boolean);
+  const cont = l.continut || [], linie = c => `<li><b>${cmdNr(c.cantitate)} ${esc(c.unitate)}</b> ${esc(c.produs)}${c.detalii ? ` <i>· ${esc(c.detalii)}</i>` : ''}${c.pentru ? ` <i>· pentru ${esc(c.pentru)}</i>` : ''}${c.confirmat ? '' : ' <em>neconfirmat de producție</em>'}</li>`;
+  return `<article class="semn liv ${l.stare} ${l.al_meu && activa ? 'a-mea' : ''}" id="liv-${l.id}">
+    <div class="semn-cap"><span class="eyebrow">${esc(LIV_FEL[l.fel])}${l.tura ? ` · tura ${l.tura}` : ''}</span>
+      <span>${activa && !l.sofer_id ? '<span class="pill crit">Fără șofer</span> ' : ''}<span class="pill liv-${l.stare}">${LIV_STARE[l.stare]}</span></span></div>
+    <h3 class="cmd-cine">${esc(livTitlu(l))}</h3>
+    ${det.length ? `<p class="liv-det">${det.join(' · ')}</p>` : ''}
+    ${l.detalii ? `<p class="semn-rasp">${esc(l.detalii)}</p>` : ''}${l.nota ? `<p class="semn-rasp"><b>Notă:</b> ${esc(l.nota)}</p>` : ''}
+    ${cont.length ? (cont.length > 6 ? `<details class="liv-cont"><summary>${cont.length} produse de dus</summary><ul>${cont.map(linie).join('')}</ul></details>` : `<ul class="liv-cont">${cont.map(linie).join('')}</ul>`) : ''}
+    ${l.stare === 'livrat' ? `<p class="liv-gata">Livrat ${oraLocala(l.facut_la)}${l.facut_de ? ` de ${esc(l.facut_de)}` : ''} · a primit <b>${esc(l.primit_de)}</b>${l.poza ? ` · <button class="rez-anul" type="button" data-liv-poza="${esc(l.poza)}">Vezi poza</button>` : ` · fără poză: ${esc(l.fara_poza)}`}</p>` : ''}
+    ${l.stare === 'problema' ? `<p class="liv-prob"><b>Problemă</b> (${oraLocala(l.facut_la)}${l.facut_de ? `, ${esc(l.facut_de)}` : ''}): ${esc(l.problema)}</p>` : ''}
+    <div class="liv-jos">${d.birou && l.stare !== 'anulata' && l.stare !== 'livrat' ? `<label class="liv-sof"><span class="sr-only">Șoferul</span><select class="field" data-liv-sofer="${l.id}"><option value="">fără șofer</option>${d.soferi.map(s => `<option value="${esc(s.user_id)}" ${s.user_id === l.sofer_id ? 'selected' : ''}>${esc(s.nume)}</option>`).join('')}</select></label>`
+        : l.sofer ? `<span class="liv-cine">Șofer: <b>${esc(l.sofer)}</b>${l.al_meu ? ' (tu)' : ''}</span>` : ''}
+      <div class="calc-act">
+        ${activa && d.sofer && !l.sofer_id ? `<button class="btn sm" type="button" data-liv-preiau="${l.id}">Preiau</button>` : ''}
+        ${l.stare === 'de_facut' && pot && (l.sofer_id || d.birou) ? `<button class="btn ghost sm" type="button" data-liv-st="${l.id}" data-st="pe_drum">Am plecat</button>` : ''}
+        ${activa && pot && (l.sofer_id || d.birou) ? `<button class="btn sm" type="button" data-liv-livrat="${l.id}">Livrat</button><button class="btn ghost sm" type="button" data-liv-prob="${l.id}">Problemă</button>` : ''}
+        ${l.stare === 'problema' && pot ? `<button class="btn sm" type="button" data-liv-livrat="${l.id}">Livrat până la urmă</button><button class="btn ghost sm" type="button" data-liv-st="${l.id}" data-st="de_facut">Reiau</button>` : ''}
+        ${activa && d.sofer && l.al_meu ? `<button class="rez-anul" type="button" data-liv-renunt="${l.id}">Renunț la ea</button>` : ''}
+        ${l.stare === 'livrat' && pot ? `<button class="rez-anul" type="button" data-liv-st="${l.id}" data-st="de_facut">Am greșit, nu e livrată</button>` : ''}
+        ${l.pot_sterge ? `<button class="rez-anul" type="button" data-liv-anul="${l.id}">Anulează sarcina</button>` : ''}
+      </div></div>
+    <div class="liv-form" data-liv-form="${l.id}"></div>
+    ${l.ceruta_de ? `<small class="muted">Cerută de ${esc(l.ceruta_de)}</small>` : ''}</article>`;
+}
+async function incarcaLivrari(params) {
+  const box = document.getElementById('livBody'); if (!box) return;
+  const zi = /^\d{4}-\d{2}-\d{2}$/.test(params.zi || '') ? params.zi : cmdZiPlus(0);
+  let r1, r2;
+  try { [r1, r2] = await Promise.all([SB.rpc('liv_zi', { p_zi: zi }), SB.rpc('liv_zile', { p_de: cmdZiPlus(0), p_pana: cmdZiPlus(7) })]); } catch (e) { r1 = { error: e }; }
+  if (!document.getElementById('livBody')) return;
+  if (!r1 || r1.error) { console.error('Livrări:', r1 && r1.error); box.innerHTML = `<p class="err">${esc(livEroare((r1 && r1.error) || {}, 'Livrările nu s-au putut încărca.'))}</p>`; return; }
+  const d = r1.data, zile = Object.fromEntries(((r2 && r2.data) || []).map(z => [z.zi, z])), L = d.livrari;
+  const deFacut = L.filter(l => ['de_facut', 'pe_drum', 'problema'].includes(l.stare)), gata = L.filter(l => l.stare === 'livrat'), anulate = L.filter(l => l.stare === 'anulata');
+  const fara = deFacut.filter(l => !l.sofer_id && l.stare !== 'problema').length;
+  // șoferul își vede întâi livrările lui, apoi pe cele libere
+  if (d.sofer) deFacut.sort((a, b) => (b.al_meu - a.al_meu) || (!a.sofer_id - !b.sofer_id) * -1);
+  const chips = [...Array(8).keys()].map(i => cmdZiPlus(i));
+  box.innerHTML = `<div class="cmd-zile">${chips.map(z => { const s = zile[z]; return `<a class="pl-chip ${z === zi ? 'on' : ''} ${s && s.fara_sofer ? 'plin' : ''}" href="${livUrl(z)}" title="${s ? `${s.toate} livrări, ${s.ramase} rămase, ${s.fara_sofer} fără șofer` : 'nicio livrare'}">${esc(cmdZiNume(z))}${s ? `<small>${s.ramase || '✓'}</small>` : ''}</a>`; }).join('')}
+      <label class="cmd-data"><span class="sr-only">Altă zi</span><input type="date" class="field" data-liv-zi value="${zi}"></label></div>
+    <div class="msg-act"><p class="liv-rezumat">${L.length ? `<b>${deFacut.length}</b> de făcut${fara ? ` · <b class="liv-rosu">${fara} fără șofer</b>` : ''} · <b>${gata.length}</b> livrate` : `Nimic de livrat ${esc(cmdZiNume(zi))}.`}</p>
+      ${d.pot_adauga && zi >= cmdZiPlus(0) ? '<button class="btn sm" type="button" data-liv-nou>Sarcină nouă</button>' : ''}</div>
+    <form class="calc-card frm liv-nou" id="livNou" hidden autocomplete="off"><span class="eyebrow">Sarcină nouă pentru șoferi</span>
+      <label>Ce e de făcut<input class="field" name="titlu" required minlength="3" maxlength="160" placeholder="Ex.: 20 baxuri de apă plată; termobox de dus la Porumbescu; 4 kg banane de la Selgros"></label>
+      <div class="frm-2"><label>De unde se ridică<input class="field" name="de_unde" maxlength="160" placeholder="Peciu, Fructus, Selgros…"></label>
+        <label>Unde se duce<input class="field" name="unde" maxlength="200" placeholder="Adresa sau locația"></label>
+        <label>Pentru ziua<input class="field" type="date" name="zi" required min="${cmdZiPlus(0)}" value="${zi >= cmdZiPlus(0) ? zi : cmdZiPlus(0)}"></label>
+        <label>Ora<input class="field" name="ora" maxlength="40" placeholder="ex.: până la 10:00"></label>
+        <label>Tura<select class="field" name="tura"><option value="">oricare</option><option value="1">tura 1</option><option value="2">tura 2</option></select></label>
+        ${d.birou ? `<label>Șoferul<select class="field" name="sofer"><option value="">îl preia cine e liber</option>${d.soferi.map(s => `<option value="${esc(s.user_id)}">${esc(s.nume)}</option>`).join('')}</select></label>` : ''}</div>
+      <label>Detalii<textarea class="field" name="detalii" rows="2" maxlength="1000" placeholder="Opțional: cu cine se ține legătura, ce se plătește, ce se aduce înapoi."></textarea></label>
+      <div class="calc-act"><button class="btn" type="submit">Adaugă sarcina</button><button class="btn ghost" type="button" data-liv-renunta>Renunț</button></div></form>
+    ${deFacut.length ? `<div class="msg-lista">${deFacut.map(l => livCard(l, d)).join('')}</div>` : ''}
+    ${gata.length ? `<h3 class="jp-h3">Livrate</h3><div class="msg-lista">${gata.map(l => livCard(l, d)).join('')}</div>` : ''}
+    ${anulate.length ? `<p class="muted mic" style="margin-top:16px">Anulate: ${anulate.map(l => esc(livTitlu(l))).join('; ')}.</p>` : ''}`;
+  const reia = () => incarcaLivrari({ ...params, zi, l: '' });
+  const rpc = async (nume, args, mesaj) => { const { error } = await SB.rpc(nume, args); if (error) { toast(error.message || 'Nu s-a salvat.', true); return false; } if (mesaj) toast(mesaj); reia(); return true; };
+  box.querySelector('[data-liv-zi]').addEventListener('change', e => { if (e.target.value) location.hash = livUrl(e.target.value); });
+  const fNou = box.querySelector('#livNou');
+  box.onclick = async e => {
+    const t = e.target.closest('[data-liv-nou], [data-liv-renunta], [data-liv-preiau], [data-liv-renunt], [data-liv-st], [data-liv-livrat], [data-liv-prob], [data-liv-anul], [data-liv-poza], [data-liv-inchide]'); if (!t) return;
+    const ds = t.dataset;
+    if (ds.livNou !== undefined) { fNou.hidden = false; fNou.elements.titlu.focus(); }
+    else if (ds.livRenunta !== undefined) fNou.hidden = true;
+    else if (ds.livPreiau) rpc('liv_pune_sofer', { p_id: +ds.livPreiau, p_sofer: SB_USER_ID }, 'E a ta.');
+    else if (ds.livRenunt) rpc('liv_pune_sofer', { p_id: +ds.livRenunt, p_sofer: null }, 'Ai renunțat. Apare din nou ca liberă.');
+    else if (ds.livSt) rpc('liv_stare', { p_id: +ds.livSt, p_stare: ds.st, p: {} }, ds.st === 'pe_drum' ? 'Drum bun.' : 'Am redeschis-o.');
+    else if (ds.livAnul) { if (confirm('Anulezi sarcina?')) rpc('liv_anuleaza', { p_id: +ds.livAnul }, 'Sarcina e anulată.'); }
+    else if (ds.livProb) {
+      const motiv = await intreaba('Ce nu a mers?', { loc: 'Ex.: clientul era închis; lipseau 2 pâini; a refuzat marfa. Biroul e anunțat pe loc.', obligatoriu: true, buton: 'Trimite' });
+      if (motiv !== null) rpc('liv_stare', { p_id: +ds.livProb, p_stare: 'problema', p: { problema: motiv } }, 'Am anunțat biroul.');
+    } else if (ds.livPoza) {
+      const { data, error } = await SB.storage.from('livrari').createSignedUrl(ds.livPoza, 600);
+      if (error || !data) return toast('Poza nu s-a putut deschide.', true);
+      const m = document.createElement('div'); m.className = 'qr-modal'; m.innerHTML = `<div class="qr-box liv-poza"><img src="${esc(data.signedUrl)}" alt="Poza livrării"><div class="calc-act"><button class="btn ghost" type="button">Închide</button></div></div>`;
+      m.addEventListener('click', ev => { if (ev.target === m || ev.target.closest('button')) m.remove(); }); document.body.appendChild(m);
+    } else if (ds.livInchide) box.querySelector(`[data-liv-form="${ds.livInchide}"]`).innerHTML = '';
+    else if (ds.livLivrat) {
+      const id = +ds.livLivrat, loc = box.querySelector(`[data-liv-form="${id}"]`);
+      loc.innerHTML = `<form class="frm liv-dovada" autocomplete="off"><label>Cine a primit marfa<input class="field" name="primit_de" required minlength="2" maxlength="120" placeholder="Numele celui care a primit"></label>
+        <label data-cu-poza>Poza mărfii lăsate<input class="field" type="file" name="poza" accept="image/*" capture="environment"></label>
+        <label data-fara-poza hidden>De ce nu poți face poza<input class="field" name="fara_poza" maxlength="200" placeholder="Ex.: telefonul nu are baterie"></label>
+        <button class="rez-anul" type="button" data-comuta-poza>Nu pot face poză</button>
+        <div class="calc-act"><button class="btn" type="submit">Confirm livrarea</button><button class="btn ghost" type="button" data-liv-inchide="${id}">Renunț</button></div></form>`;
+      const f = loc.querySelector('form'); f.elements.primit_de.focus();
+      f.querySelector('[data-comuta-poza]').addEventListener('click', ev => { const fara = f.querySelector('[data-fara-poza]'), cu = f.querySelector('[data-cu-poza]'); fara.hidden = !fara.hidden; cu.hidden = !cu.hidden; ev.target.textContent = fara.hidden ? 'Nu pot face poză' : 'Fac totuși poza'; });
+      f.addEventListener('submit', async ev => {
+        ev.preventDefault();
+        const el = f.elements, faraPoza = !f.querySelector('[data-fara-poza]').hidden, fisier = el.poza.files[0], buton = f.querySelector('[type=submit]');
+        if (!faraPoza && !fisier) return toast('Fă o poză mărfii sau apasă „Nu pot face poză”.', true);
+        if (faraPoza && el.fara_poza.value.trim().length < 3) return toast('Scrie de ce nu poți face poza.', true);
+        buton.disabled = true; buton.textContent = 'Se trimite…';
+        let cale = '';
+        if (!faraPoza) {
+          try {
+            const blob = await livMicsoreaza(fisier); cale = `${zi}/${id}-${Date.now()}.jpg`;
+            const { error } = await SB.storage.from('livrari').upload(cale, blob, { contentType: 'image/jpeg' });
+            if (error) throw error;
+          } catch (er) { console.error('Poza livrării:', er); buton.disabled = false; buton.textContent = 'Confirm livrarea'; return toast('Poza nu s-a încărcat. Încearcă din nou sau apasă „Nu pot face poză”.', true); }
+        }
+        const ok = await rpc('liv_stare', { p_id: id, p_stare: 'livrat', p: { primit_de: el.primit_de.value.trim(), poza: cale, fara_poza: faraPoza ? el.fara_poza.value.trim() : '' } }, 'Livrare confirmată.');
+        if (!ok) { buton.disabled = false; buton.textContent = 'Confirm livrarea'; }
+      });
+    }
+  };
+  box.onchange = e => { const s = e.target.closest('[data-liv-sofer]'); if (s) rpc('liv_pune_sofer', { p_id: +s.dataset.livSofer, p_sofer: s.value || null }, s.value ? 'Șoferul a fost anunțat.' : 'Livrarea e din nou liberă.'); };
+  fNou.onsubmit = async e => {
+    e.preventDefault(); const el = fNou.elements, buton = fNou.querySelector('[type=submit]'); buton.disabled = true;
+    const { error } = await SB.rpc('liv_adauga', { p: { titlu: el.titlu.value.trim(), de_unde: el.de_unde.value.trim(), unde: el.unde.value.trim(), zi: el.zi.value, ora: el.ora.value.trim(),
+      tura: el.tura.value ? +el.tura.value : null, sofer: el.sofer ? el.sofer.value || null : null, detalii: el.detalii.value.trim() } });
+    buton.disabled = false;
+    if (error) return toast(error.message || 'Sarcina nu s-a adăugat.', true);
+    toast('Sarcina e pe listă. Șoferii au fost anunțați.');
+    if (el.zi.value !== zi) location.hash = livUrl(el.zi.value); else reia();
+  };
+  if (params.l) { const el = document.getElementById('liv-' + params.l); if (el) { el.classList.add('acum'); el.scrollIntoView({ block: 'center' }); } }
+}
+
 function tabsOm(activ) {
   const t = [];
   if (areTura()) t.push(['tura', 'Tura', '#/tura']);
-  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
+  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
   if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
   if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);
   return `<nav class="tabs tabs-om">${t.map(([k, et, h]) => `<a href="${h}" class="${k === activ ? 'on' : ''}">${et}${k === 'mesaje' ? '<i class="tab-nr" data-de-confirmat hidden></i>' : ''}</a>`).join('')}</nav>`;

@@ -27,6 +27,8 @@
       async signOut() { sessionStorage.removeItem('s'); return {}; },
     },
     functions: { invoke: async () => ({ data: null, error: null }) },
-    storage: { from: () => ({ createSignedUrl: async () => ({ data: null, error: null }) }) },
+    // Stocarea de fișiere e simulată: încărcările se țin minte în pagină (window.__incarcari).
+    storage: { from: () => ({ createSignedUrl: async () => ({ data: null, error: null }),
+      upload: async (cale, blob) => { (window.__incarcari = window.__incarcari || []).push({ cale, marime: blob && blob.size, tip: blob && blob.type }); return { data: { path: cale }, error: null }; } }) },
   }; } };
 })();

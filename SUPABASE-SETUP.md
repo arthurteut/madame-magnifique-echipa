@@ -457,6 +457,28 @@ Pagina **Comenzi** (`#/comenzi`, filă în *Tura* și *Echipa*) ține locul grup
 
 Ca rolurile secțiilor să se potrivească cu oamenii voștri, schimbați coloana `roluri` din `cmd_sectii`.
 
+## 25. Fișa de livrare
+
+Rulează [`0025_livrari.sql`](supabase/migrations/0025_livrari.sql). Migrarea creează și bucket-ul privat
+`livrari` din Storage, cu regulile lui; verifică în Supabase → Storage că apare. Fără migrare, pagina
+spune că lipsește, iar restul site-ului merge ca înainte.
+
+Pagina **Livrări** (`#/livrari`, filă în *Tura* și *Echipa*) ține locul grupului de livrări:
+
+- **Livrările apar singure**: o comandă B2B devine o livrare, cu clientul, adresa și ora ei, și se ține
+  după comandă (zi schimbată, anulare). Marfa unui magazin e o livrare pe zi și pe tură, cu tot ce a
+  cerut magazinul: necesar, comenzi de clienți, creme.
+- **Sarcini scrise de mână** (ridicări, transferuri, cumpărături): le adaugă biroul, șoferii, producția,
+  RL, VT, GD și PP + B.
+- **Șoferii** sunt conturile cu rolul LOG. Biroul alege șoferul din listă sau șoferul apasă „Preiau”
+  pe o livrare liberă; poate și renunța la a lui. Livrările fără șofer apar marcate.
+- **„Livrat”** cere cine a primit marfa și o poză (micșorată în browser, urcată în bucket-ul `livrari`)
+  sau motivul pentru care poza nu se poate face. **„Problemă”** cere ce nu a mers. Ora și șoferul se
+  pun singure. Sunt anunțați: cine a cerut livrarea, responsabilul magazinului pentru marfa lui și,
+  la problemă, GM, AE și CB2B.
+- **Cine ce vede**: biroul, șoferii și producția văd toate livrările; magazinul doar marfa lui; oricine
+  pe cele cerute de el. Citirea se face doar prin `liv_zi` și `liv_zile`.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

@@ -125,6 +125,14 @@ cine a comandat află răspunsul. Producția vede toate comenzile, dar nu telefo
 nu-și văd comenzile între ele. O linie schimbată se confirmă din nou, cea neatinsă nu; după ora-limită
 comanda e târzie; anularea cere motiv și blochează comanda. Ultimul rând: „36 din 36”.
 
+Fișa de livrare (`25_livrari.sql`, după 0025; date inventate): comanda B2B apare singură ca livrare, cu
+produsele ei; magazinul are o livrare pe zi și tură, care adună necesarul și comenzile clienților; cine
+vede ce (vânzătoarea doar marfa magazinului ei, șoferii și producția tot); sarcinile de mână și cine le
+poate adăuga; biroul pune șoferul, șoferul preia și renunță, dar nu ia livrarea altuia; „Livrat” cere
+cine a primit și poză sau motiv, „Problemă” cere motiv; cine trebuie e anunțat; comanda mutată sau
+anulată își mută sau anulează livrarea, iar una deja livrată nu se redeschide. Ultimul rând: „37 din 37”.
+
 Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina reală în Playwright și
-trimite fiecare operație către baza locală, ca un cont anume: aceleași RLS, triggere și funcții ca în
+trimite fiecare operație către baza locală, ca un cont anume (pagina se servește direct din depozit, iar
+încărcările de fișiere sunt simulate): aceleași RLS, triggere și funcții ca în
 Supabase. Așa se verifică fluxurile cap-coadă (clock-in, fișă, semnalare, feedback, contestație).
