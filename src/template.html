@@ -689,6 +689,8 @@
   .tura { max-width: 820px; }
   /* Paginile de lucru de pe desktop (Comenzi, Echipa) folosesc toată lățimea ecranului. */
   .wrap.lat { max-width: none; }
+  /* Bara de titlu a acestor pagini: pe jumătate de înaltă. */
+  @media (min-width: 641px) { .band:has(> .wrap.lat) { padding: 15px 0 16px; } .band:has(> .wrap.lat) h1 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); margin: 2px 0 4px; } .band:has(> .wrap.lat) .sub { font-size: .98rem; } }
   .wrap.lat .frm, .wrap.lat .msg-lista { max-width: none; }
   @media (min-width: 1100px) { .wrap.lat .msg-lista { grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 14px; align-items: start; } .wrap.lat .msg-lista > * { margin: 0; } }
   .tura-card { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--stone); padding: clamp(18px, 3vw, 26px); }
