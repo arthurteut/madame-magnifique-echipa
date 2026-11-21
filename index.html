@@ -554,7 +554,7 @@
   .cmd-l small, .cmd-foaie td small, .cmd-pe small { display: block; font-size: .76rem; } .cmd-l i { font-style: normal; color: var(--ink-soft); }
   .cmd-l em, .cmd-cine-l em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; color: var(--muted); white-space: nowrap; }
   .cmd-l.confirmata em, .cmd-cine-l.confirmata em { color: #2f6a40; } .cmd-l.refuzata em, .cmd-nu { color: #9a3b2f; } .cmd-l.refuzata b { text-decoration: line-through; }
-  .cmd-form { max-width: none; } .cmd-fel { display: flex; gap: 6px; flex-wrap: wrap; } .cmd-fel .pl-chip { text-transform: none; letter-spacing: .02em; font-size: .82rem; padding: 11px 14px; }
+  .frm.cmd-form, .frm.cmd-catform { max-width: none; } .cmd-fel { display: flex; gap: 6px; flex-wrap: wrap; } .cmd-fel .pl-chip { text-transform: none; letter-spacing: .02em; font-size: .82rem; padding: 11px 14px; }
   .cmd-form [hidden] { display: none !important; }
   .cmd-rand { display: grid; grid-template-columns: minmax(0, 2.2fr) 84px 84px minmax(0, 2fr) 34px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
   .cmd-rp small { display: block; font-size: .74rem; } .cmd-rp.liber { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6px; }
@@ -576,6 +576,17 @@
     .cmd-l { grid-template-columns: 64px 1fr; } .cmd-l em { grid-column: 2; }
     .cmd-foaie thead { display: none; } .cmd-foaie tr { display: block; border-bottom: 1px solid var(--ink); padding: 8px 0; } .cmd-foaie td { display: block; border: 0; padding: 3px 0; } .cmd-foaie .n { text-align: left; }
     .cmd-cine-l { flex-wrap: wrap; }
+  }
+  /* Pe desktop formularul ține toată pagina: detaliile comenzii în stânga, produsele în dreapta. */
+  @media (min-width: 1100px) {
+    .frm.cmd-form { grid-template-columns: minmax(340px, 1fr) minmax(0, 1.7fr); column-gap: 40px; padding: 28px 32px; align-items: start; }
+    .cmd-form > .eyebrow, .cmd-form > .cmd-fel, .cmd-form > p.mic:not(#cmdLimita) { grid-column: 1 / -1; }
+    .cmd-form > .frm-2 { grid-column: 1; grid-row: 3 / span 4; grid-template-columns: 1fr 1fr; align-content: start; }
+    .cmd-form > .frm-2 > label:first-child, .cmd-form > .frm-2 > label[data-pt="b2b"] { grid-column: 1 / -1; }
+    .cmd-form > .cmd-prod { grid-column: 2; grid-row: 3; } .cmd-form > .cmd-nota { grid-column: 2; grid-row: 4; }
+    .cmd-form > #cmdLimita { grid-column: 2; grid-row: 5; } .cmd-form > .calc-act { grid-column: 2; grid-row: 6; }
+    .cmd-prod .cmd-rand { grid-template-columns: minmax(0, 2fr) 110px 100px minmax(0, 2.4fr) 38px; } .cmd-prod .cmd-rp b { font-size: 1.02rem; }
+    .cmd-cat { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; }
   }
   @media print { .cmd-zile, .tabs-om, .cmd-btn, [data-cmd-tot], .cmd-tarziu { display: none !important; } .cmd-sectie { break-inside: avoid; } }
   .pl-imp .frm { max-width: none; } .pl-imp table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 6px 0 18px; }
@@ -4881,13 +4892,13 @@ function cmdDeschideForm(box, d, cat, zi, c, reia) {
         <label data-pt="b2b">Aviz pe<input class="field" name="aviz_pe" value="${esc(v('aviz_pe'))}" maxlength="160" placeholder="dacă diferă de client"></label>
       </div>
       <datalist id="cmdClienti">${cat.clienti.filter(x => x.activ).map(x => `<option value="${esc(x.nume)}">`).join('')}</datalist>
-      <div><span class="eyebrow">Produse</span>
+      <div class="cmd-prod"><span class="eyebrow">Produse</span>
         <div id="cmdRanduri"></div>
         <div class="cmd-adauga"><input class="field" id="cmdCauta" list="cmdProduse" placeholder="Caută un produs și alege-l din listă" aria-label="Caută un produs">
           <button class="btn ghost sm" type="button" data-liber>Produs care nu e în listă</button></div>
         <datalist id="cmdProduse">${cat.produse.filter(x => x.activ).map(x => `<option value="${esc(x.nume)}">${esc(cat.sectie[x.sectie] || '')}</option>`).join('')}</datalist>
       </div>
-      <label>Notă pentru producție<textarea class="field" name="nota" rows="2" maxlength="1000" placeholder="Opțional: ce trebuie știut și nu ține de un singur produs.">${esc(v('nota'))}</textarea></label>
+      <label class="cmd-nota">Notă pentru producție<textarea class="field" name="nota" rows="2" maxlength="1000" placeholder="Opțional: ce trebuie știut și nu ține de un singur produs.">${esc(v('nota'))}</textarea></label>
       <p class="muted mic" id="cmdLimita"></p>
       <div class="calc-act"><button class="btn" type="submit">${edit ? 'Salvează schimbările' : 'Trimite comanda'}</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>`;
   const form = loc.querySelector('#cmdForm'), el = form.elements, randuri = form.querySelector('#cmdRanduri'), cauta = form.querySelector('#cmdCauta');
