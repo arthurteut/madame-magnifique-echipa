@@ -676,6 +676,9 @@
   /* ---------- Tura, fișele bifate, echipa ---------- */
   .mic { font-size: .82rem; }
   .tura { max-width: 820px; }
+  /* Paginile de lucru de pe desktop (Comenzi, Echipa) folosesc toată lățimea ecranului. */
+  .wrap.lat { max-width: none; }
+  @media (min-width: 1100px) { .wrap.lat #cmdV .msg-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 14px; align-items: start; max-width: none; } .wrap.lat #cmdV .msg-lista > * { margin: 0; } }
   .tura-card { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--stone); padding: clamp(18px, 3vw, 26px); }
   .tura-card.in { border-left-color: #3d7a4f; }
   .tura-card h2 { font-size: clamp(1.3rem, 3vw, 1.7rem); margin: 8px 0 8px; }
@@ -4277,12 +4280,12 @@ async function incarcaFisa(params) {
 function viewEchipa(params) {
   const tab = ['program', 'oameni'].includes(params.tab) ? params.tab : 'azi';
   setTimeout(() => ({ program: incarcaProgram, oameni: incarcaOameni, azi: incarcaAzi })[tab](params), 0);
-  return `<section class="band"><div class="wrap">
+  return `<section class="band"><div class="wrap lat">
       <span class="eyebrow">Pentru șefi · în timp real</span>
       <h1>Echipa</h1>
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
-    <section class="block"><div class="wrap">
+    <section class="block"><div class="wrap lat">
       <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
@@ -4738,11 +4741,11 @@ async function cmdCatalog(fortat) {
 }
 function viewComenzi(params) {
   setTimeout(() => incarcaComenzi(params), 0);
-  return `<section class="band tura-band"><div class="wrap">
+  return `<section class="band tura-band"><div class="wrap lat">
       <span class="eyebrow">Către producție</span><h1>Comenzi</h1>
       <p class="sub">Comanda se scrie aici, nu pe grup. Fiecare secție își confirmă liniile, iar tu vezi răspunsul.</p>
     </div></section>
-    <section class="block"><div class="wrap tura">${tabsOm('comenzi')}<div id="cmdBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+    <section class="block"><div class="wrap tura lat">${tabsOm('comenzi')}<div id="cmdBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const cmdUrl = (zi, v, extra = '') => `#/comenzi?zi=${zi}${v && v !== 'comenzi' ? '&v=' + v : ''}${extra}`;
 // Starea unei comenzi, din liniile ei.
