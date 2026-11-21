@@ -479,6 +479,23 @@ Pagina **Livrări** (`#/livrari`, filă în *Tura* și *Echipa*) ține locul gru
 - **Cine ce vede**: biroul, șoferii și producția văd toate livrările; magazinul doar marfa lui; oricine
   pe cele cerute de el. Citirea se face doar prin `liv_zi` și `liv_zile`.
 
+## 26. Panoul șefilor: toate locațiile
+
+Rulează [`0026_panou.sql`](supabase/migrations/0026_panou.sql). Fără migrare, fila spune că lipsește, iar
+restul site-ului merge ca înainte.
+
+- **Echipa → Toate locațiile** (prima filă pentru cine vede mai multe locații; se reîmprospătează la un
+  minut): pentru fiecare magazin și laborator, cine e în tură și de când e deschis, cine lipsește din
+  program, fișele zilei, nota vitrinei, semnalările, marfa de azi, feedbackul săptămânii. „Detalii”
+  deschide locația ca înainte (*Pe locație*).
+- **Ziua locației** (`#/zi`, din *Tura* și din panou):
+  - **Încasările zilei**: totalul încasat și numărul de bonuri, scrise de magazin la închidere (azi sau
+    ieri; zilele mai vechi, doar șefii). Media bonului se calculează; panoul o compară cu aceeași zi de
+    săptămâna trecută.
+  - **Nota zilei**: câteva rânduri de la cine conduce locația.
+  - **Stocul de azi**, la laboratoare: pe o listă (`stoc_produse`: produs, grupă, unitate, minim) ținută
+    de SP, DP, PBP și birou. Sub minim, produsul apare ca „puțin”.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

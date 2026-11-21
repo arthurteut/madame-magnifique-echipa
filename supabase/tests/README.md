@@ -132,6 +132,12 @@ poate adăuga; biroul pune șoferul, șoferul preia și renunță, dar nu ia liv
 cine a primit și poză sau motiv, „Problemă” cere motiv; cine trebuie e anunțat; comanda mutată sau
 anulată își mută sau anulează livrarea, iar una deja livrată nu se redeschide. Ultimul rând: „37 din 37”.
 
+Panoul șefilor (`26_panou.sql`, după 0026; date inventate): vânzătoarea scrie și corectează încasările
+magazinului ei, doar pentru azi și ieri; nu scrie nota zilei și nu vede panoul; responsabila scrie nota
+zilei și vede în panou doar magazinul ei, cu cine e în tură, cine lipsește din program, încasările și
+comparația cu săptămâna trecută; brutarul scrie stocul, dar nu schimbă lista; șefa de secție ține lista;
+conducerea vede toate locațiile. Ultimul rând: „25 din 25”.
+
 Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina reală în Playwright și
 trimite fiecare operație către baza locală, ca un cont anume (pagina se servește direct din depozit, iar
 încărcările de fișiere sunt simulate): aceleași RLS, triggere și funcții ca în
