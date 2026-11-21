@@ -427,6 +427,36 @@ iar alegerea se ține minte pentru lunile următoare. Schimburile mari între ge
 nebifate. Fișierele nu se încarcă nicăieri: în baza de date ajung doar sumele lunii. Reimportul aceleiași
 luni înlocuiește cifrele importate, fără să le dubleze; cheltuielile scrise de mână rămân.
 
+## 24. Comenzi către producție
+
+Rulează [`0024_comenzi.sql`](supabase/migrations/0024_comenzi.sql), apoi fișierul intern cu catalogul de
+pornire (`48-comenzi-date.sql`: produsele comandate des și clienții B2B; nu stă în acest depozit). Fără
+migrare, pagina spune că lipsește, iar restul site-ului merge ca înainte.
+
+Pagina **Comenzi** (`#/comenzi`, filă în *Tura* și *Echipa*) ține locul grupului de comenzi:
+
+| Fel | Cine o pune |
+|---|---|
+| B2B și evenimente | biroul: GM, AE, CB2B, DP, ADM |
+| Comandă de client (nume, telefon, avans, ora ridicării) | oricine, pentru o locație pe care o vede |
+| Necesarul magazinului | la fel |
+| Creme și materii prime | la fel |
+
+- Fiecare produs ține de o **secție** (`cmd_sectii`: brutărie, patiserie, cofetărie și creme, depozit),
+  iar rolurile secției îi confirmă liniile sau scriu de ce nu se poate. SP, DP și PBP răspund pentru
+  orice secție. Cine a comandat primește notificare la fiecare răspuns.
+- **Ora-limită** (implicit 19:00, cu o zi înainte; se schimbă din *Catalog*): după ea comanda pleacă
+  drept „târzie” și se face doar dacă secția o confirmă.
+- O linie schimbată după confirmare se întoarce la „de confirmat”; liniile neatinse își păstrează
+  răspunsul. Anularea cere motiv, iar secțiile sunt anunțate.
+- **Foaia de producție** a zilei adună comenzile pe secții: totalul pe produs și pentru cine e.
+  Se tipărește din pagină.
+- **Cine ce vede**: biroul și producția văd toate comenzile; magazinul pe ale locațiilor lui; oricine pe
+  ale sale. Telefonul clientului nu ajunge la producție. Citirea se face doar prin `cmd_zi` și `cmd_zile`.
+- **Catalogul** (produse, clienți, ora-limită) îl ține biroul; produsele le pot adăuga și SP / PBP.
+
+Ca rolurile secțiilor să se potrivească cu oamenii voștri, schimbați coloana `roluri` din `cmd_sectii`.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

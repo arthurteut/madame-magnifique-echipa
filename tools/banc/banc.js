@@ -6,6 +6,7 @@ const DIR = __dirname, TMP = '/tmp/ghiddb';
 const SETOF = new Set(['echipa_mea', 'autori_jurnal']);
 const ident = c => { if (!/^[a-z_][a-z0-9_]*$/.test(c)) throw new Error('nume nepermis: ' + c); return '"' + c + '"'; };
 const lit = v => v === null || v === undefined ? 'null' : typeof v === 'number' || typeof v === 'boolean' ? String(v)
+  : Array.isArray(v) && v.length && v.every(x => typeof x === 'number') ? `'{${v.join(',')}}'`
   : typeof v === 'object' ? `'${JSON.stringify(v).replace(/'/g, "''")}'` : `'${String(v).replace(/'/g, "''")}'`;
 const unde = f => !f.length ? '' : ' where ' + f.map(([c, op, v]) => op === 'in' ? (v.length ? `${ident(c)} in (${v.map(lit).join(',')})` : 'false')
   : op === 'is' ? `${ident(c)} is ${v === null ? 'null' : v}` : `${ident(c)} ${op} ${lit(v)}`).join(' and ');

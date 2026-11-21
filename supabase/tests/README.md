@@ -117,6 +117,14 @@ o dată pe zi, cu motiv sub prag; bonusul de management își calculează singur
 vânzătoarea își vede doar sumele ei; luna o închide doar GM / AE, iar după închidere nu se mai schimbă
 nimic. Ultimul rând: „47 din 47”.
 
+Comenzile către producție (`24_comenzi.sql`, după 0024; produse și clienți inventați): biroul pune B2B,
+magazinul necesarul și comanda unui client, patiserul cere creme; vânzătoarea nu pune B2B, nu comandă
+pentru alt magazin și nu scrie direct în tabele; comanda fără produse, cu cantitate zero sau pe o zi
+trecută e refuzată. Secțiile sunt anunțate; brutarul confirmă doar brutăria, refuzul cere motiv, iar
+cine a comandat află răspunsul. Producția vede toate comenzile, dar nu telefonul clientului; magazinele
+nu-și văd comenzile între ele. O linie schimbată se confirmă din nou, cea neatinsă nu; după ora-limită
+comanda e târzie; anularea cere motiv și blochează comanda. Ultimul rând: „36 din 36”.
+
 Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina reală în Playwright și
 trimite fiecare operație către baza locală, ca un cont anume: aceleași RLS, triggere și funcții ca în
 Supabase. Așa se verifică fluxurile cap-coadă (clock-in, fișă, semnalare, feedback, contestație).
