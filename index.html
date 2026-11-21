@@ -542,6 +542,42 @@
   .pl-luna-act { display: flex; gap: 8px; flex-wrap: wrap; }
   .pl-modif { margin: 0 0 16px; }
   .pl-nota { margin: 0 0 8px !important; }
+  .cmd-zile { display: flex; gap: 6px; flex-wrap: wrap; align-items: stretch; margin: 0 0 16px; }
+  .cmd-zile .pl-chip { text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
+  .cmd-zile .pl-chip small { font-size: .68rem; opacity: .7; letter-spacing: 0; }
+  .cmd-data .field { padding: 8px 10px; height: 100%; font: inherit; font-size: .86rem; }
+  .cmd-tarziu { border-left: 3px solid var(--gold); background: #fbf6ea; padding: 10px 14px; margin: 0 0 18px; font-size: .9rem; }
+  .cmd-cine { margin: 6px 0 2px; font-size: 1.08rem; } .cmd-det { margin: 0 0 8px; font-size: .86rem; color: var(--muted); }
+  .cmd.anulata { opacity: .6; } .cmd.acum { border-color: var(--ink); }
+  .cmd-linii { list-style: none; margin: 8px 0 10px; padding: 0; border-top: 1px solid var(--line); }
+  .cmd-l { display: grid; grid-template-columns: 76px 1fr auto; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .93rem; }
+  .cmd-l small, .cmd-foaie td small, .cmd-pe small { display: block; font-size: .76rem; } .cmd-l i { font-style: normal; color: var(--ink-soft); }
+  .cmd-l em, .cmd-cine-l em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; color: var(--muted); white-space: nowrap; }
+  .cmd-l.confirmata em, .cmd-cine-l.confirmata em { color: #2f6a40; } .cmd-l.refuzata em, .cmd-nu { color: #9a3b2f; } .cmd-l.refuzata b { text-decoration: line-through; }
+  .cmd-form { max-width: none; } .cmd-fel { display: flex; gap: 6px; flex-wrap: wrap; } .cmd-fel .pl-chip { text-transform: none; letter-spacing: .02em; font-size: .82rem; padding: 11px 14px; }
+  .cmd-form [hidden] { display: none !important; }
+  .cmd-rand { display: grid; grid-template-columns: minmax(0, 2.2fr) 84px 84px minmax(0, 2fr) 34px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .cmd-rp small { display: block; font-size: .74rem; } .cmd-rp.liber { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6px; }
+  .cmd-rand .field { padding: 9px 10px; min-width: 0; width: 100%; } .cmd-x { border: 1px solid var(--line); background: #fff; height: 34px; font-size: 1.1rem; line-height: 1; color: var(--muted); }
+  .cmd-x:hover { border-color: var(--ink); color: var(--ink); } .cmd-gol { padding: 10px 0; }
+  .cmd-adauga { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; } .cmd-adauga .field { flex: 1 1 260px; }
+  .cmd-sectie { margin: 0 0 28px; } .cmd-sectie h3 { margin: 0; font-size: 1.1rem; }
+  .cmd-foaie { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .93rem; }
+  .cmd-foaie th { text-align: left; font: 600 .66rem 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--ink); }
+  .cmd-foaie td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; } .cmd-foaie .n { text-align: right; white-space: nowrap; }
+  .cmd-cine-l { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; padding: 3px 0; } .cmd-cine-l.refuzata > span > b { text-decoration: line-through; }
+  .cmd-btn { display: inline-flex; gap: 10px; align-items: center; white-space: nowrap; }
+  .cmd-pe { list-style: none; padding: 0; margin: 10px 0; } .cmd-pe li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+  .cmd-cat { display: grid; gap: 18px; } .cmd-cat h3 { margin: 18px 0 4px; font-size: 1rem; } .cmd-catform { max-width: none; margin: 10px 0 6px; }
+  .cmd-catl { list-style: none; padding: 0; margin: 0; } .cmd-catl li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+  .cmd-catl li.stins > span { color: var(--muted); text-decoration: line-through; }
+  @media (max-width: 640px) {
+    .cmd-rand { grid-template-columns: 1fr 1fr 34px; } .cmd-rand .cmd-rp { grid-column: 1 / 3; } .cmd-rand .cmd-x { grid-row: 1; grid-column: 3; } .cmd-rand .cmd-detalii { grid-column: 1 / 4; }
+    .cmd-l { grid-template-columns: 64px 1fr; } .cmd-l em { grid-column: 2; }
+    .cmd-foaie thead { display: none; } .cmd-foaie tr { display: block; border-bottom: 1px solid var(--ink); padding: 8px 0; } .cmd-foaie td { display: block; border: 0; padding: 3px 0; } .cmd-foaie .n { text-align: left; }
+    .cmd-cine-l { flex-wrap: wrap; }
+  }
+  @media print { .cmd-zile, .tabs-om, .cmd-btn, [data-cmd-tot], .cmd-tarziu { display: none !important; } .cmd-sectie { break-inside: avoid; } }
   .pl-imp .frm { max-width: none; } .pl-imp table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 6px 0 18px; }
   .pl-imp th { text-align: left; font: 600 .68rem Montserrat, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--ink); }
   .pl-imp td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; } .pl-imp td.n, .pl-imp th.n { text-align: right; white-space: nowrap; }
@@ -1362,6 +1398,7 @@ function route() {
   else if (a === 'echipa' && vedeEchipa()) { html = viewEchipa(params); nav = 'echipa'; }
   else if (a === 'mesaje') { html = viewMesaje(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'semnalari') { html = viewSemnalari(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'comenzi') { html = viewComenzi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -4246,7 +4283,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap">
-      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -4682,10 +4719,320 @@ const reguliHtml = () => `<details class="jp-cum"><summary>Regulile: cum câști
       <p class="muted mic">Punctele nu sunt bani și nu schimbă salariul. Bonusul magazinului are regulile lui, pe pagina Bonus; acolo, fișele de deschidere și de închidere făcute sunt dovada pentru criteriul de proceduri.</p></div></div></details>`;
 
 // Filele comune paginilor omului: Tura mea · Mesaje · Semnalări · Punctele mele (· Echipa, pentru șefi)
+// ---------- Comenzi către producție (migrarea 0024) ----------
+// Patru feluri de comandă; fiecare linie merge la o secție, care o confirmă sau scrie de ce nu se poate.
+// Citirea trece prin cmd_zi / cmd_zile; scrierea prin cmd_salveaza, cmd_raspunde, cmd_anuleaza.
+const CMD_FEL = { b2b: 'B2B și evenimente', client: 'Comandă de client', magazin: 'Necesarul magazinului', intern: 'Creme și materii prime' };
+const CMD_FEL_SCURT = { b2b: 'B2B', client: 'Client la pult', magazin: 'Necesar magazin', intern: 'Creme și materii prime' };
+const CMD_UNITATI = ['buc', 'kg', 'g', 'tavă', 'l'];
+let CMD = { cat: null, d: null, form: null };
+const cmdZiPlus = n => ziLocala(new Date(Date.now() + n * 86400000));
+const cmdNr = x => Number(x).toLocaleString('ro-RO', { maximumFractionDigits: 3 });
+const cmdEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not exist/i.test((e.code || '') + ' ' + (e.message || ''))
+  ? 'Comenzile se activează după ce rulezi în Supabase migrarea 0024_comenzi.sql.' : (e.message || implicit);
+const cmdZiNume = zi => zi === cmdZiPlus(0) ? 'azi' : zi === cmdZiPlus(1) ? 'mâine' : new Date(zi + 'T12:00:00').toLocaleDateString('ro-RO', { weekday: 'short', day: 'numeric', month: 'short' });
+async function cmdCatalog(fortat) {
+  if (CMD.cat && !fortat) return CMD.cat;
+  const [produse, clienti, sectii] = await Promise.all([tabel('cmd_produse', ['position', 'nume']), tabel('cmd_clienti', ['nume']), tabel('cmd_sectii', ['position'])]);
+  return CMD.cat = { produse, clienti, sectii, sectie: Object.fromEntries(sectii.map(s => [s.cod, s.nume])) };
+}
+function viewComenzi(params) {
+  setTimeout(() => incarcaComenzi(params), 0);
+  return `<section class="band tura-band"><div class="wrap">
+      <span class="eyebrow">Către producție</span><h1>Comenzi</h1>
+      <p class="sub">Comanda se scrie aici, nu pe grup. Fiecare secție își confirmă liniile, iar tu vezi răspunsul.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura">${tabsOm('comenzi')}<div id="cmdBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+const cmdUrl = (zi, v, extra = '') => `#/comenzi?zi=${zi}${v && v !== 'comenzi' ? '&v=' + v : ''}${extra}`;
+// Starea unei comenzi, din liniile ei.
+function cmdStare(c) {
+  if (c.stare === 'anulata') return ['Anulată', 'st-respinsa'];
+  const noi = c.linii.filter(l => l.stare === 'noua').length, ref = c.linii.filter(l => l.stare === 'refuzata').length;
+  if (ref) return [ref === c.linii.length ? 'Nu se poate' : 'Nu se poate tot', 'crit'];
+  if (noi) return [noi === c.linii.length ? 'Așteaptă confirmarea' : `Mai așteaptă ${noi} ${noi === 1 ? 'linie' : 'linii'}`, 'st-deschisa'];
+  return ['Confirmată', 'st-rezolvata'];
+}
+const cmdLoc = c => c.loc || numeLoc(c.space_id);      // producția nu are magazinele în meniu: numele vine cu comanda
+const cmdCine = c => c.fel === 'magazin' ? `Necesar ${cmdLoc(c)}` : c.fel === 'intern' ? `Creme și materii prime · ${cmdLoc(c)}` : c.client_nume;
+async function incarcaComenzi(params) {
+  const box = document.getElementById('cmdBody'); if (!box) return;
+  const zi = /^\d{4}-\d{2}-\d{2}$/.test(params.zi || '') ? params.zi : cmdZiPlus(1);
+  let cat, r1, r2;
+  try { [cat, r1, r2] = await Promise.all([cmdCatalog(), SB.rpc('cmd_zi', { p_zi: zi }), SB.rpc('cmd_zile', { p_de: cmdZiPlus(0), p_pana: cmdZiPlus(7) })]); }
+  catch (e) { r1 = { error: e }; }
+  if (!document.getElementById('cmdBody')) return;
+  if (!r1 || r1.error) { console.error('Comenzi:', r1 && r1.error); box.innerHTML = `<p class="err">${esc(cmdEroare((r1 && r1.error) || {}, 'Comenzile nu s-au putut încărca.'))}</p>`; return; }
+  const d = CMD.d = r1.data, zile = Object.fromEntries(((r2 && r2.data) || []).map(z => [z.zi, z]));
+  const prod = d.sectiile_mele.length > 0, vFoaie = prod || d.birou, vCatalog = d.birou || ['SP', 'PBP'].includes(ME.role_code);
+  const v = params.v === 'foaie' && vFoaie ? 'foaie' : params.v === 'catalog' && vCatalog ? 'catalog' : 'comenzi';
+  const chips = [...Array(8).keys()].map(i => cmdZiPlus(i)), active = d.comenzi.filter(c => c.stare === 'trimisa');
+  const sus = `<div class="cmd-zile">${chips.map(z => { const s = zile[z]; return `<a class="pl-chip ${z === zi ? 'on' : ''} ${s && s.de_confirmat ? 'plin' : ''}" href="${cmdUrl(z, v)}" title="${s ? `${s.comenzi} comenzi, ${s.de_confirmat} linii de confirmat` : 'nicio comandă'}">${esc(cmdZiNume(z))}${s ? `<small>${s.comenzi}</small>` : ''}</a>`; }).join('')}
+      <label class="cmd-data"><span class="sr-only">Altă zi</span><input type="date" class="field" data-cmd-zi value="${zi}" min="${cmdZiPlus(-60)}"></label></div>
+    <div class="msg-act"><nav class="jr-filtru"><a href="${cmdUrl(zi, 'comenzi')}" class="${v === 'comenzi' ? 'on' : ''}">Comenzi · ${active.length}</a>
+        ${vFoaie ? `<a href="${cmdUrl(zi, 'foaie')}" class="${v === 'foaie' ? 'on' : ''}">Foaia de producție</a>` : ''}
+        ${vCatalog ? `<a href="${cmdUrl(zi, 'catalog')}" class="${v === 'catalog' ? 'on' : ''}">Catalog</a>` : ''}</nav>
+      ${v === 'comenzi' && zi >= cmdZiPlus(0) ? '<button class="btn sm" type="button" data-cmd-nou>Comandă nouă</button>' : ''}
+      ${v === 'foaie' ? '<button class="btn ghost sm" type="button" onclick="window.print()">Tipărește</button>' : ''}</div>
+    ${v !== 'catalog' && d.tarzie && zi >= cmdZiPlus(0) ? `<p class="cmd-tarziu">Ora-limită pentru ${esc(cmdZiNume(zi))} a trecut (${esc(d.ora_limita)}, cu o zi înainte). O comandă nouă sau schimbată intră ca <b>târzie</b>: se face doar dacă secția o confirmă.</p>` : ''}`;
+  box.innerHTML = sus + `<div id="cmdV">${v === 'foaie' ? cmdFoaie(d, cat) : v === 'catalog' ? cmdCatalogHtml(d, cat) : cmdLista(d, cat, zi, params)}</div>`;
+  const reia = (extra = {}) => incarcaComenzi({ ...params, zi, v, nou: '', e: '', ...extra });
+  box.querySelector('[data-cmd-zi]').addEventListener('change', e => { if (e.target.value) location.hash = cmdUrl(e.target.value, v); });
+  const nou = box.querySelector('[data-cmd-nou]');
+  if (nou) nou.addEventListener('click', () => cmdDeschideForm(box, d, cat, zi, null, reia));
+  const zona = box.querySelector('#cmdV');        // se reface la fiecare încărcare, deci ascultătorii nu se adună
+  if (v === 'comenzi') cmdLeagaLista(zona, d, cat, zi, params, reia);
+  if (v === 'foaie') cmdLeagaFoaie(zona, d, reia);
+  if (v === 'catalog') cmdLeagaCatalog(zona, reia);
+}
+// ----- Lista comenzilor zilei -----
+const cmdLinieHtml = (l, cat) => `<li class="cmd-l ${l.stare}"><b>${cmdNr(l.cantitate)} ${esc(l.unitate)}</b><span>${esc(l.produs)}${l.detalii ? ` <i>· ${esc(l.detalii)}</i>` : ''}
+    <small class="muted">${esc(cat.sectie[l.sectie] || l.sectie)}${l.modificata && l.stare === 'noua' ? ' · schimbată' : ''}${l.tarzie && l.stare === 'noua' ? ' · târzie' : ''}</small>
+    ${l.stare === 'refuzata' ? `<small class="cmd-nu">Nu se poate: ${esc(l.raspuns)}${l.raspuns_de ? ` (${esc(l.raspuns_de)})` : ''}</small>` : ''}</span>
+    <em>${l.stare === 'confirmata' ? 'confirmat' : l.stare === 'refuzata' ? 'nu se poate' : 'de confirmat'}</em></li>`;
+function cmdCard(c, cat) {
+  const [st, cls] = cmdStare(c), det = [c.fel !== 'magazin' && c.fel !== 'intern' && c.space_id ? `ridicare din ${cmdLoc(c)}` : '', c.livrare, c.ora ? `ora ${c.ora}` : '', c.tura ? `tura ${c.tura}` : '',
+    c.aviz_pe ? `aviz pe ${c.aviz_pe}` : '', c.telefon ? `tel. ${c.telefon}` : '', c.avans ? `avans ${cmdNr(c.avans)} lei` : ''].filter(Boolean);
+  return `<article class="semn cmd ${c.stare === 'anulata' ? 'anulata' : ''}" id="cmd-${c.id}">
+    <div class="semn-cap"><span class="eyebrow">${esc(CMD_FEL_SCURT[c.fel])}</span><span>${c.linii.some(l => l.tarzie && l.stare === 'noua') && c.stare === 'trimisa' ? '<span class="pill crit">Târzie</span> ' : ''}<span class="pill ${cls}">${st}</span></span></div>
+    <h3 class="cmd-cine">${esc(cmdCine(c))}</h3>
+    ${det.length ? `<p class="cmd-det">${det.map(esc).join(' · ')}</p>` : ''}
+    <ul class="cmd-linii">${c.linii.map(l => cmdLinieHtml(l, cat)).join('')}</ul>
+    ${c.nota ? `<p class="semn-rasp"><b>Notă:</b> ${esc(c.nota)}</p>` : ''}
+    ${c.stare === 'anulata' ? `<p class="semn-rasp"><b>Anulată:</b> ${esc(c.motiv)}</p>` : ''}
+    <small class="muted">${esc(c.a_mea ? 'Pusă de tine' : c.autor || '')} · ${dataOra(c.created_at)}</small>
+    <div class="calc-act">${c.pot_schimba && c.zi >= cmdZiPlus(0) ? `<button class="btn ghost sm" type="button" data-cmd-schimba="${c.id}">Schimbă</button>` : ''}
+      ${c.a_mea || CMD.d.birou ? `<button class="btn ghost sm" type="button" data-cmd-copiaza="${c.id}">Repetă pe altă zi</button>` : ''}
+      ${c.pot_schimba && c.zi >= cmdZiPlus(0) ? `<button class="rez-anul" type="button" data-cmd-anuleaza="${c.id}">Anulează comanda</button>` : ''}</div></article>`;
+}
+function cmdLista(d, cat, zi) {
+  return `<div id="cmdFormLoc"></div>${d.comenzi.length ? `<div class="msg-lista">${d.comenzi.map(c => cmdCard(c, cat)).join('')}</div>`
+    : `<p class="lvl4">Nicio comandă pentru ${esc(cmdZiNume(zi))}.</p>`}`;
+}
+function cmdLeagaLista(box, d, cat, zi, params, reia) {
+  const gaseste = id => d.comenzi.find(c => c.id === +id);
+  box.addEventListener('click', async e => {
+    const t = e.target.closest('[data-cmd-schimba], [data-cmd-copiaza], [data-cmd-anuleaza]'); if (!t) return;
+    if (t.dataset.cmdSchimba) cmdDeschideForm(box, d, cat, zi, gaseste(t.dataset.cmdSchimba), reia);
+    else if (t.dataset.cmdCopiaza) { const c = gaseste(t.dataset.cmdCopiaza); cmdDeschideForm(box, d, cat, zi, { ...c, id: null, zi: cmdZiPlus(1) > c.zi ? cmdZiPlus(1) : ziLocala(new Date(new Date(c.zi + 'T12:00:00').getTime() + 86400000)), linii: c.linii.map(l => ({ ...l, id: null })) }, reia); }
+    else {
+      const motiv = await intreaba('De ce se anulează comanda?', { loc: 'Producția e anunțată cu motivul.', obligatoriu: true, buton: 'Anulează comanda' }); if (motiv === null) return;
+      const { error } = await SB.rpc('cmd_anuleaza', { p_id: +t.dataset.cmdAnuleaza, p_motiv: motiv });
+      if (error) return toast(error.message || 'Comanda nu s-a anulat.', true);
+      toast('Comanda e anulată. Producția a fost anunțată.'); reia();
+    }
+  });
+  if (params.c) { const el = document.getElementById('cmd-' + params.c); if (el) { el.classList.add('acum'); el.scrollIntoView({ block: 'center' }); } }
+}
+// ----- Formularul de comandă -----
+function cmdFeluri(d) {
+  const f = [];
+  if (d.birou) f.push('b2b');
+  if (locatiiOperative().length) f.push('client', 'magazin', 'intern');
+  return f;
+}
+function cmdRandLinie(l, cat, i) {
+  const p = l.produs_id ? cat.produse.find(x => x.id === l.produs_id) : null;
+  return `<div class="cmd-rand" data-rand="${i}">
+      ${l.produs_id ? `<span class="cmd-rp"><b>${esc(l.produs)}</b><small class="muted">${esc(cat.sectie[l.sectie] || '')}</small></span>`
+        : `<span class="cmd-rp liber"><input class="field" data-c="produs" value="${esc(l.produs || '')}" placeholder="Numele produsului" maxlength="120" aria-label="Produsul">
+            <select class="field" data-c="sectie" aria-label="Secția">${cat.sectii.map(s => `<option value="${s.cod}" ${s.cod === l.sectie ? 'selected' : ''}>${esc(s.nume)}</option>`).join('')}</select></span>`}
+      <input class="field cmd-cant" data-c="cantitate" inputmode="decimal" value="${l.cantitate ? esc(plIn(l.cantitate)) : ''}" placeholder="Cât" aria-label="Cantitatea">
+      <select class="field cmd-unit" data-c="unitate" aria-label="Unitatea">${CMD_UNITATI.map(u => `<option ${u === (l.unitate || 'buc') ? 'selected' : ''}>${u}</option>`).join('')}</select>
+      <input class="field cmd-detalii" data-c="detalii" value="${esc(l.detalii || '')}" maxlength="300" placeholder="${esc((p && p.optiuni) || 'Detalii: feliat, fără zahăr, gramaj…')}" aria-label="Detalii">
+      <button type="button" class="cmd-x" data-scoate="${i}" aria-label="Scoate ${esc(l.produs || 'linia')}">×</button></div>`;
+}
+function cmdDeschideForm(box, d, cat, zi, c, reia) {
+  const loc = document.getElementById('cmdFormLoc'); if (!loc) return;
+  const feluri = cmdFeluri(d), locuri = locatiiOperative(), edit = !!(c && c.id);
+  let ultim = ''; try { ultim = localStorage.getItem('mm-loc-cmd') || ''; } catch (e) {}
+  const F = CMD.form = { id: edit ? c.id : null, fel: c ? c.fel : (d.birou ? 'b2b' : ME.role_code === 'PP + B' ? 'intern' : 'magazin'),
+    linii: c ? c.linii.map(l => ({ id: l.id, produs_id: l.produs_id, produs: l.produs, sectie: l.sectie, cantitate: l.cantitate, unitate: l.unitate, detalii: l.detalii })) : [] };
+  if (!feluri.includes(F.fel)) F.fel = feluri[0];
+  const v = k => (c && c[k]) || '', spImplicit = v('space_id') || (locuri.find(s => s.id === ultim) || locuri.find(s => s.tip === 'magazin') || locuri[0] || {}).id || '';
+  loc.innerHTML = `<form class="calc-card frm cmd-form" id="cmdForm" autocomplete="off">
+      <span class="eyebrow">${edit ? 'Schimbi comanda' : c ? 'Repeți comanda' : 'Comandă nouă'}</span>
+      ${edit ? `<p class="muted mic">${esc(CMD_FEL[F.fel])}. Liniile pe care le schimbi se întorc la secție, pentru o nouă confirmare.</p>`
+        : `<div class="cmd-fel" role="radiogroup" aria-label="Felul comenzii">${feluri.map(f => `<button type="button" role="radio" aria-checked="${f === F.fel}" class="pl-chip ${f === F.fel ? 'on' : ''}" data-fel="${f}">${CMD_FEL[f]}</button>`).join('')}</div>`}
+      <div class="frm-2">
+        <label data-pt="b2b client">Clientul<input class="field" name="client_nume" list="cmdClienti" value="${esc(v('client_nume'))}" maxlength="120" placeholder="Numele firmei sau al clientului"></label>
+        <label data-pt="client magazin intern">Locația<select class="field" name="space_id">${locuri.map(s => `<option value="${esc(s.id)}" ${s.id === spImplicit ? 'selected' : ''}>${esc(numeLoc(s.id))}</option>`).join('')}</select></label>
+        <label>Pentru ziua<input class="field" type="date" name="zi" required min="${cmdZiPlus(0)}" value="${esc(c && c.zi ? c.zi : zi >= cmdZiPlus(0) ? zi : cmdZiPlus(1))}"></label>
+        <label data-pt="client">Telefon<input class="field" name="telefon" inputmode="tel" value="${esc(v('telefon'))}" maxlength="30"></label>
+        <label data-pt="client">Avans plătit (lei)<input class="field" name="avans" inputmode="decimal" value="${esc(v('avans') ? plIn(v('avans')) : '')}"></label>
+        <label data-pt="b2b">Unde se livrează<input class="field" name="livrare" value="${esc(v('livrare'))}" maxlength="200" placeholder="Adresa, magazinul sau „ridică șoferul”"></label>
+        <label><span data-pt="b2b magazin intern">Ora</span><span data-pt="client">Ora ridicării</span><input class="field" name="ora" value="${esc(v('ora'))}" maxlength="40" placeholder="ex.: 08:00"></label>
+        <label data-pt="b2b magazin">Tura<select class="field" name="tura"><option value="">oricare</option><option value="1" ${v('tura') === 1 ? 'selected' : ''}>tura 1</option><option value="2" ${v('tura') === 2 ? 'selected' : ''}>tura 2</option></select></label>
+        <label data-pt="b2b">Aviz pe<input class="field" name="aviz_pe" value="${esc(v('aviz_pe'))}" maxlength="160" placeholder="dacă diferă de client"></label>
+      </div>
+      <datalist id="cmdClienti">${cat.clienti.filter(x => x.activ).map(x => `<option value="${esc(x.nume)}">`).join('')}</datalist>
+      <div><span class="eyebrow">Produse</span>
+        <div id="cmdRanduri"></div>
+        <div class="cmd-adauga"><input class="field" id="cmdCauta" list="cmdProduse" placeholder="Caută un produs și alege-l din listă" aria-label="Caută un produs">
+          <button class="btn ghost sm" type="button" data-liber>Produs care nu e în listă</button></div>
+        <datalist id="cmdProduse">${cat.produse.filter(x => x.activ).map(x => `<option value="${esc(x.nume)}">${esc(cat.sectie[x.sectie] || '')}</option>`).join('')}</datalist>
+      </div>
+      <label>Notă pentru producție<textarea class="field" name="nota" rows="2" maxlength="1000" placeholder="Opțional: ce trebuie știut și nu ține de un singur produs.">${esc(v('nota'))}</textarea></label>
+      <p class="muted mic" id="cmdLimita"></p>
+      <div class="calc-act"><button class="btn" type="submit">${edit ? 'Salvează schimbările' : 'Trimite comanda'}</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>`;
+  const form = loc.querySelector('#cmdForm'), el = form.elements, randuri = form.querySelector('#cmdRanduri'), cauta = form.querySelector('#cmdCauta');
+  const arataFel = () => {
+    form.querySelectorAll('[data-pt]').forEach(x => { x.hidden = !x.dataset.pt.split(' ').includes(F.fel); });
+    form.querySelectorAll('[data-fel]').forEach(b => { const on = b.dataset.fel === F.fel; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
+    el.client_nume.placeholder = F.fel === 'client' ? 'Numele clientului' : 'Alege din listă sau scrie numele firmei';
+  };
+  const citeste = () => randuri.querySelectorAll('[data-rand]').forEach(r => { const l = F.linii[+r.dataset.rand]; r.querySelectorAll('[data-c]').forEach(i => { l[i.dataset.c] = i.value; }); });
+  const deseneaza = focus => {
+    randuri.innerHTML = F.linii.length ? F.linii.map((l, i) => cmdRandLinie(l, cat, i)).join('') : '<p class="muted mic cmd-gol">Niciun produs încă. Caută-l mai jos.</p>';
+    if (focus !== undefined) { const r = randuri.querySelector(`[data-rand="${focus}"] ${F.linii[focus].produs_id ? '.cmd-cant' : '[data-c=produs]'}`); if (r) r.focus(); }
+  };
+  const limita = () => {
+    const z = el.zi.value, tarzie = z && new Date() > new Date(new Date(z + 'T' + d.ora_limita + ':00').getTime() - 86400000);
+    form.querySelector('#cmdLimita').innerHTML = !z ? '' : tarzie ? `Pentru ${esc(cmdZiNume(z))} ora-limită (${esc(d.ora_limita)}, cu o zi înainte) a trecut. Comanda pleacă drept <b>târzie</b> și se face doar dacă secția o confirmă.`
+      : `Se poate schimba liber până la ${esc(d.ora_limita)}, cu o zi înainte. Fiecare secție îți confirmă liniile ei.`;
+  };
+  const adauga = nume => {
+    const p = cat.produse.find(x => x.activ && plNorm(x.nume) === plNorm(nume)); if (!p) return false;
+    citeste(); F.linii.push({ produs_id: p.id, produs: p.nume, sectie: p.sectie, unitate: p.unitate, cantitate: '', detalii: '' }); cauta.value = ''; deseneaza(F.linii.length - 1); return true;
+  };
+  arataFel(); deseneaza(); limita();
+  form.addEventListener('click', e => {
+    const t = e.target.closest('[data-fel], [data-scoate], [data-liber], [data-renunt]'); if (!t) return;
+    if (t.dataset.fel) { F.fel = t.dataset.fel; arataFel(); }
+    else if (t.dataset.scoate) { citeste(); F.linii.splice(+t.dataset.scoate, 1); deseneaza(); }
+    else if (t.dataset.liber !== undefined) { citeste(); F.linii.push({ produs: cauta.value.trim(), sectie: cat.sectii[0].cod, unitate: 'buc', cantitate: '', detalii: '' }); cauta.value = ''; deseneaza(F.linii.length - 1); }
+    else { loc.innerHTML = ''; CMD.form = null; }
+  });
+  cauta.addEventListener('input', () => adauga(cauta.value));
+  cauta.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); if (!adauga(cauta.value) && cauta.value.trim()) toast('Produsul nu e în listă. Alege-l din sugestii sau apasă „Produs care nu e în listă”.', true); } });
+  randuri.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('.field')) { e.preventDefault(); cauta.focus(); } });
+  el.zi.addEventListener('change', limita);
+  // un client cunoscut vine cu locul, ora și avizul lui
+  el.client_nume.addEventListener('change', () => {
+    const k = F.fel === 'b2b' && cat.clienti.find(x => x.activ && plNorm(x.nume) === plNorm(el.client_nume.value)); if (!k) return;
+    if (!el.livrare.value) el.livrare.value = k.livrare; if (!el.ora.value) el.ora.value = k.ora; if (!el.aviz_pe.value) el.aviz_pe.value = k.aviz_pe;
+  });
+  form.addEventListener('submit', async e => {
+    e.preventDefault(); citeste();
+    const linii = [];
+    for (const l of F.linii) {
+      const cant = plNr(l.cantitate);
+      if (!(cant > 0)) return toast(`Scrie cantitatea pentru „${l.produs || 'produs'}”.`, true);
+      if (!l.produs_id && !String(l.produs || '').trim()) return toast('Scrie numele produsului.', true);
+      linii.push({ id: l.id || null, produs_id: l.produs_id || null, produs_nume: l.produs_id ? null : String(l.produs).trim(), sectie: l.sectie, cantitate: cant, unitate: l.unitate, detalii: (l.detalii || '').trim() });
+    }
+    if (!linii.length) return toast('Adaugă cel puțin un produs.', true);
+    const are = k => !form.querySelector(`[name=${k}]`).closest('[data-pt]') || !form.querySelector(`[name=${k}]`).closest('[data-pt]').hidden;
+    const k = F.fel === 'b2b' ? cat.clienti.find(x => x.activ && plNorm(x.nume) === plNorm(el.client_nume.value)) : null;
+    const avans = are('avans') && el.avans.value.trim() ? plNr(el.avans.value) : null;
+    if (Number.isNaN(avans) || avans < 0) return toast('Avansul e o sumă în lei.', true);
+    const p = { id: F.id, fel: F.fel, zi: el.zi.value, client_id: k ? k.id : null, client_nume: are('client_nume') ? el.client_nume.value.trim() : '',
+      space_id: are('space_id') ? el.space_id.value : null, telefon: are('telefon') ? el.telefon.value.trim() : '', avans,
+      livrare: are('livrare') ? el.livrare.value.trim() : '', ora: el.ora.value.trim(), tura: are('tura') && el.tura.value ? +el.tura.value : null,
+      aviz_pe: are('aviz_pe') ? el.aviz_pe.value.trim() : '', nota: el.nota.value.trim(), linii };
+    const buton = form.querySelector('[type=submit]'); buton.disabled = true;
+    const { data, error } = await SB.rpc('cmd_salveaza', { p });
+    if (error) { buton.disabled = false; return toast(error.message || 'Comanda nu s-a trimis.', true); }
+    if (p.space_id) { try { localStorage.setItem('mm-loc-cmd', p.space_id); } catch (er) {} }
+    toast(F.id ? 'Comanda e schimbată. Secțiile atinse au fost anunțate.' : 'Comanda a plecat. Primești o notificare când secțiile răspund.');
+    CMD.form = null; location.hash = cmdUrl(p.zi, 'comenzi', '&c=' + data);
+    if (location.hash === cmdUrl(p.zi, 'comenzi', '&c=' + data)) reia({ c: String(data) });
+  });
+  form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  (F.fel === 'b2b' || F.fel === 'client' ? el.client_nume : cauta).focus({ preventScroll: true });
+}
+// ----- Foaia de producție: totalul pe produs și pe cine îl cere, pe secții -----
+function cmdFoaie(d, cat) {
+  const active = d.comenzi.filter(c => c.stare === 'trimisa'), anulate = d.comenzi.filter(c => c.stare === 'anulata');
+  if (!active.length) return `<p class="lvl4">Nicio comandă pentru ${esc(cmdZiNume(d.zi))}.</p>`;
+  const sectii = cat.sectii.map(s => {
+    const grup = new Map();
+    for (const c of active) for (const l of c.linii) {
+      if (l.sectie !== s.cod) continue;
+      const k = [l.produs, l.unitate, l.detalii].join('|');
+      if (!grup.has(k)) grup.set(k, { produs: l.produs, unitate: l.unitate, detalii: l.detalii, total: 0, cine: [], linii: [] });
+      const g = grup.get(k);
+      if (l.stare !== 'refuzata') g.total += Number(l.cantitate);
+      g.cine.push({ c, l }); g.linii.push(l);
+    }
+    return { s, randuri: [...grup.values()].sort((a, b) => a.produs.localeCompare(b.produs, 'ro')) };
+  }).filter(x => x.randuri.length);
+  return sectii.map(({ s, randuri }) => {
+    const a_mea = d.sectiile_mele.includes(s.cod), noi = randuri.flatMap(r => r.linii).filter(l => l.stare === 'noua');
+    return `<section class="cmd-sectie"><div class="semn-cap"><h3>${esc(s.nume)}</h3>
+        ${a_mea && noi.length ? `<button class="btn sm" type="button" data-cmd-tot="${s.cod}">Confirmă tot (${noi.length})</button>` : noi.length ? `<span class="pill st-deschisa">${noi.length} de confirmat</span>` : '<span class="pill st-rezolvata">Totul confirmat</span>'}</div>
+      <table class="cmd-foaie"><thead><tr><th>Produs</th><th class="n">Total</th><th>Pentru cine</th></tr></thead><tbody>
+      ${randuri.map(r => `<tr><td><b>${esc(r.produs)}</b>${r.detalii ? `<small>${esc(r.detalii)}</small>` : ''}</td><td class="n"><b>${cmdNr(r.total)}</b> ${esc(r.unitate)}</td>
+        <td>${r.cine.map(({ c, l }) => `<div class="cmd-cine-l ${l.stare}"><span>${esc(cmdCine(c))}: <b>${cmdNr(l.cantitate)}</b>${[c.tura ? ` · tura ${c.tura}` : '', c.ora ? ` · ${esc(c.ora)}` : ''].join('')}${l.tarzie && l.stare === 'noua' ? ' <span class="pill crit">târzie</span>' : ''}${l.modificata && l.stare === 'noua' ? ' <span class="pill">schimbată</span>' : ''}
+            ${l.stare === 'refuzata' ? `<small class="cmd-nu">nu se poate: ${esc(l.raspuns)}</small>` : ''}</span>
+          ${a_mea ? (l.stare === 'noua' ? `<span class="cmd-btn"><button class="btn ghost sm" type="button" data-cmd-da="${l.id}">Confirm</button><button class="rez-anul" type="button" data-cmd-nu="${l.id}">Nu putem</button></span>`
+            : `<span class="cmd-btn"><em>${l.stare === 'confirmata' ? 'confirmat' : 'refuzat'}</em>${l.stare === 'confirmata' ? `<button class="rez-anul" type="button" data-cmd-nu="${l.id}">Nu mai putem</button>` : `<button class="rez-anul" type="button" data-cmd-da="${l.id}">Putem totuși</button>`}</span>`)
+            : `<em>${l.stare === 'confirmata' ? 'confirmat' : l.stare === 'refuzata' ? 'refuzat' : 'de confirmat'}</em>`}</div>`).join('')}</td></tr>`).join('')}
+      </tbody></table></section>`;
+  }).join('') + `<section class="cmd-sectie"><h3>Pe comenzi</h3><ul class="cmd-pe">${active.map(c => `<li><b>${esc(cmdCine(c))}</b> <span class="muted">${[CMD_FEL_SCURT[c.fel], c.livrare, c.ora ? 'ora ' + c.ora : '', c.tura ? 'tura ' + c.tura : '', c.aviz_pe ? 'aviz pe ' + c.aviz_pe : ''].filter(Boolean).map(esc).join(' · ')}</span>
+      ${c.nota ? `<small>Notă: ${esc(c.nota)}</small>` : ''}</li>`).join('')}</ul>
+      ${anulate.length ? `<p class="muted mic">Anulate: ${anulate.map(c => `${esc(cmdCine(c))} (${esc(c.motiv)})`).join('; ')}.</p>` : ''}</section>`;
+}
+function cmdLeagaFoaie(box, d, reia) {
+  const toate = d.comenzi.filter(c => c.stare === 'trimisa').flatMap(c => c.linii);
+  box.addEventListener('click', async e => {
+    const t = e.target.closest('[data-cmd-tot], [data-cmd-da], [data-cmd-nu]'); if (!t) return;
+    let ids, stare = 'confirmata', raspuns = '';
+    if (t.dataset.cmdTot) ids = toate.filter(l => l.sectie === t.dataset.cmdTot && l.stare === 'noua').map(l => l.id);
+    else if (t.dataset.cmdDa) ids = [+t.dataset.cmdDa];
+    else {
+      raspuns = await intreaba('De ce nu se poate?', { loc: 'Ex.: nu e zi de secară; aluatul e deja făcut pentru 190. Cine a comandat vede motivul.', obligatoriu: true, buton: 'Trimite' });
+      if (raspuns === null) return; ids = [+t.dataset.cmdNu]; stare = 'refuzata';
+    }
+    if (!ids.length) return;
+    t.disabled = true;
+    const { error } = await SB.rpc('cmd_raspunde', { p_linii: ids, p_stare: stare, p_raspuns: raspuns });
+    if (error) { t.disabled = false; return toast(error.message || 'Răspunsul nu s-a salvat.', true); }
+    toast(stare === 'confirmata' ? (ids.length > 1 ? `${ids.length} linii confirmate.` : 'Linie confirmată.') : 'Am anunțat pe cine a comandat.'); reia();
+  });
+}
+// ----- Catalogul: produse, clienți, ora-limită -----
+function cmdCatalogHtml(d, cat) {
+  const birou = d.birou;
+  return `<div class="cmd-cat">
+    <section class="calc-card"><span class="eyebrow">Produse · ${cat.produse.filter(p => p.activ).length} active</span>
+      <form class="frm cmd-catform" data-cat="produs"><div class="frm-2"><label>Produs nou<input class="field" name="nume" required maxlength="120"></label>
+        <label>Secția<select class="field" name="sectie">${cat.sectii.map(s => `<option value="${s.cod}">${esc(s.nume)}</option>`).join('')}</select></label>
+        <label>Unitatea<select class="field" name="unitate">${CMD_UNITATI.map(u => `<option>${u}</option>`).join('')}</select></label>
+        <label>Ce se întreabă de obicei<input class="field" name="optiuni" maxlength="160" placeholder="ex.: feliat?, cu semințe?"></label></div>
+        <div class="calc-act"><button class="btn sm" type="submit">Adaugă produsul</button></div></form>
+      ${cat.sectii.map(s => { const ale = cat.produse.filter(p => p.sectie === s.cod); return ale.length ? `<h3>${esc(s.nume)}</h3><ul class="cmd-catl">${ale.map(p => `<li class="${p.activ ? '' : 'stins'}"><span>${esc(p.nume)} <small class="muted">${esc(p.unitate)}${p.optiuni ? ' · ' + esc(p.optiuni) : ''}</small></span>
+        <button class="rez-anul" type="button" data-cat-comuta="cmd_produse" data-id="${p.id}" data-activ="${p.activ ? 1 : 0}">${p.activ ? 'Scoate din listă' : 'Pune înapoi'}</button></li>`).join('')}</ul>` : ''; }).join('')}</section>
+    ${birou ? `<section class="calc-card"><span class="eyebrow">Clienți B2B · ${cat.clienti.filter(c => c.activ).length} activi</span>
+      <form class="frm cmd-catform" data-cat="client"><div class="frm-2"><label>Client nou<input class="field" name="nume" required maxlength="120"></label>
+        <label>Unde se livrează<input class="field" name="livrare" maxlength="200"></label><label>Ora<input class="field" name="ora" maxlength="40"></label>
+        <label>Aviz pe<input class="field" name="aviz_pe" maxlength="160"></label></div>
+        <div class="calc-act"><button class="btn sm" type="submit">Adaugă clientul</button></div></form>
+      <ul class="cmd-catl">${cat.clienti.map(c => `<li class="${c.activ ? '' : 'stins'}"><span>${esc(c.nume)} <small class="muted">${[c.livrare, c.ora, c.aviz_pe ? 'aviz pe ' + c.aviz_pe : ''].filter(Boolean).map(esc).join(' · ')}</small></span>
+        <button class="rez-anul" type="button" data-cat-comuta="cmd_clienti" data-id="${c.id}" data-activ="${c.activ ? 1 : 0}">${c.activ ? 'Scoate din listă' : 'Pune înapoi'}</button></li>`).join('')}</ul></section>
+    <section class="calc-card"><span class="eyebrow">Ora-limită</span>
+      <form class="frm cmd-catform" data-cat="limita"><label>Până la ce oră, cu o zi înainte, comanda nu e târzie<input class="field" type="time" name="ora" required value="${esc(d.ora_limita)}" style="max-width:160px"></label>
+        <div class="calc-act"><button class="btn sm" type="submit">Salvează ora</button></div></form></section>` : ''}</div>`;
+}
+function cmdLeagaCatalog(box, reia) {
+  const gata = async (error, mesaj) => { if (error) return toast(error.code === '23505' ? 'Există deja în listă.' : error.message || 'Nu s-a salvat.', true); await cmdCatalog(true); toast(mesaj); reia(); };
+  box.addEventListener('submit', async e => {
+    const f = e.target.closest('[data-cat]'); if (!f) return; e.preventDefault();
+    const el = f.elements;
+    if (f.dataset.cat === 'produs') gata((await SB.from('cmd_produse').insert({ nume: el.nume.value.trim(), sectie: el.sectie.value, unitate: el.unitate.value, optiuni: el.optiuni.value.trim() })).error, 'Produsul e în catalog.');
+    else if (f.dataset.cat === 'client') gata((await SB.from('cmd_clienti').insert({ nume: el.nume.value.trim(), livrare: el.livrare.value.trim(), ora: el.ora.value.trim(), aviz_pe: el.aviz_pe.value.trim() })).error, 'Clientul e în listă.');
+    else gata((await SB.from('cmd_setari').update({ ora_limita: el.ora.value }).eq('id', 1)).error, 'Ora-limită e salvată.');
+  });
+  box.addEventListener('click', async e => {
+    const t = e.target.closest('[data-cat-comuta]'); if (!t) return;
+    gata((await SB.from(t.dataset.catComuta).update({ activ: t.dataset.activ !== '1' }).eq('id', +t.dataset.id)).error, t.dataset.activ === '1' ? 'Scos din listă. Comenzile vechi rămân.' : 'E din nou în listă.');
+  });
+}
+
 function tabsOm(activ) {
   const t = [];
   if (areTura()) t.push(['tura', 'Tura', '#/tura']);
-  t.push(['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
+  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
   if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
   if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);
   return `<nav class="tabs tabs-om">${t.map(([k, et, h]) => `<a href="${h}" class="${k === activ ? 'on' : ''}">${et}${k === 'mesaje' ? '<i class="tab-nr" data-de-confirmat hidden></i>' : ''}</a>`).join('')}</nav>`;
