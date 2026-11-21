@@ -589,6 +589,29 @@
   .liv-rezumat { margin: 0; font-size: 1rem; } .liv-rosu { color: #9a3b2f; } .liv-dovada { margin: 12px 0 0; padding: 14px; background: var(--bg-soft); max-width: none; }
   .liv-poza { max-width: min(92vw, 900px); } .liv-poza img { display: block; max-width: 100%; max-height: 76vh; margin: 0 auto 12px; }
   .liv .btn.sm { padding-top: 11px; padding-bottom: 11px; }
+  .pan-sus { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 26px; }
+  .pan-sus > div { background: var(--ink); color: #fff; padding: 16px 18px; } .pan-sus b { display: block; font: 500 1.9rem/1.1 'Montserrat', sans-serif; } .pan-sus small { color: #b9b6b0; font-size: .88rem; }
+  .pan-sus > div.rosu { background: #8f2f2a; } .pan-sus > div.rosu small { color: #f1cfcc; }
+  .pan-h { font-size: 1.3rem; margin: 26px 0 12px; } .pan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 16px; align-items: start; }
+  .pan-card { background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--line); padding: 18px 20px; } .pan-card.deschis { border-top-color: #2f6a40; } .pan-card.atentie { border-top-color: #c0504d; }
+  .pan-card header { display: flex; justify-content: space-between; gap: 10px; align-items: start; flex-wrap: wrap; margin-bottom: 4px; } .pan-card h3 { margin: 2px 0 0; font-size: 1.3rem; }
+  .pan-s { padding: 12px 0; border-top: 1px solid var(--line); } .pan-s > .eyebrow { display: block; margin-bottom: 6px; } .pan-s p { margin: 4px 0 0; }
+  .pan-oameni { list-style: none; margin: 0; padding: 0; } .pan-oameni li { padding: 2px 0; font-size: 1rem; } .pan-oameni small { color: var(--muted); }
+  .pan-rosu { color: #9a3b2f; font-size: .92rem; } .pan-mare { font: 500 1.7rem/1.1 'Montserrat', sans-serif; margin: 0 !important; } .pan-mare small { font: 400 .86rem Roboto, sans-serif; color: var(--muted); }
+  .pan-obs { font-size: .9rem; color: var(--ink-soft); } .pan-nota { font-size: .98rem; line-height: 1.5; white-space: pre-line; }
+  .pan-fisa { margin-bottom: 8px; } .pan-fisa > div:first-child { display: flex; justify-content: space-between; gap: 10px; font-size: .95rem; margin-bottom: 4px; } .pan-fisa b { font-weight: 500; white-space: nowrap; }
+  .pan-fisa .obj-bara { background: #e9e7e2; height: 6px; position: relative; } .pan-fisa .obj-bara i { display: block; height: 100%; background: var(--ink); } .pan-fisa small { display: block; font-size: .82rem; margin-top: 2px; }
+  .pan-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .pan-3 b { display: block; font: 500 1.25rem/1.2 'Montserrat', sans-serif; } .pan-3 small { color: var(--muted); font-size: .82rem; }
+  .pan-d { font-weight: 600; } .pan-d.sus { color: #2f6a40; } .pan-d.jos { color: #9a3b2f; }
+  .pan-stoc ul { list-style: none; margin: 2px 0 8px; padding: 0; } .pan-stoc li { display: flex; gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .pan-stoc li span { flex: 1; } .pan-stoc li b { font-weight: 500; white-space: nowrap; } .pan-stoc li small { color: var(--muted); font-size: .76rem; } .pan-stoc li.putin b { color: #9a3b2f; }
+  .pan-stoc em { font: 600 .64rem 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: .08em; color: #9a3b2f; font-style: normal; }
+  .pan-jos { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--line); } .pan-jos .pill { padding: 7px 9px; font-size: .72rem; }
+  .zi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 18px; align-items: start; } .zi-grid .frm { margin: 0; }
+  .zi-mare { font-size: 1.5rem !important; font-family: 'Montserrat', sans-serif !important; } .zi-medie { font-size: 1.05rem; min-height: 1.4em; }
+  .zi-stoc h3 { margin: 10px 0 0; font-size: 1rem; } .zi-st { display: grid !important; grid-template-columns: minmax(0, 1fr) 150px; gap: 2px 12px !important; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); color: var(--ink) !important; font-size: .98rem !important; }
+  .zi-st > small { grid-column: 2; font-size: .76rem; } .zi-st .pct { position: relative; display: block; } .zi-st .pct i { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--muted); font-size: .82rem; }
+  .zi-st .field { width: 100%; padding-right: 44px; }
   /* Pe desktop formularul ține toată pagina: detaliile comenzii în stânga, produsele în dreapta. */
   @media (min-width: 1100px) {
     .frm.cmd-form { grid-template-columns: minmax(340px, 1fr) minmax(0, 1.7fr); column-gap: 40px; padding: 28px 32px; align-items: start; }
@@ -1438,6 +1461,7 @@ function route() {
   else if (a === 'semnalari') { html = viewSemnalari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'comenzi') { html = viewComenzi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -4104,7 +4128,7 @@ async function incarcaTura() {
       <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
   };
   box.innerHTML = `${stare}${ba && ba.pot_nota ? notaCard(ba) : ''}${joc ? jocBanda(joc) : ''}
-    <div class="tura-scurt"><a class="btn ghost sm" href="#/semnalari?nou=1${loc ? '&s=' + enc(loc) : ''}">Semnalează o problemă</a>
+    <div class="tura-scurt"><a class="btn ghost sm" href="#/zi${loc ? '?s=' + enc(loc) : ''}">${(SP[loc] || {}).tip === 'productie' ? 'Stocul de azi' : 'Încasările zilei'}</a><a class="btn ghost sm" href="#/semnalari?nou=1${loc ? '&s=' + enc(loc) : ''}">Semnalează o problemă</a>
       <a class="btn ghost sm" href="#/mesaje">Mesaje${joc && joc.de_confirmat ? ` · ${joc.de_confirmat} de confirmat` : ''}</a></div>
     ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
       ${!t.deschis ? '<p class="muted" style="margin:-8px 0 14px">Le poți citi; ca să bifezi, fă întâi clock-in.</p>' : ''}
@@ -4314,15 +4338,17 @@ async function incarcaFisa(params) {
 
 // ----- „Echipa”: azi (în timp real) și programul pe ture -----
 function viewEchipa(params) {
-  const tab = ['program', 'oameni'].includes(params.tab) ? params.tab : 'azi';
-  setTimeout(() => ({ program: incarcaProgram, oameni: incarcaOameni, azi: incarcaAzi })[tab](params), 0);
+  // Cine vede mai multe locații pornește de la panoul cu toate; o locație anume (?s=) se deschide în detaliu.
+  const tab = ['program', 'oameni', 'azi', 'toate'].includes(params.tab) ? params.tab : (params.s || params.zi || locatiiOperative().length < 2 ? 'azi' : 'toate');
+  clearTimeout(PAN_TIMER);
+  setTimeout(() => ({ program: incarcaProgram, oameni: incarcaOameni, azi: incarcaAzi, toate: incarcaPanou })[tab](params), 0);
   return `<section class="band"><div class="wrap lat">
       <span class="eyebrow">Pentru șefi · în timp real</span>
       <h1>Echipa</h1>
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap lat">
-      <nav class="tabs"><a href="#/echipa" class="${tab === 'azi' ? 'on' : ''}">Azi</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -5222,6 +5248,154 @@ async function incarcaLivrari(params) {
     if (el.zi.value !== zi) location.hash = livUrl(el.zi.value); else reia();
   };
   if (params.l) { const el = document.getElementById('liv-' + params.l); if (el) { el.classList.add('acum'); el.scrollIntoView({ block: 'center' }); } }
+}
+
+// ---------- Panoul șefilor și ziua locației (migrarea 0026) ----------
+// Echipa → „Toate locațiile”: fiecare magazin și laborator, în timp real. „Ziua locației”: încasările serii,
+// nota zilei de la responsabil și stocul laboratorului.
+const panEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not exist/i.test((e.code || '') + ' ' + (e.message || ''))
+  ? 'Partea asta se activează după ce rulezi în Supabase migrarea 0026_panou.sql.' : (e.message || implicit);
+const panLei = x => x === null || x === undefined ? '—' : Number(x).toLocaleString('ro-RO', { maximumFractionDigits: 0 }) + ' lei';
+const panFata = (a, b) => a == null || b == null || !Number(b) ? '' : (() => { const p = Math.round((a - b) / b * 100); return `<span class="pan-d ${p >= 0 ? 'sus' : 'jos'}">${p >= 0 ? '+' : ''}${p}%</span>`; })();
+let PAN_TIMER = null;
+function panCard(x, tip, scor) {
+  const inTura = x.in_tura || [], prog = x.program || [], lipsa = prog.filter(p => p.lipseste), urmeaza = prog.filter(p => !p.venit_la && !p.lipseste);
+  const fise = x.fise || [], i = x.incasari, sapt = x.incasari_sapt, ieri = x.incasari_ieri, stoc = x.stoc || [], magazin = tip === 'magazin';
+  const deschis = inTura.length > 0, azi = ziLocala();
+  const sectiune = (titlu, html) => `<div class="pan-s"><span class="eyebrow">${titlu}</span>${html}</div>`;
+  const grupe = {}; for (const p of stoc) (grupe[p.grupa || 'Stoc'] = grupe[p.grupa || 'Stoc'] || []).push(p);
+  return `<article class="pan-card ${deschis ? 'deschis' : ''} ${lipsa.length || x.urgente ? 'atentie' : ''}">
+    <header><div><span class="eyebrow">${magazin ? 'Magazin' : 'Laborator'}</span><h3>${esc(numeLoc(x.space_id) || x.nume)}</h3></div>
+      <span class="pill ${deschis ? 'st-rezolvata' : ''}">${deschis ? `Deschis de la ${oraLocala(x.deschis_la)}` : x.deschis_la ? `Închis · a fost deschis de la ${oraLocala(x.deschis_la)}` : 'Nimeni în tură'}</span></header>
+    ${sectiune('Oameni', `${inTura.length ? `<ul class="pan-oameni">${inTura.map(o => `<li><b>${esc(o.nume)}</b> <small>${esc(o.rol)} · de la ${oraLocala(o.de_la)}</small></li>`).join('')}</ul>` : '<p class="muted mic">Nimeni nu e în tură acum.</p>'}
+      ${lipsa.length ? `<p class="pan-rosu">Lipsește din program: ${lipsa.map(p => `${esc(p.nume)} (de la ${esc(p.de_la)})`).join(', ')}</p>` : ''}
+      ${urmeaza.length ? `<p class="muted mic">Urmează: ${urmeaza.map(p => `${esc(p.nume)} ${esc(p.de_la)}`).join(', ')}</p>` : ''}
+      ${!prog.length ? '<p class="muted mic">Niciun program pus pentru azi.</p>' : ''}`)}
+    ${sectiune('Fișele zilei', fise.length ? fise.map(f => { const pct = f.pasi ? Math.round((f.facuti + f.nefacuti) / f.pasi * 100) : 0; return `<div class="pan-fisa"><div><span>${esc(f.titlu)}</span><b>${f.gata_la ? `gata la ${oraLocala(f.gata_la)}` : `${f.facuti + f.nefacuti} din ${f.pasi}`}</b></div>
+        <div class="obj-bara"><i style="width:${f.gata_la ? 100 : pct}%"></i></div>${f.nefacuti ? `<small class="pan-rosu">${f.nefacuti} ${f.nefacuti === 1 ? 'pas nefăcut' : 'pași nefăcuți'}</small>` : ''}${f.nota ? `<small>Observație: ${esc(f.nota)}</small>` : ''}</div>`; }).join('')
+      : '<p class="muted mic">Nicio fișă începută azi.</p>')}
+    ${magazin ? sectiune('Vitrina · nota dată de cine vinde', x.vitrina ? `<p class="pan-mare">${nota1(x.vitrina.nota)} <small>din 10${x.vitrina.cate > 1 ? ` · ${x.vitrina.cate} note` : ''}</small></p>${(x.vitrina.observatii || []).map(o => `<p class="pan-obs">„${esc(o)}”</p>`).join('')}` : '<p class="muted mic">Nicio notă dată azi.</p>') : ''}
+    ${magazin ? sectiune('Încasări', i ? `<div class="pan-3"><div><b>${panLei(i.incasari)}</b><small>încasări ${panFata(i.incasari, sapt && sapt.incasari)}</small></div><div><b>${Number(i.bonuri).toLocaleString('ro-RO')}</b><small>bonuri ${panFata(i.bonuri, sapt && sapt.bonuri)}</small></div>
+          <div><b>${i.medie == null ? '—' : plIn(i.medie) + ' lei'}</b><small>media bonului ${panFata(i.medie, sapt && sapt.medie)}</small></div></div>
+          <p class="muted mic">Scrise de ${esc(i.de || '—')} la ${oraLocala(i.la)}${sapt ? ' · procentele sunt față de aceeași zi de săptămâna trecută' : ''}.${i.nota ? ` Notă: ${esc(i.nota)}` : ''}</p>`
+        : `<p class="muted mic">Încă nescrise azi.${ieri ? ` Ieri: <b>${panLei(ieri.incasari)}</b>, ${ieri.bonuri} bonuri, media ${ieri.medie == null ? '—' : plIn(ieri.medie) + ' lei'}.` : ''}</p>`) : ''}
+    ${!magazin ? sectiune('Stoc', stoc.length ? Object.entries(grupe).map(([g, ps]) => `<div class="pan-stoc"><small class="muted">${esc(g)}</small><ul>${ps.map(p => { const vechi = p.zi && p.zi !== azi, putin = p.minim != null && p.cantitate != null && Number(p.cantitate) < Number(p.minim);
+          return `<li class="${putin ? 'putin' : ''}"><span>${esc(p.nume)}</span><b>${p.cantitate == null ? '—' : cmdNr(p.cantitate) + ' ' + esc(p.unitate)}</b>${putin ? '<em>puțin</em>' : ''}${vechi ? `<small>din ${ziScurta(p.zi)}</small>` : ''}</li>`; }).join('')}</ul></div>`).join('')
+        : '<p class="muted mic">Lista de stoc nu e făcută încă. Șeful de secție o pornește din „Ziua locației”.</p>') : ''}
+    ${x.nota_zilei ? sectiune(`Nota zilei${x.nota_zilei.zi !== azi ? ' · de ieri' : ''}`, `<p class="pan-nota">${esc(x.nota_zilei.text)}</p><small class="muted">${esc(x.nota_zilei.de || '')} · ${oraLocala(x.nota_zilei.la)}</small>`) : magazin ? sectiune('Nota zilei', '<p class="muted mic">Responsabilul nu a scris-o încă.</p>') : ''}
+    <div class="pan-jos">
+      ${x.semnalari ? `<a href="#/semnalari?s=${enc(x.space_id)}" class="pill ${x.urgente ? 'crit' : ''}">${x.semnalari} ${x.semnalari === 1 ? 'semnalare deschisă' : 'semnalări deschise'}${x.urgente ? ` · ${x.urgente} urgente` : ''}</a>` : '<span class="pill">Nicio semnalare</span>'}
+      ${x.livrari && x.livrari.toate ? `<a href="#/livrari" class="pill ${x.livrari.probleme ? 'crit' : ''}">Marfa de azi: ${x.livrari.livrate} din ${x.livrari.toate} livrate${x.livrari.probleme ? ' · cu probleme' : ''}</a>` : ''}
+      ${x.feedback && (x.feedback.aprecieri || x.feedback.imbunatatiri) ? `<span class="pill" title="${x.feedback.ultimul ? esc(`${x.feedback.ultimul.de} către ${x.feedback.ultimul.catre}: ${x.feedback.ultimul.text}`) : ''}">Feedback săptămâna asta: ${x.feedback.aprecieri} aprecieri · ${x.feedback.imbunatatiri} de îmbunătățit</span>` : ''}
+      ${scor && scor.saptamana && scor.saptamana.scor != null ? `<span class="pill">Nota săptămânii: ${scor.saptamana.scor} din 100</span>` : ''}</div>
+    <div class="calc-act"><a class="btn ghost sm" href="#/echipa?tab=azi&s=${enc(x.space_id)}">Detalii</a><a class="btn ghost sm" href="#/zi?s=${enc(x.space_id)}">${magazin ? 'Încasări și nota zilei' : 'Stocul de azi'}</a></div></article>`;
+}
+async function incarcaPanou() {
+  const box = document.getElementById('echipaBody'); if (!box) return;
+  clearTimeout(PAN_TIMER);
+  const [r, l] = await Promise.all([SB.rpc('panou_sefi'), SB.rpc('joc_locatii').then(x => x, () => ({ data: [] }))]);
+  if (document.getElementById('echipaBody') !== box) return;
+  if (r.error) { console.error('Panou:', r.error); box.innerHTML = `<p class="err">${esc(panEroare(r.error, 'Panoul nu s-a putut încărca.'))}</p>`; return; }
+  const tip = Object.fromEntries(D.spatii.map(s => [s.id, s.tip])), scor = Object.fromEntries((l.data || []).map(x => [x.id, x]));
+  const toate = (r.data || []).filter(x => ['magazin', 'productie'].includes(tip[x.space_id])), mag = toate.filter(x => tip[x.space_id] === 'magazin'), lab = toate.filter(x => tip[x.space_id] === 'productie');
+  const inc = mag.map(x => x.incasari).filter(Boolean), total = inc.reduce((t, x) => t + Number(x.incasari), 0), bonuri = inc.reduce((t, x) => t + Number(x.bonuri), 0);
+  const oameni = toate.reduce((t, x) => t + (x.in_tura || []).length, 0), lipsa = toate.reduce((t, x) => t + (x.program || []).filter(p => p.lipseste).length, 0);
+  const semn = toate.reduce((t, x) => t + Number(x.semnalari || 0), 0);
+  box.innerHTML = `<div id="panBody"><div class="pan-sus">
+      <div><b>${oameni}</b><small>oameni în tură acum</small></div>
+      <div class="${lipsa ? 'rosu' : ''}"><b>${lipsa}</b><small>lipsesc din program</small></div>
+      <div><b>${inc.length ? panLei(total) : '—'}</b><small>încasări azi${inc.length && inc.length < mag.length ? ` · ${inc.length} din ${mag.length} magazine` : ''}</small></div>
+      <div><b>${inc.length ? bonuri.toLocaleString('ro-RO') : '—'}</b><small>bonuri${bonuri ? ` · media ${plIn(Math.round(total / bonuri * 100) / 100)} lei` : ''}</small></div>
+      <div class="${semn ? 'rosu' : ''}"><b>${semn}</b><small>semnalări deschise</small></div></div>
+    ${mag.length ? `<h2 class="pan-h">Magazine</h2><div class="pan-grid">${mag.map(x => panCard(x, 'magazin', scor[x.space_id])).join('')}</div>` : ''}
+    ${lab.length ? `<h2 class="pan-h">Laboratoare</h2><div class="pan-grid">${lab.map(x => panCard(x, 'productie', scor[x.space_id])).join('')}</div>` : ''}
+    ${!toate.length ? '<p class="lvl4">Nu vezi nicio locație.</p>' : ''}
+    <p class="muted mic" style="margin-top:14px">Se reîmprospătează singur, la un minut. Ultima dată: ${oraLocala(new Date().toISOString())}.</p></div>`;
+  PAN_TIMER = setTimeout(() => { if (document.getElementById('panBody') && !document.hidden) incarcaPanou(); else if (document.getElementById('panBody')) PAN_TIMER = setTimeout(incarcaPanou, 60000); }, 60000);
+}
+// ----- Ziua locației: încasările, nota zilei, stocul -----
+function viewZi(params) {
+  setTimeout(() => incarcaZi(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Se scrie o dată pe zi</span><h1>Ziua locației</h1>
+      <p class="sub">Încasările serii, nota zilei și stocul laboratorului. Șefii le văd pe toate într-un loc.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('zi')}<div id="ziBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaZi(params) {
+  const box = document.getElementById('ziBody'); if (!box) return;
+  const locuri = locatiiOperative(); let ultim = ''; try { ultim = localStorage.getItem('mm-loc-zi') || ''; } catch (e) {}
+  const loc = (locuri.find(s => s.id === params.s) || locuri.find(s => s.id === ultim) || locuri.find(s => s.tip === (areTura() && !vedeEchipa() ? 'magazin' : 'magazin')) || locuri[0] || {}).id;
+  if (!loc) { box.innerHTML = '<p class="lvl4">Contul tău nu e legat de nicio locație.</p>'; return; }
+  const zi = /^\d{4}-\d{2}-\d{2}$/.test(params.zi || '') ? params.zi : ziLocala();
+  const { data: d, error } = await SB.rpc('zi_locatie', { p_space: loc, p_zi: zi });
+  if (!document.getElementById('ziBody')) return;
+  if (error) { console.error('Ziua:', error); box.innerHTML = `<p class="err">${esc(panEroare(error, 'Ziua nu s-a putut încărca.'))}</p>`; return; }
+  try { localStorage.setItem('mm-loc-zi', loc); } catch (e) {}
+  const magazin = (locuri.find(s => s.id === loc) || {}).tip === 'magazin', i = d.incasari, sapt = d.incasari_sapt, ieri = d.incasari_ieri;
+  const grupe = {}; for (const p of d.stoc) (grupe[p.grupa || 'Stoc'] = grupe[p.grupa || 'Stoc'] || []).push(p);
+  box.innerHTML = `<div class="echipa-sus">${locuri.length > 1 ? `<label class="pl-sel"><span class="eyebrow">Locația</span><select class="field" data-zi-loc>${locuri.map(s => `<option value="${esc(s.id)}" ${s.id === loc ? 'selected' : ''}>${esc(numeLoc(s.id))}</option>`).join('')}</select></label>` : ''}
+      <label class="pl-sel"><span class="eyebrow">Ziua</span><input class="field" type="date" data-zi-zi value="${zi}" max="${d.azi}"></label></div>
+    <div class="zi-grid">
+    ${magazin ? `<form class="calc-card frm" id="ziInc" autocomplete="off"><span class="eyebrow">Încasările zilei · ${esc(numeLoc(loc))}</span>
+      <p class="muted mic">De pe raportul casei, la închidere: totalul încasat (cu TVA) și numărul de bonuri. Media bonului se calculează singură.</p>
+      <div class="frm-2"><label>Încasări (lei)<input class="field zi-mare" name="incasari" inputmode="decimal" required value="${i ? esc(plIn(i.incasari)) : ''}" placeholder="0" ${d.pot_incasari ? '' : 'disabled'}></label>
+        <label>Număr de bonuri<input class="field zi-mare" name="bonuri" inputmode="numeric" required value="${i ? i.bonuri : ''}" placeholder="0" ${d.pot_incasari ? '' : 'disabled'}></label></div>
+      <p class="zi-medie" id="ziMedie"></p>
+      <label>Ceva de spus despre zi (opțional)<input class="field" name="nota" maxlength="1000" value="${esc(i ? i.nota : '')}" placeholder="Ex.: ploaie toată ziua; eveniment în zonă" ${d.pot_incasari ? '' : 'disabled'}></label>
+      ${i ? `<p class="muted mic">Scrise de ${esc(i.de || '—')} la ${oraLocala(i.la)}. Le poți corecta.</p>` : ''}
+      ${d.pot_incasari ? `<div class="calc-act"><button class="btn" type="submit">${i ? 'Corectează' : 'Salvează încasările'}</button></div>` : '<p class="muted mic">Pentru zile mai vechi de ieri, încasările le scrie responsabilul.</p>'}
+      <p class="muted mic">${ieri ? `Ieri: ${panLei(ieri.incasari)}, ${ieri.bonuri} bonuri, media ${ieri.medie == null ? '—' : plIn(ieri.medie) + ' lei'}. ` : ''}${sapt ? `Aceeași zi, săptămâna trecută: ${panLei(sapt.incasari)}, ${sapt.bonuri} bonuri, media ${sapt.medie == null ? '—' : plIn(sapt.medie) + ' lei'}.` : ''}</p></form>` : ''}
+    ${d.sef ? `<form class="calc-card frm" id="ziNota"><span class="eyebrow">Nota zilei · de la responsabil</span>
+      <label>Cum a fost ziua<textarea class="field" name="text" rows="5" maxlength="3000" required minlength="3" placeholder="Ce a mers, ce nu a mers, ce ai nevoie de la conducere sau de la producție.">${esc(d.nota ? d.nota.text : '')}</textarea></label>
+      ${d.nota ? `<p class="muted mic">Scrisă de ${esc(d.nota.de || '—')} la ${oraLocala(d.nota.la)}.</p>` : ''}
+      <div class="calc-act"><button class="btn" type="submit">${d.nota ? 'Schimbă nota' : 'Salvează nota'}</button></div></form>`
+      : d.nota ? `<div class="calc-card"><span class="eyebrow">Nota zilei · de la responsabil</span><p>${esc(d.nota.text)}</p></div>` : ''}
+    ${!magazin || d.stoc.length ? `<form class="calc-card frm zi-stoc" id="ziStoc" autocomplete="off"><span class="eyebrow">Stocul de azi · ${esc(numeLoc(loc))}</span>
+      ${d.stoc.length ? `<p class="muted mic">Scrii ce e acum în laborator. Lași gol ce nu ai numărat. Sub cifră vezi ultima valoare scrisă.</p>
+        ${Object.entries(grupe).map(([g, ps]) => `<h3>${esc(g)}</h3>${ps.map(p => `<label class="zi-st"><span>${esc(p.nume)}${p.minim != null ? ` <small class="muted">minim ${cmdNr(p.minim)}</small>` : ''}${d.tine_lista ? ` <button class="rez-anul" type="button" data-stoc-scoate="${p.id}">scoate</button>` : ''}</span>
+          <span class="pct"><input class="field" data-stoc="${p.id}" inputmode="decimal" value="${p.azi == null ? '' : esc(plIn(p.azi))}" placeholder="${p.ultim ? plIn(p.ultim.cantitate) : '0'}"><i>${esc(p.unitate)}</i></span>
+          ${p.ultim ? `<small class="muted">${ziScurta(p.ultim.zi)}: ${cmdNr(p.ultim.cantitate)}</small>` : '<small></small>'}</label>`).join('')}`).join('')}
+        <div class="calc-act"><button class="btn" type="submit">Salvează stocul</button></div>`
+        : `<p class="muted">Lista de stoc e goală. ${d.tine_lista ? 'Adaugă mai jos produsele pe care vrei să le urmărești.' : 'O pornește șeful de secție.'}</p>`}</form>` : ''}
+    ${d.tine_lista && !magazin ? `<form class="calc-card frm" id="ziProdus" autocomplete="off"><span class="eyebrow">Adaugă pe lista de stoc</span>
+      <div class="frm-2"><label>Produs<input class="field" name="nume" required maxlength="120" placeholder="Ex.: Aluat de croissant"></label>
+        <label>Grupa<input class="field" name="grupa" maxlength="60" list="ziGrupe" placeholder="Aluaturi, Torturi, Produse finite…"></label>
+        <label>Unitatea<select class="field" name="unitate">${CMD_UNITATI.map(u => `<option>${u}</option>`).join('')}</select></label>
+        <label>Minim (opțional)<input class="field" name="minim" inputmode="decimal" placeholder="sub el apare „puțin”"></label></div>
+      <datalist id="ziGrupe">${[...new Set(['Aluaturi', 'Torturi', 'Produse finite', 'Creme', ...d.stoc.map(p => p.grupa).filter(Boolean)])].map(g => `<option value="${esc(g)}">`).join('')}</datalist>
+      <div class="calc-act"><button class="btn sm" type="submit">Adaugă produsul</button></div></form>` : ''}</div>`;
+  const reia = () => incarcaZi({ s: loc, zi });
+  const selLoc = box.querySelector('[data-zi-loc]'); if (selLoc) selLoc.onchange = () => { location.hash = `#/zi?s=${enc(selLoc.value)}${zi !== d.azi ? '&zi=' + zi : ''}`; };
+  box.querySelector('[data-zi-zi]').onchange = e => { if (e.target.value) location.hash = `#/zi?s=${enc(loc)}&zi=${e.target.value}`; };
+  const fInc = box.querySelector('#ziInc');
+  if (fInc) {
+    const medie = () => { const a = plNr(fInc.elements.incasari.value), b = plNr(fInc.elements.bonuri.value); box.querySelector('#ziMedie').innerHTML = a > 0 && b > 0 ? `Media bonului: <b>${plIn(Math.round(a / b * 100) / 100)} lei</b>${sapt && sapt.medie ? ` · săptămâna trecută: ${plIn(sapt.medie)} lei` : ''}` : ''; };
+    fInc.addEventListener('input', medie); medie();
+    fInc.onsubmit = async e => { e.preventDefault(); const a = plNr(fInc.elements.incasari.value), b = plNr(fInc.elements.bonuri.value);
+      if (!(a >= 0) || !(b >= 0) || !Number.isInteger(b)) return toast('Scrie încasările în lei și numărul de bonuri, întreg.', true);
+      const { error: er } = await SB.rpc('incasari_pune', { p_space: loc, p_zi: zi, p_incasari: a, p_bonuri: b, p_nota: fInc.elements.nota.value.trim() });
+      if (er) return toast(er.message || 'Încasările nu s-au salvat.', true); toast('Încasările sunt salvate. Mulțumim.'); reia(); };
+  }
+  const fNota = box.querySelector('#ziNota');
+  if (fNota) fNota.onsubmit = async e => { e.preventDefault(); const { error: er } = await SB.rpc('nota_zilei_pune', { p_space: loc, p_zi: zi, p_text: fNota.elements.text.value });
+    if (er) return toast(er.message || 'Nota nu s-a salvat.', true); toast('Nota zilei e salvată.'); reia(); };
+  const fStoc = box.querySelector('#ziStoc');
+  if (fStoc) {
+    fStoc.onsubmit = async e => { e.preventDefault(); const valori = {};
+      for (const inp of fStoc.querySelectorAll('[data-stoc]')) { const v = inp.value.trim() === '' ? null : plNr(inp.value); if (Number.isNaN(v) || v < 0) return toast('Stocul e un număr, de exemplu 12 sau 3,5.', true); valori[inp.dataset.stoc] = v === null ? '' : v; }
+      const { error: er } = await SB.rpc('stoc_pune', { p_space: loc, p_valori: valori });
+      if (er) return toast(er.message || 'Stocul nu s-a salvat.', true); toast('Stocul de azi e salvat.'); reia(); };
+    fStoc.onclick = async e => { const t = e.target.closest('[data-stoc-scoate]'); if (!t) return; e.preventDefault();
+      if (!confirm('Scoți produsul de pe lista de stoc? Cifrele vechi rămân.')) return;
+      const { error: er } = await SB.from('stoc_produse').update({ activ: false }).eq('id', +t.dataset.stocScoate);
+      if (er) return toast(er.message || 'Nu s-a putut scoate.', true); reia(); };
+  }
+  const fProd = box.querySelector('#ziProdus');
+  if (fProd) fProd.onsubmit = async e => { e.preventDefault(); const el = fProd.elements, minim = el.minim.value.trim() ? plNr(el.minim.value) : null;
+    if (Number.isNaN(minim)) return toast('Minimul e un număr.', true);
+    const { error: er } = await SB.from('stoc_produse').insert({ space_id: loc, nume: el.nume.value.trim(), grupa: el.grupa.value.trim(), unitate: el.unitate.value, minim, position: d.stoc.length });
+    if (er) return toast(er.code === '23505' ? 'Produsul e deja pe listă (poate scos: scrie-l cu alt nume).' : er.message || 'Nu s-a adăugat.', true); toast('Produsul e pe listă.'); reia(); };
 }
 
 function tabsOm(activ) {
