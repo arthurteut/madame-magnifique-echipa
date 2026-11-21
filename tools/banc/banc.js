@@ -54,12 +54,17 @@ const U = k => '00000000-0000-0000-0000-0000000000' + k;
 async function deschide(b, { k, user, vp = { width: 390, height: 844 }, mob = true, hash = '', local = {} }) {
   const ctx = await b.newContext({ viewport: vp, deviceScaleFactor: 2, isMobile: mob, hasTouch: mob });
   const log = [], err = [];
+  // Pagina se servește direct din depozit, fără server web.
+  await ctx.route('http://localhost:8765/**', r => { const u = new URL(r.request().url()); const f = path.join('/home/user/madame-magnifique-echipa', u.pathname === '/' ? 'index.html' : decodeURIComponent(u.pathname));
+    if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) return r.fulfill({ status: 404, body: '' });
+    const t = { html: 'text/html; charset=utf-8', js: 'application/javascript', css: 'text/css', json: 'application/json', svg: 'image/svg+xml', png: 'image/png', jpg: 'image/jpeg', webp: 'image/webp', woff2: 'font/woff2' }[f.split('.').pop()] || 'application/octet-stream';
+    return r.fulfill({ contentType: t, body: fs.readFileSync(f) }); });
   await ctx.route('**/supabase-js@*/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(path.join(DIR, 'dbmock.js'), 'utf8') }));
   await ctx.route('**/assets/config.js', r => r.fulfill({ contentType: 'application/javascript', body: "window.MM_CONFIG={supabaseUrl:'https://t.supabase.co',supabaseAnonKey:'a'}" }));
   await ctx.exposeFunction('__db', spec => JSON.stringify(db(U(k), JSON.parse(spec), log)));
   await ctx.addInitScript(([uid, loc]) => { window.__UID = uid; try { for (const [a, v] of Object.entries(loc)) if (localStorage.getItem(a) === null) localStorage.setItem(a, v); } catch (e) {} }, [U(k), local]);
   const p = await ctx.newPage();
-  p.on('pageerror', e => err.push('pageerror: ' + e.message)); p.on('console', m => { if (m.type() === 'error') err.push(m.text()); });
+  p.on('pageerror', e => err.push('pageerror: ' + String(e.stack).split('\n').slice(0, 4).join(' | '))); p.on('console', m => { if (m.type() === 'error') err.push(m.text()); });
   p.on('dialog', d => d.accept());
   await p.goto('http://localhost:8765/' + hash); await p.fill('#user', user); await p.fill('#pw', 'p'); await p.click('#unlockBtn');
   await p.waitForSelector('#app:not(.hidden)');

@@ -689,7 +689,8 @@
   .tura { max-width: 820px; }
   /* Paginile de lucru de pe desktop (Comenzi, Echipa) folosesc toată lățimea ecranului. */
   .wrap.lat { max-width: none; }
-  @media (min-width: 1100px) { .wrap.lat #cmdV .msg-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 14px; align-items: start; max-width: none; } .wrap.lat #cmdV .msg-lista > * { margin: 0; } }
+  .wrap.lat .frm, .wrap.lat .msg-lista { max-width: none; }
+  @media (min-width: 1100px) { .wrap.lat .msg-lista { grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 14px; align-items: start; } .wrap.lat .msg-lista > * { margin: 0; } }
   .tura-card { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--stone); padding: clamp(18px, 3vw, 26px); }
   .tura-card.in { border-left-color: #3d7a4f; }
   .tura-card h2 { font-size: clamp(1.3rem, 3vw, 1.7rem); margin: 8px 0 8px; }
@@ -4043,12 +4044,12 @@ async function dateTura() {
 }
 function viewTura() {
   setTimeout(incarcaTura, 0);
-  return `<section class="band tura-band"><div class="wrap">
+  return `<section class="band tura-band"><div class="wrap lat">
       <span class="eyebrow">${esc(ME.full_name)} · ${esc(ME.role_code)}</span>
       <h1>Tura mea</h1>
       <p class="sub">La sosire scanezi codul QR de la intrare, apoi bifezi fișele pas cu pas. La plecare scanezi din nou.</p>
     </div></section>
-    <section class="block"><div class="wrap tura">${tabsOm('tura')}<div id="turaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+    <section class="block"><div class="wrap tura lat">${tabsOm('tura')}<div id="turaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 async function incarcaTura() {
   const box = document.getElementById('turaBody'); if (!box) return;
@@ -5133,12 +5134,12 @@ const insigneHtml = j => { const ins = insigne(j); return `<h3 class="jp-h3">Ins
 function viewProgres(params) {
   setTimeout(() => incarcaProgres(params), 0);
   const alt = params.u && params.u !== SB_USER_ID;
-  return `<section class="band tura-band"><div class="wrap">
+  return `<section class="band tura-band"><div class="wrap lat">
       <span class="eyebrow" id="progresSus">${alt ? 'Progresul unui om din echipă' : esc(ME.full_name) + ' · ' + esc(ME.role_code)}</span>
       <h1 id="progresTitlu">${alt ? 'Progres' : 'Punctele mele'}</h1>
       <p class="sub">Fiecare punct câștigat sau pierdut, cu motivul lui. Punctele aduc niveluri, insigne și loc în clasament; nu sunt bani.</p>
     </div></section>
-    <section class="block"><div class="wrap tura">${alt ? '<p class="crumbs"><a href="#/echipa?tab=oameni">← Oamenii mei</a></p>' : tabsOm('progres')}
+    <section class="block"><div class="wrap tura lat">${alt ? '<p class="crumbs"><a href="#/echipa?tab=oameni">← Oamenii mei</a></p>' : tabsOm('progres')}
       <div id="progresBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 async function incarcaProgres(params) {
@@ -5206,11 +5207,11 @@ async function incarcaProgres(params) {
 // ----- Pagina „Mesaje”: anunțurile conducerii și feedbackul de la șefi -----
 function viewMesaje(params) {
   setTimeout(() => incarcaMesaje(params), 0);
-  return `<section class="band tura-band"><div class="wrap">
+  return `<section class="band tura-band"><div class="wrap lat">
       <span class="eyebrow">De la conducere către echipă</span><h1>Mesaje</h1>
       <p class="sub">Anunțurile conducerii și feedbackul primit de la șefi. Fiecare anunț se confirmă cu „Am citit”.</p>
     </div></section>
-    <section class="block"><div class="wrap tura">${tabsOm('mesaje')}<div id="mesajeBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+    <section class="block"><div class="wrap tura lat">${tabsOm('mesaje')}<div id="mesajeBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 async function incarcaMesaje(params) {
   const box = document.getElementById('mesajeBody'); if (!box) return;
@@ -5317,11 +5318,11 @@ async function incarcaMesaje(params) {
 // ----- Pagina „Semnalări”: problemele de lucru -----
 function viewSemnalari(params) {
   setTimeout(() => incarcaSemnalari(params), 0);
-  return `<section class="band tura-band"><div class="wrap">
+  return `<section class="band tura-band"><div class="wrap lat">
       <span class="eyebrow">Probleme de lucru</span><h1>Semnalări</h1>
       <p class="sub">Lipsă marfă, un echipament defect, o situație cu un client: scrii aici, nu pe grup. Ajunge la șefi, iar tu vezi ce s-a făcut.</p>
     </div></section>
-    <section class="block"><div class="wrap tura">${tabsOm('semnalari')}<div id="semnBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+    <section class="block"><div class="wrap tura lat">${tabsOm('semnalari')}<div id="semnBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 async function incarcaSemnalari(params) {
   const box = document.getElementById('semnBody'); if (!box) return;
@@ -5457,11 +5458,11 @@ const lunaDoar = d => new Intl.DateTimeFormat('ro-RO', { month: 'long', timeZone
 const nrSauNull = v => { const x = String(v ?? '').trim().replace(/\s/g, '').replace(',', '.'); return x === '' || !isFinite(+x) ? null : +x; };
 function viewBonus(params) {
   setTimeout(() => incarcaBonus(params), 0);
-  return `<section class="band tura-band"><div class="wrap">
+  return `<section class="band tura-band"><div class="wrap lat">
       <span class="eyebrow">Sistemul de bonusare pe magazin</span><h1>Bonus</h1>
       <p class="sub">Din ce se compune bonusul lunii la magazinul tău, unde ești acum și de ce. Toate sumele sunt brute.</p>
     </div></section>
-    <section class="block"><div class="wrap tura">${tabsOm('bonus')}<div id="bonusBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+    <section class="block"><div class="wrap tura lat">${tabsOm('bonus')}<div id="bonusBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 // Starea unui criteriu, ca etichetă.
 const bnStare = ok => ok === true ? '<span class="pill st-rezolvata">Îndeplinit</span>' : ok === false ? '<span class="pill bn-nu">Neîndeplinit</span>' : '<span class="pill">Neevaluat</span>';
