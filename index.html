@@ -628,6 +628,15 @@
   .std-rez { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; margin-bottom: 20px; } .std-rez > div { background: var(--bg-soft); padding: 14px 16px; } .std-rez p { margin: 6px 0 0; font-size: .93rem; }
   .std-compar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; max-width: min(94vw, 1100px); } .std-compar figure { margin: 0; } .std-compar img { display: block; width: 100%; max-height: 68vh; object-fit: contain; background: #111; }
   .std-compar figcaption { font: 600 .68rem 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; padding: 6px 0; } .std-compar .calc-act { grid-column: 1 / -1; }
+  .std-grup { padding: 18px 20px; } .std-grup h3 { margin: 0; font-size: 1.2rem; } .std-randuri { list-style: none; margin: 10px 0 8px; padding: 0; border-top: 1px solid var(--line); }
+  .std-r { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .std-r em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: #2f6a40; } .std-r.nu em { color: #9a3b2f; }
+  .std-rn b { font-weight: 500; } .std-rn small { display: block; font-size: .82rem; }
+  .std-mini { display: block; width: 44px; height: 44px; background: var(--bg-soft); overflow: hidden; flex: none; } .std-mini img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+  .std-pn { display: flex; gap: 10px; align-items: center; min-width: 0; } .std-pn b { font-weight: 500; }
+  .std-p { border-bottom: 1px solid var(--line); } .std-p .std-c { border-bottom: 0; } .std-det { padding: 4px 0 12px 54px; display: grid; gap: 4px; } .std-det[hidden] { display: none; }
+  .std-c.mic { font-size: .9rem; padding: 3px 0; } .std-c.mic .std-dn label { padding: 5px 10px; } .std-form [hidden] { display: none !important; }
+  @media (max-width: 520px) { .std-det { padding-left: 0; } .std-p > .std-c { flex-wrap: wrap; } }
   .std-fis { cursor: pointer; } .pan-std { margin: 18px 0 0; font-size: .98rem; }
   @media (max-width: 520px) { .std-card { grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 12px; } }
   /* Pe desktop formularul ține toată pagina: detaliile comenzii în stânga, produsele în dreapta. */
@@ -5488,51 +5497,67 @@ async function incarcaStandarde(params) {
   const reia = () => incarcaStandarde({ ...params, iar: '' });
   if (v === 'azi') {
     try { localStorage.setItem('mm-loc-std', loc); } catch (e) {}
-    const P = d.produse;
-    // „Verifică din nou”: produsul ales își arată iar formularul (dacă nu are încă o decizie)
-    P.forEach(p => { if (String(p.id) === String(params.iar) && p.verificare && !p.verificare.decizie) p.verificare = null; });
-    const facute = P.filter(p => p.verificare).length, bune = P.filter(p => p.verificare && p.verificare.ok).length;
-    const card = p => { const w = p.verificare;
-      return `<article class="std-card ${w ? (w.ok ? 'ok' : 'nu') : ''}" data-std-p="${p.id}">
-        <div class="std-et ${p.etalon ? '' : 'gol'}">${p.etalon ? `<img data-std-poza="${esc(p.etalon)}" alt="Etalon: ${esc(p.nume)}" loading="lazy">` : ''}<span>${p.etalon ? 'Etalon' : 'Fără etalon încă'}</span></div>
-        <div class="std-in"><div class="semn-cap"><h3>${esc(p.nume)}</h3>${w ? `<span class="pill ${w.ok ? 'st-rezolvata' : 'liv-problema'}">${w.ok ? 'În standard' : 'Sub standard'}</span>` : '<span class="pill">De verificat</span>'}</div>
-        ${w ? `${stdCriterii(w)}${w.nota ? `<p class="semn-rasp">${esc(w.nota)}</p>` : ''}
-            <small class="muted">${esc(w.de || '')} · ${oraLocala(w.la)}${w.poza ? ` · <button class="rez-anul" type="button" data-std-vezi="${esc(w.poza)}" data-et="${esc(p.etalon)}">vezi poza</button>` : ` · fără poză: ${esc(w.fara_poza)}`}</small>
-            ${w.decizie ? `<p class="std-dec"><b>${STD_DECIZIE[w.decizie]}</b>${w.decizie_nota ? ` · ${esc(w.decizie_nota)}` : ''} <small class="muted">${esc(w.decizie_de || '')}</small></p>` : !w.ok ? '<p class="muted mic">Șefii au fost anunțați. Până hotărăsc, ține produsul deoparte dacă nu ești sigură.</p>' : ''}
-            ${!w.decizie ? `<button class="rez-anul" type="button" data-std-iar="${p.id}">Verifică din nou</button>` : ''}`
-          : `<form class="std-form" autocomplete="off">${p.criterii.map((c, i) => `<div class="std-c"><span>${esc(c)}</span><span class="std-dn" role="radiogroup" aria-label="${esc(c)}"><label><input type="radio" name="c${i}" value="1" checked> în regulă</label><label><input type="radio" name="c${i}" value="0"> nu</label></span></div>`).join('')}
-              <label data-nota hidden>Ce nu e în regulă<textarea class="field" name="nota" rows="2" maxlength="1000" placeholder="Pe scurt: ce vezi diferit față de etalon."></textarea></label>
-              <label data-cu-poza>Poza produsului<input class="field" type="file" name="poza" accept="image/*" capture="environment"></label>
-              <label data-fara-poza hidden>De ce nu poți face poza<input class="field" name="fara_poza" maxlength="200"></label>
-              <div class="calc-act"><button class="btn sm" type="submit">Trimite</button><button class="rez-anul" type="button" data-comuta-poza>Nu pot face poză</button></div></form>`}
-        </div></article>`; };
+    const P = d.produse, facute = P.filter(p => p.verificare).length, bune = P.filter(p => p.verificare && p.verificare.ok).length;
+    // Produsele se verifică pe secții: o singură poză cu toate, iar criteriile se deschid doar la produsul cu probleme.
+    const grupe = [...new Set(P.map(p => p.sectie))].map(sec => ({ sec, ps: P.filter(p => p.sectie === sec) }));
+    const numeSec = { brutarie: 'Brutărie', patiserie: 'Patiserie', cofetarie: 'Cofetărie', depozit: 'Depozit' };
+    const rand = p => { const w = p.verificare;
+      return `<li class="std-r ${w.ok ? 'ok' : 'nu'}"><span class="std-mini ${p.etalon ? '' : 'gol'}">${p.etalon ? `<img data-std-poza="${esc(p.etalon)}" alt="" loading="lazy">` : ''}</span>
+        <span class="std-rn"><b>${esc(p.nume)}</b>${w.ok ? '' : `<small class="pan-rosu">${w.criterii.filter(c => !c.ok).map(c => esc(c.nume)).join(', ')} · ${esc(w.nota)}</small>`}
+          ${w.decizie ? `<small><b>${STD_DECIZIE[w.decizie]}</b>${w.decizie_nota ? ` · ${esc(w.decizie_nota)}` : ''}</small>` : !w.ok ? '<small class="muted">Șefii au fost anunțați; ține-l deoparte până hotărăsc.</small>' : ''}</span>
+        <em>${w.ok ? 'în standard' : 'sub standard'}</em></li>`; };
+    const grup = ({ sec, ps }) => {
+      const refac = params.iar === sec, deFacut = ps.filter(p => !p.verificare || (refac && !p.verificare.decizie)), gata = ps.filter(p => !deFacut.includes(p));
+      const comune = ps.every(p => p.criterii.join('|') === ps[0].criterii.join('|')), w0 = (gata.find(p => p.verificare) || {}).verificare;
+      return `<section class="std-grup calc-card" data-std-g="${sec}">
+        <div class="semn-cap"><h3>${esc(numeSec[sec] || sec)}</h3><span class="pill ${!deFacut.length ? (gata.every(p => p.verificare.ok) ? 'st-rezolvata' : 'liv-problema') : ''}">${!deFacut.length ? (gata.every(p => p.verificare.ok) ? 'Totul în standard' : 'Cu probleme') : `${deFacut.length} de verificat`}</span></div>
+        ${comune ? `<p class="muted mic">Te uiți la: ${ps[0].criterii.map(esc).join(' · ')}.</p>` : ''}
+        ${gata.length ? `<ul class="std-randuri">${gata.map(rand).join('')}</ul>
+          <small class="muted">${esc(w0.de || '')} · ${oraLocala(w0.la)}${w0.poza ? ` · <button class="rez-anul" type="button" data-std-vezi="${esc(w0.poza)}">vezi poza</button>` : ` · fără poză: ${esc(w0.fara_poza)}`}${!deFacut.length && gata.some(p => !p.verificare.decizie) ? ` · <button class="rez-anul" type="button" data-std-iar="${sec}">Verifică din nou</button>` : ''}</small>` : ''}
+        ${deFacut.length ? `<form class="std-form" autocomplete="off">
+          <label data-cu-poza><b>O singură poză cu toate, de sus: tăiate și netăiate</b><input class="field" type="file" name="poza" accept="image/*" capture="environment"></label>
+          <label data-fara-poza hidden>De ce nu poți face poza<input class="field" name="fara_poza" maxlength="200"></label>
+          <div class="std-prod">${deFacut.map(p => `<div class="std-p" data-std-p="${p.id}">
+            <div class="std-c"><span class="std-pn"><span class="std-mini ${p.etalon ? '' : 'gol'}">${p.etalon ? `<img data-std-poza="${esc(p.etalon)}" alt="Etalon: ${esc(p.nume)}" loading="lazy" data-std-mare="${esc(p.etalon)}">` : ''}</span><b>${esc(p.nume)}</b></span>
+              <span class="std-dn" role="radiogroup" aria-label="${esc(p.nume)}"><label><input type="radio" name="p${p.id}" value="1" checked> în regulă</label><label><input type="radio" name="p${p.id}" value="0"> are o problemă</label></span></div>
+            <div class="std-det" hidden><p class="muted mic">Ce nu e în regulă la ${esc(p.nume)}? Bifează „nu” unde e cazul.</p>
+              ${p.criterii.map((c, i) => `<div class="std-c mic"><span>${esc(c)}</span><span class="std-dn" role="radiogroup" aria-label="${esc(c)}"><label><input type="radio" name="p${p.id}c${i}" value="1" checked> da</label><label><input type="radio" name="p${p.id}c${i}" value="0"> nu</label></span></div>`).join('')}
+              <label>Pe scurt, ce vezi<textarea class="field" name="n${p.id}" rows="2" maxlength="1000" placeholder="Ex.: miezul e crud la mijloc; straturile sunt lipite."></textarea></label></div></div>`).join('')}</div>
+          <div class="calc-act"><button class="btn sm" type="submit">Trimite verificarea</button><button class="rez-anul" type="button" data-comuta-poza>Nu pot face poză</button></div></form>` : ''}</section>`; };
     box.innerHTML = sus + (P.length ? `<p class="liv-rezumat" style="margin-bottom:16px"><b>${facute}</b> din <b>${P.length}</b> verificate azi la ${esc(numeLoc(loc))}${facute ? ` · <b>${bune}</b> în standard${facute - bune ? ` · <b class="liv-rosu">${facute - bune} sub standard</b>` : ''}` : ''}</p>
-      <div class="std-grid">${P.map(card).join('')}</div>` : `<p class="lvl4">Lista de produse urmărite e goală. ${tineLista ? 'Adaugă produsele din „Produse și etaloane”.' : 'O fac șefii de secție.'}</p>`);
+      <div class="std-grid">${grupe.map(grup).join('')}</div>` : `<p class="lvl4">Lista de produse urmărite e goală. ${tineLista ? 'Adaugă produsele din „Produse și etaloane”.' : 'O fac șefii de secție.'}</p>`);
     const sel = box.querySelector('[data-std-loc]'); if (sel) sel.onchange = () => { location.hash = stdUrl('azi', 's=' + enc(sel.value)); };
     box.querySelectorAll('.std-form').forEach(f => {
-      const nota = f.querySelector('[data-nota]'), arata = () => { nota.hidden = ![...f.querySelectorAll('input[type=radio]:checked')].some(r => r.value === '0'); };
-      f.addEventListener('change', arata);
+      const sec = f.closest('[data-std-g]').dataset.stdG, ale = [...f.querySelectorAll('[data-std-p]')].map(x => P.find(p => p.id === +x.dataset.stdP));
+      f.addEventListener('change', e => { const r = e.target.closest('.std-p'); if (r && e.target.name === 'p' + r.dataset.stdP) r.querySelector('.std-det').hidden = e.target.value === '1'; });
       f.querySelector('[data-comuta-poza]').onclick = e => { const fara = f.querySelector('[data-fara-poza]'), cu = f.querySelector('[data-cu-poza]'); fara.hidden = !fara.hidden; cu.hidden = !cu.hidden; e.target.textContent = fara.hidden ? 'Nu pot face poză' : 'Fac totuși poza'; };
       f.onsubmit = async e => {
         e.preventDefault();
-        const id = +f.closest('[data-std-p]').dataset.stdP, p = P.find(x => x.id === id), crit = {}, el = f.elements, buton = f.querySelector('[type=submit]');
-        p.criterii.forEach((c, i) => { crit[c] = el['c' + i].value === '1'; });
-        const picat = Object.values(crit).some(x => !x), faraPoza = !f.querySelector('[data-fara-poza]').hidden, fisier = el.poza.files[0];
-        if (picat && el.nota.value.trim().length < 3) return toast('Scrie pe scurt ce nu e în regulă.', true);
-        if (!faraPoza && !fisier) return toast('Fă o poză produsului sau apasă „Nu pot face poză”.', true);
+        const el = f.elements, buton = f.querySelector('[type=submit]'), produse = [];
+        for (const p of ale) {
+          const bun = el['p' + p.id].value === '1', crit = {};
+          p.criterii.forEach((c, i) => { crit[c] = bun || el[`p${p.id}c${i}`].value === '1'; });
+          const nota = bun ? '' : el['n' + p.id].value.trim();
+          if (!bun && !Object.values(crit).some(x => !x)) return toast(`La ${p.nume} ai spus că are o problemă: bifează „nu” la ce nu e în regulă.`, true);
+          if (!bun && nota.length < 3) return toast(`Scrie pe scurt ce nu e în regulă la ${p.nume}.`, true);
+          produse.push({ id: p.id, criterii: crit, nota });
+        }
+        const faraPoza = !f.querySelector('[data-fara-poza]').hidden, fisier = el.poza.files[0], rele = produse.filter(x => x.nota).length;
+        if (!faraPoza && !fisier) return toast('Fă o poză cu toate produsele sau apasă „Nu pot face poză”.', true);
         if (faraPoza && el.fara_poza.value.trim().length < 3) return toast('Scrie de ce nu poți face poza.', true);
         buton.disabled = true; buton.textContent = 'Se trimite…';
         let cale = '';
-        try { if (!faraPoza) cale = await stdUrca(fisier, `${azi}/${loc}`, id); }
-        catch (x) { console.error('Poza standardului:', x); buton.disabled = false; buton.textContent = 'Trimite'; return toast('Poza nu s-a încărcat. Încearcă din nou sau apasă „Nu pot face poză”.', true); }
-        const { error } = await SB.rpc('std_verifica', { p_space: loc, p_produs: id, p_criterii: crit, p_nota: el.nota.value.trim(), p_poza: cale, p_fara_poza: faraPoza ? el.fara_poza.value.trim() : '' });
-        if (error) { buton.disabled = false; buton.textContent = 'Trimite'; return toast(error.message || 'Verificarea nu s-a salvat.', true); }
-        toast(picat ? 'Am anunțat secția și șefii.' : 'În standard. Mulțumim.'); reia();
+        try { if (!faraPoza) cale = await stdUrca(fisier, `${azi}/${loc}`, sec); }
+        catch (x) { console.error('Poza standardului:', x); buton.disabled = false; buton.textContent = 'Trimite verificarea'; return toast('Poza nu s-a încărcat. Încearcă din nou sau apasă „Nu pot face poză”.', true); }
+        const { error } = await SB.rpc('std_verifica_grup', { p_space: loc, p_produse: produse, p_poza: cale, p_fara_poza: faraPoza ? el.fara_poza.value.trim() : '' });
+        if (error) { buton.disabled = false; buton.textContent = 'Trimite verificarea'; return toast(/std_verifica_grup|schema cache|does not exist/i.test(error.message || '') ? 'Verificarea pe grupe se activează după migrarea 0028_standarde_grup.sql.' : error.message || 'Verificarea nu s-a salvat.', true); }
+        toast(rele ? `Am anunțat secția și șefii despre ${rele === 1 ? 'produsul cu probleme' : 'cele ' + rele + ' produse cu probleme'}.` : 'Totul în standard. Mulțumim.'); reia();
       };
     });
     box.onclick = e => {
-      const t = e.target.closest('[data-std-vezi], [data-std-iar]'); if (!t) return;
-      if (t.dataset.stdVezi) stdArataPoza(t.dataset.stdVezi, t.dataset.et);
+      const t = e.target.closest('[data-std-vezi], [data-std-iar], [data-std-mare]'); if (!t) return;
+      if (t.dataset.stdVezi) stdArataPoza(t.dataset.stdVezi, '');
+      else if (t.dataset.stdMare) { e.preventDefault(); stdArataPoza('', t.dataset.stdMare); }
       else incarcaStandarde({ ...params, iar: t.dataset.stdIar });
     };
     stdPoze(box);
