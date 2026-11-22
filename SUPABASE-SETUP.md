@@ -506,8 +506,10 @@ Pagina **Standarde** (`#/standarde`, filă în *Tura* și *Echipa*) ține locul 
 
 - **Produse și etaloane** (SP, DP, PBP și biroul): fiecare produs urmărit are o secție, 1–8 criterii
   scurte și o poză-etalon.
-- **Verificarea de azi** (magazinul): pentru fiecare produs, o poză și criteriile, bifate față de etalon.
-  Ce e în standard nu mai cere nimic. Un criteriu picat cere o explicație și devine neconformitate.
+- **Verificarea de azi** (magazinul), pe secții: o singură poză cu toate produsele secției (de sus, tăiate
+  și netăiate). Fiecare produs vine pe „în regulă”; la cel cu probleme se deschid criteriile lui și se scrie
+  o explicație, iar produsul devine neconformitate. Cere și
+  [`0028_standarde_grup.sql`](supabase/migrations/0028_standarde_grup.sql).
 - **Sub standard**: neconformitatea ajunge la secția care a făcut produsul, la șefii de secție, la
   responsabilul magazinului și la conducere. Un șef hotărăște ce se face (rămâne la vânzare, degustare,
   retras), iar secția scrie cauza. După decizie, verificarea zilei nu se mai schimbă.
