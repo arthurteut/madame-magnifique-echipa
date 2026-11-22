@@ -28,7 +28,7 @@
     },
     functions: { invoke: async () => ({ data: null, error: null }) },
     // Stocarea de fișiere e simulată: încărcările se țin minte în pagină (window.__incarcari).
-    storage: { from: () => ({ createSignedUrl: async () => ({ data: null, error: null }),
+    storage: { from: () => ({ createSignedUrl: async cale => ({ data: { signedUrl: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><rect width='300' height='300' fill='%23c8a078'/><text x='20' y='150' font-size='20'>${String(cale).split('/')[0]}</text></svg>` }, error: null }),
       upload: async (cale, blob) => { (window.__incarcari = window.__incarcari || []).push({ cale, marime: blob && blob.size, tip: blob && blob.type }); return { data: { path: cale }, error: null }; } }) },
   }; } };
 })();

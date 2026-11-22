@@ -612,6 +612,24 @@
   .zi-stoc h3 { margin: 10px 0 0; font-size: 1rem; } .zi-st { display: grid !important; grid-template-columns: minmax(0, 1fr) 150px; gap: 2px 12px !important; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); color: var(--ink) !important; font-size: .98rem !important; }
   .zi-st > small { grid-column: 2; font-size: .76rem; } .zi-st .pct { position: relative; display: block; } .zi-st .pct i { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--muted); font-size: .82rem; }
   .zi-st .field { width: 100%; padding-right: 44px; }
+  .std-grid, .std-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr)); gap: 16px; align-items: start; } .std-lista { margin-top: 18px; }
+  .std-card { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--line); padding: 16px; }
+  .std-card.ok { border-left-color: #2f6a40; } .std-card.nu { border-left-color: #c0504d; } .std-card.stins { opacity: .55; } .std-card h3 { margin: 0; font-size: 1.12rem; }
+  .std-et { position: relative; aspect-ratio: 1; background: var(--bg-soft); overflow: hidden; align-self: start; } .std-et img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .std-et span { position: absolute; left: 0; bottom: 0; right: 0; background: rgba(36, 36, 36, .72); color: #fff; font: 600 .62rem 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; padding: 5px 7px; }
+  .std-et.gol span { position: static; display: grid; place-items: center; height: 100%; background: none; color: var(--muted); text-align: center; }
+  .std-crit { list-style: none; margin: 8px 0; padding: 0; } .std-crit li { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: .93rem; }
+  .std-crit b { font: 600 .68rem 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: .06em; } .std-crit .da b { color: #2f6a40; } .std-crit .nu b, .std-crit .nu span { color: #9a3b2f; }
+  .std-form { display: grid; gap: 10px; margin-top: 8px; } .std-form label { display: grid; gap: 5px; font-size: .86rem; color: var(--muted); } .std-form .field { padding: 9px 10px; font: inherit; color: var(--ink); }
+  .std-c { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .std-dn { display: inline-flex; border: 1px solid var(--ink); flex: none; } .std-dn label { display: block; position: relative; padding: 7px 11px; font: 500 .72rem/1 'Montserrat', sans-serif; letter-spacing: .04em; color: var(--ink); cursor: pointer; }
+  .std-dn input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; } .std-dn label:has(input:checked) { background: var(--ink); color: #fff; } .std-dn label:has(input[value="0"]:checked) { background: #9a3b2f; }
+  .std-dec { margin: 8px 0 0; font-size: .95rem; } .std-pic { margin: 6px 0; } .std-cauza { max-width: none; margin: 10px 0 0; } .std-n.gata { background: #fafafa; } .std-n.acum { border-color: var(--ink); }
+  .std-rez { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; margin-bottom: 20px; } .std-rez > div { background: var(--bg-soft); padding: 14px 16px; } .std-rez p { margin: 6px 0 0; font-size: .93rem; }
+  .std-compar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; max-width: min(94vw, 1100px); } .std-compar figure { margin: 0; } .std-compar img { display: block; width: 100%; max-height: 68vh; object-fit: contain; background: #111; }
+  .std-compar figcaption { font: 600 .68rem 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; padding: 6px 0; } .std-compar .calc-act { grid-column: 1 / -1; }
+  .std-fis { cursor: pointer; } .pan-std { margin: 18px 0 0; font-size: .98rem; }
+  @media (max-width: 520px) { .std-card { grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 12px; } }
   /* Pe desktop formularul ține toată pagina: detaliile comenzii în stânga, produsele în dreapta. */
   @media (min-width: 1100px) {
     .frm.cmd-form { grid-template-columns: minmax(340px, 1fr) minmax(0, 1.7fr); column-gap: 40px; padding: 28px 32px; align-items: start; }
@@ -1462,6 +1480,7 @@ function route() {
   else if (a === 'comenzi') { html = viewComenzi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'standarde') { html = viewStandarde(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -4348,7 +4367,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap lat">
-      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -5258,7 +5277,8 @@ const panEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not ex
 const panLei = x => x === null || x === undefined ? '—' : Number(x).toLocaleString('ro-RO', { maximumFractionDigits: 0 }) + ' lei';
 const panFata = (a, b) => a == null || b == null || !Number(b) ? '' : (() => { const p = Math.round((a - b) / b * 100); return `<span class="pan-d ${p >= 0 ? 'sus' : 'jos'}">${p >= 0 ? '+' : ''}${p}%</span>`; })();
 let PAN_TIMER = null;
-function panCard(x, tip, scor) {
+function panCard(x, tip, scor, std) {
+  const sz = std ? (std.azi || []).find(z => z.space_id === x.space_id) : null;
   const inTura = x.in_tura || [], prog = x.program || [], lipsa = prog.filter(p => p.lipseste), urmeaza = prog.filter(p => !p.venit_la && !p.lipseste);
   const fise = x.fise || [], i = x.incasari, sapt = x.incasari_sapt, ieri = x.incasari_ieri, stoc = x.stoc || [], magazin = tip === 'magazin';
   const deschis = inTura.length > 0, azi = ziLocala();
@@ -5274,6 +5294,7 @@ function panCard(x, tip, scor) {
     ${sectiune('Fișele zilei', fise.length ? fise.map(f => { const pct = f.pasi ? Math.round((f.facuti + f.nefacuti) / f.pasi * 100) : 0; return `<div class="pan-fisa"><div><span>${esc(f.titlu)}</span><b>${f.gata_la ? `gata la ${oraLocala(f.gata_la)}` : `${f.facuti + f.nefacuti} din ${f.pasi}`}</b></div>
         <div class="obj-bara"><i style="width:${f.gata_la ? 100 : pct}%"></i></div>${f.nefacuti ? `<small class="pan-rosu">${f.nefacuti} ${f.nefacuti === 1 ? 'pas nefăcut' : 'pași nefăcuți'}</small>` : ''}${f.nota ? `<small>Observație: ${esc(f.nota)}</small>` : ''}</div>`; }).join('')
       : '<p class="muted mic">Nicio fișă începută azi.</p>')}
+    ${magazin && std && std.produse ? sectiune('Produse în standard', sz ? `<p class="pan-mare">${sz.in_standard} <small>din ${sz.verificate} verificate${sz.verificate < std.produse ? ` · mai sunt ${std.produse - sz.verificate} de verificat` : ''}</small></p>${sz.neconforme.length ? `<p class="pan-rosu">Sub standard: ${sz.neconforme.map(esc).join(', ')}${sz.fara_decizie ? ` · ${sz.fara_decizie} fără decizie` : ''} · <a href="#/standarde?v=neconforme">vezi</a></p>` : ''}` : '<p class="muted mic">Verificarea de azi nu e făcută încă.</p>') : ''}
     ${magazin ? sectiune('Vitrina · nota dată de cine vinde', x.vitrina ? `<p class="pan-mare">${nota1(x.vitrina.nota)} <small>din 10${x.vitrina.cate > 1 ? ` · ${x.vitrina.cate} note` : ''}</small></p>${(x.vitrina.observatii || []).map(o => `<p class="pan-obs">„${esc(o)}”</p>`).join('')}` : '<p class="muted mic">Nicio notă dată azi.</p>') : ''}
     ${magazin ? sectiune('Încasări', i ? `<div class="pan-3"><div><b>${panLei(i.incasari)}</b><small>încasări ${panFata(i.incasari, sapt && sapt.incasari)}</small></div><div><b>${Number(i.bonuri).toLocaleString('ro-RO')}</b><small>bonuri ${panFata(i.bonuri, sapt && sapt.bonuri)}</small></div>
           <div><b>${i.medie == null ? '—' : plIn(i.medie) + ' lei'}</b><small>media bonului ${panFata(i.medie, sapt && sapt.medie)}</small></div></div>
@@ -5293,7 +5314,7 @@ function panCard(x, tip, scor) {
 async function incarcaPanou() {
   const box = document.getElementById('echipaBody'); if (!box) return;
   clearTimeout(PAN_TIMER);
-  const [r, l] = await Promise.all([SB.rpc('panou_sefi'), SB.rpc('joc_locatii').then(x => x, () => ({ data: [] }))]);
+  const [r, l, std] = await Promise.all([SB.rpc('panou_sefi'), SB.rpc('joc_locatii').then(x => x, () => ({ data: [] })), SB.rpc('std_rezumat').then(x => (x.error ? null : x.data), () => null)]);
   if (document.getElementById('echipaBody') !== box) return;
   if (r.error) { console.error('Panou:', r.error); box.innerHTML = `<p class="err">${esc(panEroare(r.error, 'Panoul nu s-a putut încărca.'))}</p>`; return; }
   const tip = Object.fromEntries(D.spatii.map(s => [s.id, s.tip])), scor = Object.fromEntries((l.data || []).map(x => [x.id, x]));
@@ -5307,7 +5328,8 @@ async function incarcaPanou() {
       <div><b>${inc.length ? panLei(total) : '—'}</b><small>încasări azi${inc.length && inc.length < mag.length ? ` · ${inc.length} din ${mag.length} magazine` : ''}</small></div>
       <div><b>${inc.length ? bonuri.toLocaleString('ro-RO') : '—'}</b><small>bonuri${bonuri ? ` · media ${plIn(Math.round(total / bonuri * 100) / 100)} lei` : ''}</small></div>
       <div class="${semn ? 'rosu' : ''}"><b>${semn}</b><small>semnalări deschise</small></div></div>
-    ${mag.length ? `<h2 class="pan-h">Magazine</h2><div class="pan-grid">${mag.map(x => panCard(x, 'magazin', scor[x.space_id])).join('')}</div>` : ''}
+    ${mag.length ? `<h2 class="pan-h">Magazine</h2><div class="pan-grid">${mag.map(x => panCard(x, 'magazin', scor[x.space_id], std)).join('')}</div>` : ''}
+    ${std && (std.sectii || []).length ? `<p class="pan-std"><b>În standard, ultimele 7 zile:</b> ${std.sectii.map(q => `${esc(q.nume)} ${q.verificate ? Math.round(q.in_standard / q.verificate * 100) : 0}%`).join(' · ')}${(std.repetate || []).length ? ` · <span class="pan-rosu">pică repetat: ${std.repetate.map(q => esc(q.produs)).join(', ')}</span>` : ''} · <a href="#/standarde?v=neconforme">detalii</a></p>` : ''}
     ${lab.length ? `<h2 class="pan-h">Laboratoare</h2><div class="pan-grid">${lab.map(x => panCard(x, 'productie', scor[x.space_id])).join('')}</div>` : ''}
     ${!toate.length ? '<p class="lvl4">Nu vezi nicio locație.</p>' : ''}
     <p class="muted mic" style="margin-top:14px">Se reîmprospătează singur, la un minut. Ultima dată: ${oraLocala(new Date().toISOString())}.</p></div>`;
@@ -5398,10 +5420,177 @@ async function incarcaZi(params) {
     if (er) return toast(er.code === '23505' ? 'Produsul e deja pe listă (poate scos: scrie-l cu alt nume).' : er.message || 'Nu s-a adăugat.', true); toast('Produsul e pe listă.'); reia(); };
 }
 
+// ---------- Standardele de produs (migrarea 0027) ----------
+// Dimineața, magazinul verifică fiecare produs urmărit față de poza-etalon: o poză și criteriile.
+// Ce pică devine neconformitate: un șef hotărăște ce se face, iar secția scrie cauza.
+const STD_DECIZIE = { ramane: 'Rămâne la vânzare', degustare: 'Merge la degustare', retras: 'Retras de la vânzare' };
+const stdEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not exist/i.test((e.code || '') + ' ' + (e.message || ''))
+  ? 'Standardele se activează după ce rulezi în Supabase migrarea 0027_standarde.sql.' : (e.message || implicit);
+const stdUrl = (v, extra = '') => `#/standarde${v && v !== 'azi' ? '?v=' + v : ''}${extra ? (v && v !== 'azi' ? '&' : '?') + extra : ''}`;
+function viewStandarde(params) {
+  setTimeout(() => incarcaStandarde(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Calitatea produselor</span><h1>Standarde</h1>
+      <p class="sub">Fiecare produs, verificat dimineața față de poza-etalon. Ce nu e în standard ajunge la secția care l-a făcut.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('standarde')}<div id="stdBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+// Pozele din bucket-ul privat: adresa semnată se cere abia când poza e pe pagină.
+async function stdPoze(box) {
+  for (const img of box.querySelectorAll('img[data-std-poza]')) {
+    const { data } = await SB.storage.from('standarde').createSignedUrl(img.dataset.stdPoza, 3600);
+    if (data && data.signedUrl) img.src = data.signedUrl; else img.closest('.std-et')?.classList.add('gol');
+  }
+}
+async function stdArataPoza(cale, etalon) {
+  const cer = c => c ? SB.storage.from('standarde').createSignedUrl(c, 600).then(r => (r.data ? r.data.signedUrl : null), () => null) : Promise.resolve(null);
+  const [a, b] = await Promise.all([cer(cale), cer(etalon)]);
+  if (!a && !b) return toast('Poza nu s-a putut deschide.', true);
+  const m = document.createElement('div'); m.className = 'qr-modal';
+  m.innerHTML = `<div class="qr-box std-compar">${a ? `<figure><img src="${esc(a)}" alt="Produsul de azi"><figcaption>Produsul de azi</figcaption></figure>` : ''}${b ? `<figure><img src="${esc(b)}" alt="Etalonul"><figcaption>Etalonul</figcaption></figure>` : ''}
+    <div class="calc-act"><button class="btn ghost" type="button">Închide</button></div></div>`;
+  m.addEventListener('click', e => { if (e.target === m || e.target.closest('button')) m.remove(); }); document.body.appendChild(m);
+}
+async function stdUrca(fisier, dosar, id) {
+  const blob = await livMicsoreaza(fisier), cale = `${dosar}/${id}-${Date.now()}.jpg`;
+  const { error } = await SB.storage.from('standarde').upload(cale, blob, { contentType: 'image/jpeg' });
+  if (error) throw error; return cale;
+}
+const stdCriterii = v => `<ul class="std-crit">${v.criterii.map(c => `<li class="${c.ok ? 'da' : 'nu'}"><span>${esc(c.nume)}</span><b>${c.ok ? 'în regulă' : 'nu'}</b></li>`).join('')}</ul>`;
+function stdRezumatHtml(r) {
+  if (!r) return '';
+  const azi = r.azi || [], pc1 = (a, b) => b ? Math.round(a / b * 100) + '%' : '—';
+  return `<div class="std-rez">
+    <div><span class="eyebrow">Azi, pe magazine</span>${azi.length ? azi.map(z => `<p><b>${esc(numeLoc(z.space_id))}</b> ${z.verificate} din ${r.produse} verificate · ${z.in_standard} în standard${z.neconforme.length ? ` · <span class="pan-rosu">sub standard: ${z.neconforme.map(esc).join(', ')}</span>` : ''}${z.fara_decizie ? ` · <b class="pan-rosu">${z.fara_decizie} fără decizie</b>` : ''}</p>`).join('') : '<p class="muted mic">Nicio verificare făcută azi.</p>'}</div>
+    <div><span class="eyebrow">Ultimele 7 zile, pe secții</span>${(r.sectii || []).length ? r.sectii.map(s => `<p><b>${esc(s.nume)}</b> ${pc1(s.in_standard, s.verificate)} în standard <small class="muted">(${s.in_standard} din ${s.verificate})</small></p>`).join('') : '<p class="muted mic">Încă nu sunt verificări.</p>'}</div>
+    <div><span class="eyebrow">Pică repetat, în 14 zile</span>${(r.repetate || []).length ? r.repetate.map(x => `<p><b>${esc(x.produs)}</b> de ${x.ori} ori <small class="muted">${esc(x.criterii || '')}</small></p>`).join('') : '<p class="muted mic">Niciun produs nu a picat de două ori.</p>'}</div></div>`;
+}
+async function incarcaStandarde(params) {
+  const box = document.getElementById('stdBody'); if (!box) return;
+  const magazine = locatiiOperative().filter(s => s.tip === 'magazin'); let ultim = ''; try { ultim = localStorage.getItem('mm-loc-std') || ''; } catch (e) {}
+  const loc = (magazine.find(s => s.id === params.s) || magazine.find(s => s.id === ultim) || magazine[0] || {}).id;
+  const v = ['azi', 'neconforme', 'produse'].includes(params.v) ? params.v : loc ? 'azi' : 'neconforme';
+  const azi = ziLocala();
+  let d = null, lista = null, produse = null, cat = null, rez = null, er = null;
+  try {
+    const cereri = [SB.rpc('std_rezumat').then(r => (r.error ? null : r.data), () => null)];
+    if (v === 'azi' && loc) cereri.push(SB.rpc('std_zi', { p_space: loc, p_zi: azi }));
+    else if (v === 'produse') cereri.push(Promise.all([tabel('std_produse', ['position', 'nume']), cmdCatalog()]));
+    else cereri.push(SB.rpc('std_neconforme', { p_zile: 14 }));
+    const [r0, r1] = await Promise.all(cereri); rez = r0;
+    if (v === 'produse') [produse, cat] = r1; else if (r1.error) er = r1.error; else if (v === 'azi' && loc) d = r1.data; else lista = r1.data || [];
+  } catch (e) { er = e; }
+  if (document.getElementById('stdBody') !== box) return;
+  if (er) { console.error('Standarde:', er); box.innerHTML = `<p class="err">${esc(stdEroare(er, 'Standardele nu s-au putut încărca.'))}</p>`; return; }
+  const tineLista = (d && d.tine_lista) || ME.vedeTot || ['GM', 'AE', 'CB2B', 'DP', 'ADM', 'SP', 'PBP'].includes(ME.role_code);
+  const sus = `<div class="msg-act"><nav class="jr-filtru">${loc ? `<a href="${stdUrl('azi')}" class="${v === 'azi' ? 'on' : ''}">Verificarea de azi</a>` : ''}<a href="${stdUrl('neconforme')}" class="${v === 'neconforme' ? 'on' : ''}">Sub standard</a>${tineLista ? `<a href="${stdUrl('produse')}" class="${v === 'produse' ? 'on' : ''}">Produse și etaloane</a>` : ''}</nav>
+      ${v === 'azi' && magazine.length > 1 ? `<label class="pl-sel"><span class="sr-only">Magazinul</span><select class="field" data-std-loc>${magazine.map(s => `<option value="${esc(s.id)}" ${s.id === loc ? 'selected' : ''}>${esc(numeLoc(s.id))}</option>`).join('')}</select></label>` : ''}</div>`;
+  const reia = () => incarcaStandarde({ ...params, iar: '' });
+  if (v === 'azi') {
+    try { localStorage.setItem('mm-loc-std', loc); } catch (e) {}
+    const P = d.produse;
+    // „Verifică din nou”: produsul ales își arată iar formularul (dacă nu are încă o decizie)
+    P.forEach(p => { if (String(p.id) === String(params.iar) && p.verificare && !p.verificare.decizie) p.verificare = null; });
+    const facute = P.filter(p => p.verificare).length, bune = P.filter(p => p.verificare && p.verificare.ok).length;
+    const card = p => { const w = p.verificare;
+      return `<article class="std-card ${w ? (w.ok ? 'ok' : 'nu') : ''}" data-std-p="${p.id}">
+        <div class="std-et ${p.etalon ? '' : 'gol'}">${p.etalon ? `<img data-std-poza="${esc(p.etalon)}" alt="Etalon: ${esc(p.nume)}" loading="lazy">` : ''}<span>${p.etalon ? 'Etalon' : 'Fără etalon încă'}</span></div>
+        <div class="std-in"><div class="semn-cap"><h3>${esc(p.nume)}</h3>${w ? `<span class="pill ${w.ok ? 'st-rezolvata' : 'liv-problema'}">${w.ok ? 'În standard' : 'Sub standard'}</span>` : '<span class="pill">De verificat</span>'}</div>
+        ${w ? `${stdCriterii(w)}${w.nota ? `<p class="semn-rasp">${esc(w.nota)}</p>` : ''}
+            <small class="muted">${esc(w.de || '')} · ${oraLocala(w.la)}${w.poza ? ` · <button class="rez-anul" type="button" data-std-vezi="${esc(w.poza)}" data-et="${esc(p.etalon)}">vezi poza</button>` : ` · fără poză: ${esc(w.fara_poza)}`}</small>
+            ${w.decizie ? `<p class="std-dec"><b>${STD_DECIZIE[w.decizie]}</b>${w.decizie_nota ? ` · ${esc(w.decizie_nota)}` : ''} <small class="muted">${esc(w.decizie_de || '')}</small></p>` : !w.ok ? '<p class="muted mic">Șefii au fost anunțați. Până hotărăsc, ține produsul deoparte dacă nu ești sigură.</p>' : ''}
+            ${!w.decizie ? `<button class="rez-anul" type="button" data-std-iar="${p.id}">Verifică din nou</button>` : ''}`
+          : `<form class="std-form" autocomplete="off">${p.criterii.map((c, i) => `<div class="std-c"><span>${esc(c)}</span><span class="std-dn" role="radiogroup" aria-label="${esc(c)}"><label><input type="radio" name="c${i}" value="1" checked> în regulă</label><label><input type="radio" name="c${i}" value="0"> nu</label></span></div>`).join('')}
+              <label data-nota hidden>Ce nu e în regulă<textarea class="field" name="nota" rows="2" maxlength="1000" placeholder="Pe scurt: ce vezi diferit față de etalon."></textarea></label>
+              <label data-cu-poza>Poza produsului<input class="field" type="file" name="poza" accept="image/*" capture="environment"></label>
+              <label data-fara-poza hidden>De ce nu poți face poza<input class="field" name="fara_poza" maxlength="200"></label>
+              <div class="calc-act"><button class="btn sm" type="submit">Trimite</button><button class="rez-anul" type="button" data-comuta-poza>Nu pot face poză</button></div></form>`}
+        </div></article>`; };
+    box.innerHTML = sus + (P.length ? `<p class="liv-rezumat" style="margin-bottom:16px"><b>${facute}</b> din <b>${P.length}</b> verificate azi la ${esc(numeLoc(loc))}${facute ? ` · <b>${bune}</b> în standard${facute - bune ? ` · <b class="liv-rosu">${facute - bune} sub standard</b>` : ''}` : ''}</p>
+      <div class="std-grid">${P.map(card).join('')}</div>` : `<p class="lvl4">Lista de produse urmărite e goală. ${tineLista ? 'Adaugă produsele din „Produse și etaloane”.' : 'O fac șefii de secție.'}</p>`);
+    const sel = box.querySelector('[data-std-loc]'); if (sel) sel.onchange = () => { location.hash = stdUrl('azi', 's=' + enc(sel.value)); };
+    box.querySelectorAll('.std-form').forEach(f => {
+      const nota = f.querySelector('[data-nota]'), arata = () => { nota.hidden = ![...f.querySelectorAll('input[type=radio]:checked')].some(r => r.value === '0'); };
+      f.addEventListener('change', arata);
+      f.querySelector('[data-comuta-poza]').onclick = e => { const fara = f.querySelector('[data-fara-poza]'), cu = f.querySelector('[data-cu-poza]'); fara.hidden = !fara.hidden; cu.hidden = !cu.hidden; e.target.textContent = fara.hidden ? 'Nu pot face poză' : 'Fac totuși poza'; };
+      f.onsubmit = async e => {
+        e.preventDefault();
+        const id = +f.closest('[data-std-p]').dataset.stdP, p = P.find(x => x.id === id), crit = {}, el = f.elements, buton = f.querySelector('[type=submit]');
+        p.criterii.forEach((c, i) => { crit[c] = el['c' + i].value === '1'; });
+        const picat = Object.values(crit).some(x => !x), faraPoza = !f.querySelector('[data-fara-poza]').hidden, fisier = el.poza.files[0];
+        if (picat && el.nota.value.trim().length < 3) return toast('Scrie pe scurt ce nu e în regulă.', true);
+        if (!faraPoza && !fisier) return toast('Fă o poză produsului sau apasă „Nu pot face poză”.', true);
+        if (faraPoza && el.fara_poza.value.trim().length < 3) return toast('Scrie de ce nu poți face poza.', true);
+        buton.disabled = true; buton.textContent = 'Se trimite…';
+        let cale = '';
+        try { if (!faraPoza) cale = await stdUrca(fisier, `${azi}/${loc}`, id); }
+        catch (x) { console.error('Poza standardului:', x); buton.disabled = false; buton.textContent = 'Trimite'; return toast('Poza nu s-a încărcat. Încearcă din nou sau apasă „Nu pot face poză”.', true); }
+        const { error } = await SB.rpc('std_verifica', { p_space: loc, p_produs: id, p_criterii: crit, p_nota: el.nota.value.trim(), p_poza: cale, p_fara_poza: faraPoza ? el.fara_poza.value.trim() : '' });
+        if (error) { buton.disabled = false; buton.textContent = 'Trimite'; return toast(error.message || 'Verificarea nu s-a salvat.', true); }
+        toast(picat ? 'Am anunțat secția și șefii.' : 'În standard. Mulțumim.'); reia();
+      };
+    });
+    box.onclick = e => {
+      const t = e.target.closest('[data-std-vezi], [data-std-iar]'); if (!t) return;
+      if (t.dataset.stdVezi) stdArataPoza(t.dataset.stdVezi, t.dataset.et);
+      else incarcaStandarde({ ...params, iar: t.dataset.stdIar });
+    };
+    stdPoze(box);
+  } else if (v === 'neconforme') {
+    const card = n => `<article class="semn std-n ${n.decizie && n.cauza ? 'gata' : ''}" id="std-${n.id}">
+      <div class="semn-cap"><span class="eyebrow">${esc(n.loc)} · ${ziScurta(n.zi)}</span><span>${n.decizie ? `<span class="pill">${STD_DECIZIE[n.decizie]}</span>` : '<span class="pill crit">Fără decizie</span>'} ${n.cauza ? '<span class="pill st-rezolvata">Cauză scrisă</span>' : '<span class="pill st-deschisa">Fără cauză</span>'}</span></div>
+      <h3 class="cmd-cine">${esc(n.produs)}</h3>
+      <p class="std-pic">${n.criterii.filter(c => !c.ok).map(c => `<span class="pill liv-problema">${esc(c.nume)}</span>`).join(' ')}</p>
+      <p class="semn-text">${esc(n.nota)}</p>
+      <small class="muted">${esc(n.de || '')} · ${oraLocala(n.la)}${n.poza ? ` · <button class="rez-anul" type="button" data-std-vezi="${esc(n.poza)}" data-et="${esc(n.etalon)}">vezi poza lângă etalon</button>` : ` · fără poză: ${esc(n.fara_poza)}`}</small>
+      ${n.decizie ? `<p class="std-dec"><b>${STD_DECIZIE[n.decizie]}</b>${n.decizie_nota ? ` · ${esc(n.decizie_nota)}` : ''} <small class="muted">${esc(n.decizie_de || '')}, ${oraLocala(n.decizie_la)}</small></p>` : ''}
+      ${n.pot_decide ? `<div class="calc-act">${Object.entries(STD_DECIZIE).map(([k, et]) => `<button class="btn ${n.decizie === k ? '' : 'ghost'} sm" type="button" data-std-dec="${n.id}" data-d="${k}">${et}</button>`).join('')}</div>` : ''}
+      ${n.cauza ? `<p class="semn-rasp"><b>Cauza:</b> ${esc(n.cauza)} <small class="muted">${esc(n.cauza_de || '')}</small></p>` : ''}
+      ${n.pot_cauza ? `<form class="frm std-cauza" data-std-cauza="${n.id}"><label>${n.cauza ? 'Schimbă cauza' : 'Cauza și ce se schimbă'}<textarea class="field" rows="2" maxlength="2000" required minlength="5" placeholder="Ex.: cuptorul a fost pornit târziu; de mâine verificăm temperatura la 3:30.">${esc(n.cauza)}</textarea></label>
+        <div class="calc-act"><button class="btn sm" type="submit">Salvează cauza</button></div></form>` : ''}</article>`;
+    box.innerHTML = sus + stdRezumatHtml(rez) + (lista.length ? `<div class="msg-lista">${lista.map(card).join('')}</div>` : '<p class="lvl4">Niciun produs sub standard în ultimele 14 zile.</p>');
+    box.onclick = async e => {
+      const t = e.target.closest('[data-std-vezi], [data-std-dec]'); if (!t) return;
+      if (t.dataset.stdVezi) return stdArataPoza(t.dataset.stdVezi, t.dataset.et);
+      const nota = await intreaba(STD_DECIZIE[t.dataset.d], { text: 'Poți adăuga o precizare pentru magazin (opțional).', loc: 'Ex.: îl vindem cu 30% reducere până la prânz.', buton: 'Confirm' }); if (nota === null) return;
+      const { error } = await SB.rpc('std_decide', { p_id: +t.dataset.stdDec, p_decizie: t.dataset.d, p_nota: nota });
+      if (error) return toast(error.message || 'Decizia nu s-a salvat.', true); toast('Decizia a ajuns la magazin.'); reia();
+    };
+    box.onsubmit = async e => { const f = e.target.closest('[data-std-cauza]'); if (!f) return; e.preventDefault();
+      const { error } = await SB.rpc('std_cauza', { p_id: +f.dataset.stdCauza, p_text: f.querySelector('textarea').value });
+      if (error) return toast(error.message || 'Cauza nu s-a salvat.', true); toast('Cauza e salvată.'); reia(); };
+    if (params.n) { const el = document.getElementById('std-' + params.n); if (el) { el.classList.add('acum'); el.scrollIntoView({ block: 'center' }); } }
+  } else {
+    box.innerHTML = sus + `<form class="calc-card frm" id="stdNou" autocomplete="off"><span class="eyebrow">Produs nou de urmărit</span>
+        <div class="frm-2"><label>Produsul<input class="field" name="nume" required maxlength="120" placeholder="Ex.: Croissant cu unt"></label>
+          <label>Secția care îl face<select class="field" name="sectie">${cat.sectii.map(s => `<option value="${s.cod}">${esc(s.nume)}</option>`).join('')}</select></label></div>
+        <label>Criteriile, câte unul pe rând (cel mult 8)<textarea class="field" name="criterii" rows="4" required placeholder="Culoare aurie, uniformă&#10;Volum și formă&#10;Foietaj vizibil"></textarea></label>
+        <div class="calc-act"><button class="btn sm" type="submit">Adaugă produsul</button></div></form>
+      <div class="std-lista">${produse.map(p => `<article class="std-card ${p.activ ? '' : 'stins'}"><div class="std-et ${p.etalon ? '' : 'gol'}">${p.etalon ? `<img data-std-poza="${esc(p.etalon)}" alt="Etalon: ${esc(p.nume)}" loading="lazy">` : ''}<span>${p.etalon ? 'Etalon' : 'Fără etalon'}</span></div>
+          <div class="std-in"><div class="semn-cap"><h3>${esc(p.nume)}</h3><span class="pill">${esc(cat.sectie[p.sectie] || p.sectie)}</span></div>
+            <ul class="std-crit">${p.criterii.map(c => `<li><span>${esc(c)}</span></li>`).join('')}</ul>
+            <div class="calc-act"><label class="btn ghost sm std-fis">${p.etalon ? 'Schimbă poza-etalon' : 'Pune poza-etalon'}<input type="file" accept="image/*" data-std-etalon="${p.id}" hidden></label>
+              <button class="rez-anul" type="button" data-std-comuta="${p.id}" data-activ="${p.activ ? 1 : 0}">${p.activ ? 'Scoate din listă' : 'Pune înapoi'}</button></div></div></article>`).join('') || '<p class="lvl4">Niciun produs încă.</p>'}</div>`;
+    box.querySelector('#stdNou').onsubmit = async e => { e.preventDefault(); const el = e.target.elements, criterii = el.criterii.value.split('\n').map(x => x.trim()).filter(Boolean);
+      if (!criterii.length || criterii.length > 8) return toast('Scrie între 1 și 8 criterii, câte unul pe rând.', true);
+      const { error } = await SB.from('std_produse').insert({ nume: el.nume.value.trim(), sectie: el.sectie.value, criterii, position: produse.length });
+      if (error) return toast(error.code === '23505' ? 'Produsul e deja pe listă.' : error.message || 'Nu s-a adăugat.', true); toast('Produsul e pe listă. Pune-i și o poză-etalon.'); reia(); };
+    box.onchange = async e => { const inp = e.target.closest('[data-std-etalon]'); if (!inp || !inp.files[0]) return;
+      try { const cale = await stdUrca(inp.files[0], 'etalon', inp.dataset.stdEtalon);
+        const { error } = await SB.from('std_produse').update({ etalon: cale }).eq('id', +inp.dataset.stdEtalon); if (error) throw error;
+        toast('Etalonul e pus.'); reia();
+      } catch (x) { console.error('Etalon:', x); toast('Poza-etalon nu s-a încărcat.', true); } };
+    box.onclick = async e => { const t = e.target.closest('[data-std-comuta]'); if (!t) return;
+      const { error } = await SB.from('std_produse').update({ activ: t.dataset.activ !== '1' }).eq('id', +t.dataset.stdComuta);
+      if (error) return toast(error.message || 'Nu s-a salvat.', true); reia(); };
+    stdPoze(box);
+  }
+}
+
 function tabsOm(activ) {
   const t = [];
   if (areTura()) t.push(['tura', 'Tura', '#/tura']);
-  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
+  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['standarde', 'Standarde', '#/standarde'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
   if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
   if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);
   return `<nav class="tabs tabs-om">${t.map(([k, et, h]) => `<a href="${h}" class="${k === activ ? 'on' : ''}">${et}${k === 'mesaje' ? '<i class="tab-nr" data-de-confirmat hidden></i>' : ''}</a>`).join('')}</nav>`;

@@ -496,6 +496,24 @@ restul site-ului merge ca înainte.
   - **Stocul de azi**, la laboratoare: pe o listă (`stoc_produse`: produs, grupă, unitate, minim) ținută
     de SP, DP, PBP și birou. Sub minim, produsul apare ca „puțin”.
 
+## 27. Standardele de produs
+
+Rulează [`0027_standarde.sql`](supabase/migrations/0027_standarde.sql), apoi lista de pornire
+(`49-standarde-date.sql`: opt produse cu criteriile lor; e o propunere și se schimbă din pagină).
+Migrarea creează bucket-ul privat `standarde` din Storage. Fără migrare, pagina spune că lipsește.
+
+Pagina **Standarde** (`#/standarde`, filă în *Tura* și *Echipa*) ține locul pozelor de dimineață de pe grup:
+
+- **Produse și etaloane** (SP, DP, PBP și biroul): fiecare produs urmărit are o secție, 1–8 criterii
+  scurte și o poză-etalon.
+- **Verificarea de azi** (magazinul): pentru fiecare produs, o poză și criteriile, bifate față de etalon.
+  Ce e în standard nu mai cere nimic. Un criteriu picat cere o explicație și devine neconformitate.
+- **Sub standard**: neconformitatea ajunge la secția care a făcut produsul, la șefii de secție, la
+  responsabilul magazinului și la conducere. Un șef hotărăște ce se face (rămâne la vânzare, degustare,
+  retras), iar secția scrie cauza. După decizie, verificarea zilei nu se mai schimbă.
+- **Rezumatul** (șefi și producție; apare și în *Echipa → Toate locațiile*): azi, pe magazine; ultimele
+  7 zile, pe secții; produsele care au picat de cel puțin două ori în 14 zile, cu criteriile picate.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

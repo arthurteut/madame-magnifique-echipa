@@ -138,6 +138,12 @@ zilei și vede în panou doar magazinul ei, cu cine e în tură, cine lipsește 
 comparația cu săptămâna trecută; brutarul scrie stocul, dar nu schimbă lista; șefa de secție ține lista;
 conducerea vede toate locațiile. Ultimul rând: „25 din 25”.
 
+Standardele de produs (`27_standarde.sql`, după 0027; date inventate): magazinul verifică un produs cu
+toate criteriile și cu poză sau motiv; un criteriu picat cere explicație și anunță secția produsului,
+șefa de secție, responsabila magazinului și conducerea, nu și alte secții; alt magazin și altă secție nu
+văd neconformitatea; decide doar un șef, cauza o scrie doar secția produsului; după decizie verificarea
+nu se mai schimbă; rezumatul pe magazine, pe secții și produsele care pică repetat. Ultimul rând: „27 din 27”.
+
 Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina reală în Playwright și
 trimite fiecare operație către baza locală, ca un cont anume (pagina se servește direct din depozit, iar
 încărcările de fișiere sunt simulate): aceleași RLS, triggere și funcții ca în
