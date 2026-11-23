@@ -543,6 +543,20 @@ Rulează `supabase/migrations/0030_agenda.sql`, apoi fișierul de date cu lista 
 - **Fișa rolului** (*Roluri → Responsabil Locație*) arată aceeași listă, la „Responsabilități care se
   repetă”. Pentru asta rulează și `supabase/migrations/0031_agenda_pe_rol.sql`.
 
+## 30. Jurnalul de activitate și rezumatul pentru șefi (migrarea 0032)
+
+Rulează `supabase/migrations/0032_activitate.sql`.
+
+- **Jurnalul**: bifele din agendă, încasările, nota zilei, stocul, comenzile și răspunsurile la ele,
+  livrările, verificările de standard și testele se scriu singure, cu om, oră și locație.
+- **Pagina Activitate** (*Echipa → Activitate*): șeful vede tot ce au făcut oamenii de sub el, pe
+  locațiile lui; cine vede tot, vede tot. Se filtrează pe fel și pe locație.
+- **Rezumatul** pleacă la 11:00, 15:00 și 21:00 (ora României): o singură notificare pe șef, cu ce s-a
+  făcut de la rezumatul trecut, pe locații. Fără acțiuni noi, nu pleacă nimic.
+- **Seara, la 21:00**: pe fiecare magazin, ce a rămas nefăcut din agendă ajunge pe loc la șefii responsabilului.
+- Problemele (întârzieri, pași nefăcuți, semnalări, livrări cu probleme, produse sub standard) vin pe loc, ca înainte.
+- Jurnalul păstrează 60 de zile.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

@@ -154,3 +154,5 @@ Migrarea 0029 (adrese salvate, anunț doar pentru B2B, secții pe oameni) se ver
 o verificare a lui pică fără să fie o problemă.
 
 Migrarea 0030 (agenda responsabilului) se verifică tot în banc: bife, stări pe zile anume, panoul șefilor și mementoul.
+
+Migrarea 0032 (jurnalul de activitate, rezumatul pentru șefi) se verifică în banc: ce intră în jurnal, cine primește rezumatul și cine nu, pagina Activitate.

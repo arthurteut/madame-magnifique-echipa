@@ -638,6 +638,9 @@
   .ag-d { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; } .ag-nr { font: 500 .95rem 'Montserrat', sans-serif; white-space: nowrap; }
   .ag-d em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: var(--muted); }
   .ag-r.gata .ag-d em { color: #2f6a40; } .ag-r.azi .ag-d em, .ag-r.intarziata .ag-d em { color: #9a3b2f; } .ag-r.oprit { opacity: .6; }
+  .act-sus { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 14px 0; } .act-loc { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+  .act-l { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); } .act-l li { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .act-l time { font: 500 .9rem 'Montserrat', sans-serif; color: var(--muted); } .act-l small { display: block; color: var(--muted); font-size: .82rem; } .act-l .go { text-decoration: none; }
   .ag-sus { margin-top: 14px; } .tura-ag { margin: 14px 0; } .tura-ag h3 { margin: 4px 0 0; font-size: 1.3rem; } .tura-ag-sus { display: flex; gap: 8px 20px; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; } .tura-ag-sus p { margin: 0; } .rol-ag { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 14px; align-items: start; } .rol-ag .ag-grup { margin-top: 0; }
   .rol-ag-r { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--line); }
   @media (max-width: 640px) { .ag-r { grid-template-columns: 34px minmax(0, 1fr); } .ag-d { grid-column: 2; justify-content: flex-start; } }
@@ -1504,6 +1507,7 @@ function route() {
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'standarde') { html = viewStandarde(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'activitate' && vedeEchipa()) { html = viewActivitate(params); nav = 'echipa'; }
   else if (a === 'agenda' && (AGENDA_AM || vedeEchipa())) { html = viewAgenda(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
@@ -4394,7 +4398,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap lat">
-      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/activitate">Activitate</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -5423,6 +5427,35 @@ async function turaAgenda(locTura) {
   box.onchange = async e => { const c = e.target.closest('[data-ag-bifa]'); if (!c) return;
     const { error } = await SB.rpc('agenda_bifeaza', { p_sarcina: +c.closest('[data-ag]').dataset.ag, p_space: loc, p_facut: c.checked, p_nota: '' });
     if (error) { c.checked = !c.checked; return toast(error.message || 'Nu s-a salvat.', true); } toast('Bifat.'); turaAgenda(loc); };
+}
+// ---------- Activitatea echipei (migrarea 0032) ----------
+// Jurnalul cu tot ce a făcut echipa în aplicație; din el pleacă rezumatul de la 11:00, 15:00 și 21:00.
+const ACT_FEL = { agenda: 'Agenda', incasari: 'Încasări', nota: 'Nota zilei', stoc: 'Stoc', comanda: 'Comenzi', raspuns: 'Răspunsuri la comenzi', livrare: 'Livrări', standard: 'Standarde', test: 'Teste' };
+const actZi = (zi, n) => { const d = new Date(zi + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+function viewActivitate(params) {
+  setTimeout(() => incarcaActivitate(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Pentru șefi</span><h1>Activitate</h1>
+      <p class="sub">Tot ce a făcut echipa ta în aplicație, pe zile. Rezumatul îți vine la 11:00, 15:00 și 21:00; problemele vin pe loc.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('echipa')}<div id="actBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaActivitate(params) {
+  const box = document.getElementById('actBody'); if (!box) return;
+  const zi = /^\d{4}-\d{2}-\d{2}$/.test(params.zi || '') ? params.zi : ziLocala();
+  const { data: d, error } = await SB.rpc('activitate_echipa', { p_zi: zi });
+  if (!document.getElementById('actBody')) return;
+  if (error) { console.error('Activitate:', error); box.innerHTML = `<p class="err">${esc(/PGRST20|42883|schema cache|does not exist/i.test((error.code || '') + ' ' + (error.message || '')) ? 'Activitatea se activează după ce rulezi în Supabase migrarea 0032_activitate.sql.' : error.message || 'Activitatea nu s-a putut încărca.')}</p>`; return; }
+  const R = d.randuri, fel = params.fel || '', loc = params.s || '', arat = R.filter(x => (!fel || x.fel === fel) && (!loc || x.space_id === loc));
+  const url = (o) => { const q = Object.assign({ zi, fel, s: loc }, o); return '#/activitate?' + Object.entries(q).filter(([, v]) => v).map(([k, v]) => `${k}=${enc(v)}`).join('&'); };
+  const locuri = [...new Set(R.map(x => x.space_id).filter(Boolean))], feluri = [...new Set(R.map(x => x.fel))];
+  box.innerHTML = `<div class="act-sus"><a class="btn ghost sm" href="${url({ zi: actZi(zi, -1) })}">← ${ziScurta(actZi(zi, -1))}</a>
+      <b>${zi === d.azi ? 'Azi' : ziScurta(zi)} · ${R.length} ${R.length === 1 ? 'acțiune' : 'acțiuni'}</b>
+      ${zi < d.azi ? `<a class="btn ghost sm" href="${url({ zi: actZi(zi, 1) })}">${ziScurta(actZi(zi, 1))} →</a>` : '<span></span>'}</div>
+    ${R.length ? `<nav class="tabs"><a href="${url({ fel: '' })}" class="${fel ? '' : 'on'}">Tot</a>${feluri.map(f => `<a href="${url({ fel: f })}" class="${fel === f ? 'on' : ''}">${ACT_FEL[f] || f} · ${R.filter(x => x.fel === f).length}</a>`).join('')}</nav>
+      ${locuri.length > 1 ? `<p class="act-loc"><a class="pill ${loc ? '' : 'crit'}" href="${url({ s: '' })}">Toate locațiile</a>${locuri.map(l => `<a class="pill ${loc === l ? 'crit' : ''}" href="${url({ s: l })}">${esc(numeLoc(l))}</a>`).join('')}</p>` : ''}
+      <ul class="act-l">${arat.map(x => `<li><time>${oraLocala(x.la)}</time><div><b>${esc(x.om || '—')}</b> ${esc(x.text)}<small>${x.space_id ? esc(numeLoc(x.space_id)) + ' · ' : ''}${ACT_FEL[x.fel] || x.fel}</small></div>${x.url ? `<a class="go" href="${esc(x.url)}" aria-label="Deschide">→</a>` : ''}</li>`).join('') || '<li class="muted">Nimic pentru filtrul ales.</li>'}</ul>`
+      : '<p class="lvl4">Nicio acțiune înregistrată în ziua asta.</p>'}`;
 }
 // ---------- Agenda responsabilului (migrarea 0030) ----------
 // Sarcinile care se repetă: zilnic, săptămânal, lunar, la nevoie. Se bifează pe locație; șefii văd în panou.
