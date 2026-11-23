@@ -638,7 +638,7 @@
   .ag-d { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; } .ag-nr { font: 500 .95rem 'Montserrat', sans-serif; white-space: nowrap; }
   .ag-d em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: var(--muted); }
   .ag-r.gata .ag-d em { color: #2f6a40; } .ag-r.azi .ag-d em, .ag-r.intarziata .ag-d em { color: #9a3b2f; } .ag-r.oprit { opacity: .6; }
-  .ag-sus { margin-top: 14px; } .rol-ag { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 14px; align-items: start; } .rol-ag .ag-grup { margin-top: 0; }
+  .ag-sus { margin-top: 14px; } .tura-ag { margin: 14px 0; } .tura-ag h3 { margin: 4px 0 0; font-size: 1.3rem; } .tura-ag-sus { display: flex; gap: 8px 20px; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; } .tura-ag-sus p { margin: 0; } .rol-ag { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 14px; align-items: start; } .rol-ag .ag-grup { margin-top: 0; }
   .rol-ag-r { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--line); }
   @media (max-width: 640px) { .ag-r { grid-template-columns: 34px minmax(0, 1fr); } .ag-d { grid-column: 2; justify-content: flex-start; } }
   .std-grup { padding: 18px 20px; } .std-grup h3 { margin: 0; font-size: 1.2rem; } .std-randuri { list-style: none; margin: 10px 0 8px; padding: 0; border-top: 1px solid var(--line); }
@@ -4172,7 +4172,8 @@ async function incarcaTura() {
       <span class="fisa-titlu"><b>${esc(f.titlu)}</b><small>${run && run.finished_at ? `Gata la ${oraLocala(run.finished_at)}` : run ? `${gata} din ${total} pași` : 'Nepornită'}${termen ? ` · termen ${termen}` : ''}${eu ? ' · ești programat(ă)' : ''}</small></span>
       <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
   };
-  box.innerHTML = `${stare}${ba && ba.pot_nota ? notaCard(ba) : ''}${joc ? jocBanda(joc) : ''}
+  if (AGENDA_AM) setTimeout(() => turaAgenda(loc), 0);
+  box.innerHTML = `${stare}${AGENDA_AM ? '<div id="turaAgenda"></div>' : ''}${ba && ba.pot_nota ? notaCard(ba) : ''}${joc ? jocBanda(joc) : ''}
     <div class="tura-scurt"><a class="btn ghost sm" href="#/zi${loc ? '?s=' + enc(loc) : ''}">${(SP[loc] || {}).tip === 'productie' ? 'Stocul de azi' : 'Încasările zilei'}</a><a class="btn ghost sm" href="#/semnalari?nou=1${loc ? '&s=' + enc(loc) : ''}">Semnalează o problemă</a>
       <a class="btn ghost sm" href="#/mesaje">Mesaje${joc && joc.de_confirmat ? ` · ${joc.de_confirmat} de confirmat` : ''}</a></div>
     ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
@@ -5405,6 +5406,23 @@ async function rolAgenda(cod) {
     <div class="rol-ag">${G.map(([k, et]) => { const l = r.data.filter(t => t.ritm === k); return l.length ? `<div class="calc-card ag-grup"><span class="eyebrow">${et}</span><ul class="ag-l">${l.map(t =>
       `<li class="rol-ag-r"><div class="ag-t"><b>${esc(t.titlu)}</b><small>${esc(agCand(t))}${t.detaliu ? ' · ' + esc(t.detaliu) : ''}</small></div>${t.unde && !t.unde.startsWith('#/') ? `<span class="pill">${esc(t.unde)}</span>` : ''}</li>`).join('')}</ul></div>` : ''; }).join('')}</div>
     ${ME && ME.role_code === cod ? '<p class="mic" style="margin:12px 0 36px"><a href="#/agenda">Le bifezi în Agendă</a></p>' : '<p style="margin-bottom:36px"></p>'}`;
+}
+// Agenda pe pagina Tura: ce e de făcut acum, cu bifă pe loc. Lista întreagă e în tabul Agenda.
+async function turaAgenda(locTura) {
+  const mag = D.spatii.filter(s => s.tip === 'magazin'); let ultim = ''; try { ultim = localStorage.getItem('mm-loc-ag') || ''; } catch (e) {}
+  const loc = (mag.find(s => s.id === locTura) || mag.find(s => s.id === ultim) || mag[0] || {}).id; if (!loc) return;
+  const { data: d, error } = await SB.rpc('agenda_zi', { p_space: loc });
+  const box = document.getElementById('turaAgenda'); if (!box || error || !d || !d.sarcini.length) return;
+  const act = d.sarcini.filter(t => t.activ), acum = act.filter(t => t.stare === 'azi' || t.stare === 'intarziata'), zi = act.filter(t => t.ritm === 'zilnic');
+  const sapt = act.filter(t => t.ritm === 'saptamanal'), sg = sapt.reduce((n, t) => n + Math.min(t.facute, t.tinta), 0), st = sapt.reduce((n, t) => n + t.tinta, 0);
+  box.innerHTML = `<div class="calc-card ag-grup tura-ag"><div class="tura-ag-sus"><div><span class="eyebrow">Agenda ta · ${esc(numeLoc(loc))}</span>
+        <h3>${acum.length ? `${acum.length} de făcut acum` : 'Ești la zi'}</h3></div>
+      <p class="muted mic">Azi ${zi.filter(t => t.stare === 'gata').length} din ${zi.length} · săptămâna asta ${sg} din ${st}</p></div>
+    ${acum.length ? `<ul class="ag-l">${acum.map(t => agRand(t, '')).join('')}</ul>` : ''}
+    <div class="calc-act"><a class="btn ghost sm" href="#/agenda?s=${enc(loc)}">Toată agenda</a></div></div>`;
+  box.onchange = async e => { const c = e.target.closest('[data-ag-bifa]'); if (!c) return;
+    const { error } = await SB.rpc('agenda_bifeaza', { p_sarcina: +c.closest('[data-ag]').dataset.ag, p_space: loc, p_facut: c.checked, p_nota: '' });
+    if (error) { c.checked = !c.checked; return toast(error.message || 'Nu s-a salvat.', true); } toast('Bifat.'); turaAgenda(loc); };
 }
 // ---------- Agenda responsabilului (migrarea 0030) ----------
 // Sarcinile care se repetă: zilnic, săptămânal, lunar, la nevoie. Se bifează pe locație; șefii văd în panou.
