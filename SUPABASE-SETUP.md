@@ -540,6 +540,8 @@ Rulează `supabase/migrations/0030_agenda.sql`, apoi fișierul de date cu lista 
 - **Mementoul** pleacă la ora pusă pe sarcină, doar dacă nu e bifată, către responsabilii locației.
 - **Panoul șefilor**: pe fiecare magazin, câte sunt făcute azi, săptămâna și luna asta, și ce a rămas în urmă.
 - **Lista** o ține biroul (cine vede tot): adaugă sarcini și le scoate, din josul paginii Agenda.
+- **Fișa rolului** (*Roluri → Responsabil Locație*) arată aceeași listă, la „Responsabilități care se
+  repetă”. Pentru asta rulează și `supabase/migrations/0031_agenda_pe_rol.sql`.
 
 ## Variabilele, pe scurt
 
