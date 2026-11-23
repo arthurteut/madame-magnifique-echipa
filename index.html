@@ -631,6 +631,15 @@
   .std-rez { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; margin-bottom: 20px; } .std-rez > div { background: var(--bg-soft); padding: 14px 16px; } .std-rez p { margin: 6px 0 0; font-size: .93rem; }
   .std-compar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; max-width: min(94vw, 1100px); } .std-compar figure { margin: 0; } .std-compar img { display: block; width: 100%; max-height: 68vh; object-fit: contain; background: #111; }
   .std-compar figcaption { font: 600 .68rem 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; padding: 6px 0; } .std-compar .calc-act { grid-column: 1 / -1; }
+  .ag-grup { padding: 18px 20px; margin-top: 14px; } .ag-l { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .ag-r { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .ag-b input { width: 24px; height: 24px; accent-color: var(--ink); cursor: pointer; } .ag-b input:disabled { cursor: default; }
+  .ag-t b { font-weight: 500; font-size: 1.02rem; } .ag-t small { display: block; font-size: .84rem; color: var(--muted); } .ag-r.gata .ag-t b { color: var(--muted); }
+  .ag-d { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; } .ag-nr { font: 500 .95rem 'Montserrat', sans-serif; white-space: nowrap; }
+  .ag-d em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: var(--muted); }
+  .ag-r.gata .ag-d em { color: #2f6a40; } .ag-r.azi .ag-d em, .ag-r.intarziata .ag-d em { color: #9a3b2f; } .ag-r.oprit { opacity: .6; }
+  .ag-sus { margin-top: 14px; }
+  @media (max-width: 640px) { .ag-r { grid-template-columns: 34px minmax(0, 1fr); } .ag-d { grid-column: 2; justify-content: flex-start; } }
   .std-grup { padding: 18px 20px; } .std-grup h3 { margin: 0; font-size: 1.2rem; } .std-randuri { list-style: none; margin: 10px 0 8px; padding: 0; border-top: 1px solid var(--line); }
   .std-r { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
   .std-r em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: #2f6a40; } .std-r.nu em { color: #9a3b2f; }
@@ -1241,7 +1250,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
 <script src="assets/config.js"></script>
 <script>
-let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null, BONUS_LOC = [];
+let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null, BONUS_LOC = [], AGENDA_AM = false;
 
 // ---------- Autentificare (Supabase) ----------
 // Angajatul scrie doar utilizatorul; contul are în spate un email intern,
@@ -1281,7 +1290,7 @@ function showApp() {
   puncteNoiCurand();
 }
 function showLock(msg) {
-  D = ME = null; BONUS_LOC = [];
+  D = ME = null; BONUS_LOC = []; AGENDA_AM = false;
   document.getElementById('app').classList.add('hidden');
   document.getElementById('lock').classList.remove('hidden');
   if (msg) showErr(msg);
@@ -1374,6 +1383,7 @@ async function deschideSesiunea(user) {
   D = await incarcaDate();
   prepare();
   BONUS_LOC = await SB.rpc('bonus_locatii').then(r => (r.error || !Array.isArray(r.data) ? [] : r.data), () => []);
+  AGENDA_AM = await SB.rpc('agenda_am').then(r => r.data === true, () => false);   // vine cu migrarea 0030
   showApp();
 }
 
@@ -1493,6 +1503,7 @@ function route() {
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'standarde') { html = viewStandarde(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'agenda' && (AGENDA_AM || vedeEchipa())) { html = viewAgenda(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
   else if (a === 'bonus' && BONUS_LOC.length) { html = viewBonus(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'admin' && ME && ME.admin) { html = viewAdmin(params); nav = 'admin'; }
@@ -5319,7 +5330,7 @@ const panEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not ex
 const panLei = x => x === null || x === undefined ? '—' : Number(x).toLocaleString('ro-RO', { maximumFractionDigits: 0 }) + ' lei';
 const panFata = (a, b) => a == null || b == null || !Number(b) ? '' : (() => { const p = Math.round((a - b) / b * 100); return `<span class="pan-d ${p >= 0 ? 'sus' : 'jos'}">${p >= 0 ? '+' : ''}${p}%</span>`; })();
 let PAN_TIMER = null;
-function panCard(x, tip, scor, std) {
+function panCard(x, tip, scor, std, ag) {
   const sz = std ? (std.azi || []).find(z => z.space_id === x.space_id) : null;
   const inTura = x.in_tura || [], prog = x.program || [], lipsa = prog.filter(p => p.lipseste), urmeaza = prog.filter(p => !p.venit_la && !p.lipseste);
   const fise = x.fise || [], i = x.incasari, sapt = x.incasari_sapt, ieri = x.incasari_ieri, stoc = x.stoc || [], magazin = tip === 'magazin';
@@ -5342,6 +5353,9 @@ function panCard(x, tip, scor, std) {
           <div><b>${i.medie == null ? '—' : plIn(i.medie) + ' lei'}</b><small>media bonului ${panFata(i.medie, sapt && sapt.medie)}</small></div></div>
           <p class="muted mic">Scrise de ${esc(i.de || '—')} la ${oraLocala(i.la)}${sapt ? ' · procentele sunt față de aceeași zi de săptămâna trecută' : ''}.${i.nota ? ` Notă: ${esc(i.nota)}` : ''}</p>`
         : `<p class="muted mic">Încă nescrise azi.${ieri ? ` Ieri: <b>${panLei(ieri.incasari)}</b>, ${ieri.bonuri} bonuri, media ${ieri.medie == null ? '—' : plIn(ieri.medie) + ' lei'}.` : ''}</p>`) : ''}
+    ${magazin && ag ? sectiune('Agenda responsabilului', `<div class="pan-3"><div><b>${ag.azi_gata} din ${ag.azi_toate}</b><small>azi</small></div><div><b>${ag.sapt_gata} din ${ag.sapt_toate}</b><small>săptămâna asta</small></div><div><b>${ag.luna_gata} din ${ag.luna_toate}</b><small>luna asta</small></div></div>
+        ${ag.intarziate.length ? `<p class="pan-rosu">Rămase în urmă: ${ag.intarziate.map(esc).join(' · ')}</p>` : ''}${ag.de_azi.length ? `<p class="muted mic">De făcut azi: ${ag.de_azi.map(esc).join(' · ')}</p>` : ''}
+        <p class="mic"><a href="#/agenda?s=${enc(x.space_id)}">Vezi agenda</a></p>`) : ''}
     ${!magazin ? sectiune('Stoc', stoc.length ? Object.entries(grupe).map(([g, ps]) => `<div class="pan-stoc"><small class="muted">${esc(g)}</small><ul>${ps.map(p => { const vechi = p.zi && p.zi !== azi, putin = p.minim != null && p.cantitate != null && Number(p.cantitate) < Number(p.minim);
           return `<li class="${putin ? 'putin' : ''}"><span>${esc(p.nume)}</span><b>${p.cantitate == null ? '—' : cmdNr(p.cantitate) + ' ' + esc(p.unitate)}</b>${putin ? '<em>puțin</em>' : ''}${vechi ? `<small>din ${ziScurta(p.zi)}</small>` : ''}</li>`; }).join('')}</ul></div>`).join('')
         : '<p class="muted mic">Lista de stoc nu e făcută încă. Șeful de secție o pornește din „Ziua locației”.</p>') : ''}
@@ -5356,7 +5370,8 @@ function panCard(x, tip, scor, std) {
 async function incarcaPanou() {
   const box = document.getElementById('echipaBody'); if (!box) return;
   clearTimeout(PAN_TIMER);
-  const [r, l, std] = await Promise.all([SB.rpc('panou_sefi'), SB.rpc('joc_locatii').then(x => x, () => ({ data: [] })), SB.rpc('std_rezumat').then(x => (x.error ? null : x.data), () => null)]);
+  const [r, l, std, ag] = await Promise.all([SB.rpc('panou_sefi'), SB.rpc('joc_locatii').then(x => x, () => ({ data: [] })), SB.rpc('std_rezumat').then(x => (x.error ? null : x.data), () => null),
+    SB.rpc('agenda_panou').then(x => (x.error ? {} : Object.fromEntries((x.data || []).map(q => [q.space_id, q]))), () => ({}))]);
   if (document.getElementById('echipaBody') !== box) return;
   if (r.error) { console.error('Panou:', r.error); box.innerHTML = `<p class="err">${esc(panEroare(r.error, 'Panoul nu s-a putut încărca.'))}</p>`; return; }
   const tip = Object.fromEntries(D.spatii.map(s => [s.id, s.tip])), scor = Object.fromEntries((l.data || []).map(x => [x.id, x]));
@@ -5370,12 +5385,88 @@ async function incarcaPanou() {
       <div><b>${inc.length ? panLei(total) : '—'}</b><small>încasări azi${inc.length && inc.length < mag.length ? ` · ${inc.length} din ${mag.length} magazine` : ''}</small></div>
       <div><b>${inc.length ? bonuri.toLocaleString('ro-RO') : '—'}</b><small>bonuri${bonuri ? ` · media ${plIn(Math.round(total / bonuri * 100) / 100)} lei` : ''}</small></div>
       <div class="${semn ? 'rosu' : ''}"><b>${semn}</b><small>semnalări deschise</small></div></div>
-    ${mag.length ? `<h2 class="pan-h">Magazine</h2><div class="pan-grid">${mag.map(x => panCard(x, 'magazin', scor[x.space_id], std)).join('')}</div>` : ''}
+    ${mag.length ? `<h2 class="pan-h">Magazine</h2><div class="pan-grid">${mag.map(x => panCard(x, 'magazin', scor[x.space_id], std, ag[x.space_id])).join('')}</div>` : ''}
     ${std && (std.sectii || []).length ? `<p class="pan-std"><b>În standard, ultimele 7 zile:</b> ${std.sectii.map(q => `${esc(q.nume)} ${q.verificate ? Math.round(q.in_standard / q.verificate * 100) : 0}%`).join(' · ')}${(std.repetate || []).length ? ` · <span class="pan-rosu">pică repetat: ${std.repetate.map(q => esc(q.produs)).join(', ')}</span>` : ''} · <a href="#/standarde?v=neconforme">detalii</a></p>` : ''}
     ${lab.length ? `<h2 class="pan-h">Laboratoare</h2><div class="pan-grid">${lab.map(x => panCard(x, 'productie', scor[x.space_id])).join('')}</div>` : ''}
     ${!toate.length ? '<p class="lvl4">Nu vezi nicio locație.</p>' : ''}
     <p class="muted mic" style="margin-top:14px">Se reîmprospătează singur, la un minut. Ultima dată: ${oraLocala(new Date().toISOString())}.</p></div>`;
   PAN_TIMER = setTimeout(() => { if (document.getElementById('panBody') && !document.hidden) incarcaPanou(); else if (document.getElementById('panBody')) PAN_TIMER = setTimeout(incarcaPanou, 60000); }, 60000);
+}
+// ---------- Agenda responsabilului (migrarea 0030) ----------
+// Sarcinile care se repetă: zilnic, săptămânal, lunar, la nevoie. Se bifează pe locație; șefii văd în panou.
+const AG_ZILE = ['', 'luni', 'marți', 'miercuri', 'joi', 'vineri', 'sâmbătă', 'duminică'];
+const AG_STARE = { gata: 'Făcut', azi: 'De făcut azi', intarziata: 'În urmă', in_curs: 'Mai e timp', la_nevoie: 'Când e cazul' };
+function viewAgenda(params) {
+  setTimeout(() => incarcaAgenda(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Responsabil de locație</span><h1>Agenda</h1>
+      <p class="sub">Ce ai de făcut azi, săptămâna asta și luna asta. Bifezi când e gata; conducerea vede fără să întrebe.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('agenda')}<div id="agBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+const agCand = t => t.ritm === 'zilnic' ? (t.ora ? `până la ${t.ora}` : 'în fiecare zi')
+  : t.ritm === 'saptamanal' ? (t.zi_sapt ? `${AG_ZILE[t.zi_sapt]}${t.ora ? ', ' + t.ora : ''}` : t.tinta > 1 ? `de ${t.tinta} ori pe săptămână` : 'o dată pe săptămână')
+  : t.ritm === 'lunar' ? (t.zi_luna ? (t.zi_luna >= 30 ? 'în ultima zi a lunii' : `pe ${t.zi_luna} ale lunii`) : 'o dată pe lună') : 'când e cazul';
+function agRand(t, sef) {
+  const multe = t.ritm !== 'zilnic' && t.ritm !== 'la_nevoie' && t.tinta > 1, u = t.ultima;
+  const link = t.unde.startsWith('#/') ? `<a class="btn ghost sm" href="${esc(t.unde)}">Deschide</a>` : t.unde ? `<span class="pill">${esc(t.unde)}</span>` : '';
+  return `<li class="ag-r ${t.stare} ${t.activ ? '' : 'oprit'}" data-ag="${t.id}">
+    <label class="ag-b"><input type="checkbox" data-ag-bifa ${t.bifat_azi ? 'checked' : ''} ${t.pot_bifa ? '' : 'disabled'} aria-label="${esc(t.titlu)}"></label>
+    <div class="ag-t"><b>${esc(t.titlu)}</b><small>${esc(agCand(t))}${t.detaliu ? ' · ' + esc(t.detaliu) : ''}</small>
+      ${u ? `<small class="muted">Ultima dată: ${u.zi === ziLocala() ? 'azi' : ziScurta(u.zi)}, ${oraLocala(u.la)} · ${esc(u.de || '')}${u.nota ? ` · „${esc(u.nota)}”` : ''}</small>` : ''}</div>
+    <div class="ag-d">${multe ? `<span class="ag-nr">${Math.min(t.facute, t.tinta)} din ${t.tinta}</span>` : ''}<em>${t.activ ? AG_STARE[t.stare] : 'Scoasă'}</em>${link}
+      ${t.bifat_azi && t.pot_bifa ? '<button class="rez-anul" type="button" data-ag-nota>notă</button>' : ''}${sef === 'edit' ? `<button class="rez-anul" type="button" data-ag-comuta="${t.activ ? 0 : 1}">${t.activ ? 'scoate' : 'pune la loc'}</button>` : ''}</div></li>`;
+}
+async function incarcaAgenda(params) {
+  const box = document.getElementById('agBody'); if (!box) return;
+  const locuri = D.spatii.filter(s => s.tip === 'magazin'); let ultim = ''; try { ultim = localStorage.getItem('mm-loc-ag') || ''; } catch (e) {}
+  const loc = (locuri.find(s => s.id === params.s) || locuri.find(s => s.id === ultim) || locuri[0] || {}).id;
+  if (!loc) { box.innerHTML = '<p class="lvl4">Contul tău nu e legat de niciun magazin.</p>'; return; }
+  const { data: d, error } = await SB.rpc('agenda_zi', { p_space: loc });
+  if (!document.getElementById('agBody')) return;
+  if (error) { console.error('Agenda:', error); box.innerHTML = `<p class="err">${esc(/PGRST20|42883|schema cache|does not exist/i.test((error.code || '') + ' ' + (error.message || '')) ? 'Agenda se activează după ce rulezi în Supabase migrarea 0030_agenda.sql.' : error.message || 'Agenda nu s-a putut încărca.')}</p>`; return; }
+  try { localStorage.setItem('mm-loc-ag', loc); } catch (e) {}
+  const S = d.sarcini, act = S.filter(t => t.activ), edit = d.pot_edita ? 'edit' : '';
+  const acum = act.filter(t => t.stare === 'azi' || t.stare === 'intarziata'), zi = act.filter(t => t.ritm === 'zilnic');
+  const grup = (titlu, lista, gol) => lista.length || gol ? `<div class="calc-card ag-grup"><span class="eyebrow">${titlu}</span>${lista.length ? `<ul class="ag-l">${lista.map(t => agRand(t, edit)).join('')}</ul>` : `<p class="muted mic">${gol}</p>`}</div>` : '';
+  const sapt = act.filter(t => t.ritm === 'saptamanal'), luna = act.filter(t => t.ritm === 'lunar');
+  const sg = sapt.reduce((n, t) => n + Math.min(t.facute, t.tinta), 0), st = sapt.reduce((n, t) => n + t.tinta, 0);
+  box.innerHTML = `${locuri.length > 1 ? `<nav class="tabs">${locuri.map(s => `<a href="#/agenda?s=${enc(s.id)}" class="${s.id === loc ? 'on' : ''}">${esc(numeLoc(s.id))}</a>`).join('')}</nav>` : ''}
+    <div class="pan-sus ag-sus"><div class="${acum.length ? 'rosu' : ''}"><b>${acum.length}</b><small>de făcut acum</small></div>
+      <div><b>${zi.filter(t => t.stare === 'gata').length} din ${zi.length}</b><small>azi</small></div>
+      <div><b>${sg} din ${st}</b><small>săptămâna asta</small></div>
+      <div><b>${luna.filter(t => t.stare === 'gata').length} din ${luna.length}</b><small>luna asta</small></div></div>
+    ${!S.length ? '<p class="lvl4">Agenda e goală. Lista de sarcini o pune biroul.</p>' : ''}
+    ${grup('De făcut acum', acum, S.length ? 'Nimic urgent. Ești la zi.' : '')}
+    ${grup('Făcute azi', zi.filter(t => t.stare === 'gata'))}
+    ${grup('Săptămâna asta', sapt.filter(t => !acum.includes(t)))}
+    ${grup('Luna asta', luna.filter(t => !acum.includes(t)))}
+    ${grup('Când e cazul', act.filter(t => t.ritm === 'la_nevoie'))}
+    ${edit ? `${grup('Scoase din agendă', S.filter(t => !t.activ))}
+      <form class="calc-card frm" id="agNou" autocomplete="off"><span class="eyebrow">Adaugă o sarcină</span>
+        <label>Ce e de făcut<input class="field" name="titlu" required minlength="3" maxlength="160"></label>
+        <label>Detalii (opțional)<input class="field" name="detaliu" maxlength="300"></label>
+        <div class="frm-2"><label>Cât de des<select class="field" name="ritm"><option value="zilnic">În fiecare zi</option><option value="saptamanal">În fiecare săptămână</option><option value="lunar">În fiecare lună</option><option value="la_nevoie">Când e cazul</option></select></label>
+          <label>De câte ori (pe săptămână sau lună)<input class="field" name="tinta" type="number" min="1" max="7" value="1"></label></div>
+        <div class="frm-2"><label>Ziua din săptămână (opțional)<select class="field" name="zi_sapt"><option value="">oricare</option>${AG_ZILE.slice(1).map((z, i) => `<option value="${i + 1}">${z}</option>`).join('')}</select></label>
+          <label>Ziua din lună (opțional)<input class="field" name="zi_luna" type="number" min="1" max="31" placeholder="31 = ultima zi"></label></div>
+        <div class="frm-2"><label>Ora mementoului (opțional)<input class="field" name="ora" type="time"></label>
+          <label>Unde se face (opțional)<input class="field" name="unde" maxlength="60" placeholder="SoftPro, Gesto sau #/comenzi"></label></div>
+        <div class="calc-act"><button class="btn" type="submit">Adaugă în agendă</button></div></form>` : ''}`;
+  const reia = () => incarcaAgenda(Object.assign({}, params, { s: loc }));
+  box.onchange = async e => { const c = e.target.closest('[data-ag-bifa]'); if (!c) return;
+    const { error } = await SB.rpc('agenda_bifeaza', { p_sarcina: +c.closest('[data-ag]').dataset.ag, p_space: loc, p_facut: c.checked, p_nota: '' });
+    if (error) { c.checked = !c.checked; return toast(error.message || 'Nu s-a salvat.', true); } toast(c.checked ? 'Bifat.' : 'Bifa de azi e scoasă.'); reia(); };
+  box.onclick = async e => {
+    const n = e.target.closest('[data-ag-nota]'), k = e.target.closest('[data-ag-comuta]'); if (!n && !k) return;
+    const id = +e.target.closest('[data-ag]').dataset.ag;
+    if (n) { const nota = prompt('Notă pentru conducere (ce ai găsit, ce lipsește):'); if (nota === null) return;
+      const { error } = await SB.rpc('agenda_bifeaza', { p_sarcina: id, p_space: loc, p_facut: true, p_nota: nota }); if (error) return toast(error.message || 'Nu s-a salvat.', true); toast('Nota e salvată.'); return reia(); }
+    const { error } = await SB.rpc('agenda_pune', { p: { id, activ: k.dataset.agComuta === '1' } }); if (error) return toast(error.message || 'Nu s-a salvat.', true);
+    toast(k.dataset.agComuta === '1' ? 'E din nou în agendă.' : 'Scoasă din agendă. Bifele vechi rămân.'); reia(); };
+  box.onsubmit = async e => { const f = e.target.closest('#agNou'); if (!f) return; e.preventDefault(); const el = f.elements;
+    const { error } = await SB.rpc('agenda_pune', { p: { titlu: el.titlu.value.trim(), detaliu: el.detaliu.value.trim(), ritm: el.ritm.value, tinta: el.tinta.value, zi_sapt: el.zi_sapt.value, zi_luna: el.zi_luna.value, ora: el.ora.value, unde: el.unde.value.trim() } });
+    if (error) return toast(error.message || 'Nu s-a salvat.', true); toast('Sarcina e în agendă.'); reia(); };
 }
 // ----- Ziua locației: încasările, nota zilei, stocul -----
 function viewZi(params) {
@@ -5648,6 +5739,7 @@ async function incarcaStandarde(params) {
 function tabsOm(activ) {
   const t = [];
   if (areTura()) t.push(['tura', 'Tura', '#/tura']);
+  if (AGENDA_AM || (ME && ME.vedeTot)) t.push(['agenda', 'Agenda', '#/agenda']);
   t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['standarde', 'Standarde', '#/standarde'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
   if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
   if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);

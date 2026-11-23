@@ -152,3 +152,5 @@ Supabase. Așa se verifică fluxurile cap-coadă (clock-in, fișă, semnalare, f
 Migrarea 0029 (adrese salvate, anunț doar pentru B2B, secții pe oameni) se verifică în banc, cap-coadă
 în pagină. Testul 21 presupune că Fructus nu are încă procedură de deschidere; dacă baza locală are una,
 o verificare a lui pică fără să fie o problemă.
+
+Migrarea 0030 (agenda responsabilului) se verifică tot în banc: bife, stări pe zile anume, panoul șefilor și mementoul.

@@ -529,6 +529,18 @@ Rulează `supabase/migrations/0029_notite.sql` în SQL Editor.
   producție, secțiile lui. Cine are bife primește și confirmă doar acele secții; cine nu are niciuna
   rămâne pe secțiile rolului.
 
+## 29. Agenda responsabilului de locație (migrarea 0030)
+
+Rulează `supabase/migrations/0030_agenda.sql`, apoi fișierul de date cu lista de sarcini (nu e în depozit).
+
+- **Agenda** (tab nou la responsabil): sarcinile care se repetă, pe zi, săptămână și lună. Sus apare
+  ce e de făcut acum; se bifează pe locație, cu o notă dacă e cazul.
+- **Stările**: „de făcut azi” (zilnicele nebifate, sarcina cu zi fixă în ziua ei, sau când altfel
+  nu mai iese numărul săptămânii), „în urmă” (ziua ei a trecut), „mai e timp”, „făcut”.
+- **Mementoul** pleacă la ora pusă pe sarcină, doar dacă nu e bifată, către responsabilii locației.
+- **Panoul șefilor**: pe fiecare magazin, câte sunt făcute azi, săptămâna și luna asta, și ce a rămas în urmă.
+- **Lista** o ține biroul (cine vede tot): adaugă sarcini și le scoate, din josul paginii Agenda.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
