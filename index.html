@@ -638,7 +638,8 @@
   .ag-d { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; } .ag-nr { font: 500 .95rem 'Montserrat', sans-serif; white-space: nowrap; }
   .ag-d em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: var(--muted); }
   .ag-r.gata .ag-d em { color: #2f6a40; } .ag-r.azi .ag-d em, .ag-r.intarziata .ag-d em { color: #9a3b2f; } .ag-r.oprit { opacity: .6; }
-  .ag-sus { margin-top: 14px; }
+  .ag-sus { margin-top: 14px; } .rol-ag { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 14px; align-items: start; } .rol-ag .ag-grup { margin-top: 0; }
+  .rol-ag-r { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--line); }
   @media (max-width: 640px) { .ag-r { grid-template-columns: 34px minmax(0, 1fr); } .ag-d { grid-column: 2; justify-content: flex-start; } }
   .std-grup { padding: 18px 20px; } .std-grup h3 { margin: 0; font-size: 1.2rem; } .std-randuri { list-style: none; margin: 10px 0 8px; padding: 0; border-top: 1px solid var(--line); }
   .std-r { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
@@ -1938,6 +1939,7 @@ function viewRole(r) {
   const byProc = {};
   tasks.forEach(t => (byProc[t.p] = byProc[t.p] || []).push(t));
   const minutes = tasks.filter(t => /zilnic/i.test(t.cand)).reduce((n, t) => n + (parseFloat(t.min) || 0), 0);
+  setTimeout(() => rolAgenda(r.cod), 0);
   return `
   <section class="band"><div class="wrap">
     <div class="crumbs"><a href="#/roluri">Roluri</a> / ${esc(r.cod)}</div>
@@ -1947,6 +1949,7 @@ function viewRole(r) {
     ${where.length ? `<p style="margin:20px 0 0">Unde lucrezi: ${where.map(s => `<a class="chip" href="#/s/${s.id}?rol=${enc(r.cod)}">${esc(s.titlu)}</a>`).join(' ')}</p>` : ''}
   </div></section>
   <section class="block"><div class="wrap">
+    <div id="rolAgenda" data-rol="${esc(r.cod)}"></div>
     ${tasks.length ? `<div class="stats" style="margin-bottom:36px">
       <div class="stat"><strong>${tasks.length}</strong><span>task-uri în retail</span></div>
       <div class="stat"><strong>${procs.length}</strong><span>proceduri pe care le execuți</span></div>
@@ -5391,6 +5394,17 @@ async function incarcaPanou() {
     ${!toate.length ? '<p class="lvl4">Nu vezi nicio locație.</p>' : ''}
     <p class="muted mic" style="margin-top:14px">Se reîmprospătează singur, la un minut. Ultima dată: ${oraLocala(new Date().toISOString())}.</p></div>`;
   PAN_TIMER = setTimeout(() => { if (document.getElementById('panBody') && !document.hidden) incarcaPanou(); else if (document.getElementById('panBody')) PAN_TIMER = setTimeout(incarcaPanou, 60000); }, 60000);
+}
+// Responsabilitățile care se repetă, luate din agendă (migrarea 0031): aceeași listă ca în tabul Agenda.
+async function rolAgenda(cod) {
+  if (!SB) return;
+  const r = await SB.rpc('agenda_rol', { p_rol: cod }).then(x => x, () => ({ error: true }));
+  const box = document.getElementById('rolAgenda'); if (!box || box.dataset.rol !== cod || r.error || !(r.data || []).length) return;
+  const G = [['zilnic', 'În fiecare zi'], ['saptamanal', 'În fiecare săptămână'], ['lunar', 'În fiecare lună'], ['la_nevoie', 'Când e cazul']];
+  box.innerHTML = `<h2 class="section-title">Responsabilități care se repetă</h2>
+    <div class="rol-ag">${G.map(([k, et]) => { const l = r.data.filter(t => t.ritm === k); return l.length ? `<div class="calc-card ag-grup"><span class="eyebrow">${et}</span><ul class="ag-l">${l.map(t =>
+      `<li class="rol-ag-r"><div class="ag-t"><b>${esc(t.titlu)}</b><small>${esc(agCand(t))}${t.detaliu ? ' · ' + esc(t.detaliu) : ''}</small></div>${t.unde && !t.unde.startsWith('#/') ? `<span class="pill">${esc(t.unde)}</span>` : ''}</li>`).join('')}</ul></div>` : ''; }).join('')}</div>
+    ${ME && ME.role_code === cod ? '<p class="mic" style="margin:12px 0 36px"><a href="#/agenda">Le bifezi în Agendă</a></p>' : '<p style="margin-bottom:36px"></p>'}`;
 }
 // ---------- Agenda responsabilului (migrarea 0030) ----------
 // Sarcinile care se repetă: zilnic, săptămânal, lunar, la nevoie. Se bifează pe locație; șefii văd în panou.
