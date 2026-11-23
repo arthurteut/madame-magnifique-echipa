@@ -569,6 +569,9 @@
   .cmd-btn { display: inline-flex; gap: 10px; align-items: center; white-space: nowrap; }
   .cmd-pe { list-style: none; padding: 0; margin: 10px 0; } .cmd-pe li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
   .cmd-cat { display: grid; gap: 18px; } .cmd-cat h3 { margin: 18px 0 4px; font-size: 1rem; } .cmd-catform { max-width: none; margin: 10px 0 6px; }
+  .cmd-cine-t { width: 100%; border-collapse: collapse; font-size: .92rem; margin-top: 8px; } .cmd-cine-t th { text-align: center; font: 600 .62rem 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 6px 4px; border-bottom: 1px solid var(--ink); }
+  .cmd-cine-t th:first-child { text-align: left; } .cmd-cine-t td { padding: 7px 4px; border-bottom: 1px solid var(--line); text-align: center; } .cmd-cine-t td:first-child { text-align: left; } .cmd-cine-t input { width: 18px; height: 18px; }
+  .anunt-cine { background: var(--bg-soft); padding: 12px 14px; font-size: .92rem; } .anunt-cine:empty { display: none; } .anunt-cine p { margin: 4px 0 0; } .anunt-cine b { font-weight: 500; }
   .cmd-catl { list-style: none; padding: 0; margin: 0; } .cmd-catl li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
   .cmd-catl li.stins > span { color: var(--muted); text-decoration: line-through; }
   @media (max-width: 640px) {
@@ -4830,8 +4833,9 @@ const cmdEroare = (e, implicit) => /PGRST20|42883|42P01|schema cache|does not ex
 const cmdZiNume = zi => zi === cmdZiPlus(0) ? 'azi' : zi === cmdZiPlus(1) ? 'mâine' : new Date(zi + 'T12:00:00').toLocaleDateString('ro-RO', { weekday: 'short', day: 'numeric', month: 'short' });
 async function cmdCatalog(fortat) {
   if (CMD.cat && !fortat) return CMD.cat;
-  const [produse, clienti, sectii] = await Promise.all([tabel('cmd_produse', ['position', 'nume']), tabel('cmd_clienti', ['nume']), tabel('cmd_sectii', ['position'])]);
-  return CMD.cat = { produse, clienti, sectii, sectie: Object.fromEntries(sectii.map(s => [s.cod, s.nume])) };
+  const [produse, clienti, sectii, adrese] = await Promise.all([tabel('cmd_produse', ['position', 'nume']), tabel('cmd_clienti', ['nume']), tabel('cmd_sectii', ['position']),
+    tabel('cmd_adrese', ['adresa']).catch(() => [])]);   // adresele vin cu migrarea 0029
+  return CMD.cat = { produse, clienti, sectii, adrese, sectie: Object.fromEntries(sectii.map(s => [s.cod, s.nume])) };
 }
 function viewComenzi(params) {
   setTimeout(() => incarcaComenzi(params), 0);
@@ -4957,11 +4961,12 @@ function cmdDeschideForm(box, d, cat, zi, c, reia) {
         <label>Pentru ziua<input class="field" type="date" name="zi" required min="${cmdZiPlus(0)}" value="${esc(c && c.zi ? c.zi : zi >= cmdZiPlus(0) ? zi : cmdZiPlus(1))}"></label>
         <label data-pt="client">Telefon<input class="field" name="telefon" inputmode="tel" value="${esc(v('telefon'))}" maxlength="30"></label>
         <label data-pt="client">Avans plătit (lei)<input class="field" name="avans" inputmode="decimal" value="${esc(v('avans') ? plIn(v('avans')) : '')}"></label>
-        <label data-pt="b2b">Unde se livrează<input class="field" name="livrare" value="${esc(v('livrare'))}" maxlength="200" placeholder="Adresa, magazinul sau „ridică șoferul”"></label>
+        <label data-pt="b2b">Unde se livrează<input class="field" name="livrare" list="cmdAdrese" value="${esc(v('livrare'))}" maxlength="200" placeholder="Adresa, magazinul sau „ridică șoferul”"><small class="muted" id="cmdAdrNota"></small></label>
         <label><span data-pt="b2b magazin intern">Ora</span><span data-pt="client">Ora ridicării</span><input class="field" name="ora" value="${esc(v('ora'))}" maxlength="40" placeholder="ex.: 08:00"></label>
         <label data-pt="b2b magazin">Tura<select class="field" name="tura"><option value="">oricare</option><option value="1" ${v('tura') === 1 ? 'selected' : ''}>tura 1</option><option value="2" ${v('tura') === 2 ? 'selected' : ''}>tura 2</option></select></label>
         <label data-pt="b2b">Aviz pe<input class="field" name="aviz_pe" value="${esc(v('aviz_pe'))}" maxlength="160" placeholder="dacă diferă de client"></label>
       </div>
+      <datalist id="cmdAdrese"></datalist>
       <datalist id="cmdClienti">${cat.clienti.filter(x => x.activ).map(x => `<option value="${esc(x.nume)}">`).join('')}</datalist>
       <div class="cmd-prod"><span class="eyebrow">Produse</span>
         <div id="cmdRanduri"></div>
@@ -5005,10 +5010,19 @@ function cmdDeschideForm(box, d, cat, zi, c, reia) {
   randuri.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('.field')) { e.preventDefault(); cauta.focus(); } });
   el.zi.addEventListener('change', limita);
   // un client cunoscut vine cu locul, ora și avizul lui
+  // … și cu adresele la care i s-a mai livrat, ca sugestii
+  const adrese = () => {
+    const k = cat.clienti.find(x => plNorm(x.nume) === plNorm(el.client_nume.value)), ale = k ? (cat.adrese || []).filter(a => a.client_id === k.id).map(a => a.adresa) : [];
+    form.querySelector('#cmdAdrese').innerHTML = ale.map(a => `<option value="${esc(a)}">`).join('');
+    form.querySelector('#cmdAdrNota').textContent = F.fel !== 'b2b' || !el.client_nume.value.trim() ? '' : k ? (ale.length > 1 ? `${ale.length} adrese salvate pentru acest client: alege din listă sau scrie una nouă.` : '')
+      : 'Client nou: îl salvez în listă, cu adresa, ora și avizul scrise aici.';
+  };
   el.client_nume.addEventListener('change', () => {
-    const k = F.fel === 'b2b' && cat.clienti.find(x => x.activ && plNorm(x.nume) === plNorm(el.client_nume.value)); if (!k) return;
-    if (!el.livrare.value) el.livrare.value = k.livrare; if (!el.ora.value) el.ora.value = k.ora; if (!el.aviz_pe.value) el.aviz_pe.value = k.aviz_pe;
+    const k = F.fel === 'b2b' && cat.clienti.find(x => x.activ && plNorm(x.nume) === plNorm(el.client_nume.value));
+    if (k) { if (!el.livrare.value) el.livrare.value = k.livrare; if (!el.ora.value) el.ora.value = k.ora; if (!el.aviz_pe.value) el.aviz_pe.value = k.aviz_pe; }
+    adrese();
   });
+  adrese();
   form.addEventListener('submit', async e => {
     e.preventDefault(); citeste();
     const linii = [];
@@ -5031,6 +5045,7 @@ function cmdDeschideForm(box, d, cat, zi, c, reia) {
     const { data, error } = await SB.rpc('cmd_salveaza', { p });
     if (error) { buton.disabled = false; return toast(error.message || 'Comanda nu s-a trimis.', true); }
     if (p.space_id) { try { localStorage.setItem('mm-loc-cmd', p.space_id); } catch (er) {} }
+    if (p.fel === 'b2b') await cmdCatalog(true).catch(() => {});     // clientul și adresa tocmai salvate apar la următoarea comandă
     toast(F.id ? 'Comanda e schimbată. Secțiile atinse au fost anunțate.' : 'Comanda a plecat. Primești o notificare când secțiile răspund.');
     CMD.form = null; location.hash = cmdUrl(p.zi, 'comenzi', '&c=' + data);
     if (location.hash === cmdUrl(p.zi, 'comenzi', '&c=' + data)) reia({ c: String(data) });
@@ -5107,11 +5122,29 @@ function cmdCatalogHtml(d, cat) {
         <div class="calc-act"><button class="btn sm" type="submit">Adaugă clientul</button></div></form>
       <ul class="cmd-catl">${cat.clienti.map(c => `<li class="${c.activ ? '' : 'stins'}"><span>${esc(c.nume)} <small class="muted">${[c.livrare, c.ora, c.aviz_pe ? 'aviz pe ' + c.aviz_pe : ''].filter(Boolean).map(esc).join(' · ')}</small></span>
         <button class="rez-anul" type="button" data-cat-comuta="cmd_clienti" data-id="${c.id}" data-activ="${c.activ ? 1 : 0}">${c.activ ? 'Scoate din listă' : 'Pune înapoi'}</button></li>`).join('')}</ul></section>
+    <section class="calc-card" id="cmdCine"><span class="eyebrow">Cine răspunde de fiecare secție</span><p class="muted mic">Se încarcă…</p></section>
     <section class="calc-card"><span class="eyebrow">Ora-limită</span>
       <form class="frm cmd-catform" data-cat="limita"><label>Până la ce oră, cu o zi înainte, comanda nu e târzie<input class="field" type="time" name="ora" required value="${esc(d.ora_limita)}" style="max-width:160px"></label>
         <div class="calc-act"><button class="btn sm" type="submit">Salvează ora</button></div></form></section>` : ''}</div>`;
 }
+// Cine primește și confirmă comenzile fiecărei secții: după rol sau, bifat de mână, pe om.
+async function cmdCineRaspunde(box) {
+  const loc = box.querySelector('#cmdCine'); if (!loc) return;
+  const [r, cat] = await Promise.all([SB.rpc('cmd_cine_raspunde'), cmdCatalog()]);
+  if (r.error) { loc.innerHTML = '<span class="eyebrow">Cine răspunde de fiecare secție</span><p class="muted mic">Se activează după migrarea 0029_notite.sql.</p>'; return; }
+  loc.innerHTML = `<span class="eyebrow">Cine răspunde de fiecare secție</span>
+    <p class="muted mic">Cine are o bifă pusă de mână primește și confirmă doar secțiile bifate. Cine nu are niciuna le primește pe cele ale rolului lui (SP, DP și PBP: toate).</p>
+    <table class="cmd-cine-t"><thead><tr><th>Om</th>${cat.sectii.map(s => `<th>${esc(s.nume)}</th>`).join('')}<th></th></tr></thead><tbody>
+    ${(r.data || []).map(o => `<tr data-om="${esc(o.user_id)}"><td><b>${esc(o.nume)}</b> <small class="muted">${esc(o.rol)}</small></td>
+      ${cat.sectii.map(s => `<td><input type="checkbox" data-sectie="${s.cod}" ${o.sectii.includes(s.cod) ? 'checked' : ''} aria-label="${esc(o.nume)}: ${esc(s.nume)}"></td>`).join('')}
+      <td>${o.de_mana ? '<button class="rez-anul" type="button" data-dupa-rol>înapoi la rol</button>' : '<small class="muted">după rol</small>'}</td></tr>`).join('') || '<tr><td colspan="6" class="muted">Niciun cont de producție încă.</td></tr>'}</tbody></table>`;
+  const pune = async (tr, sectii) => { const { error } = await SB.rpc('cmd_pune_sectii', { p_user: tr.dataset.om, p_sectii: sectii }); if (error) return toast(error.message || 'Nu s-a salvat.', true); toast('Salvat.'); cmdCineRaspunde(box); };
+  loc.onchange = e => { const c = e.target.closest('[data-sectie]'); if (!c) return; const tr = c.closest('tr'), s = [...tr.querySelectorAll('[data-sectie]:checked')].map(x => x.dataset.sectie);
+    if (!s.length) { toast('Fără nicio secție bifată, omul revine la secțiile rolului lui.'); } pune(tr, s); };
+  loc.onclick = e => { const b = e.target.closest('[data-dupa-rol]'); if (b) pune(b.closest('tr'), []); };
+}
 function cmdLeagaCatalog(box, reia) {
+  cmdCineRaspunde(box);
   const gata = async (error, mesaj) => { if (error) return toast(error.code === '23505' ? 'Există deja în listă.' : error.message || 'Nu s-a salvat.', true); await cmdCatalog(true); toast(mesaj); reia(); };
   box.addEventListener('submit', async e => {
     const f = e.target.closest('[data-cat]'); if (!f) return; e.preventDefault();
@@ -5810,11 +5843,25 @@ async function incarcaMesaje(params) {
     if (care === 'anunt') {
       const locuri = locatiiOperative();
       loc.innerHTML = `<form class="calc-card frm" data-trimite="anunt"><span class="eyebrow">Anunț nou</span>
-        <label>Pentru cine<select class="field" name="space_id">${m.pot_anunta_firma ? '<option value="">Toată firma</option>' : ''}${locuri.map(s => `<option value="${esc(s.id)}">Echipa ${esc(numeLoc(s.id))}</option>`).join('')}</select></label>
+        <label>Pentru cine<select class="field" name="space_id">${m.pot_anunta_firma ? '<option value="">Toată firma</option>' : ''}${locuri.map(s => `<option value="${esc(s.id)}">Echipa ${esc(numeLoc(s.id))}</option>`).join('')}${D.spatii.some(s => s.id === 'b2b') ? '<option value="b2b" data-tinta="b2b">Doar B2B</option>' : ''}</select></label>
+        <div class="anunt-cine" id="anuntCine" aria-live="polite"></div>
         <label>Titlu<input class="field" name="title" required minlength="3" maxlength="140" placeholder="Ex.: Vitrina de lunch se face la 10:45"></label>
         <label>Text (opțional)<textarea class="field" name="body" rows="4" maxlength="4000" placeholder="Detaliile: de când, de ce, cine răspunde."></textarea></label>
         <p class="muted mic">Fiecare om din echipă primește notificare și confirmă cu „Am citit” în 24 de ore.</p>
         <div class="calc-act"><button class="btn" type="submit">Trimite anunțul</button><button class="btn ghost" type="button" data-renunt>Renunț</button></div></form>`;
+      // Cine primește anunțul, pe roluri, înainte de trimitere.
+      const sel = loc.querySelector('[name=space_id]'), cine = loc.querySelector('#anuntCine');
+      const arata = async () => {
+        const tinta = sel.selectedOptions[0].dataset.tinta || null, ales = sel.value;
+        cine.innerHTML = '<p class="muted mic">Se caută destinatarii…</p>';
+        const { data, error } = await SB.rpc('anunt_destinatari', { p_space: ales || null, p_tinta: tinta });
+        if (sel.value !== ales) return;
+        if (error) { cine.innerHTML = ''; return; }        // fără migrarea 0029, formularul merge ca înainte
+        const grupe = {}; for (const o of data || []) (grupe[o.rol_nume] = grupe[o.rol_nume] || []).push(o.nume);
+        cine.innerHTML = (data || []).length ? `<span class="eyebrow">Îl primesc ${data.length} ${data.length === 1 ? 'om' : 'oameni'}</span>${Object.entries(grupe).map(([r, ns]) => `<p><b>${esc(r)}</b> ${ns.map(esc).join(', ')}</p>`).join('')}`
+          : '<p class="pan-rosu">Nimeni nu ar primi anunțul: nu există conturi active pentru această selecție.</p>';
+      };
+      sel.addEventListener('change', arata); arata();
     } else {
       loc.innerHTML = '<p class="muted">Se încarcă oamenii…</p>';
       const r = await SB.rpc('joc_raport', { p_luna: null });
@@ -5839,7 +5886,7 @@ async function incarcaMesaje(params) {
     e.preventDefault();
     const el = f.elements, buton = f.querySelector('[type=submit]'); buton.disabled = true;
     const r = f.dataset.trimite === 'anunt'
-      ? await SB.from('anunturi').insert({ space_id: el.space_id.value || null, title: el.title.value.trim(), body: el.body.value.trim() })
+      ? await SB.from('anunturi').insert(Object.assign({ space_id: el.space_id.value || null, title: el.title.value.trim(), body: el.body.value.trim() }, el.space_id.selectedOptions[0].dataset.tinta ? { tinta: el.space_id.selectedOptions[0].dataset.tinta } : {}))
       : await SB.from('feedback').insert({ to_user: el.to_user.value, fel: el.fel.value, puncte: +el.puncte.value, text: el.text.value.trim() });
     if (r.error) { buton.disabled = false; return toast(r.error.message || 'Nu s-a trimis.', true); }
     toast(f.dataset.trimite === 'anunt' ? 'Anunțul a plecat. Vezi aici cine l-a confirmat.' : 'Feedbackul a ajuns la om, cu notificare.');

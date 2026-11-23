@@ -516,6 +516,19 @@ Pagina **Standarde** (`#/standarde`, filă în *Tura* și *Echipa*) ține locul 
 - **Rezumatul** (șefi și producție; apare și în *Echipa → Toate locațiile*): azi, pe magazine; ultimele
   7 zile, pe secții; produsele care au picat de cel puțin două ori în 14 zile, cu criteriile picate.
 
+## 28. Adrese salvate, anunț doar pentru B2B, secții pe oameni (migrarea 0029)
+
+Rulează `supabase/migrations/0029_notite.sql` în SQL Editor.
+
+- **Adresele clienților**: la o comandă B2B, clientul nou intră singur în listă, iar adresa, ora și
+  „aviz pe” se țin minte. La următoarea comandă vin completate; dacă clientul are mai multe adrese,
+  apar ca sugestii.
+- **Anunț „Doar B2B”**: ajunge numai la Coordonator B2B și Asistent Executiv. Ceilalți nu îl văd.
+- **Cine îl primește**: înainte de trimitere, formularul de anunț arată destinatarii, grupați pe roluri.
+- **Cine răspunde de fiecare secție** (*Comenzi → Catalog*): biroul bifează, pe fiecare om din
+  producție, secțiile lui. Cine are bife primește și confirmă doar acele secții; cine nu are niciuna
+  rămâne pe secțiile rolului.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

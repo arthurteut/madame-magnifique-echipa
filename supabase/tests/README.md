@@ -148,3 +148,7 @@ Bancul de probă din `tools/banc/` (`banc.js`, `dbmock.js`) deschide pagina real
 trimite fiecare operație către baza locală, ca un cont anume (pagina se servește direct din depozit, iar
 încărcările de fișiere sunt simulate): aceleași RLS, triggere și funcții ca în
 Supabase. Așa se verifică fluxurile cap-coadă (clock-in, fișă, semnalare, feedback, contestație).
+
+Migrarea 0029 (adrese salvate, anunț doar pentru B2B, secții pe oameni) se verifică în banc, cap-coadă
+în pagină. Testul 21 presupune că Fructus nu are încă procedură de deschidere; dacă baza locală are una,
+o verificare a lui pică fără să fie o problemă.
