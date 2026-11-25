@@ -638,6 +638,11 @@
   .ag-d { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; } .ag-nr { font: 500 .95rem 'Montserrat', sans-serif; white-space: nowrap; }
   .ag-d em { font: 600 .66rem/1 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; font-style: normal; white-space: nowrap; color: var(--muted); }
   .ag-r.gata .ag-d em { color: #2f6a40; } .ag-r.azi .ag-d em, .ag-r.intarziata .ag-d em { color: #9a3b2f; } .ag-r.oprit { opacity: .6; }
+  .ct { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 11px 0; border-bottom: 1px solid var(--line); } .ct[hidden], .ct-grup[hidden] { display: none; }
+  .ct b { font-weight: 500; font-size: 1.02rem; } .ct small { display: block; font-size: .84rem; color: var(--muted); } .ct-d { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; } .ct-cauta { max-width: 520px; margin-top: 14px; }
+  .ac-scroll { overflow-x: auto; margin: 10px 0; } .ac-t { border-collapse: collapse; width: 100%; min-width: 640px; } .ac-t th { font: 500 .78rem 'Montserrat', sans-serif; color: var(--muted); padding: 6px 4px; text-align: center; white-space: nowrap; } .ac-t tbody th { text-align: left; padding-right: 10px; }
+  .ac-t td { text-align: center; padding: 9px 2px; border: 1px solid var(--line); font: 500 .95rem 'Montserrat', sans-serif; min-width: 34px; } .ac-t td small { font-weight: 400; color: inherit; opacity: .75; font-size: .74rem; }
+  .ac-t td.gol { color: #c9c6c0; } .ac-t td.ok { background: #e7efe6; } .ac-t td.sub { background: #8f2f2a; color: #fff; } .ac-t tr.azi th { color: var(--ink); font-weight: 700; }
   .act-sus { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 14px 0; } .act-loc { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
   .act-l { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); } .act-l li { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); }
   .act-l time { font: 500 .9rem 'Montserrat', sans-serif; color: var(--muted); } .act-l small { display: block; color: var(--muted); font-size: .82rem; } .act-l .go { text-decoration: none; }
@@ -1507,6 +1512,8 @@ function route() {
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'standarde') { html = viewStandarde(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'acoperire' && vedeEchipa()) { html = viewAcoperire(params); nav = 'echipa'; }
+  else if (a === 'contacte') { html = viewContacte(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'activitate' && vedeEchipa()) { html = viewActivitate(params); nav = 'echipa'; }
   else if (a === 'agenda' && (AGENDA_AM || vedeEchipa())) { html = viewAgenda(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'progres') { html = viewProgres(params); nav = params.u || !areTura() ? 'echipa' : 'tura'; }
@@ -4398,7 +4405,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap lat">
-      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/activitate">Activitate</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/acoperire">Acoperire</a><a href="#/activitate">Activitate</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -5428,6 +5435,86 @@ async function turaAgenda(locTura) {
     const { error } = await SB.rpc('agenda_bifeaza', { p_sarcina: +c.closest('[data-ag]').dataset.ag, p_space: loc, p_facut: c.checked, p_nota: '' });
     if (error) { c.checked = !c.checked; return toast(error.message || 'Nu s-a salvat.', true); } toast('Bifat.'); turaAgenda(loc); };
 }
+// ---------- Contacte (migrarea 0033) ----------
+const CT_GRUPE = ['Conducere', 'Echipă', 'Producție', 'Furnizori', 'Service', 'Urgențe', 'Altele'];
+function viewContacte(params) {
+  setTimeout(() => incarcaContacte(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Pe cine suni</span><h1>Contacte</h1>
+      <p class="sub">Echipa, producția, furnizorii, service-ul și urgențele. Apeși pe număr și sună.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('contacte')}<div id="ctBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaContacte(params) {
+  const box = document.getElementById('ctBody'); if (!box) return;
+  const r = await SB.from('contacte').select('*').order('position').order('nume');
+  if (!document.getElementById('ctBody')) return;
+  if (r.error) { box.innerHTML = `<p class="err">${esc(/PGRST20|42P01|schema cache|does not exist/i.test((r.error.code || '') + ' ' + (r.error.message || '')) ? 'Contactele se activează după ce rulezi în Supabase migrarea 0033_contacte_acoperire.sql.' : r.error.message || 'Contactele nu s-au putut încărca.')}</p>`; return; }
+  const C = r.data || [], sef = vedeEchipa(), tel = t => t.replace(/[^\d+]/g, '');
+  const card = c => `<li class="ct" data-ct="${c.id}" data-q="${esc(plNorm([c.nume, c.rol, c.telefon, c.nota, c.space_id ? numeLoc(c.space_id) : ''].join(' ')))}">
+      <div><b>${esc(c.nume)}</b><small>${esc([c.rol, c.space_id ? numeLoc(c.space_id) : ''].filter(Boolean).join(' · '))}</small>${c.nota ? `<small class="muted">${esc(c.nota)}</small>` : ''}</div>
+      <div class="ct-d">${c.telefon ? `<a class="btn sm" href="tel:${esc(tel(c.telefon))}">${esc(c.telefon)}</a>` : ''}${c.email ? `<a class="btn ghost sm" href="mailto:${esc(c.email)}">Email</a>` : ''}${sef ? '<button class="rez-anul" type="button" data-ct-sterge>șterge</button>' : ''}</div></li>`;
+  box.innerHTML = `<input class="field ct-cauta" id="ctCauta" type="search" placeholder="Caută după nume, rol, locație sau număr" autocomplete="off">
+    ${C.length ? CT_GRUPE.map(g => { const l = C.filter(c => c.grupa === g); return l.length ? `<div class="calc-card ag-grup ct-grup"><span class="eyebrow">${g}</span><ul class="ag-l">${l.map(card).join('')}</ul></div>` : ''; }).join('')
+      : `<p class="lvl4">Lista e goală. ${sef ? 'Adaugă primul contact mai jos.' : 'O completează șefii.'}</p>`}
+    ${sef ? `<form class="calc-card frm" id="ctNou" autocomplete="off"><span class="eyebrow">Adaugă un contact</span>
+      <div class="frm-2"><label>Nume<input class="field" name="nume" required minlength="2" maxlength="120"></label><label>Telefon<input class="field" name="telefon" type="tel" maxlength="30" placeholder="07xx xxx xxx"></label></div>
+      <div class="frm-2"><label>Ce face (rol, firmă)<input class="field" name="rol" maxlength="120" placeholder="Responsabil magazin, furnizor lactate…"></label>
+        <label>Grupa<select class="field" name="grupa">${CT_GRUPE.map(g => `<option ${g === 'Echipă' ? 'selected' : ''}>${g}</option>`).join('')}</select></label></div>
+      <div class="frm-2"><label>Locația (opțional)<select class="field" name="space_id"><option value="">fără</option>${D.spatii.map(x => `<option value="${esc(x.id)}">${esc(numeLoc(x.id))}</option>`).join('')}</select></label>
+        <label>Email (opțional)<input class="field" name="email" type="email" maxlength="120"></label></div>
+      <label>Notă (opțional)<input class="field" name="nota" maxlength="200" placeholder="Când se sună, pentru ce"></label>
+      <div class="calc-act"><button class="btn" type="submit">Adaugă</button></div></form>` : ''}`;
+  box.querySelector('#ctCauta').oninput = e => { const q = plNorm(e.target.value.trim()); box.querySelectorAll('.ct').forEach(x => { x.hidden = !!q && !x.dataset.q.includes(q); });
+    box.querySelectorAll('.ct-grup').forEach(g => { g.hidden = !g.querySelector('.ct:not([hidden])'); }); };
+  box.onclick = async e => { const b = e.target.closest('[data-ct-sterge]'); if (!b) return; if (!confirm('Ștergi contactul?')) return;
+    const { error } = await SB.from('contacte').delete().eq('id', +b.closest('[data-ct]').dataset.ct); if (error) return toast(error.message || 'Nu s-a șters.', true); toast('Șters.'); incarcaContacte(params); };
+  box.onsubmit = async e => { const f = e.target.closest('#ctNou'); if (!f) return; e.preventDefault(); const el = f.elements;
+    const { error } = await SB.from('contacte').insert({ nume: el.nume.value.trim(), telefon: el.telefon.value.trim(), rol: el.rol.value.trim(), grupa: el.grupa.value, space_id: el.space_id.value || null, email: el.email.value.trim(), nota: el.nota.value.trim() });
+    if (error) return toast(error.message || 'Nu s-a salvat.', true); toast('Contactul e în listă.'); incarcaContacte(params); };
+}
+// ---------- Acoperirea pe ore (migrarea 0033) ----------
+// Câți oameni sunt puși în program, oră cu oră, față de câți trebuie. Roșu = sub necesar.
+function viewAcoperire(params) {
+  setTimeout(() => incarcaAcoperire(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Pentru șefi</span><h1>Acoperire</h1>
+      <p class="sub">Câți oameni sunt în magazin, oră cu oră, față de câți trebuie. Vezi din timp orele în care sunteți prea puțini.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('echipa')}<div id="acBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaAcoperire(params) {
+  const box = document.getElementById('acBody'); if (!box) return;
+  const locuri = locatiiOperative(); let ultim = ''; try { ultim = localStorage.getItem('mm-loc-ac') || ''; } catch (e) {}
+  const loc = (locuri.find(s => s.id === params.s) || locuri.find(s => s.id === ultim) || locuri[0] || {}).id;
+  if (!loc) { box.innerHTML = '<p class="lvl4">Nu vezi nicio locație.</p>'; return; }
+  const { data: d, error } = await SB.rpc('acoperire', { p_space: loc, p_luni: /^\d{4}-\d{2}-\d{2}$/.test(params.luni || '') ? params.luni : null });
+  if (!document.getElementById('acBody')) return;
+  if (error) { box.innerHTML = `<p class="err">${esc(/PGRST20|42883|schema cache|does not exist/i.test((error.code || '') + ' ' + (error.message || '')) ? 'Acoperirea se activează după ce rulezi în Supabase migrarea 0033_contacte_acoperire.sql.' : error.message || 'Acoperirea nu s-a putut încărca.')}</p>`; return; }
+  try { localStorage.setItem('mm-loc-ac', loc); } catch (e) {}
+  const ore = d.zile[0].ore.map(o => o.h), url = o => `#/acoperire?s=${enc(o.s || loc)}&luni=${o.luni || d.luni}`;
+  const sub = d.zile.reduce((n, z) => n + z.ore.filter(o => o.necesar && o.pusi < o.necesar).length, 0), areNec = d.necesar.length > 0;
+  box.innerHTML = `${locuri.length > 1 ? `<nav class="tabs">${locuri.map(s => `<a href="${url({ s: s.id })}" class="${s.id === loc ? 'on' : ''}">${esc(numeLoc(s.id))}</a>`).join('')}</nav>` : ''}
+    <div class="act-sus"><a class="btn ghost sm" href="${url({ luni: actZi(d.luni, -7) })}">← săptămâna dinainte</a><b>${ziScurta(d.luni)} – ${ziScurta(actZi(d.luni, 6))}</b><a class="btn ghost sm" href="${url({ luni: actZi(d.luni, 7) })}">săptămâna următoare →</a></div>
+    <p class="${sub ? 'pan-rosu' : 'muted'}">${!areNec ? 'Nu e pus încă necesarul de oameni. Tabelul arată doar câți sunt în program; adaugă mai jos intervalele.' : sub ? `${sub} ${sub === 1 ? 'oră' : 'ore'} sub necesar săptămâna asta.` : 'Toate orele sunt acoperite.'}</p>
+    <div class="ac-scroll"><table class="ac-t"><thead><tr><th></th>${ore.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>
+      ${d.zile.map(z => `<tr class="${z.zi === d.azi ? 'azi' : ''}"><th>${ziScurta(z.zi)}</th>${z.ore.map(o => `<td class="${o.necesar ? (o.pusi < o.necesar ? 'sub' : 'ok') : o.pusi ? '' : 'gol'}" title="${o.h}:00 · ${o.pusi} în program${o.necesar ? `, trebuie ${o.necesar}` : ''}">${o.pusi}${o.necesar ? `<small>/${o.necesar}</small>` : ''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <p class="muted mic">În fiecare căsuță: câți oameni sunt în program la ora aceea, apoi câți trebuie. Programul se schimbă din <a href="#/echipa?tab=program">Program pe ture</a>.</p>
+    <div class="calc-card ag-grup"><span class="eyebrow">Câți oameni trebuie · ${esc(numeLoc(loc))}</span>
+      ${areNec ? `<ul class="ag-l">${d.necesar.map(n => `<li class="rol-ag-r" data-nec="${n.id}"><div class="ag-t"><b>${n.de_la}–${n.pana} · ${n.oameni} ${n.oameni === 1 ? 'om' : 'oameni'}</b><small>${n.zi_sapt ? AG_ZILE[n.zi_sapt] : 'în fiecare zi'}${n.nota ? ' · ' + esc(n.nota) : ''}</small></div><button class="rez-anul" type="button" data-nec-sterge>șterge</button></li>`).join('')}</ul>` : '<p class="muted mic">Niciun interval pus.</p>'}
+      <form class="frm" id="acNou" autocomplete="off" style="margin-top:14px"><div class="frm-2"><label>De la<input class="field" name="de_la" type="time" required value="07:00"></label><label>Până la<input class="field" name="pana" type="time" required value="10:00"></label></div>
+        <div class="frm-2"><label>Câți oameni<input class="field" name="oameni" type="number" min="1" max="20" required value="2"></label>
+          <label>Ziua<select class="field" name="zi_sapt"><option value="">în fiecare zi</option>${AG_ZILE.slice(1).map((z, i) => `<option value="${i + 1}">${z}</option>`).join('')}</select></label></div>
+        <label>Notă (opțional)<input class="field" name="nota" maxlength="120" placeholder="ora de vârf de dimineață"></label>
+        <div class="calc-act"><button class="btn" type="submit">Adaugă intervalul</button></div></form></div>`;
+  const reia = () => incarcaAcoperire(Object.assign({}, params, { s: loc, luni: d.luni }));
+  box.onclick = async e => { const b = e.target.closest('[data-nec-sterge]'); if (!b) return;
+    const { error } = await SB.rpc('acoperire_sterge', { p_id: +b.closest('[data-nec]').dataset.nec }); if (error) return toast(error.message || 'Nu s-a șters.', true); reia(); };
+  box.onsubmit = async e => { const f = e.target.closest('#acNou'); if (!f) return; e.preventDefault(); const el = f.elements;
+    if (el.pana.value <= el.de_la.value) return toast('Ora de sfârșit trebuie să fie după cea de început.', true);
+    const { error } = await SB.rpc('acoperire_pune', { p: { space_id: loc, de_la: el.de_la.value, pana: el.pana.value, oameni: el.oameni.value, zi_sapt: el.zi_sapt.value, nota: el.nota.value.trim() } });
+    if (error) return toast(error.message || 'Nu s-a salvat.', true); toast('Intervalul e pus.'); reia(); };
+}
 // ---------- Activitatea echipei (migrarea 0032) ----------
 // Jurnalul cu tot ce a făcut echipa în aplicație; din el pleacă rezumatul de la 11:00, 15:00 și 21:00.
 const ACT_FEL = { agenda: 'Agenda', incasari: 'Încasări', nota: 'Nota zilei', stoc: 'Stoc', comanda: 'Comenzi', raspuns: 'Răspunsuri la comenzi', livrare: 'Livrări', standard: 'Standarde', test: 'Teste' };
@@ -5476,11 +5563,11 @@ function agRand(t, sef) {
   const multe = t.ritm !== 'zilnic' && t.ritm !== 'la_nevoie' && t.tinta > 1, u = t.ultima;
   const link = t.unde.startsWith('#/') ? `<a class="btn ghost sm" href="${esc(t.unde)}">Deschide</a>` : t.unde ? `<span class="pill">${esc(t.unde)}</span>` : '';
   return `<li class="ag-r ${t.stare} ${t.activ ? '' : 'oprit'}" data-ag="${t.id}">
-    <label class="ag-b"><input type="checkbox" data-ag-bifa ${t.bifat_azi ? 'checked' : ''} ${t.pot_bifa ? '' : 'disabled'} aria-label="${esc(t.titlu)}"></label>
+    <label class="ag-b"><input type="checkbox" data-ag-bifa ${t.bifat_azi ? 'checked' : ''} ${t.pot_bifa && !t.auto ? '' : 'disabled'} aria-label="${esc(t.titlu)}"></label>
     <div class="ag-t"><b>${esc(t.titlu)}</b><small>${esc(agCand(t))}${t.detaliu ? ' · ' + esc(t.detaliu) : ''}</small>
       ${u ? `<small class="muted">Ultima dată: ${u.zi === ziLocala() ? 'azi' : ziScurta(u.zi)}, ${oraLocala(u.la)} · ${esc(u.de || '')}${u.nota ? ` · „${esc(u.nota)}”` : ''}</small>` : ''}</div>
     <div class="ag-d">${multe ? `<span class="ag-nr">${Math.min(t.facute, t.tinta)} din ${t.tinta}</span>` : ''}<em>${t.activ ? AG_STARE[t.stare] : 'Scoasă'}</em>${link}
-      ${t.bifat_azi && t.pot_bifa ? '<button class="rez-anul" type="button" data-ag-nota>notă</button>' : ''}${sef === 'edit' ? `<button class="rez-anul" type="button" data-ag-comuta="${t.activ ? 0 : 1}">${t.activ ? 'scoate' : 'pune la loc'}</button>` : ''}</div></li>`;
+      ${t.auto ? '<small class="muted">se bifează singură</small>' : ''}${t.bifat_azi && t.pot_bifa && !t.auto ? '<button class="rez-anul" type="button" data-ag-nota>notă</button>' : ''}${sef === 'edit' ? `<button class="rez-anul" type="button" data-ag-comuta="${t.activ ? 0 : 1}">${t.activ ? 'scoate' : 'pune la loc'}</button>` : ''}</div></li>`;
 }
 async function incarcaAgenda(params) {
   const box = document.getElementById('agBody'); if (!box) return;
@@ -5805,7 +5892,7 @@ function tabsOm(activ) {
   const t = [];
   if (areTura()) t.push(['tura', 'Tura', '#/tura']);
   if (AGENDA_AM || (ME && ME.vedeTot)) t.push(['agenda', 'Agenda', '#/agenda']);
-  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['standarde', 'Standarde', '#/standarde'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres']);
+  t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['standarde', 'Standarde', '#/standarde'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres'], ['contacte', 'Contacte', '#/contacte']);
   if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
   if (vedeEchipa()) t.push(['echipa', 'Echipa', '#/echipa']);
   return `<nav class="tabs tabs-om">${t.map(([k, et, h]) => `<a href="${h}" class="${k === activ ? 'on' : ''}">${et}${k === 'mesaje' ? '<i class="tab-nr" data-de-confirmat hidden></i>' : ''}</a>`).join('')}</nav>`;

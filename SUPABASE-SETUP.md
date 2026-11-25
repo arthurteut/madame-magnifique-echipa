@@ -557,6 +557,17 @@ Rulează `supabase/migrations/0032_activitate.sql`.
 - Problemele (întârzieri, pași nefăcuți, semnalări, livrări cu probleme, produse sub standard) vin pe loc, ca înainte.
 - Jurnalul păstrează 60 de zile.
 
+## 31. Contacte, acoperire pe ore, sarcini care se bifează singure (migrarea 0033)
+
+Rulează `supabase/migrations/0033_contacte_acoperire.sql` (cere 0030).
+
+- **Contacte** (tab nou pentru toată echipa): oameni și firme de sunat, pe grupe, cu căutare. Numărul
+  e legătură de sunat. Le adaugă și le șterg șefii.
+- **Acoperire** (*Echipa → Acoperire*): pe fiecare locație, câți oameni sunt în program oră cu oră față
+  de câți trebuie. Necesarul se pune pe intervale, în fiecare zi sau într-o zi anume.
+- **Agenda**: o sarcină poate fi legată de încasări sau de nota zilei; atunci se bifează singură când
+  responsabilul le scrie în „Ziua locației”.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

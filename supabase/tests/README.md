@@ -156,3 +156,5 @@ o verificare a lui pică fără să fie o problemă.
 Migrarea 0030 (agenda responsabilului) se verifică tot în banc: bife, stări pe zile anume, panoul șefilor și mementoul.
 
 Migrarea 0032 (jurnalul de activitate, rezumatul pentru șefi) se verifică în banc: ce intră în jurnal, cine primește rezumatul și cine nu, pagina Activitate.
+
+Migrarea 0033 (contacte, acoperire pe ore, sarcini din agendă care se bifează singure) se verifică în banc.
