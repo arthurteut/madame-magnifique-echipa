@@ -599,6 +599,17 @@ Rulează `supabase/migrations/0036_orar_general.sql` (cere 0034).
   dacă schimbarea a făcut-o altcineva. La mai multe ture puse deodată pleacă un singur mesaj de om.
   Schimbările intră și în Activitate și în rezumatul pentru șefi.
 
+## 35. Orarul meu; notificări doar de la magazinul propriu (migrarea 0037)
+
+Rulează `supabase/migrations/0037_orarul_meu_si_magazinul_meu.sql`.
+
+- **Orarul meu** (tab nou pentru toți cei care lucrează în ture, și card sus pe pagina Tura): turele pe
+  14 zile, cu locația, orele și colegii din aceeași zi.
+- **Magazinul de care răspunde un responsabil** stă în tabela `raspunde_de`. Cine are un rând acolo primește
+  notificările de șef (clock-in, clock-out, fișe, întârzieri, semnalări, standarde, agendă, mutări în orar,
+  rezumat) doar de la locațiile lui. Ce îl privește pe el (tura lui la alt magazin, mementourile) ajunge
+  de oriunde. Cine nu are niciun rând rămâne ca înainte. Nu schimbă ce vede omul în aplicație.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |

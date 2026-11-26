@@ -675,6 +675,14 @@
   .or-zile span { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); cursor: pointer; font: 500 .82rem 'Montserrat', sans-serif; } .or-zile input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); } .or-zile .trecut span { opacity: .45; }
   .or-acum .prez-in { max-width: 1500px; } .or-acum-cap { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 16px; }
   .or-l { list-style: none; margin: 0; padding: 0; } .or-l li { padding: 5px 0; } .or-l small { color: var(--muted); } .or-l span { display: block; font-size: .86rem; color: var(--muted); } .or-l em { font-style: normal; color: #8f2f2a; } .or-l li.rosu b { color: #8f2f2a; }
+  .om-card { margin: 14px 0; padding: 16px 18px; } .om-card h3 { margin: 4px 0 0; font-size: 1.2rem; } .om-banda { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-top: 12px; }
+  .om-banda a { display: block; padding: 7px 4px; text-align: center; text-decoration: none; color: inherit; border: 1px solid var(--line); min-height: 74px; } .om-banda a.are { background: var(--bg-soft); border-color: #cfcbc3; } .om-banda a.azi { border-color: var(--ink); border-width: 2px; }
+  .om-banda small { display: block; font: 600 .62rem 'Montserrat', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; } .om-banda b { display: block; font: 600 .86rem 'Montserrat', sans-serif; }
+  .om-banda span { display: block; font-size: .66rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; } .om-banda i { font-style: normal; font-size: .72rem; color: #b5b1a9; }
+  @media (max-width: 560px) { .om-banda { gap: 2px; } .om-banda a { padding: 6px 1px; } .om-banda b { font-size: .72rem; letter-spacing: -.02em; } .om-banda span { font-size: .6rem; } .om-banda small { font-size: .56rem; } }
+  .om-l { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid var(--line); } .om-l li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .om-l li.azi { background: #faf6ec; margin: 0 -10px; padding: 12px 10px; } .om-l li.liber { padding: 8px 0; } .om-zi b { display: block; font-weight: 500; text-transform: capitalize; } .om-zi small { color: var(--muted); font-size: .8rem; }
+  .om-t { margin-bottom: 8px; } .om-t:last-child { margin-bottom: 0; } .om-t b { font: 600 1.15rem 'Montserrat', sans-serif; margin-right: 8px; } .om-t small { display: block; font-size: .84rem; margin-top: 2px; }
   .act-sus { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 14px 0; } .act-loc { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
   .act-l { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); } .act-l li { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); }
   .act-l time { font: 500 .9rem 'Montserrat', sans-serif; color: var(--muted); } .act-l small { display: block; color: var(--muted); font-size: .82rem; } .act-l .go { text-decoration: none; }
@@ -1546,6 +1554,7 @@ function route() {
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'standarde') { html = viewStandarde(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'orarul-meu') { html = viewOrarulMeu(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'orar' && ORAR_SEF) { html = viewOrar(params); nav = 'echipa'; }
   else if (a === 'acoperire' && vedeEchipa()) { html = viewAcoperire(params); nav = 'echipa'; }
   else if (a === 'contacte') { html = viewContacte(params); nav = areTura() ? 'tura' : 'echipa'; }
@@ -4219,15 +4228,16 @@ async function incarcaTura() {
       <span class="fisa-prog"><i style="width:${total ? Math.round(gata / total * 100) : 0}%"></i></span><span class="go">→</span></a>`;
   };
   if (AGENDA_AM) setTimeout(() => turaAgenda(loc), 0);
-  box.innerHTML = `${stare}${AGENDA_AM ? '<div id="turaAgenda"></div>' : ''}${ba && ba.pot_nota ? notaCard(ba) : ''}${joc ? jocBanda(joc) : ''}
+  setTimeout(turaOrar, 0);
+  box.innerHTML = `${stare}<div id="turaOrar"></div>${AGENDA_AM ? '<div id="turaAgenda"></div>' : ''}${ba && ba.pot_nota ? notaCard(ba) : ''}${joc ? jocBanda(joc) : ''}
     <div class="tura-scurt"><a class="btn ghost sm" href="#/zi${loc ? '?s=' + enc(loc) : ''}">${(SP[loc] || {}).tip === 'productie' ? 'Stocul de azi' : 'Încasările zilei'}</a><a class="btn ghost sm" href="#/semnalari?nou=1${loc ? '&s=' + enc(loc) : ''}">Semnalează o problemă</a>
       <a class="btn ghost sm" href="#/mesaje">Mesaje${joc && joc.de_confirmat ? ` · ${joc.de_confirmat} de confirmat` : ''}</a></div>
     ${loc ? `<h2 class="section-title" style="margin-top:36px">Fișele de azi · ${esc(numeLoc(loc))}</h2>
       ${!t.deschis ? '<p class="muted" style="margin:-8px 0 14px">Le poți citi; ca să bifezi, fă întâi clock-in.</p>' : ''}
       ${fise.length ? `<div class="fise">${fise.map(rand).join('')}</div>` : '<p class="lvl4">Pentru rolul tău nu sunt încă fișe de bifat la locația asta.</p>'}` : ''}
     ${joc ? jocProgres(joc) : ''}
-    ${urmatoare.length ? `<h2 class="section-title" style="margin-top:36px">Turele următoare</h2>
-      <div class="ture-lista">${urmatoare.map(s => `<div><b>${ziUman(s.day)}</b><span>${esc(numeLoc(s.space_id))} · ${hm(s.starts)}–${hm(s.ends)}${s.opens ? ' · deschizi' : ''}${s.closes ? ' · închizi' : ''}</span></div>`).join('')}</div>` : ''}
+    ${urmatoare.length ? `<div data-ture-vechi><h2 class="section-title" style="margin-top:36px">Turele următoare</h2>
+      <div class="ture-lista">${urmatoare.map(s => `<div><b>${ziUman(s.day)}</b><span>${esc(numeLoc(s.space_id))} · ${hm(s.starts)}–${hm(s.ends)}${s.opens ? ' · deschizi' : ''}${s.closes ? ' · închizi' : ''}</span></div>`).join('')}</div></div>` : ''}
     ${pushCard()}
     ${t.pontaj.filter(c => c.clock_out).length ? `<h2 class="section-title" style="margin-top:36px">Pontajul tău</h2>
       <div class="ture-lista">${t.pontaj.filter(c => c.clock_out).slice(0, 7).map(c => `<div><b>${ziUman(ziLocala(new Date(c.clock_in)))}</b><span>${esc(numeLoc(c.space_id))} · ${oraLocala(c.clock_in)}–${oraLocala(c.clock_out)}</span></div>`).join('')}</div>` : ''}`;
@@ -5519,6 +5529,39 @@ function ctLocatii(tel) {
         <div class="ct-d">${c.telefon ? `<a class="btn sm" href="tel:${esc(tel(c.telefon))}">${esc(c.telefon)}</a>` : '<small class="muted">fără telefon</small>'}</div></li>`).join('')}</ul>
       <p class="mic" style="margin:8px 0 0"><a href="#/s/${enc(s.id)}">Pagina locației</a></p></div>`; }).join('');
 }
+// ---------- Orarul meu (migrarea 0037) ----------
+// Turele mele pe 14 zile, cu colegii din aceeași zi. Pe pagina Tura apare pe scurt, sus.
+const omRand = t => `<div class="om-t"><b>${t.starts}–${t.ends}</b><span>${esc(t.loc)}${t.opens ? ' · deschizi' : ''}${t.closes ? ' · închizi' : ''}</span>${t.note ? `<small>${esc(t.note)}</small>` : ''}
+  ${t.colegi.length ? `<small class="muted">Cu: ${t.colegi.map(c => `${esc(c.nume)} ${c.starts}–${c.ends}`).join(', ')}</small>` : '<small class="muted">Ești singur(ă) în program la locația asta.</small>'}</div>`;
+async function turaOrar() {
+  const r = await SB.rpc('orarul_meu').then(x => x, () => ({ error: true })); const box = document.getElementById('turaOrar'); if (!box || r.error) return;
+  const d = r.data, T = d.ture, zi7 = [...Array(7).keys()].map(i => plusZile(d.azi, i));
+  document.querySelectorAll('[data-ture-vechi]').forEach(x => x.remove());   // lista veche, înlocuită de cardul de sus
+  box.innerHTML = `<div class="calc-card om-card"><div class="tura-ag-sus"><div><span class="eyebrow">Orarul meu</span><h3>${T.length ? `${T.filter(t => zi7.includes(t.zi)).length} ture în următoarele 7 zile` : 'Nicio tură pusă încă'}</h3></div>
+      <a class="btn ghost sm" href="#/orarul-meu">Tot orarul</a></div>
+    <div class="om-banda">${zi7.map(z => { const ts = T.filter(t => t.zi === z); return `<a href="#/orarul-meu" class="${z === d.azi ? 'azi' : ''} ${ts.length ? 'are' : ''}"><small>${z === d.azi ? 'azi' : ziScurta(z)}</small>${ts.length ? ts.map(t => `<b>${t.starts}</b><span>${esc(t.loc)}</span>`).join('') : '<i>liber</i>'}</a>`; }).join('')}</div></div>`;
+}
+function viewOrarulMeu() {
+  setTimeout(incarcaOrarulMeu, 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Turele tale</span><h1>Orarul meu</h1>
+      <p class="sub">Unde și când lucrezi în următoarele două săptămâni, și cu cine. Primești notificare la fiecare schimbare.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('orarulmeu')}<div id="omBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaOrarulMeu() {
+  const box = document.getElementById('omBody'); if (!box) return;
+  const { data: d, error } = await SB.rpc('orarul_meu');
+  if (!document.getElementById('omBody')) return;
+  if (error) { box.innerHTML = `<p class="err">${esc(/PGRST20|42883|schema cache|does not exist/i.test((error.code || '') + ' ' + (error.message || '')) ? 'Orarul meu se activează după ce rulezi în Supabase migrarea 0037_orarul_meu_si_magazinul_meu.sql.' : error.message || 'Orarul nu s-a putut încărca.')}</p>`; return; }
+  const T = d.ture, ore = t => { const [a, b] = [t.starts, t.ends].map(x => +x.slice(0, 2) + +x.slice(3) / 60); return b - a; };
+  const sapt = (de, titlu) => { const zile = [...Array(7).keys()].map(i => plusZile(d.azi, de + i)), ts = T.filter(t => zile.includes(t.zi)), h = ts.reduce((n, t) => n + ore(t), 0);
+    return `<div class="calc-card ag-grup"><div class="tura-ag-sus"><span class="eyebrow">${titlu}</span><p class="muted mic">${ts.length ? `${ts.length} ${ts.length === 1 ? 'tură' : 'ture'} · ${cmdNr(Math.round(h * 10) / 10)} ore` : 'nicio tură pusă'}</p></div>
+      <ul class="om-l">${zile.map(z => { const l = T.filter(t => t.zi === z); return `<li class="${z === d.azi ? 'azi' : ''} ${l.length ? '' : 'liber'}"><div class="om-zi"><b>${z === d.azi ? 'Azi' : z === plusZile(d.azi, 1) ? 'Mâine' : ziUman(z).split(',')[0]}</b><small>${ziScurta(z)}</small></div>
+        <div>${l.length ? l.map(omRand).join('') : '<span class="muted">liber</span>'}</div></li>`; }).join('')}</ul></div>`; };
+  box.innerHTML = `${sapt(0, 'Următoarele 7 zile')}${sapt(7, 'Săptămâna de după')}
+    <p class="muted mic" style="margin-top:12px">Orarul îl fac responsabilii și șefii de producție. Dacă o tură nu e bună, scrie-i celui care a pus-o${ORAR_SEF ? ' sau schimb-o din <a href="#/orar">Orarul general</a>' : ''}.</p>`;
+}
 // ---------- Orarul general (migrarea 0036) ----------
 // Toți oamenii pe rânduri, zilele pe coloane, tura colorată după locație. „Acum” arată cine e în tură.
 const ORAR_CULORI = ['#e3d0aa', '#cfdcc9', '#ecc9bd', '#c9d6e6', '#dccfe6', '#e6dfc0', '#c8e0dc', '#e6cfda'];
@@ -6071,7 +6114,7 @@ async function incarcaStandarde(params) {
 
 function tabsOm(activ) {
   const t = [];
-  if (areTura()) t.push(['tura', 'Tura', '#/tura']);
+  if (areTura()) t.push(['tura', 'Tura', '#/tura'], ['orarulmeu', 'Orarul meu', '#/orarul-meu']);
   if (AGENDA_AM || (ME && ME.vedeTot)) t.push(['agenda', 'Agenda', '#/agenda']);
   t.push(['comenzi', 'Comenzi', '#/comenzi'], ['livrari', 'Livrări', '#/livrari'], ['standarde', 'Standarde', '#/standarde'], ['mesaje', 'Mesaje', '#/mesaje'], ['semnalari', 'Semnalări', '#/semnalari'], ['progres', 'Puncte', '#/progres'], ['contacte', 'Contacte', '#/contacte']);
   if (BONUS_LOC.length) t.push(['bonus', 'Bonus', '#/bonus']);
