@@ -4498,16 +4498,17 @@ async function incarcaProgram(params) {
   const s = locuri.find(x => x.id === params.s) ? params.s : (locuri[0] || {}).id;
   const luni = luniDin(/^\d{4}-\d{2}-\d{2}$/.test(params.sapt || '') ? params.sapt : ziLocala());
   const zile = [...Array(7).keys()].map(i => plusZile(luni, i));
-  let oameni, ture;
+  let oameni, ture, listaNoua = false;
   try {
-    const [o, t] = await Promise.all([SB.rpc('echipa_mea'),
+    // oameni_de_programat (migrarea 0034) îi include și pe cel care face programul și pe colegii cu rolul lui
+    const [o, t] = await Promise.all([SB.rpc('oameni_de_programat').then(x => (x.error ? SB.rpc('echipa_mea') : Object.assign(x, { nou: true }))),
       SB.from('shifts').select('*').eq('space_id', s).gte('day', zile[0]).lte('day', zile[6]).order('starts')]);
     if (o.error) throw o.error; if (t.error) throw t.error;
-    oameni = o.data; ture = t.data;
+    oameni = o.data; ture = t.data; listaNoua = !!o.nou;
   } catch (e) { console.error('Program:', e); box.innerHTML = '<p class="err">Programul nu s-a putut încărca.</p>'; return; }
   if (!document.getElementById('echipaBody')) return;
   const subs = subordonati(ME.role_code);
-  const planificabili = oameni.filter(p => p.active && (ME.admin || subs.has(p.role_code)));
+  const planificabili = oameni.filter(p => p.active && (listaNoua || ME.admin || subs.has(p.role_code)));
   const om = u => oameni.find(x => x.user_id === u) || { full_name: 'Coleg', role_code: '' };
   const url = (x = {}) => '#/echipa?' + new URLSearchParams({ tab: 'program', s, sapt: luni, ...x }).toString();
   box.innerHTML = `<div class="echipa-sus">
