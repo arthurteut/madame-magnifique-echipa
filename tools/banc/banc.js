@@ -3,7 +3,7 @@ const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const { execFileSync } = require('child_process');
 const fs = require('fs'), path = require('path');
 const DIR = __dirname, TMP = '/tmp/ghiddb';
-const SETOF = new Set(['echipa_mea', 'autori_jurnal']);
+const SETOF = new Set(['oameni_de_programat', 'echipa_mea', 'autori_jurnal']);
 const ident = c => { if (!/^[a-z_][a-z0-9_]*$/.test(c)) throw new Error('nume nepermis: ' + c); return '"' + c + '"'; };
 const lit = v => v === null || v === undefined ? 'null' : typeof v === 'number' || typeof v === 'boolean' ? String(v)
   : Array.isArray(v) && v.every(x => typeof x === 'number' || (typeof x === 'string' && /^[\w-]+$/.test(x))) ? `'{${v.join(',')}}'`

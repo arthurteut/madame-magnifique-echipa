@@ -568,6 +568,13 @@ Rulează `supabase/migrations/0033_contacte_acoperire.sql` (cere 0030).
 - **Agenda**: o sarcină poate fi legată de încasări sau de nota zilei; atunci se bifează singură când
   responsabilul le scrie în „Ziua locației”.
 
+## 32. Programul: și pentru cel care îl face (migrarea 0034)
+
+Rulează `supabase/migrations/0034_program_si_pentru_sef.sql`.
+
+În *Echipa → Program pe ture*, cine face programul se poate pune pe sine, pe colegii cu același rol și
+pe șefii lui de pe teren (un vânzător de tură își poate pune responsabilul). Conducerea nu apare în listă.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
