@@ -652,6 +652,29 @@
   .prez-unde a { display: block; height: 100%; padding: 13px 15px; border: 1px solid var(--line); text-decoration: none; color: inherit; } .prez-unde a:hover { border-color: var(--ink); }
   .prez-unde b { display: block; font: 600 .78rem 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; } .prez-unde span { font-size: .9rem; color: var(--muted); }
   .prez-nota { margin: 26px 0 6px; font-size: .95rem; } .prez .calc-act { margin-bottom: 12px; }
+  .or-sus { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; margin: 14px 0 10px; } .or-sus .sapt { display: flex; gap: 8px; align-items: center; } .or-cauta { max-width: 220px; margin: 0; }
+  .or-leg { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 0 0 10px; } .or-chip { display: inline-flex; gap: 6px; align-items: center; padding: 5px 10px; border: 1px solid var(--line); text-decoration: none; color: inherit; font-size: .84rem; }
+  .or-chip i, .or-g span { width: 12px; height: 12px; background: var(--c); display: inline-block; } .or-chip.on { border-color: var(--ink); font-weight: 500; }
+  .or-leg-st { margin-left: auto; font-size: .8rem; color: var(--muted); display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; } .or-leg-st i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-left: 8px; }
+  .or-leg-st .intura, .or-t.intura i::before { background: #2f6a40; } .or-leg-st .plecat, .or-t.plecat i::before { background: #8a857c; } .or-leg-st .lipsa, .or-t.lipsa i::before { background: #8f2f2a; }
+  .or-scroll { overflow: auto; max-height: 76vh; border: 1px solid var(--line); } .or-tab { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 900px; }
+  .or-tab thead th { position: sticky; top: 0; z-index: 3; background: var(--ink); color: #fff; font: 500 .8rem 'Montserrat', sans-serif; padding: 8px 6px; text-align: center; } .or-tab thead th.azi { background: #5b4a2a; }
+  .or-tab thead th:first-child, .or-tab tbody th { position: sticky; left: 0; z-index: 2; text-align: left; } .or-tab thead th:first-child { z-index: 4; }
+  .or-tot { display: flex; gap: 3px; justify-content: center; margin-top: 4px; min-height: 18px; } .or-tot span { background: var(--c); color: var(--ink); font-size: .7rem; min-width: 18px; padding: 1px 3px; }
+  .or-tab tbody th { background: #fff; padding: 6px 10px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 150px; max-width: 190px; } .or-tab tbody th b { font-weight: 500; display: block; font-size: .93rem; } .or-tab tbody th small { color: var(--muted); font-size: .76rem; }
+  .or-tab td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 4px; vertical-align: top; min-width: 104px; cursor: pointer; } .or-tab td.azi { background: #faf6ec; } .or-tab td.trecut { background: #fafaf9; }
+  .or-tab td:hover .or-plus { opacity: 1; } .or-plus { display: block; text-align: center; color: var(--muted); opacity: 0; font-size: 1.1rem; line-height: 34px; } .or-neprog { display: block; font-size: .74rem; color: #8f2f2a; padding: 6px 2px; }
+  .or-g td { background: var(--bg-soft); font: 600 .72rem 'Montserrat', sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 7px 10px; cursor: default; position: sticky; left: 0; } .or-g span { margin-right: 8px; vertical-align: -1px; }
+  .or-t { display: block; width: 100%; text-align: left; background: var(--c); border: 0; border-left: 3px solid rgba(0, 0, 0, .28); padding: 4px 6px; margin-bottom: 3px; cursor: pointer; font: inherit; color: var(--ink); }
+  .or-t b { display: block; font: 600 .8rem 'Montserrat', sans-serif; } .or-t small { display: block; font-size: .72rem; } .or-t.alt { opacity: .45; }
+  .or-t i { display: block; font-style: normal; font-size: .68rem; margin-top: 1px; } .or-t i::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; } .or-t.lipsa { border-left-color: #8f2f2a; }
+  .or-modal { z-index: 95; } .or-form { text-align: left; width: min(520px, 100%); max-height: 92vh; overflow-y: auto; } .or-form h3 { margin: 4px 0 0; }
+  .or-loc { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; } .or-loc input, .or-zile input { position: absolute; opacity: 0; } .or-loc span { display: block; padding: 8px 12px; border: 2px solid transparent; background: var(--c); cursor: pointer; font-size: .9rem; }
+  .or-loc input:checked + span { border-color: var(--ink); font-weight: 500; } .or-loc input:focus-visible + span, .or-zile input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .or-bife { display: flex; gap: 18px; margin: 8px 0; } .or-zile { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; margin: 8px 0 12px; } .or-zile small { margin-right: 4px; }
+  .or-zile span { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); cursor: pointer; font: 500 .82rem 'Montserrat', sans-serif; } .or-zile input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); } .or-zile .trecut span { opacity: .45; }
+  .or-acum .prez-in { max-width: 1500px; } .or-acum-cap { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 16px; }
+  .or-l { list-style: none; margin: 0; padding: 0; } .or-l li { padding: 5px 0; } .or-l small { color: var(--muted); } .or-l span { display: block; font-size: .86rem; color: var(--muted); } .or-l em { font-style: normal; color: #8f2f2a; } .or-l li.rosu b { color: #8f2f2a; }
   .act-sus { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 14px 0; } .act-loc { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
   .act-l { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); } .act-l li { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); }
   .act-l time { font: 500 .9rem 'Montserrat', sans-serif; color: var(--muted); } .act-l small { display: block; color: var(--muted); font-size: .82rem; } .act-l .go { text-decoration: none; }
@@ -1268,7 +1291,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.min.js"></script>
 <script src="assets/config.js"></script>
 <script>
-let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null, BONUS_LOC = [], AGENDA_AM = false;
+let D = null, ME = null, SB = null, SB_USER_ID = null, CURS = null, BONUS_LOC = [], AGENDA_AM = false, ORAR_SEF = false;
 
 // ---------- Autentificare (Supabase) ----------
 // Angajatul scrie doar utilizatorul; contul are în spate un email intern,
@@ -1308,7 +1331,7 @@ function showApp() {
   puncteNoiCurand();
 }
 function showLock(msg) {
-  D = ME = null; BONUS_LOC = []; AGENDA_AM = false;
+  D = ME = null; BONUS_LOC = []; AGENDA_AM = false; ORAR_SEF = false;
   document.getElementById('app').classList.add('hidden');
   document.getElementById('lock').classList.remove('hidden');
   if (msg) showErr(msg);
@@ -1402,6 +1425,7 @@ async function deschideSesiunea(user) {
   prepare();
   BONUS_LOC = await SB.rpc('bonus_locatii').then(r => (r.error || !Array.isArray(r.data) ? [] : r.data), () => []);
   AGENDA_AM = await SB.rpc('agenda_am').then(r => r.data === true, () => false);   // vine cu migrarea 0030
+  ORAR_SEF = await SB.rpc('orar_sef').then(r => r.data === true, () => false);       // vine cu migrarea 0036
   showApp();
   prezentareLaIntrare();
 }
@@ -1522,6 +1546,7 @@ function route() {
   else if (a === 'livrari') { html = viewLivrari(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'zi') { html = viewZi(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'standarde') { html = viewStandarde(params); nav = areTura() ? 'tura' : 'echipa'; }
+  else if (a === 'orar' && ORAR_SEF) { html = viewOrar(params); nav = 'echipa'; }
   else if (a === 'acoperire' && vedeEchipa()) { html = viewAcoperire(params); nav = 'echipa'; }
   else if (a === 'contacte') { html = viewContacte(params); nav = areTura() ? 'tura' : 'echipa'; }
   else if (a === 'activitate' && vedeEchipa()) { html = viewActivitate(params); nav = 'echipa'; }
@@ -4415,7 +4440,7 @@ function viewEchipa(params) {
       <p class="sub">Cine e în tură, cum merg fișele și ce probleme au apărut, la fiecare locație. Programul pe ture îl faci tot aici.</p>
     </div></section>
     <section class="block"><div class="wrap lat">
-      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a><a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a><a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/acoperire">Acoperire</a><a href="#/activitate">Activitate</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
+      <nav class="tabs">${locatiiOperative().length > 1 ? `<a href="#/echipa?tab=toate" class="${tab === 'toate' ? 'on' : ''}">Toate locațiile</a>` : ''}<a href="#/echipa?tab=azi" class="${tab === 'azi' ? 'on' : ''}">${locatiiOperative().length > 1 ? 'Pe locație' : 'Azi'}</a>${ORAR_SEF ? '<a href="#/orar">Orar general</a>' : `<a href="#/echipa?tab=program" class="${tab === 'program' ? 'on' : ''}">Program pe ture</a>`}<a href="#/echipa?tab=oameni" class="${tab === 'oameni' ? 'on' : ''}">Oameni și puncte</a><a href="#/acoperire">Acoperire</a><a href="#/activitate">Activitate</a><a href="#/comenzi">Comenzi</a><a href="#/livrari">Livrări</a><a href="#/standarde">Standarde</a><a href="#/mesaje">Mesaje</a><a href="#/semnalari">Semnalări</a>${BONUS_LOC.length ? '<a href="#/bonus">Bonus</a>' : ''}</nav>
       <div id="echipaBody"><p class="muted">Se încarcă…</p></div></div></section>`;
 }
 const locatiiOperative = () => D.spatii.filter(s => s.tip === 'magazin' || s.tip === 'productie');
@@ -5494,6 +5519,100 @@ function ctLocatii(tel) {
         <div class="ct-d">${c.telefon ? `<a class="btn sm" href="tel:${esc(tel(c.telefon))}">${esc(c.telefon)}</a>` : '<small class="muted">fără telefon</small>'}</div></li>`).join('')}</ul>
       <p class="mic" style="margin:8px 0 0"><a href="#/s/${enc(s.id)}">Pagina locației</a></p></div>`; }).join('');
 }
+// ---------- Orarul general (migrarea 0036) ----------
+// Toți oamenii pe rânduri, zilele pe coloane, tura colorată după locație. „Acum” arată cine e în tură.
+const ORAR_CULORI = ['#e3d0aa', '#cfdcc9', '#ecc9bd', '#c9d6e6', '#dccfe6', '#e6dfc0', '#c8e0dc', '#e6cfda'];
+const ZI_SCURT = ['L', 'Ma', 'Mi', 'J', 'V', 'S', 'D'];
+function viewOrar(params) {
+  setTimeout(() => incarcaOrar(params), 0);
+  return `<section class="band tura-band"><div class="wrap lat">
+      <span class="eyebrow">Toate magazinele și laboratoarele</span><h1>Orar general</h1>
+      <p class="sub">Un singur orar, lucrat de toți responsabilii și șefii de producție. Apeși pe o căsuță ca să pui o tură și pe o tură ca să o schimbi.</p>
+    </div></section>
+    <section class="block"><div class="wrap tura lat">${tabsOm('echipa')}<div id="orBody"><p class="muted">Se încarcă…</p></div></div></section>`;
+}
+async function incarcaOrar(params) {
+  const box = document.getElementById('orBody'); if (!box) return;
+  const { data: d, error } = await SB.rpc('orar_saptamana', { p_luni: /^\d{4}-\d{2}-\d{2}$/.test(params.luni || '') ? params.luni : null });
+  if (!document.getElementById('orBody')) return;
+  if (error) { box.innerHTML = `<p class="err">${esc(/PGRST20|42883|schema cache|does not exist/i.test((error.code || '') + ' ' + (error.message || '')) ? 'Orarul general se activează după ce rulezi în Supabase migrarea 0036_orar_general.sql.' : error.message || 'Orarul nu s-a putut încărca.')}</p>`; return; }
+  const L = d.locatii, cul = Object.fromEntries(L.map((l, i) => [l.id, ORAR_CULORI[i % ORAR_CULORI.length]])), numeL = id => (L.find(l => l.id === id) || {}).nume || id;
+  const zile = [...Array(7).keys()].map(i => actZi(d.luni, i)), filtru = L.some(l => l.id === params.s) ? params.s : '';
+  const url = o => { const q = Object.assign({ luni: d.luni, s: filtru }, o); return '#/orar?' + Object.entries(q).filter(([, v]) => v).map(([k, v]) => `${k}=${enc(v)}`).join('&'); };
+  const tureOm = (u, z) => d.ture.filter(t => t.user_id === u && t.day === z), pont = (u, z) => d.pontaj.filter(c => c.user_id === u && c.day === z);
+  // starea unei ture față de pontaj: doar pentru azi și zilele trecute
+  const stare = t => { if (t.day > d.azi) return ''; const c = pont(t.user_id, t.day).find(x => x.space_id === t.space_id) || pont(t.user_id, t.day)[0];
+    if (c) return c.out ? 'plecat' : 'intura'; return t.day < d.azi || t.starts <= d.acum ? 'lipsa' : ''; };
+  const ST = { intura: 'în tură', plecat: 'a plecat', lipsa: 'fără clock-in' };
+  const oameni = d.oameni.filter(o => !filtru || o.acasa === filtru || d.ture.some(t => t.user_id === o.user_id && t.space_id === filtru));
+  const grupe = [...new Set(oameni.map(o => o.acasa || ''))].sort((a, b) => (a ? L.findIndex(l => l.id === a) : 99) - (b ? L.findIndex(l => l.id === b) : 99));
+  const ore = t => { const [a, b] = [t.starts, t.ends].map(x => +x.slice(0, 2) + +x.slice(3) / 60); return b - a; };
+  const rand = o => { const tot = zile.reduce((n, z) => n + tureOm(o.user_id, z).reduce((m, t) => m + ore(t), 0), 0);
+    return `<tr data-q="${esc(plNorm(o.nume + ' ' + o.rol))}"><th><b>${esc(o.nume)}</b><small>${esc(o.rol)} · ${tot ? cmdNr(Math.round(tot * 10) / 10) + ' h' : 'liber'}</small></th>${zile.map(z => { const ts = tureOm(o.user_id, z);
+      return `<td class="${z === d.azi ? 'azi' : ''} ${z < d.azi ? 'trecut' : ''}" data-or-celula="${o.user_id}|${z}">${ts.map(t => { const st = stare(t); return `<button type="button" class="or-t ${st} ${filtru && t.space_id !== filtru ? 'alt' : ''}" style="--c:${cul[t.space_id] || '#dedcd8'}" data-or-tura="${t.id}"
+        title="${esc(numeL(t.space_id))} · ${t.starts}–${t.ends}${st ? ' · ' + ST[st] : ''}${t.de ? ' · pusă de ' + esc(t.de) : ''}"><b>${t.starts}–${t.ends}</b><small>${esc(numeL(t.space_id))}${t.opens ? ' · D' : ''}${t.closes ? ' · Î' : ''}</small>${st ? `<i>${ST[st]}</i>` : ''}</button>`; }).join('')
+        || (pont(o.user_id, z).length ? `<span class="or-neprog" title="A dat clock-in fără să fie în orar">clock-in ${pont(o.user_id, z)[0].in}</span>` : '<span class="or-plus">+</span>')}</td>`; }).join('')}</tr>`; };
+  const total = z => L.map(l => { const n = new Set(d.ture.filter(t => t.day === z && t.space_id === l.id).map(t => t.user_id)).size; return n ? `<span style="--c:${cul[l.id]}">${n}</span>` : ''; }).join('');
+  box.innerHTML = `<div class="or-sus"><div class="sapt"><a class="btn ghost sm" href="${url({ luni: actZi(d.luni, -7) })}">←</a><b>${ziScurta(zile[0])} – ${ziScurta(zile[6])}</b><a class="btn ghost sm" href="${url({ luni: actZi(d.luni, 7) })}">→</a></div>
+      <button class="btn sm" type="button" data-or-acum>Acum · cine e în tură</button>
+      <input class="field or-cauta" id="orCauta" type="search" placeholder="Caută un om" autocomplete="off">
+      <button class="btn ghost sm" type="button" data-or-copiaza>Copiază săptămâna trecută</button></div>
+    <p class="or-leg"><a class="or-chip ${filtru ? '' : 'on'}" href="${url({ s: '' })}">Toate</a>${L.map(l => `<a class="or-chip ${filtru === l.id ? 'on' : ''}" style="--c:${cul[l.id]}" href="${url({ s: l.id })}"><i></i>${esc(l.nume)}</a>`).join('')}
+      <span class="or-leg-st"><i class="intura"></i>în tură <i class="plecat"></i>a plecat <i class="lipsa"></i>fără clock-in</span></p>
+    <div class="or-scroll"><table class="or-tab"><thead><tr><th>${oameni.length} oameni</th>${zile.map((z, i) => `<th class="${z === d.azi ? 'azi' : ''}">${ziScurta(z)}<div class="or-tot">${total(z)}</div></th>`).join('')}</tr></thead>
+      ${grupe.map(g => `<tbody><tr class="or-g"><td colspan="8"><span style="--c:${cul[g] || '#dedcd8'}"></span>${g ? esc(numeL(g)) : 'Fără locație de bază'}</td></tr>${oameni.filter(o => (o.acasa || '') === g).map(rand).join('')}</tbody>`).join('')}</table></div>
+    <p class="muted mic">Culoarea arată locația. D = deschide, Î = închide. Cifrele de sub zi: câți oameni sunt puși la fiecare locație. Omul e grupat la locația de care e legat sau unde lucrează cel mai des.</p>`;
+  const reia = () => incarcaOrar(Object.assign({}, params, { luni: d.luni, s: filtru }));
+  box.querySelector('#orCauta').oninput = e => { const q = plNorm(e.target.value.trim()); box.querySelectorAll('tr[data-q]').forEach(r => { r.hidden = !!q && !r.dataset.q.includes(q); }); };
+  const formular = (o, zi, t) => {
+    const acasa = t ? t.space_id : (filtru || o.acasa || (L[0] || {}).id), el = document.createElement('div'); el.className = 'qr-modal or-modal';
+    el.innerHTML = `<form class="qr-card or-form frm" autocomplete="off"><span class="eyebrow">${t ? 'Schimbă tura' : 'Tură nouă'}</span><h3>${esc(o.nume)} <small class="muted">${esc(o.rol)}</small></h3>
+      <p class="muted mic">${ziScurta(zi)}${t && t.de ? ` · pusă de ${esc(t.de)}` : ''}</p>
+      <div class="or-loc" role="radiogroup" aria-label="Locația">${L.map(l => `<label style="--c:${cul[l.id]}"><input type="radio" name="space_id" value="${esc(l.id)}" ${l.id === acasa ? 'checked' : ''}><span>${esc(l.nume)}</span></label>`).join('')}</div>
+      <div class="frm-2"><label>De la<input class="field" type="time" name="starts" required value="${t ? t.starts : oraLocatie(acasa, zi, 'opens') || '07:30'}"></label><label>Până la<input class="field" type="time" name="ends" required value="${t ? t.ends : '15:30'}"></label></div>
+      <div class="or-bife"><label><input type="checkbox" name="opens" ${t && t.opens ? 'checked' : ''}> Deschide</label><label><input type="checkbox" name="closes" ${t && t.closes ? 'checked' : ''}> Închide</label></div>
+      ${t ? '' : `<div class="or-zile"><small class="muted">Aceeași tură și în:</small>${zile.map((z, i) => `<label class="${z < d.azi ? 'trecut' : ''}"><input type="checkbox" name="zi" value="${z}" ${z === zi ? 'checked disabled' : ''}><span>${ZI_SCURT[i]}</span></label>`).join('')}</div>`}
+      <label>Notă (opțional)<input class="field" name="note" maxlength="120" value="${t ? esc(t.note || '') : ''}"></label>
+      <div class="calc-act"><button class="btn" type="submit">${t ? 'Salvează' : 'Pune în orar'}</button>${t ? '<button class="btn ghost" type="button" data-or-sterge>Scoate tura</button>' : ''}<button class="btn ghost" type="button" data-or-renunt>Renunț</button></div>
+      <p class="muted mic">Omul primește notificare la fiecare schimbare.</p></form>`;
+    document.body.appendChild(el);
+    const inchide = () => el.remove();
+    el.addEventListener('click', async e => { if (e.target === el || e.target.closest('[data-or-renunt]')) return inchide();
+      if (e.target.closest('[data-or-sterge]')) { const { error } = await SB.rpc('orar_sterge', { p_id: t.id }); if (error) return toast(error.message || 'Nu s-a scos.', true); inchide(); toast('Tura e scoasă.'); reia(); } });
+    el.querySelector('form').onsubmit = async e => { e.preventDefault(); const f = e.target.elements;
+      const p = { user_id: o.user_id, space_id: f.space_id.value, day: zi, starts: f.starts.value, ends: f.ends.value, opens: f.opens.checked, closes: f.closes.checked, note: f.note.value.trim() };
+      if (t) p.id = t.id; else p.zile = [...el.querySelectorAll('[name=zi]:checked')].map(x => x.value);
+      const { data, error } = await SB.rpc('orar_pune', { p }); if (error) return toast(error.message || 'Nu s-a salvat.', true);
+      inchide(); toast(t ? 'Tura e schimbată.' : data > 1 ? `${data} ture puse.` : 'Tura e pusă.'); reia(); };
+  };
+  box.onclick = async e => {
+    if (e.target.closest('[data-or-acum]')) return orarAcum();
+    if (e.target.closest('[data-or-copiaza]')) { if (!confirm(`Copiez turele din săptămâna trecută în ${ziScurta(zile[0])} – ${ziScurta(zile[6])}? Ce e deja pus rămâne.`)) return;
+      const { data, error } = await SB.rpc('orar_copiaza', { p_luni: d.luni }); if (error) return toast(error.message || 'Nu s-a copiat.', true); toast(data ? `${data} ture copiate.` : 'Nu era nimic de copiat.'); return reia(); }
+    const b = e.target.closest('[data-or-tura]'), c = e.target.closest('[data-or-celula]'); if (!b && !c) return;
+    const [u, zi] = (b ? b.closest('[data-or-celula]') : c).dataset.orCelula.split('|'), o = d.oameni.find(x => x.user_id === u);
+    formular(o, zi, b ? d.ture.find(t => String(t.id) === b.dataset.orTura) : null);
+  };
+  if (params.acum) orarAcum();
+}
+async function orarAcum() {
+  const { data: d, error } = await SB.rpc('orar_acum'); if (error) return toast(error.message || 'Nu s-a putut încărca.', true);
+  const L = d.locatii, tot = k => L.reduce((n, l) => n + l[k].length, 0), hm2 = m => `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')}`;
+  const li = (x, extra, cls = '') => `<li class="${cls}"><b>${esc(x.nume)}</b> <small>${esc(x.rol)}</small><span>${extra}</span></li>`;
+  const el = document.createElement('div'); el.className = 'prez or-acum'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Cine e în tură acum');
+  el.innerHTML = `<div class="prez-in"><div class="or-acum-cap"><div><span class="eyebrow">Acum · ${d.acum}</span><h1>Cine e în tură</h1></div><button class="btn ghost" type="button" data-inchide>Închide</button></div>
+    <div class="pan-sus"><div><b>${tot('in_tura')}</b><small>în tură acum</small></div><div class="${tot('lipsesc') ? 'rosu' : ''}"><b>${tot('lipsesc')}</b><small>lipsesc sau au întârziat</small></div>
+      <div><b>${tot('plecati')}</b><small>au plecat azi</small></div><div><b>${tot('urmeaza')}</b><small>urmează azi</small></div></div>
+    <div class="pan-grid">${L.map(l => `<article class="pan-card ${l.in_tura.length ? 'deschis' : ''} ${l.lipsesc.length ? 'atentie' : ''}"><header><div><span class="eyebrow">${l.tip === 'magazin' ? 'Magazin' : 'Laborator'}</span><h3>${esc(l.nume)}</h3></div>
+        <span class="pill ${l.in_tura.length ? 'st-rezolvata' : ''}">${l.in_tura.length ? `${l.in_tura.length} în tură` : 'Nimeni în tură'}</span></header>
+      ${l.in_tura.length ? `<div class="pan-s"><span class="eyebrow">În tură</span><ul class="or-l">${l.in_tura.map(x => li(x, `de la ${x.de_la}${x.program ? ` · program ${x.program}` : ' · nu era în orar'}${x.intarziere > 5 ? ` · <em>a întârziat ${x.intarziere} min</em>` : ''}`)).join('')}</ul></div>` : ''}
+      ${l.lipsesc.length ? `<div class="pan-s"><span class="eyebrow">Lipsesc sau au întârziat</span><ul class="or-l">${l.lipsesc.map(x => li(x, `program ${x.program} · <em>fără clock-in de ${x.minute} min</em>`, 'rosu')).join('')}</ul></div>` : ''}
+      ${l.urmeaza.length ? `<div class="pan-s"><span class="eyebrow">Urmează</span><ul class="or-l">${l.urmeaza.map(x => li(x, x.program)).join('')}</ul></div>` : ''}
+      ${l.plecati.length ? `<div class="pan-s"><span class="eyebrow">Au plecat</span><ul class="or-l">${l.plecati.map(x => li(x, `${x.de_la}–${x.pana} · ${hm2(x.minute)}${x.program ? ` · program ${x.program}` : ''}`)).join('')}</ul></div>` : ''}
+      ${!l.in_tura.length && !l.lipsesc.length && !l.urmeaza.length && !l.plecati.length ? '<p class="muted mic">Nimeni în orar azi.</p>' : ''}</article>`).join('')}</div></div>`;
+  document.body.appendChild(el); document.body.style.overflow = 'hidden';
+  el.addEventListener('click', e => { if (e.target.closest('[data-inchide]')) { el.remove(); document.body.style.overflow = ''; } });
+}
 // ---------- Acoperirea pe ore (migrarea 0033) ----------
 // Câți oameni sunt puși în program, oră cu oră, față de câți trebuie. Roșu = sub necesar.
 function viewAcoperire(params) {
@@ -5538,7 +5657,7 @@ async function incarcaAcoperire(params) {
 }
 // ---------- Activitatea echipei (migrarea 0032) ----------
 // Jurnalul cu tot ce a făcut echipa în aplicație; din el pleacă rezumatul de la 11:00, 15:00 și 21:00.
-const ACT_FEL = { agenda: 'Agenda', incasari: 'Încasări', nota: 'Nota zilei', stoc: 'Stoc', comanda: 'Comenzi', raspuns: 'Răspunsuri la comenzi', livrare: 'Livrări', standard: 'Standarde', test: 'Teste' };
+const ACT_FEL = { orar: 'Orar', agenda: 'Agenda', incasari: 'Încasări', nota: 'Nota zilei', stoc: 'Stoc', comanda: 'Comenzi', raspuns: 'Răspunsuri la comenzi', livrare: 'Livrări', standard: 'Standarde', test: 'Teste' };
 const actZi = (zi, n) => { const d = new Date(zi + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 function viewActivitate(params) {
   setTimeout(() => incarcaActivitate(params), 0);

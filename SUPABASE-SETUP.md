@@ -584,6 +584,21 @@ răspunde, sarcinile din agendă și unde găsește fiecare lucru. Numărătoare
 redeschide oricând din *Roluri → Responsabil Locație*. Pagina Contacte arată acum și contactele scrise
 în pagina fiecărei locații, cu ce mai e de completat.
 
+## 34. Orarul general (migrarea 0036)
+
+Rulează `supabase/migrations/0036_orar_general.sql` (cere 0034).
+
+- **Orar general** (*Echipa → Orar general*): toți oamenii pe rânduri, zilele pe coloane, tura colorată
+  după locație. Îl lucrează responsabilii de locație, șefii de secție, coordonatorul de producție și
+  conducerea: pot pune pe oricine, la orice magazin sau laborator. Rolurile sunt în tabela `orar_roluri`.
+- **Tură nouă**: apeși pe căsuța omului în ziua dorită; aceeași tură se poate pune pe mai multe zile deodată.
+  Două ture suprapuse pentru același om sunt refuzate. Fiecare tură ține minte cine a pus-o.
+- **Acum**: pe fiecare locație, cine e în tură, cine lipsește sau a întârziat, cine a plecat și cine urmează.
+  În tabel, turele de azi și cele trecute arată starea din pontaj.
+- **Notificări la fiecare mutare**: omul pus, mutat sau scos află pe loc; responsabilii locației află și ei,
+  dacă schimbarea a făcut-o altcineva. La mai multe ture puse deodată pleacă un singur mesaj de om.
+  Schimbările intră și în Activitate și în rezumatul pentru șefi.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
