@@ -643,6 +643,15 @@
   .ac-scroll { overflow-x: auto; margin: 10px 0; } .ac-t { border-collapse: collapse; width: 100%; min-width: 640px; } .ac-t th { font: 500 .78rem 'Montserrat', sans-serif; color: var(--muted); padding: 6px 4px; text-align: center; white-space: nowrap; } .ac-t tbody th { text-align: left; padding-right: 10px; }
   .ac-t td { text-align: center; padding: 9px 2px; border: 1px solid var(--line); font: 500 .95rem 'Montserrat', sans-serif; min-width: 34px; } .ac-t td small { font-weight: 400; color: inherit; opacity: .75; font-size: .74rem; }
   .ac-t td.gol { color: #c9c6c0; } .ac-t td.ok { background: #e7efe6; } .ac-t td.sub { background: #8f2f2a; color: #fff; } .ac-t tr.azi th { color: var(--ink); font-weight: 700; }
+  .prez { position: fixed; inset: 0; z-index: 90; background: var(--bg, #fff); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .prez-in { max-width: 860px; margin: 0 auto; padding: 44px 22px 60px; } .prez h1 { font: 500 2.3rem/1.1 'Montserrat', sans-serif; margin: 8px 0 10px; } .prez-sub { font-size: 1.15rem; margin: 0; }
+  .prez-rol { margin: 14px 0 0; padding: 14px 16px; background: var(--bg-soft); border-left: 3px solid var(--gold); } .prez h2 { font: 600 .8rem 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; margin: 34px 0 12px; }
+  .prez-3, .prez-unde { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+  .prez-3 li { background: var(--ink); color: #fff; padding: 16px 18px; } .prez-3 b { display: block; font: 500 1.2rem 'Montserrat', sans-serif; margin-bottom: 4px; } .prez-3 span { color: #cfccc6; font-size: .92rem; }
+  .prez-ag { display: grid; gap: 14px 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); } .prez-ag ul { margin: 6px 0 0; padding-left: 18px; } .prez-ag li { margin: 3px 0; font-size: .95rem; }
+  .prez-unde a { display: block; height: 100%; padding: 13px 15px; border: 1px solid var(--line); text-decoration: none; color: inherit; } .prez-unde a:hover { border-color: var(--ink); }
+  .prez-unde b { display: block; font: 600 .78rem 'Montserrat', sans-serif; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; } .prez-unde span { font-size: .9rem; color: var(--muted); }
+  .prez-nota { margin: 26px 0 6px; font-size: .95rem; } .prez .calc-act { margin-bottom: 12px; }
   .act-sus { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 14px 0; } .act-loc { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
   .act-l { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); } .act-l li { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); }
   .act-l time { font: 500 .9rem 'Montserrat', sans-serif; color: var(--muted); } .act-l small { display: block; color: var(--muted); font-size: .82rem; } .act-l .go { text-decoration: none; }
@@ -1394,6 +1403,7 @@ async function deschideSesiunea(user) {
   BONUS_LOC = await SB.rpc('bonus_locatii').then(r => (r.error || !Array.isArray(r.data) ? [] : r.data), () => []);
   AGENDA_AM = await SB.rpc('agenda_am').then(r => r.data === true, () => false);   // vine cu migrarea 0030
   showApp();
+  prezentareLaIntrare();
 }
 
 document.getElementById('lockForm').addEventListener('submit', async e => {
@@ -5414,10 +5424,11 @@ async function rolAgenda(cod) {
   const r = await SB.rpc('agenda_rol', { p_rol: cod }).then(x => x, () => ({ error: true }));
   const box = document.getElementById('rolAgenda'); if (!box || box.dataset.rol !== cod || r.error || !(r.data || []).length) return;
   const G = [['zilnic', 'În fiecare zi'], ['saptamanal', 'În fiecare săptămână'], ['lunar', 'În fiecare lună'], ['la_nevoie', 'Când e cazul']];
+  box.onclick = e => { if (e.target.closest('[data-prez-arata]')) { e.preventDefault(); prezentareRol(0); } };
   box.innerHTML = `<h2 class="section-title">Responsabilități care se repetă</h2>
     <div class="rol-ag">${G.map(([k, et]) => { const l = r.data.filter(t => t.ritm === k); return l.length ? `<div class="calc-card ag-grup"><span class="eyebrow">${et}</span><ul class="ag-l">${l.map(t =>
       `<li class="rol-ag-r"><div class="ag-t"><b>${esc(t.titlu)}</b><small>${esc(agCand(t))}${t.detaliu ? ' · ' + esc(t.detaliu) : ''}</small></div>${t.unde && !t.unde.startsWith('#/') ? `<span class="pill">${esc(t.unde)}</span>` : ''}</li>`).join('')}</ul></div>` : ''; }).join('')}</div>
-    ${ME && ME.role_code === cod ? '<p class="mic" style="margin:12px 0 36px"><a href="#/agenda">Le bifezi în Agendă</a></p>' : '<p style="margin-bottom:36px"></p>'}`;
+    ${ME && ME.role_code === cod ? `<p class="mic" style="margin:12px 0 36px"><a href="#/agenda">Le bifezi în Agendă</a>${cod === 'RL' ? ' · <a href="#" data-prez-arata>Vezi prezentarea rolului</a>' : ''}</p>` : '<p style="margin-bottom:36px"></p>'}`;
 }
 // Agenda pe pagina Tura: ce e de făcut acum, cu bifă pe loc. Lista întreagă e în tabul Agenda.
 async function turaAgenda(locTura) {
@@ -5458,6 +5469,7 @@ async function incarcaContacte(params) {
   box.innerHTML = `<input class="field ct-cauta" id="ctCauta" type="search" placeholder="Caută după nume, rol, locație sau număr" autocomplete="off">
     ${C.length ? CT_GRUPE.map(g => { const l = C.filter(c => c.grupa === g); return l.length ? `<div class="calc-card ag-grup ct-grup"><span class="eyebrow">${g}</span><ul class="ag-l">${l.map(card).join('')}</ul></div>` : ''; }).join('')
       : `<p class="lvl4">Lista e goală. ${sef ? 'Adaugă primul contact mai jos.' : 'O completează șefii.'}</p>`}
+    ${ctLocatii(tel)}
     ${sef ? `<form class="calc-card frm" id="ctNou" autocomplete="off"><span class="eyebrow">Adaugă un contact</span>
       <div class="frm-2"><label>Nume<input class="field" name="nume" required minlength="2" maxlength="120"></label><label>Telefon<input class="field" name="telefon" type="tel" maxlength="30" placeholder="07xx xxx xxx"></label></div>
       <div class="frm-2"><label>Ce face (rol, firmă)<input class="field" name="rol" maxlength="120" placeholder="Responsabil magazin, furnizor lactate…"></label>
@@ -5473,6 +5485,14 @@ async function incarcaContacte(params) {
   box.onsubmit = async e => { const f = e.target.closest('#ctNou'); if (!f) return; e.preventDefault(); const el = f.elements;
     const { error } = await SB.from('contacte').insert({ nume: el.nume.value.trim(), telefon: el.telefon.value.trim(), rol: el.rol.value.trim(), grupa: el.grupa.value, space_id: el.space_id.value || null, email: el.email.value.trim(), nota: el.nota.value.trim() });
     if (error) return toast(error.message || 'Nu s-a salvat.', true); toast('Contactul e în listă.'); incarcaContacte(params); };
+}
+// Contactele scrise în pagina fiecărei locații apar și aici, ca să nu fie trecute de două ori.
+function ctLocatii(tel) {
+  return D.spatii.filter(s => ((s.fisa || {}).contacte || []).length).map(s => { const l = s.fisa.contacte, lipsa = l.filter(c => !c.nume || !c.telefon).length;
+    return `<div class="calc-card ag-grup ct-grup"><span class="eyebrow">${esc(numeLoc(s.id) || s.titlu)}${lipsa ? ` · ${lipsa} de completat` : ''}</span><ul class="ag-l">${l.map(c =>
+      `<li class="ct" data-q="${esc(plNorm([c.nume, c.functie, c.telefon, numeLoc(s.id)].join(' ')))}"><div><b>${c.nume ? esc(c.nume) : '<span class="todo">nume de completat</span>'}</b><small>${esc(c.functie)}</small></div>
+        <div class="ct-d">${c.telefon ? `<a class="btn sm" href="tel:${esc(tel(c.telefon))}">${esc(c.telefon)}</a>` : '<small class="muted">fără telefon</small>'}</div></li>`).join('')}</ul>
+      <p class="mic" style="margin:8px 0 0"><a href="#/s/${enc(s.id)}">Pagina locației</a></p></div>`; }).join('');
 }
 // ---------- Acoperirea pe ore (migrarea 0033) ----------
 // Câți oameni sunt puși în program, oră cu oră, față de câți trebuie. Roșu = sub necesar.
@@ -5544,6 +5564,47 @@ async function incarcaActivitate(params) {
       ${locuri.length > 1 ? `<p class="act-loc"><a class="pill ${loc ? '' : 'crit'}" href="${url({ s: '' })}">Toate locațiile</a>${locuri.map(l => `<a class="pill ${loc === l ? 'crit' : ''}" href="${url({ s: l })}">${esc(numeLoc(l))}</a>`).join('')}</p>` : ''}
       <ul class="act-l">${arat.map(x => `<li><time>${oraLocala(x.la)}</time><div><b>${esc(x.om || '—')}</b> ${esc(x.text)}<small>${x.space_id ? esc(numeLoc(x.space_id)) + ' · ' : ''}${ACT_FEL[x.fel] || x.fel}</small></div>${x.url ? `<a class="go" href="${esc(x.url)}" aria-label="Deschide">→</a>` : ''}</li>`).join('') || '<li class="muted">Nimic pentru filtrul ales.</li>'}</ul>`
       : '<p class="lvl4">Nicio acțiune înregistrată în ziua asta.</p>'}`;
+}
+// ---------- Prezentarea rolului (migrarea 0035) ----------
+// Responsabilul de locație o vede la primele trei deschideri; o poate redeschide din fișa rolului.
+async function prezentareLaIntrare() {
+  if (!ME || ME.role_code !== 'RL') return;
+  try { if (sessionStorage.getItem('mm-prez') === '1') return; sessionStorage.setItem('mm-prez', '1'); } catch (e) {}
+  const nr = await SB.rpc('prezentare_rol').then(r => (r.error ? 0 : +r.data || 0), () => 0);
+  if (nr >= 1 && nr <= 3) prezentareRol(nr);
+}
+async function prezentareRol(nr) {
+  const rol = ROL[ME.role_code] || {}, locuri = spacesOfRole(ME.role_code).filter(s => s.tip === 'magazin');
+  const ag = await SB.rpc('agenda_rol', { p_rol: ME.role_code }).then(r => (r.error ? [] : r.data || []), () => []);
+  const G = [['zilnic', 'În fiecare zi'], ['saptamanal', 'În fiecare săptămână'], ['lunar', 'În fiecare lună']];
+  const unde = [['Tura', 'Clock-in cu codul QR, fișele de deschidere și închidere, ce ai de făcut acum.', '#/tura'],
+    ['Agenda', 'Sarcinile tale pe zi, săptămână și lună. Bifezi când e gata.', '#/agenda'],
+    ['Comenzi', 'Marfa de a doua zi și comenzile clienților, direct către producție. Ora-limită e scrisă în pagină.', '#/comenzi'],
+    ['Ziua locației', 'Seara scrii încasările, numărul de bonuri și nota zilei.', '#/zi'],
+    ['Standarde', 'Dimineața verifici produsele față de poza-etalon.', '#/standarde'],
+    ['Echipa', 'Programul pe ture, acoperirea pe ore, feedback pentru oameni, activitatea echipei.', '#/echipa'],
+    ['Semnalări', 'Orice problemă: echipament, marfă, oameni. Ajunge pe loc la cine o rezolvă.', '#/semnalari'],
+    ['Contacte', 'Pe cine suni, cu numărul la o apăsare.', '#/contacte']];
+  const el = document.createElement('div'); el.className = 'prez'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Prezentarea rolului');
+  el.innerHTML = `<div class="prez-in">
+    <span class="eyebrow">Rolul tău${nr ? ` · prezentarea ${nr} din 3` : ''}</span>
+    <h1>Bun venit, ${esc((ME.full_name || '').split(' ')[0] || '')}</h1>
+    <p class="prez-sub">Ești <b>${esc(rol.nume || 'Responsabil Locație')}</b>${locuri.length ? ` la ${locuri.map(s => esc(numeLoc(s.id))).join(', ')}` : ''}.</p>
+    ${rol.raspunde ? `<p class="prez-rol">${esc(rol.raspunde)}</p>` : ''}
+    <h2>De ce răspunzi</h2>
+    <ul class="prez-3"><li><b>Oamenii</b><span>Programul, prezența și felul în care lucrează echipa magazinului.</span></li>
+      <li><b>Magazinul</b><span>Vitrina, curățenia, marfa și standardul produselor, în fiecare zi.</span></li>
+      <li><b>Cifrele</b><span>Încasările, comenzile, stocurile și documentele magazinului.</span></li></ul>
+    ${ag.length ? `<h2>Ce ai de făcut</h2><div class="prez-ag">${G.map(([k, et]) => { const l = ag.filter(t => t.ritm === k); return l.length ? `<div><span class="eyebrow">${et}</span><ul>${l.map(t => `<li>${esc(t.titlu)}</li>`).join('')}</ul></div>` : ''; }).join('')}</div>` : ''}
+    <h2>Unde găsești fiecare lucru</h2>
+    <ul class="prez-unde">${unde.map(([n, d, h]) => `<li><a href="${h}" data-prez-gata><b>${n}</b><span>${d}</span></a></li>`).join('')}</ul>
+    <p class="prez-nota">Conducerea vede în timp real ce e făcut în magazin și primește un rezumat de trei ori pe zi. Ce bifezi și ce scrii aici ține loc de mesajele de pe WhatsApp.</p>
+    <div class="calc-act"><button class="btn" type="button" data-prez-gata>Am înțeles</button>${AGENDA_AM ? '<a class="btn ghost" href="#/agenda" data-prez-gata>Deschide Agenda</a>' : ''}</div>
+    ${nr && nr < 3 ? `<p class="muted mic">O mai vezi de ${3 - nr === 1 ? 'încă o dată' : 'încă două ori'}. O găsești oricând în Roluri → ${esc(rol.nume || 'rolul tău')}.</p>` : nr === 3 ? `<p class="muted mic">E ultima dată când apare singură. O găsești oricând în Roluri → ${esc(rol.nume || 'rolul tău')}.</p>` : ''}</div>`;
+  document.body.appendChild(el); document.body.style.overflow = 'hidden';
+  const inchide = () => { el.remove(); document.body.style.overflow = ''; };
+  el.addEventListener('click', e => { if (e.target.closest('[data-prez-gata]')) inchide(); });
+  el.setAttribute('tabindex', '-1'); el.focus({ preventScroll: true }); el.scrollTop = 0;
 }
 // ---------- Agenda responsabilului (migrarea 0030) ----------
 // Sarcinile care se repetă: zilnic, săptămânal, lunar, la nevoie. Se bifează pe locație; șefii văd în panou.

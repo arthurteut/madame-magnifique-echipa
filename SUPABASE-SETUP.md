@@ -575,6 +575,15 @@ Rulează `supabase/migrations/0034_program_si_pentru_sef.sql`.
 În *Echipa → Program pe ture*, cine face programul se poate pune pe sine, pe colegii cu același rol și
 pe șefii lui de pe teren (un vânzător de tură își poate pune responsabilul). Conducerea nu apare în listă.
 
+## 33. Prezentarea rolului la primele trei deschideri (migrarea 0035)
+
+Rulează `supabase/migrations/0035_prezentare_rol.sql`.
+
+Responsabilul de locație vede, la primele trei deschideri ale aplicației, un ecran cu rolul lui: de ce
+răspunde, sarcinile din agendă și unde găsește fiecare lucru. Numărătoarea e pe cont. Ecranul se poate
+redeschide oricând din *Roluri → Responsabil Locație*. Pagina Contacte arată acum și contactele scrise
+în pagina fiecărei locații, cu ce mai e de completat.
+
 ## Variabilele, pe scurt
 
 | Ce | Unde | Public? |
